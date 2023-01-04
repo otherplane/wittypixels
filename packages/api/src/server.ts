@@ -10,7 +10,12 @@ import constants, { MINT_PRIVATE_KEY } from './constants'
 const server = Fastify({
   logger: {
     level: 'info',
-    prettyPrint: true,
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+      },
+    },
   },
 })
 

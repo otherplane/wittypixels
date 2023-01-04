@@ -113,7 +113,7 @@ describe('Route /interactions', () => {
   it(
     'should sum less points if interaction with the same player occurs several times',
     async () => {
-      // jest.useFakeTimers('legacy')
+      jest.useRealTimers()
       const [token, token1] = await Promise.all([
         authenticatePlayer(initialPlayers[0].key),
         authenticatePlayer(initialPlayers[1].key),

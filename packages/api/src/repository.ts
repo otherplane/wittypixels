@@ -4,6 +4,7 @@ import {
   ObjectId,
   OptionalUnlessRequiredId,
   WithId,
+  MatchKeysAndValues,
 } from 'mongodb'
 
 export class Repository<T> {
@@ -24,7 +25,6 @@ export class Repository<T> {
     const isAlreadyBootstrapped =
       (await this.collection.estimatedDocumentCount()) > 0
 
-    console.log('is BOOTSTRAPED!!!!', await this.collection.find({}).toArray())
     // Prevent accidental bootstrapping if the collection is already bootstrapped
     if (isAlreadyBootstrapped && !force) {
       return null
@@ -80,7 +80,7 @@ export class Repository<T> {
     try {
       const success = await this.collection.updateOne(
         filter,
-        { $set: element },
+        { $set: element as MatchKeysAndValues<T> },
         { upsert: false }
       )
 

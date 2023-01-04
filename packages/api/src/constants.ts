@@ -60,7 +60,6 @@ export const INTERACTION_POINTS_DIVISOR = process.env.INTERACTION_POINTS_DIVISOR
 
 // Secp256k1 private key used for signing in the `mint` endpoint
 export const MINT_PRIVATE_KEY = process.env.MINT_PRIVATE_KEY || '0x00'
-// '0xb5b1870957d373ef0eeffecc6e4812c0fd08f554b37b233526acc331bf1544f7'
 
 // Tell how many players to generate
 export const PLAYERS_COUNT: number = process.env.PLAYERS_COUNT

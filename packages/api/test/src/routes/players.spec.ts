@@ -9,7 +9,7 @@ describe('player.ts', () => {
       },
       (err, response) => {
         expect(response?.json().message).toBe(
-          `headers should have required property 'authorization'`
+          `headers must have required property 'authorization'`
         )
       }
     )

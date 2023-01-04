@@ -2,7 +2,7 @@ import Ajv from 'ajv'
 import AutoLoad, { AutoloadPluginOptions } from '@fastify/autoload'
 import fastifyJwt from '@fastify/jwt'
 import { FastifyPluginAsync, FastifyPluginCallback } from 'fastify'
-import { fastifyMongodb } from '@fastify/mongodb'
+import fastifyMongodb from '@fastify/mongodb'
 import fp from 'fastify-plugin'
 import { join } from 'path'
 
