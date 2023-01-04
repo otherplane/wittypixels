@@ -1,0 +1,67 @@
+name: Run lint, test and build
+
+env:
+  CI: true
+
+on: pull_request
+jobs:
+  lint_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+     
+      - name: 'Create env file'
+        shell: bash
+        env:
+          TESTVARS: ${{ secrets.ENV_FILE }}
+        run: echo "$TESTVARS" >> .env.test
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.5.0
+          run_install: false
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'pnpm'
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run linter
+        run: pnpm lint
+
+      # See https://github.com/otherplane/wittypixels/blob/main/README.md#e2e-test)
+      # - name: Run unit tests
+      #   run: pnpm test:unit
+
+      - name: Run build
+        run: pnpm build
+        
+      - name: Run e2e tests 
+        run: pnpm test:e2e
+
