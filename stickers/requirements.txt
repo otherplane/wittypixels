@@ -1,0 +1,5 @@
+-e git://github.com/PercyJax/brother_ql.git@bf4d73f5a598135ce49084cf87f6e172d464bb3b#egg=brother-ql
+Pillow==8.3.2
+-e git://github.com/ojii/pymaging.git@596a08fce5664e58d6e8c96847393fbe987783f2#egg=pymaging
+-e git://github.com/ojii/pymaging-png.git@83d85c44e4b2342818e6c068065e031a9f81bb9f#egg=pymaging_png
+qrcode==6.1

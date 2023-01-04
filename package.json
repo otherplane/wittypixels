@@ -1,0 +1,24 @@
+{
+  "name": "wittypixels",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=16"
+  },
+  "private": true,
+  "description": "",
+  "scripts": {
+    "build": "pnpm m run build",
+    "test": "pnpm m run test",
+    "test:unit": "pnpm m run test:unit",
+    "test:e2e": "pnpm m run test:e2e:ci",
+    "lint": "pnpm m run lint",
+    "clean": "pnpm m run clean",
+    "prepare": "pnpm m run prepare",
+    "docker:build": "pnpm m run docker:build"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "volta": {
+    "node": "16.13.1"
+  }
+}

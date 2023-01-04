@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  api:
+    # production
+    # image: witnet/wittypixels-api
+    # development
+    build:
+      context: packages/api
+    container_name: wittypixels-api
+    ports:
+      - $SERVER_PORT:3000
+    links:
+      - database
+    depends_on:
+      - database
+    environment:
+      MONGO_URI: $MONGO_URI
+      JWT_SECRET: $JWT_SECRET
+      MINT_PRIVATE_KEY: $MINT_PRIVATE_KEY
+      PLAYER_KEY_SALT: $PLAYER_KEY_SALT
+      PLAYER_MINT_TIMESTAMP: $PLAYER_MINT_TIMESTAMP 
+      GAME_END_TIMESTAMP: $GAME_END_TIMESTAMP
+      SERVER: $SERVER
+      TRADE_DURATION_MILLIS: $TRADE_DURATION_MILLIS
+      TRADE_COOLDOWN_MILLIS: $TRADE_COOLDOWN_MILLIS
+      WEB3_PROVIDER: $WEB3_PROVIDER
+      WITTYPIXELS_ERC721_ADDRESS: $WITTYPIXELS_ERC721_ADDRESS 
