@@ -1,0 +1,38 @@
+{
+  "name": "witty-creatures",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=16"
+  },
+  "private": true,
+  "description": "",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@rushstack/eslint-patch": "1.1.3",
+    "@vue/eslint-config-prettier": "7.0.0",
+    "@vue/eslint-config-typescript": "10.0.0",
+    "eslint": "8.16.0",
+    "eslint-plugin-cypress": "2.12.1",
+    "eslint-plugin-vue": "9.0.1",
+    "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "bootstrap": "yarn lerna bootstrap",
+    "build": "yarn lerna run build --stream --concurrency 1",
+    "test": "yarn lerna run test --stream ",
+    "test:unit": "yarn lerna run test:unit --stream",
+    "test:e2e": "yarn lerna run test:e2e:ci --stream",
+    "lint": "yarn lerna run lint --stream --concurrency 1",
+    "clean": "yarn lerna run clean --concurrency 4",
+    "prepare": "lerna run prepare",
+    "docker:build": "lerna run docker:build"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "volta": {
+    "node": "16.13.1",
+    "yarn": "1.22.10"
+  }
+}

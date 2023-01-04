@@ -1,0 +1,180 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_tokenOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_ranchId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_farmerId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_farmerScore",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_farmerName",
+        "type": "string"
+      },
+      {
+        "components": [
+          {
+            "internalType": "enum WittyBufficornsLib.Awards",
+            "name": "category",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ranking",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bufficornId",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct WittyBufficornsLib.Award[]",
+        "name": "_farmerAwards",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "mintFarmerAwards",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTokenInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "enum WittyBufficornsLib.Awards",
+                "name": "category",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint256",
+                "name": "ranking",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bufficornId",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct WittyBufficornsLib.Award",
+            "name": "award",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint256",
+            "name": "farmerId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expeditionTs",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct WittyBufficornsLib.TokenInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_farmerId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getFarmer",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "score",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ranchId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "firstTokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalAwards",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct WittyBufficornsLib.Farmer",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_farmerId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getFarmerTokens",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

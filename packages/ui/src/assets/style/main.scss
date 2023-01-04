@@ -1,0 +1,243 @@
+$beige: #eedba5;
+$orange: #fc9700;
+$brown: #bd3800;
+$black: black;
+$white: white;
+$transparent: transparent;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Zilla+Slab:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap');
+
+$black: #1a1a1a;
+$black-secondary: #727272;
+$black-base-color: #fff;
+$black-main-color: #333;
+$black-opacity-1: #1a1a1a75;
+$black-opacity-2: #1a1a1a10;
+$red: #bd2635;
+$red-secondary: #d37b84;
+$red-base-color: #fff;
+$red-main-color: #f00;
+$red-opacity-1: #bd263575;
+$red-opacity-2: #bd263510;
+$blue: #124ca1;
+$blue-secondary: #5e82b9;
+$blue-base-color: #fff;
+$blue-main-color: #00d;
+$blue-opacity-1: #124ca175;
+$blue-opacity-2: #124ca110;
+$yellow: #ee9c03;
+$yellow-secondary: #e6b966;
+$yellow-base-color: #fff;
+$yellow-main-color: #fd2;
+$yellow-opacity-1: #ffad0075;
+$yellow-opacity-2: #ffad0010;
+$purple: #512791;
+$purple-secondary: #9b7cca;
+$purple-base-color: #fff;
+$purple-main-color: #627;
+$purple-opacity-1: #51279175;
+$purple-opacity-2: #51279110;
+$green: #217821;
+$green-secondary: #7ec07e;
+$green-base-color: #fff;
+$green-main-color: #080;
+$green-opacity-1: #21782175;
+$green-opacity-2: #21782110;
+$white-theme: #a1a1a1;
+$white-secondary: #acacac;
+$white-base-color: #000;
+$white-main-color: #fff;
+$white-opacity-1: #acacac75;
+$white-opacity-2: #acacac10;
+
+html,
+body {
+  font-family: 'Roboto';
+  --primary-color: #{$black};
+  background-color: $white;
+  touch-action: pan-x pan-y;
+}
+.purple {
+  --primary-color: #{$black};
+  --secondary-color: #{$purple-secondary};
+  --main-color: #{$purple-main-color};
+  --base-color: #{$green-base-color};
+  --primary-color-opacity-1: #{$purple-opacity-1};
+  --primary-color-opacity-2: #{$purple-opacity-2};
+  --vc-nav-background-color: #{$purple};
+  --vc-pgn-active-color: #{$purple};
+  --vc-pgn-background-color: #{$purple-opacity-1};
+}
+.green {
+  --primary-color: #{$black};
+  --secondary-color: #{$green-secondary};
+  --main-color: #{$green-main-color};
+  --base-color: #{$green-base-color};
+  --primary-color-opacity-1: #{$green-opacity-1};
+  --primary-color-opacity-2: #{$green-opacity-2};
+  --vc-nav-background-color: #{$green};
+  --vc-pgn-active-color: #{$green};
+  --vc-pgn-background-color: #{$green-secondary};
+}
+.yellow {
+  --primary-color: #{$black};
+  --secondary-color: #{$yellow};
+  --main-color: #{$yellow-main-color};
+  --base-color: #{$yellow-base-color};
+  --primary-color-opacity-1: #{$yellow-opacity-1};
+  --primary-color-opacity-2: #{$yellow-opacity-2};
+  --vc-nav-background-color: #{$yellow};
+  --vc-pgn-active-color: #{$yellow};
+  --vc-pgn-background-color: #{$yellow-opacity-1};
+}
+.blue {
+  --primary-color: #{$black};
+  --secondary-color: #{$blue-secondary};
+  --main-color: #{$blue-main-color};
+  --base-color: #{$blue-base-color};
+  --primary-color-opacity-1: #{$blue-opacity-1};
+  --primary-color-opacity-2: #{$blue-opacity-2};
+  --vc-nav-background-color: #{$blue};
+  --vc-pgn-active-color: #{$blue};
+  --vc-pgn-background-color: #{$blue-opacity-1};
+}
+.red {
+  --primary-color: #{$black};
+  --secondary-color: #{$red-secondary};
+  --main-color: #{$red-main-color};
+  --base-color: #{$red-base-color};
+  --primary-color-opacity-1: #{$red-opacity-1};
+  --primary-color-opacity-2: #{$red-opacity-2};
+  --vc-nav-background-color: #{$red};
+  --vc-pgn-active-color: #{$red};
+  --vc-pgn-background-color: #{$red-secondary};
+}
+.black {
+  --primary-color: #{$black};
+  --secondary-color: #{$black-secondary};
+  --main-color: #{$black-main-color};
+  --base-color: #{$black-base-color};
+  --primary-color-opacity-1: #{$black-opacity-1};
+  --primary-color-opacity-2: #{$black-opacity-2};
+  --vc-pgn-active-color: #{$black};
+  --vc-nav-background-color: #{$black};
+  --vc-pgn-background-color: #{$black-opacity-1};
+}
+.white {
+  --primary-color: #{$black};
+  --secondary-color: #{$white-secondary};
+  --main-color: #{$white-main-color};
+  --base-color: #{$white-base-color};
+  --primary-color-opacity-1: #{$white-opacity-1};
+  --primary-color-opacity-2: #{$white-opacity-2};
+  --vc-nav-background-color: #{$white};
+  --vc-pgn-active-color: #{$white};
+  --vc-pgn-background-color: #{$white-secondary};
+}
+
+.bg-white {
+  background-color: $white !important;
+}
+.text-pink {
+  color: $white;
+}
+.text-brown {
+  color: var(--primary-color);
+}
+.bg-beige-transparent {
+  background-color: $white !important;
+}
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+.border-primary {
+  border: 2px solid var(--primary-color) !important;
+}
+.text-primary {
+  color: var(--primary-color);
+}
+
+.container {
+  text-align: center;
+  display: grid;
+  row-gap: 16px;
+}
+
+.btn {
+  font-size: 18px;
+}
+.small-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+.subtitle {
+  font-size: 14px;
+  width: 216px;
+  font-weight: lighter;
+  &.label {
+    font-size: 12px;
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+}
+.title {
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+.text {
+  font-size: 20px;
+}
+.bold {
+  font-weight: 600;
+}
+.label {
+  font-size: 12px;
+  color: var(--primary-color);
+}
+.time {
+  font-size: 10px;
+}
+.info {
+  font-size: 24px;
+  font-weight: 500;
+}
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+input[type='radio'] {
+  &.custom {
+    appearance: none;
+    background-color: $transparent;
+    font: inherit;
+    color: currentColor;
+    width: 18px;
+    height: 18px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+  }
+}
+
+input[type='radio'] {
+  &.custom::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--primary-color-opacity-1);
+  }
+}
+
+input[type='radio'] {
+  &.custom:checked::before {
+    transform: scale(1);
+  }
+}

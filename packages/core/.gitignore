@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules
+
+# Build artifacts
+build/contracts
+
+# Environmental configuration files
+.env
