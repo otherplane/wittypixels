@@ -4,10 +4,10 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
-RUN yarn
+RUN pnpm install
 
 EXPOSE 3000
 
-RUN yarn build
+RUN pnpm build
 
 CMD [ "node", "dist/server.js" ]

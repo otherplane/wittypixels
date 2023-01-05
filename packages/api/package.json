@@ -8,13 +8,13 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "start": "yarn build:ts && node dist/server.js",
+    "start": "pnpm build:ts && node dist/server.js",
     "build:ts": "tsc",
-    "build": "yarn build:ts",
+    "build": "pnpm build:ts",
     "docker:build": "docker build . --no-cache -t witnet/witty-creatures-api",
     "lint": "eslint . --ext .js,.ts,.cjs --fix --ignore-path .gitignore",
-    "test": "yarn build:ts && cross-env TS_NODE_FILES=true jest test/.*spec.ts  --no-coverage --runInBand",
-    "test:unit": "yarn test"
+    "test": "pnpm build:ts && cross-env TS_NODE_FILES=true jest test/.*spec.ts  --no-coverage --runInBand",
+    "test:unit": "pnpm test"
   },
   "dependencies": {
     "@fastify/autoload": "5.0.0",
