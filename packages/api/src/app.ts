@@ -5,7 +5,6 @@ import { FastifyPluginAsync, FastifyPluginCallback } from 'fastify'
 import fastifyMongodb from '@fastify/mongodb'
 import fp from 'fastify-plugin'
 import { join } from 'path'
-
 import { PLAYERS_COUNT, JWT_SECRET, MONGO_URI } from './constants'
 import { PlayerModel } from './models/player'
 import { InteractionModel } from './models/interaction'

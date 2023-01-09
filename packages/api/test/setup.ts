@@ -4,15 +4,12 @@ import { app } from '../src/app'
 import { FastifyInstance } from 'fastify'
 
 let server: FastifyInstance
-
-let client = new MongoClient(
-  process.env.MONGO_URI ||
-    'mongodb://your_username:your_password@localhost:27017/database'
-)
+let client = new MongoClient(process.env.MONGO_URI || '')
 let db: Db
 
 beforeAll(async () => {
   client = await client.connect()
+  server = Fastify().register(app)
   db = await client.db(process.env.MONGO_INITDB_DATABASE || 'database')
 })
 
@@ -36,7 +33,7 @@ beforeEach(async () => {
 })
 
 afterAll(async () => {
-  await client.close()
+  await server.close()
 })
 
 afterEach(async () => {
@@ -64,7 +61,7 @@ async function authenticatePlayer(key: string): Promise<string> {
 
 async function serverInject(
   opts: InjectOptions,
-  cb: (_error, _result) => Promise<void> | void
+  cb: (_error: any, _result: any) => Promise<void> | void
 ): Promise<null> {
   return new Promise(resolve => {
     server.inject(opts, async (error, result) => {

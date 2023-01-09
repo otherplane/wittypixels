@@ -24,9 +24,10 @@ jobs:
           cache: 'pnpm'
 
       - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.6.0
+        uses: supercharge/mongodb-github-action@1.8.0
         with:
-          mongodb-version: '4.0'
+          mongodb-version: 4.0
+          mongodb-db: database
           mongodb-port: 27017
 
       - run: pnpm install

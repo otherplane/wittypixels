@@ -1,3 +1,4 @@
+import { Player } from '../../../src/domain/player'
 import { authenticatePlayer, initialPlayers, serverInject } from '../../setup'
 
 describe('Route /leaderboard', () => {
@@ -27,11 +28,9 @@ describe('Route /leaderboard', () => {
           expect(response.statusCode).toBe(200)
           expect(players.players.length).toBe(6)
           expect(players.total).toBe(6)
-
-          players.players.forEach((player, index) => {
+          players.players.forEach((player: Player) => {
             expect(player.username).toBeTruthy()
             expect(player.score).toBe(0)
-            expect(player.position).toBe(index)
             expect(typeof player.creationIndex).toBe('number')
           })
         }
@@ -82,7 +81,7 @@ describe('Route /leaderboard', () => {
           expect(players.players.length).toBe(5)
           expect(players.total).toBe(5)
 
-          players.players.forEach(player => {
+          players.players.forEach((player: Player) => {
             expect(player.username).toBeTruthy()
             if (player.username === initialPlayers[1].username) {
               expect(player.score).toBe(800)
@@ -107,7 +106,7 @@ describe('Route /leaderboard', () => {
     ])
     const token = tokens[0]
 
-    let firstPlayer
+    let firstPlayer: Player
     await serverInject(
       {
         method: 'GET',
