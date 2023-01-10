@@ -4,7 +4,7 @@
       <div
         class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-beige sm:mx-0 sm:h-10 sm:w-10"
       >
-        <SvgImage :svg="bufficornMain" />
+        <SvgImage :svg="playerMainImage" />
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
         <h3
@@ -45,7 +45,7 @@
 <script>
 import { defineComponent, getCurrentInstance } from 'vue'
 import { useWeb3 } from '../composables/useWeb3'
-import bufficornMain from '@/assets/egg.svg?raw'
+import playerMainImage from '@/assets/egg.svg?raw'
 import { useStore } from '@/stores/player'
 export default defineComponent({
   setup() {
@@ -54,7 +54,7 @@ export default defineComponent({
     const player = useStore()
     return {
       player,
-      bufficornMain,
+      playerMainImage,
       mint() {
         w3Witmon.mint()
         instance.parent.emit('close')

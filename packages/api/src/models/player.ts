@@ -75,9 +75,9 @@ export class PlayerModel {
 
   public async create(player: DbPlayerVTO): Promise<Player> {
     const { username } = player
-    const bufficornExists = await this.repository.getOne({ username })
+    const playerExists = await this.repository.getOne({ username })
 
-    if (bufficornExists) {
+    if (playerExists) {
       throw new Error(`Player with name ${username} already exists`)
     }
 

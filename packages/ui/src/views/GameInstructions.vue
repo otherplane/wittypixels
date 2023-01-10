@@ -77,13 +77,4 @@ export default {
     padding-left: 24px;
   }
 }
-@media (max-width: 600px) {
-  .container {
-    .ranch-logos {
-      .ranch {
-        height: 50px;
-      }
-    }
-  }
-}
 </style>

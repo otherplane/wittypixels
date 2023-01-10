@@ -4,7 +4,7 @@
       <div
         class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-beige sm:mx-0 sm:h-10 sm:w-10"
       >
-        <SvgImage :svg="bufficornMain" />
+        <SvgImage :svg="playerMainImage" />
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
         <h3 class="text-lg leading-6 font-bold text-black" id="modal-title">
@@ -42,7 +42,7 @@ import { defineComponent, getCurrentInstance } from 'vue'
 import { createImportLink } from '../services/exportInformation'
 import { copyTextToClipboard } from '../services/copyToClipboard'
 import { useStore } from '../stores/player'
-import bufficornMain from '@/assets/egg.svg?raw'
+import playerMainImage from '@/assets/egg.svg?raw'
 export default defineComponent({
   setup() {
     const instance = getCurrentInstance()
@@ -53,7 +53,7 @@ export default defineComponent({
         instance.parent.emit('close')
       },
       player,
-      bufficornMain,
+      playerMainImage,
       importLink,
       async copyToClipboard() {
         await copyTextToClipboard(importLink)

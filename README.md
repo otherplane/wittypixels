@@ -5,7 +5,7 @@
 git clone git@github.com:otherplane/witty-pixels.git
 
 # cd into the cloned repository
-cd witty-creatures-3.0
+cd witty-pixels
 
 # install application dependencies
 pnpm i

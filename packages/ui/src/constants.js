@@ -17,7 +17,7 @@ export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://0.0.0.0:4000'
 
 export const BASE_URL =
-  import.meta.env.VITE_BASE_URL || 'https://bufficorns.com'
+  import.meta.env.VITE_BASE_URL || 'https://witty-pixels.com'
 
 export const ATTRIBUTES = {}
 

@@ -107,18 +107,17 @@ export function useWeb3() {
       const contract = new web3.eth.Contract(jsonInterface, CONTRACT_ADDRESS)
       const from = (await requestAccounts(web3))[0]
       const mintArgs = await player.getContractArgs(from)
-      const farmerAwards = mintArgs.data.farmerAwards.map(medal =>
+      const playerAwards = mintArgs.data.farmerAwards.map(medal =>
         Object.values(medal)
       )
 
       contract.methods
         .mintFarmerAwards(
           mintArgs.data.address,
-          mintArgs.data.ranchId,
-          mintArgs.data.farmerId,
-          mintArgs.data.farmerScore,
-          mintArgs.data.farmerName,
-          farmerAwards,
+          mintArgs.data.playerId,
+          mintArgs.data.playerScore,
+          mintArgs.data.playerName,
+          playerAwards,
           `0x${mintArgs.envelopedSignature.signature}`
         )
         .send({ from })

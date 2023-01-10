@@ -2,7 +2,6 @@
   <div class="background" :class="THEME_COLORS[player?.color]">
     <WitnetStrip class="witnet-logo-strip" />
     <div v-if="isBackground" class="main-background" />
-    <SvgImage v-if="isBufficorn" class="bufficorn-img" :svg="wittyCorn" />
     <div class="layout" :class="{ padding, 'max-height': maxHeight }">
       <slot />
     </div>
@@ -16,10 +15,6 @@ import { THEME_COLORS } from '../constants'
 export default defineComponent({
   props: {
     isBackground: {
-      type: Boolean,
-      default: false,
-    },
-    isBufficorn: {
       type: Boolean,
       default: false,
     },
@@ -56,20 +51,6 @@ export default defineComponent({
   position: relative;
   z-index: 12;
 }
-.mountains-img {
-  width: 100vw;
-  position: fixed;
-  z-index: 4;
-  bottom: 0;
-  left: 0;
-}
-.bufficorn-img {
-  height: 50vh;
-  z-index: 5;
-  right: 24vw;
-  position: fixed;
-  bottom: 0;
-}
 .main-background {
   position: fixed;
   height: 100vh;
@@ -97,14 +78,6 @@ export default defineComponent({
   }
   &.max-height {
     min-height: 80vh;
-  }
-}
-@media (max-width: 600px) {
-  .bufficorn-img {
-    height: 50vh;
-    right: -50px;
-    position: fixed;
-    bottom: 0;
   }
 }
 </style>

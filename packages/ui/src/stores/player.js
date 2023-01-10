@@ -15,8 +15,6 @@ export const useStore = defineStore('player', {
       theme: null,
       nft: [],
       username: '',
-      ranch: {},
-      selectedBufficorn: null,
       bonus: null,
       interactionInfo: null,
       interactionIn: null,
@@ -33,9 +31,7 @@ export const useStore = defineStore('player', {
       color: null,
       tokenIds: null,
       score: null,
-      bufficornsGlobalStats: null,
       playersGlobalStats: null,
-      ranchesGlobalStats: null,
       errors: {
         showMintedAwards: null,
         preview: null,
@@ -214,7 +210,6 @@ export const useStore = defineStore('player', {
         this.username = username
         this.score = score
         this.color = color
-        // this.saveTheme(ranch.name)
         if (request.lastInteractionIn) {
           this.interactionIn = request.lastInteractionIn
         }

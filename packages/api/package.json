@@ -1,5 +1,5 @@
 {
-  "name": "@witty-creatures/api",
+  "name": "@witty-pixels/api",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.ts",
@@ -11,9 +11,9 @@
     "start": "pnpm build:ts && node dist/server.js",
     "build:ts": "tsc",
     "build": "pnpm build:ts",
-    "docker:build": "docker build . --no-cache -t witnet/witty-creatures-api",
+    "docker:build": "docker build . --no-cache -t witnet/witty-pixels-api",
     "lint": "eslint . --ext .js,.ts,.cjs --fix --ignore-path .gitignore",
-    "test": "pnpm build:ts && cross-env TS_NODE_FILES=true jest test/.*spec.ts  --no-coverage --runInBand",
+    "test": "pnpm build:ts && cross-env TS_NODE_FILES=true jest test/.*spec.ts --no-coverage --runInBand --silent=false",
     "test:unit": "pnpm test"
   },
   "dependencies": {

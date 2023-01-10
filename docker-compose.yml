@@ -3,7 +3,7 @@ version: '2'
 services:
   database:
     image: mongo:4
-    container_name: witty-creatures-3.0-database
+    container_name: witty-pixels-database
     ports:
       - $MONGO_PORT:27017
     environment:
@@ -18,11 +18,11 @@ services:
 
   api:
     # production
-    # image: witnet/witty-creatures-server
+    # image: witnet/witty-pixels-server
     # development
     build:
       context: packages/api
-    container_name: witty-creatures-api
+    container_name: witty-pixels-api
     ports:
       - $SERVER_PORT:3000
     links:
@@ -41,4 +41,4 @@ services:
       TRADE_COOLDOWN_MILLIS: $TRADE_COOLDOWN_MILLIS
       DEVELOPMENT: $DEVELOPMENT
       WEB3_PROVIDER: $WEB3_PROVIDER
-      WITTY_BUFFICORNS_ERC721_ADDRESS: $WITTY_BUFFICORNS_ERC721_ADDRESS 
+      WITTY_PIXELS_ERC721_ADDRESS: $WITTY_PIXELS_ERC721_ADDRESS 

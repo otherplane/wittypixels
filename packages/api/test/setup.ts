@@ -33,7 +33,7 @@ beforeEach(async () => {
 })
 
 afterAll(async () => {
-  await server.close()
+  await client.close()
 })
 
 afterEach(async () => {

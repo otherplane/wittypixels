@@ -66,11 +66,6 @@ export const PLAYERS_COUNT: number = process.env.PLAYERS_COUNT
   ? parseInt(process.env.PLAYERS_COUNT)
   : 10
 
-// Tell how many bufficorns to generate for each ranch
-export const BUFFICORNS_PER_RANCH: number = process.env.BUFFICORNS_PER_RANCH
-  ? parseInt(process.env.BUFFICORNS_PER_RANCH)
-  : 4
-
 // Awards date in millis
 // If `PLAYER_MINT_TIMESTAMP=0`, checks are ignored (for testing purposes)
 export const PLAYER_MINT_TIMESTAMP = process.env.PLAYER_MINT_TIMESTAMP

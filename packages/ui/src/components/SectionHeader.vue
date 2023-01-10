@@ -46,11 +46,6 @@ export default {
     margin-right: 8px;
     width: 10px;
   }
-  .ranch-img {
-    width: 138px;
-    height: 100px;
-    margin-bottom: 8px;
-  }
   .title-section {
     font-family: 'Road Store', sans-serif;
     font-size: 24px;

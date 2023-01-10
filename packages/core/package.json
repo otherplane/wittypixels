@@ -1,7 +1,7 @@
 {
-  "name": "@witty-creatures/solidity",
+  "name": "@witty-pixels/solidity",
   "version": "3.3.7",
-  "description": "Witty creatures Solidity Contracts",
+  "description": "Witty pixels Solidity Contracts",
   "author": "Witnet Devs <devs@witnet.io>",
   "license": "MIT",
   "private": false,
