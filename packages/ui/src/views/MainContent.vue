@@ -40,18 +40,12 @@
       <InteractionInfo />
       <NFTPreview />
       <MintInformation />
-      <EggSvg />
+      <PixelBoard />
       <div class="sticky-btn" v-if="!player.gameOver">
         <router-link class="btn" :to="type === 'disable' ? '' : '/scan'">
           <CustomButton type="dark" :slim="true"> INTERACTION </CustomButton>
         </router-link>
-        <CustomButton
-          type="dark"
-          :slim="true"
-          @click="player.interact({ key: player.id })"
-        >
-          SELF INTERACTION
-        </CustomButton>
+        <DrawingPalette />
       </div>
       <div class="btn" v-if="player.gameOver">
         <CustomButton

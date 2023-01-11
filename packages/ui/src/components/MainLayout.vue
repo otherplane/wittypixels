@@ -1,5 +1,5 @@
 <template>
-  <div class="background" :class="THEME_COLORS[player?.color]">
+  <div class="background">
     <WitnetStrip class="witnet-logo-strip" />
     <div v-if="isBackground" class="main-background" />
     <div class="layout" :class="{ padding, 'max-height': maxHeight }">
@@ -11,7 +11,6 @@
 import { defineComponent } from 'vue-demi'
 import { useStore } from '@/stores/player'
 import wittyCorn from '@/assets/egg.svg?raw'
-import { THEME_COLORS } from '../constants'
 export default defineComponent({
   props: {
     isBackground: {
@@ -32,7 +31,6 @@ export default defineComponent({
     return {
       player,
       wittyCorn,
-      THEME_COLORS,
     }
   },
 })

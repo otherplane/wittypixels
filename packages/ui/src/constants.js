@@ -36,14 +36,15 @@ export const STATS_FILTERS = {
   },
 }
 
-export const THEME_COLORS = {
-  0: 'green',
-  1: 'black',
-  2: 'red',
-  3: 'purple',
-  4: 'white',
-  5: 'yellow',
-  6: 'blue',
+export const COLORS = {
+  0: 'red',
+  1: 'orange',
+  2: 'yellow',
+  3: 'green',
+  4: 'blue',
+  5: 'purple',
+  6: 'black',
+  7: 'white',
 }
 
 export const POLLER_MILLISECONDS = import.meta.env.VITE_POLLER_MILLISECONDS
