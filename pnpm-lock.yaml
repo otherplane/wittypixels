@@ -114,6 +114,7 @@ importers:
       eslint-plugin-vue: 9.0.1
       gsap: ^3.10.4
       jsdom: 19.0.0
+      konva: ^8.4.0
       pinia: 2.0.13
       postcss: 8.4.14
       prettier: 2.6.2
@@ -129,6 +130,7 @@ importers:
       vue: 3.2.33
       vue-barcode-reader: 1.0.1
       vue-demi: ^0.13.2
+      vue-konva: ^3.0.2
       vue-router: 4.0.14
       vue-select: ^4.0.0-beta.3
       vue-tsc: 0.34.16
@@ -140,6 +142,7 @@ importers:
       date-fns: 2.28.0
       date-fns-tz: 1.2.2_date-fns@2.28.0
       gsap: 3.11.4
+      konva: 8.4.0
       pinia: 2.0.13_ytvqwwdyss532bvoq2clv4ed5m
       query-string: 7.1.1
       sass: 1.45.1
@@ -147,6 +150,7 @@ importers:
       vue: 3.2.33
       vue-barcode-reader: 1.0.1
       vue-demi: 0.13.11_vue@3.2.33
+      vue-konva: 3.0.2_konva@8.4.0
       vue-router: 4.0.14_vue@3.2.33
       vue-select: 4.0.0-beta.6_vue@3.2.33
       web3: 1.7.3
@@ -7564,6 +7568,10 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /konva/8.4.0:
+    resolution: {integrity: sha512-o38I9j1Gr5CprnBwPI9dCSzb4cvN/8pnjuFHtKrGcNBfKmaLvYfcIakTEDm6xLt17O+S/6nXhLdXa5wqiHHS9Q==}
+    dev: false
+
   /latest-version/5.1.0:
     resolution: {integrity: sha512-weT+r0kTkRQdCdYCNtkMwWXQTMEswKrFBkm4ckQOMVhhqhIMI1UT2hMj+1iigIhgSZm5gTmrRXBNoGUgaTY1xA==}
     engines: {node: '>=8'}
@@ -10168,6 +10176,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /vue-konva/3.0.2_konva@8.4.0:
+    resolution: {integrity: sha512-FNWKtPPVDihNuQcq7F4GzuVPkPaEfg8lnWezpRqgiC2VetdvONOiYOFD800jNL5kt/lEYnSOYvhqqdTPbv2c8w==}
+    engines: {node: '>= 4.0.0', npm: '>= 3.0.0'}
+    peerDependencies:
+      konva: '>7'
+    dependencies:
+      konva: 8.4.0
+    dev: false
 
   /vue-router/4.0.14_vue@3.2.33:
     resolution: {integrity: sha512-wAO6zF9zxA3u+7AkMPqw9LjoUCjSxfFvINQj3E/DceTt6uEz1XZLraDhdg2EYmvVwTBSGlLYsUw8bDmx0754Mw==}

@@ -15,6 +15,7 @@ export const useStore = defineStore('player', {
       theme: null,
       nft: [],
       username: '',
+      selectedColor: null,
       bonus: null,
       interactionInfo: null,
       interactionIn: null,
@@ -71,6 +72,9 @@ export const useStore = defineStore('player', {
     },
   },
   actions: {
+    selectColor(color) {
+      this.selectedColor = color
+    },
     notify(payload) {
       this.app.config.globalProperties.$notify(payload)
     },
