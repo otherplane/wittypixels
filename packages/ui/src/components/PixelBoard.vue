@@ -1,12 +1,10 @@
 <template>
-  <div class="pixel-board">
-    {{ currentSelection }}
+  <div class="pixel-board" ref="targetBoard">
     <v-stage
       ref="stage"
       :config="configKonva"
       @wheel="zoom"
       @dragStart="changeDragCursor"
-      @mouseleave="currentPixel = null"
     >
       <v-layer ref="layer">
         <v-rect
@@ -14,13 +12,13 @@
           :ref="`${pixel.x}:${pixel.y}`"
           :key="`${pixel.x}:${pixel.y}`"
           :config="pixel"
-          @mouseover="previewPixel({ x: pixel.x, y: pixel.y })"
-          @tap="updatePixel({ x: pixel.x, y: pixel.y })"
+          @click="previewPixelAndShowPanel({ x: pixel.x, y: pixel.y })"
+          @tap="previewPixelAndShowPanel({ x: pixel.x, y: pixel.y })"
         ></v-rect>
         <v-rect
-          v-if="currentPixel"
-          :config="currentPixel"
-          @click="updatePixel({ x: currentPixel.x, y: currentPixel.y })"
+          v-if="pixelToPaint"
+          :config="pixelToPaint"
+          @click="showPanel()"
         ></v-rect>
       </v-layer>
     </v-stage>
@@ -30,21 +28,17 @@
 <script>
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from '@/stores/player'
+import { CANVAS_WIDTH, CANVAS_HEIGHT, PIXEL_SIZE, SCALE_BY } from '@/constants'
 export default {
   setup() {
     const store = useStore()
-    const PIXEL_SIZE = 16
-    const CANVAS_WIDTH = 700
-    const CANVAS_HEIGHT = 600
-    const SCALE_BY = 1.01
     const pixel = ref()
     const stage = ref()
-    const pixelMap = ref({})
+    const targetBoard = ref()
     const configKonva = {
       width: CANVAS_WIDTH,
       height: CANVAS_HEIGHT,
     }
-    const currentPixel = ref(null)
 
     onMounted(() => {
       drawGrid()
@@ -54,13 +48,14 @@ export default {
     const selectedColor = computed(() => {
       return store.selectedColor
     })
+    const pixelMap = computed(() => {
+      return store.pixelMap
+    })
+    const pixelToPaint = computed(() => {
+      return store.pixelToPaint
+    })
     const stageNode = computed(() => {
       return stage.value.getNode()
-    })
-    const currentSelection = computed(() => {
-      return `Current Selection is x: ${
-        standardizePixelCoordinates(currentPixel.value?.x) ?? 0
-      } y: ${standardizePixelCoordinates(currentPixel.value?.y) ?? 0}`
     })
     const stageContainer = computed(() => {
       return stage.value.getStage().container()
@@ -79,18 +74,21 @@ export default {
         ) {
           const x = xCell * PIXEL_SIZE
           const y = yCell * PIXEL_SIZE
-          pixelMap.value[generateId(x, y)] = generatePixel(x, y, 'lightgrey')
+          store.paintDefaultPixel({
+            key: generateId(x, y),
+            pixel: generatePixel(x, y, 'lightgrey'),
+          })
         }
       }
-    }
-    function standardizePixelCoordinates(coordinate) {
-      return coordinate > 0 ? coordinate / PIXEL_SIZE : coordinate
     }
     function generateId(x, y) {
       return `${x}:${y}`
     }
     function generatePixel(x, y, color) {
       return {
+        id: generateId(x, y),
+        author: null,
+        timestamp: null,
         x: x,
         y: y,
         width: PIXEL_SIZE,
@@ -100,36 +98,38 @@ export default {
         stroke: color,
       }
     }
+    function showPanel() {
+      store.togglePalettePanel(true)
+    }
+    function previewPixelAndShowPanel({ x, y }) {
+      this.showPanel()
+      this.previewPixel({ x, y })
+    }
     function previewPixel({ x, y }) {
       if (
-        !currentPixel.value ||
-        generateId(currentPixel.value.x, currentPixel.value.y) !==
+        !pixelToPaint.value ||
+        generateId(pixelToPaint.value.x, pixelToPaint.value.y) !==
           generateId(x, y)
       ) {
-        currentPixel.value = {
+        store.setPixelToPaint({
+          id: generateId(x, y),
           x: x,
           y: y,
           width: PIXEL_SIZE,
           height: PIXEL_SIZE,
-          fill: selectedColor,
+          fill: selectedColor.value,
           strokeWidth: 1,
           stroke: 'black',
-        }
+        })
       }
       stageContainer.value.style.cursor = 'pointer'
     }
+    function clearPixelToPaint() {
+      store.clearPixelToPaint()
+      store.togglePalettePanel(false)
+    }
     function changeDragCursor() {
       stageContainer.value.style.cursor = 'move'
-    }
-    function updatePixel({ x, y }) {
-      if (selectedColor.value) {
-        pixelMap.value[generateId(x, y)] = generatePixel(
-          x,
-          y,
-          selectedColor.value
-        )
-        console.log('updated pixel', pixelMap.value[generateId(x, y)])
-      }
     }
     function zoom(e) {
       e.evt.preventDefault()
@@ -158,20 +158,23 @@ export default {
       pixel,
       configKonva,
       pixelMap,
-      updatePixel,
       previewPixel,
-      currentPixel,
+      pixelToPaint,
       stage,
       zoom,
       changeDragCursor,
-      currentSelection,
+      clearPixelToPaint,
+      targetBoard,
+      previewPixelAndShowPanel,
+      showPanel,
     }
   },
 }
 </script>
 <style>
 .pixel-board {
-  max-width: 90vw;
+  max-width: 100vw;
+  height: 90vh;
   overflow: hidden;
 }
 </style>

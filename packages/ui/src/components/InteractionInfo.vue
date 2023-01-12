@@ -73,7 +73,6 @@ export default {
 }
 
 .counter {
-  margin-bottom: 16px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 16px;

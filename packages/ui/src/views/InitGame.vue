@@ -1,8 +1,10 @@
 <template>
   <MainLayout :isBackground="true">
-    <router-link to="/disclaimer" class="link">
-      <CustomButton class="btn" type="primary"> PLAY NOW </CustomButton>
-    </router-link>
+    <template v-slot:main>
+      <router-link to="/disclaimer" class="link">
+        <CustomButton class="btn" type="primary"> PLAY NOW </CustomButton>
+      </router-link>
+    </template>
   </MainLayout>
 </template>
 

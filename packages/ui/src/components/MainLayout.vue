@@ -1,44 +1,31 @@
 <template>
   <div class="background">
-    <WitnetStrip class="witnet-logo-strip" />
-    <div v-if="isBackground" class="main-background" />
-    <div class="layout" :class="{ padding, 'max-height': maxHeight }">
-      <slot />
+    <div class="witnet-logo-strip">
+      <AppHeader />
+    </div>
+    <div class="layout">
+      <slot name="main" />
+      <slot name="bottom" />
     </div>
   </div>
 </template>
 <script>
 import { defineComponent } from 'vue-demi'
 import { useStore } from '@/stores/player'
-import wittyCorn from '@/assets/egg.svg?raw'
 export default defineComponent({
-  props: {
-    isBackground: {
-      type: Boolean,
-      default: false,
-    },
-    maxHeight: {
-      type: Boolean,
-      default: false,
-    },
-    padding: {
-      type: Boolean,
-      default: true,
-    },
-  },
   setup() {
     const player = useStore()
     return {
       player,
-      wittyCorn,
     }
   },
 })
 </script>
 <style scoped lang="scss">
 .background {
-  height: 100%;
-  position: relative;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: max-content 1fr;
   left: 0;
   right: 0;
   z-index: 3;
@@ -47,35 +34,17 @@ export default defineComponent({
 }
 .witnet-logo-strip {
   position: relative;
+  background-color: $white;
   z-index: 12;
 }
-.main-background {
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  bottom: 0px;
-  z-index: 4;
-  background-position: bottom center;
-  background-size: cover;
-}
+
 .layout {
-  position: relative;
+  overflow: auto;
   z-index: 7;
   width: 100%;
   max-width: 700px;
-  min-height: 98vh;
   margin-top: 32px;
   margin: 0 auto;
-  display: grid;
-  align-items: flex-start;
-  grid-template-rows: max-content;
-
-  &.padding {
-    padding: 16px;
-    margin-top: 4vh;
-  }
-  &.max-height {
-    min-height: 80vh;
-  }
+  grid-template-rows: 1fr;
 }
 </style>

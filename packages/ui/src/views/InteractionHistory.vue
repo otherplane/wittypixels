@@ -1,33 +1,31 @@
 <template>
   <MainLayout>
-    <div class="container">
-      <SectionHeader title="HISTORY" />
-      <div
-        v-for="(interaction, index) in player.history?.interactions"
-        :key="interaction.timestamp"
-        class="interaction-container"
-        :class="{ even: index % 2 }"
-      >
-        <p class="interaction-label date">
-          {{
-            format(
-              utcToZonedTime(interaction.timestamp, timeZone),
-              'yyyy-MM-dd HH:mm:ss'
-            )
-          }}
-        </p>
-        <p>
-          <span class="highlight">{{ interaction.from }}</span>
-          sent <span class="highlight">{{ interaction.points }}</span> points to
-          <span class="highlight">{{ interaction.to }}</span>
-        </p>
+    <template v-slot:main>
+      <div class="container">
+        <SectionHeader title="HISTORY" />
+        <div
+          v-for="(interaction, index) in player.history?.interactions"
+          :key="interaction.timestamp"
+          class="interaction-container"
+          :class="{ even: index % 2 }"
+        >
+          <p class="interaction-label date">
+            {{ formatTimestamp(interaction.timestamp) }}
+          </p>
+          <p>
+            <span class="highlight">{{ interaction.from }}</span>
+            sent <span class="highlight">{{ interaction.points }}</span> points
+            to
+            <span class="highlight">{{ interaction.to }}</span>
+          </p>
+        </div>
+        <CustomPagination
+          v-if="numberPages > 1"
+          :limit="numberPages"
+          @update-page="updateCurrentPage"
+        />
       </div>
-      <CustomPagination
-        v-if="numberPages > 1"
-        :limit="numberPages"
-        @update-page="updateCurrentPage"
-      />
-    </div>
+    </template>
   </MainLayout>
 </template>
 <script>
@@ -35,6 +33,7 @@ import { useStore } from '@/stores/player'
 import { onMounted, computed, ref, watch } from 'vue'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
+import { formatTimestamp } from '@/utils'
 export default {
   setup() {
     const player = useStore()
@@ -63,6 +62,7 @@ export default {
       format,
       numberPages,
       updateCurrentPage,
+      formatTimestamp,
     }
   },
 }
