@@ -1,12 +1,13 @@
 <template>
   <div
     class="color"
-    :class="{ selected }"
+    :class="{ selected, ['disabled']: !points }"
     :style="{ 'background-color': color }"
     @click="selectColor"
   >
-    <p v-if="points">{{ points }}x</p>
-    <p v-else>x</p>
+    <p class="text" :class="{ [color]: color, ['disabled']: !points }">
+      {{ points ? `${points}x` : '' }}
+    </p>
   </div>
 </template>
 <script>
@@ -31,7 +32,11 @@ export default {
     })
 
     function selectColor() {
-      store.selectColor(props.color)
+      if (props.points > 0) {
+        store.selectColor(props.color)
+      } else {
+        store.selectColor(null)
+      }
     }
 
     return { selectColor, selected }
@@ -41,11 +46,22 @@ export default {
 <style scoped lang="scss">
 .color {
   padding: 4px 8px;
-  border: 1px solid $black-secondary;
   border-radius: 4px;
   cursor: pointer;
+  border: 2px solid $black;
+  .text {
+    font-size: 14px;
+    font-weight: bold;
+    color: $black;
+  }
+  .black {
+    color: $white;
+  }
+  &.disabled {
+    opacity: 0.5;
+  }
 }
 .selected {
-  border: 2px solid $black;
+  border: 2px dashed $black;
 }
 </style>

@@ -43,9 +43,12 @@ export const COLORS = {
   3: 'green',
   4: 'blue',
   5: 'purple',
-  6: 'black',
-  7: 'white',
 }
+export const TIMEZONE = 'America/Denver'
+export const PIXEL_SIZE = 16
+export const CANVAS_WIDTH = 700
+export const CANVAS_HEIGHT = 600
+export const SCALE_BY = 1.01
 
 export const POLLER_MILLISECONDS = import.meta.env.VITE_POLLER_MILLISECONDS
   ? parseInt(import.meta.env.VITE_POLLER_MILLISECONDS)

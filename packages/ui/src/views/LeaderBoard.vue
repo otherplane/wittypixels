@@ -1,33 +1,38 @@
 <template>
   <MainLayout>
-    <div class="container">
-      <SectionHeader title="LEADERBOARD" />
-      <div class="tabs-container">
-        <div v-for="tab in Object.values(tabs)" :key="tab.key">
-          <TabButton
-            :active="tab.active"
-            :label="tab.key"
-            @click="activateTab({ primaryValue: tab.key })"
-          />
+    <template v-slot:main>
+      <div class="container">
+        <SectionHeader title="LEADERBOARD" />
+        <div class="tabs-container">
+          <div v-for="tab in Object.values(tabs)" :key="tab.key">
+            <TabButton
+              :active="tab.active"
+              :label="tab.key"
+              @click="activateTab({ primaryValue: tab.key })"
+            />
+          </div>
         </div>
-      </div>
-      <div class="subtabs-container" v-if="tabs[primaryTab].showSubtabs">
-        <div
-          v-for="tab in Object.values(tabs[primaryTab].subTabs)"
-          :key="tab.key"
-          class="tab"
-        >
-          <SubtabButton
-            :active="tab.active"
-            :label="tab.key"
-            @click="
-              activateTab({ primaryValue: primaryTab, secondaryValue: tab.key })
-            "
-          />
+        <div class="subtabs-container" v-if="tabs[primaryTab].showSubtabs">
+          <div
+            v-for="tab in Object.values(tabs[primaryTab].subTabs)"
+            :key="tab.key"
+            class="tab"
+          >
+            <SubtabButton
+              :active="tab.active"
+              :label="tab.key"
+              @click="
+                activateTab({
+                  primaryValue: primaryTab,
+                  secondaryValue: tab.key,
+                })
+              "
+            />
+          </div>
         </div>
+        <ListStats :gameEntity="primaryTab" :entityAttribute="secondaryTab" />
       </div>
-      <ListStats :gameEntity="primaryTab" :entityAttribute="secondaryTab" />
-    </div>
+    </template>
   </MainLayout>
 </template>
 

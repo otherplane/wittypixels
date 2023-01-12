@@ -39,7 +39,7 @@
 
 <script>
 import { defineComponent, getCurrentInstance } from 'vue'
-import playerMainImage from '@/assets/egg.svg?raw'
+import playerMainImage from '@/assets/game-icon.svg?raw'
 export default defineComponent({
   emits: ['claim'],
   setup() {

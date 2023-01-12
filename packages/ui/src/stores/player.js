@@ -16,6 +16,10 @@ export const useStore = defineStore('player', {
       nft: [],
       username: '',
       selectedColor: null,
+      palettePoints: [],
+      showPalettePanel: false,
+      pixelToPaint: null,
+      pixelMap: {},
       bonus: null,
       interactionInfo: null,
       interactionIn: null,
@@ -72,6 +76,30 @@ export const useStore = defineStore('player', {
     },
   },
   actions: {
+    paintPixel({ key }) {
+      this.pixelMap[key] = {
+        author: this.username,
+        timestamp: new Date().getTime(),
+        ...this.pixelToPaint,
+        stroke: this.pixelToPaint.fill,
+      }
+    },
+    paintDefaultPixel({ key, pixel }) {
+      this.pixelMap[key] = pixel
+    },
+    setPixelToPaint(pixel) {
+      this.pixelToPaint = {
+        ...pixel,
+        stroke: pixel.stroke,
+      }
+    },
+    clearPixelToPaint() {
+      this.pixelToPaint = null
+    },
+    togglePalettePanel(value) {
+      this.showPalettePanel = value
+      console.log(this.showPalettePanel)
+    },
     selectColor(color) {
       this.selectedColor = color
     },
@@ -213,6 +241,16 @@ export const useStore = defineStore('player', {
         this.id = key
         this.username = username
         this.score = score
+        this.palettePoints = {
+          0: 5,
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0,
+          6: 0,
+          7: 5,
+        }
         this.color = color
         if (request.lastInteractionIn) {
           this.interactionIn = request.lastInteractionIn

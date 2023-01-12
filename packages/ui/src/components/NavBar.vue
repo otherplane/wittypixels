@@ -1,6 +1,6 @@
 <template>
   <div class="nav-container" ref="target">
-    <nav class="navbar" :class="{ open: isMenuVisible }">
+    <nav class="navbar" :class="{ visible: isMenuVisible }">
       <label class="responsive-menu" @click="toggleMenu">
         <a class="target-burger" :class="{ visible: isMenuVisible }">
           <ul class="buns">
@@ -10,7 +10,7 @@
         </a>
       </label>
       <div class="dropdown">
-        <ul class="tab-container" :class="{ visible: isMenuVisible }">
+        <div class="tab-container" :class="{ visible: isMenuVisible }">
           <router-link class="tab" to="/leaderboard"> Leaderboard </router-link>
           <router-link class="tab" to="/interactions"> History </router-link>
           <router-link class="tab" to="/instructions">
@@ -19,7 +19,7 @@
           <div class="tab" @click="openExportModal()" type="dark">
             Get backup
           </div>
-        </ul>
+        </div>
       </div>
     </nav>
   </div>
@@ -96,7 +96,7 @@ export default {
   .responsive-menu {
     display: block;
     position: relative;
-    z-index: 50px;
+    z-index: 50;
     top: 0px;
     left: 0px;
     width: 32px;
@@ -104,15 +104,16 @@ export default {
   .dropdown {
     position: absolute;
     z-index: 50;
-    top: 58px;
+    top: 40px;
+    right: 0px;
   }
 }
 .tab-container {
   background-color: $white;
   border: 2px solid var(--primary-color);
   list-style: none;
-  visibility: hidden;
   text-align: left;
+  visibility: visible;
   border-radius: 4px;
   margin: 0;
   display: grid;
@@ -142,7 +143,6 @@ export default {
   .tab {
     width: 148px;
     cursor: pointer;
-    display: block;
     align-items: left;
     text-decoration: none;
     padding: 0px 16px;

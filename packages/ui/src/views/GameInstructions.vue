@@ -1,9 +1,11 @@
 <template>
   <MainLayout>
-    <div class="container">
-      <SectionHeader title="INSTRUCTIONS" />
-      <h2 class="title"></h2>
-    </div>
+    <template v-slot:main>
+      <div class="container">
+        <SectionHeader title="INSTRUCTIONS" />
+        <h2 class="title"></h2>
+      </div>
+    </template>
   </MainLayout>
 </template>
 

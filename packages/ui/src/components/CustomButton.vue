@@ -20,8 +20,8 @@ defineProps({
 .btn {
   width: 100%;
   color: $white;
-  padding: 16px 16px;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border-radius: 28px;
   font-family: Roboto;
   font-weight: bold;
   &.primary {
@@ -34,7 +34,7 @@ defineProps({
   }
   &.dark {
     color: $white;
-    background: var(--primary-color);
+    background: var(--secondary-color);
   }
   &.disable {
     opacity: 0.6;

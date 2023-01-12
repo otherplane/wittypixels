@@ -11,5 +11,6 @@
   display: grid;
   grid-template-rows: max-content 1fr;
   height: 100vh;
+  overflow: hidden;
 }
 </style>

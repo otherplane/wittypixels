@@ -1,6 +1,27 @@
 <template>
   <transition name="fade">
-    <div class="info">
+    <p v-if="!player.demoOver" class="countdown">
+      <span>DEMO ENDS IN:</span>
+      <TimeLeft
+        class="time-left"
+        :timestamp="player.demoOverTimeMilli"
+        :seconds="true"
+      />
+    </p>
+    <p v-else-if="!player.gameOver" class="countdown">
+      <span>GAME ENDS IN:</span>
+      <TimeLeft
+        class="time-left"
+        :timestamp="player.gameOverTimeMilli"
+        :seconds="true"
+      />
+    </p>
+    <p v-else class="countdown">
+      <span>GAME OVER</span>
+    </p>
+  </transition>
+  <transition name="fade">
+    <div class="info" v-if="!player.mintingAllow && player.previews.length">
       <div class="time-container">
         <p class="bonus-title">Time left to allow minting</p>
         <TimeLeft
@@ -16,15 +37,36 @@
 
 <script>
 import { useStore } from '@/stores/player'
+import { computed } from 'vue'
+import { formatNumber } from '../utils'
 export default {
-  setup() {
+  emits: ['openExportModal'],
+  setup(_props) {
     const player = useStore()
-    return { player }
+    const gameOver = player.gameOver
+    // TODO: HANDLE END OF GAME
+    const mintStatus = computed(() =>
+      player.mintInfo.blockHash ? 'minted' : 'pending'
+    )
+    return {
+      gameOver,
+      player,
+      mintStatus,
+      formatNumber,
+    }
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.countdown {
+  background-color: $grey;
+  width: 100%;
+  color: $white;
+  font-weight: bold;
+  font-size: 14px;
+  padding-left: 16px;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.5s;
@@ -59,9 +101,10 @@ export default {
   }
 }
 .time-left {
+  padding-left: 8px;
   width: max-content;
   overflow: hidden;
   text-align: left;
-  font-size: 18px;
+  font-size: 14px;
 }
 </style>

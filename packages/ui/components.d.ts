@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AppHeader: typeof import('./src/components/AppHeader.vue')['default']
     Color: typeof import('./src/components/Color.vue')['default']
     ColorSelector: typeof import('./src/components/ColorSelector.vue')['default']
     CountdownToAllowMint: typeof import('./src/components/CountdownToAllowMint.vue')['default']
@@ -12,6 +13,9 @@ declare module '@vue/runtime-core' {
     CustomPagination: typeof import('./src/components/CustomPagination.vue')['default']
     DrawingPalette: typeof import('./src/components/DrawingPalette.vue')['default']
     EggSvg: typeof import('./src/components/EggSvg.vue')['default']
+    GameActions: typeof import('./src/components/GameActions.vue')['default']
+    GameCountdown: typeof import('./src/components/GameCountdown.vue')['default']
+    GameCountdowns: typeof import('./src/components/GameCountdowns.vue')['default']
     GameNotification: typeof import('./src/components/GameNotification.vue')['default']
     GameOverModal: typeof import('./src/components/GameOverModal.vue')['default']
     InteractionInfo: typeof import('./src/components/InteractionInfo.vue')['default']
@@ -27,8 +31,10 @@ declare module '@vue/runtime-core' {
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     NFTPreview: typeof import('./src/components/NFTPreview.vue')['default']
     Palette: typeof import('./src/components/Palette.vue')['default']
+    PanelSlider: typeof import('./src/components/PanelSlider.vue')['default']
     PixelBoard: typeof import('./src/components/PixelBoard.vue')['default']
     PlayerGlobalData: typeof import('./src/components/PlayerGlobalData.vue')['default']
+    PlayGround: typeof import('./src/components/PlayGround.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SectionHeader: typeof import('./src/components/SectionHeader.vue')['default']
