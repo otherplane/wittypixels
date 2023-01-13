@@ -1,4 +1,10 @@
-import { DbPlayerVTO, ExtendedPlayerVTO, PlayerLeaderboardInfo } from '../types'
+import {
+  DbPlayerVTO,
+  ExtendedPlayerVTO,
+  PlayerLeaderboardInfo,
+  Color,
+  Palette,
+} from '../types'
 import { Interaction } from './interaction'
 
 export class Player {
@@ -7,10 +13,11 @@ export class Player {
   lastInteractionIn?: number | undefined
   lastInteractionOut?: number | undefined
   key: string
-  color: number
+  color: Color
   username: string
   score: number
   nft: Array<string> = []
+  palette: Palette
 
   constructor(vto: DbPlayerVTO) {
     this.key = vto.key
@@ -20,6 +27,7 @@ export class Player {
     this.token = vto.token
     this.creationIndex = vto.creationIndex
     this.color = vto.color
+    this.palette = vto.palette
   }
 
   toExtendedPlayerVTO({
@@ -44,7 +52,7 @@ export class Player {
     }
   }
 
-  toDbVTO(shoWToken = false): DbPlayerVTO {
+  toDbVTO(showToken = false): DbPlayerVTO {
     const vto = {
       lastInteractionIn: this.lastInteractionIn,
       lastInteractionOut: this.lastInteractionOut,
@@ -55,9 +63,10 @@ export class Player {
       token: this.token,
       creationIndex: this.creationIndex,
       color: this.color,
+      palette: this.palette,
     }
 
-    return shoWToken ? { ...vto, token: this.token } : vto
+    return showToken ? { ...vto, token: this.token } : vto
   }
 
   static getLeaderboard(

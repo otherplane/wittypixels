@@ -4,12 +4,12 @@ import { generateUsernameList, getColorFromIndex } from '../utils'
 import {
   PLAYER_KEY_LENGTH_BYTES,
   PLAYER_KEY_SALT,
-  INTERACTION_POINTS,
-  INTERACTION_POINTS_DIVISOR,
-  INTERACTION_POINTS_MIN,
-  SELF_INTERACTION_POINTS,
+  SELF_INTERACTION_COLOR_QUANTITY,
+  INTERACTION_COLOR_QUANTITY,
+  INTERACTION_COLOR_QUANTITY_MIN,
+  INTERACTION_COLOR_QUANTITY_DIVISOR,
 } from '../constants'
-import { DbPlayerVTO, DbInteractionVTO } from '../types'
+import { DbPlayerVTO, DbInteractionVTO, Color } from '../types'
 import { Repository } from '../repository'
 import { Player } from '../domain/player'
 
@@ -48,6 +48,13 @@ export class PlayerModel {
       score,
       creationIndex: index,
       color,
+      palette: {
+        '0': 0,
+        '1': 0,
+        '2': 0,
+        '3': 0,
+        '4': 0,
+      },
     })
   }
 
@@ -96,31 +103,40 @@ export class PlayerModel {
     return vto ? new Player(vto) : null
   }
 
-  public async addPoints(key: string, points: number): Promise<Player | null> {
-    await this.collection.updateOne({ key }, { $inc: { score: points } })
+  public async addColor(
+    key: string,
+    color: Color,
+    amount: number
+  ): Promise<Player | null> {
+    await this.collection.updateOne(
+      { key },
+      { $inc: { [`palette.${color}`]: amount } }
+    )
 
     return await this.get(key)
   }
 
-  public computePoints(
+  public computeColors(
     lastInteraction: DbInteractionVTO | null,
     selfInteraction: boolean
   ) {
     // Compute points
     if (selfInteraction) {
-      return SELF_INTERACTION_POINTS
+      return SELF_INTERACTION_COLOR_QUANTITY
     }
 
-    let points
+    let quantity
     if (!lastInteraction) {
-      points = INTERACTION_POINTS
+      quantity = INTERACTION_COLOR_QUANTITY
     } else {
-      points = Math.max(
-        Math.ceil(lastInteraction.points / INTERACTION_POINTS_DIVISOR),
-        INTERACTION_POINTS_MIN
+      quantity = Math.max(
+        Math.ceil(
+          lastInteraction.quantity / INTERACTION_COLOR_QUANTITY_DIVISOR
+        ),
+        INTERACTION_COLOR_QUANTITY_MIN
       )
     }
-    return points
+    return quantity
   }
 
   public async getOne(id: string): Promise<Player | null> {

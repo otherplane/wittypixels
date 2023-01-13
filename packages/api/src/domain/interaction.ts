@@ -1,16 +1,18 @@
-import { DbInteractionVTO } from '../types'
+import { Color, DbInteractionVTO } from '../types'
 
 export class Interaction {
   public from: string
   public to: string
-  public points: number
+  public quantity: number
+  public color: Color
   public timestamp: number
   public ends: number
 
   constructor(vto: DbInteractionVTO) {
     this.from = vto.from
     this.to = vto.to
-    this.points = vto.points
+    this.quantity = vto.quantity
+    this.color = vto.color
     this.timestamp = vto.timestamp
     this.ends = vto.ends
   }
@@ -19,7 +21,8 @@ export class Interaction {
     return {
       from: this.from,
       to: this.to,
-      points: this.points,
+      quantity: this.quantity,
+      color: this.color,
       timestamp: this.timestamp,
       ends: this.ends,
     }

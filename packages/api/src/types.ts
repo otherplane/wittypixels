@@ -8,6 +8,14 @@ export const ClaimPlayerParams = Type.Object({
 })
 export type ClaimPlayerParams = Static<typeof ClaimPlayerParams>
 
+const Palette = Type.Object({
+  0: Type.Integer(),
+  1: Type.Integer(),
+  2: Type.Integer(),
+  3: Type.Integer(),
+  4: Type.Integer(),
+})
+
 export const PlayerVTO = Type.Object({
   key: Type.String(),
   token: Type.Optional(Type.String()),
@@ -16,6 +24,7 @@ export const PlayerVTO = Type.Object({
   nft: Type.Array(Type.Optional(Type.String())),
   creationIndex: Type.Integer(),
   color: Type.Integer(),
+  palette: Palette,
 })
 
 export type PlayerVTO = Static<typeof PlayerVTO>
@@ -28,6 +37,7 @@ export const DbPlayerVTO = Type.Object({
   nft: Type.Array(Type.Optional(Type.String())),
   creationIndex: Type.Integer(),
   color: Type.Integer(),
+  palette: Palette,
 })
 
 export type DbPlayerVTO = Static<typeof DbPlayerVTO>
@@ -51,7 +61,8 @@ export type JwtVerifyPayload = Static<typeof JwtVerifyPayload>
 export const DbInteractionVTO = Type.Object({
   from: Type.String(),
   to: Type.String(),
-  points: Type.Number(),
+  quantity: Type.Number(),
+  color: Type.Number(),
   timestamp: Type.Number(),
   ends: Type.Number(),
 })
@@ -119,11 +130,12 @@ export const InteractionParams = Type.Object({
 export type InteractionParams = Static<typeof InteractionParams>
 
 export const InteractionResult = Type.Object({
-  points: Type.Number(),
+  quantity: Type.Number(),
   ends: Type.Number(),
   from: Type.String(),
   to: Type.String(),
   timestamp: Type.Number(),
+  color: Type.Number(),
 })
 export type InteractionResult = Static<typeof InteractionParams>
 
@@ -171,3 +183,14 @@ export const InteractionHistoryResponse = Type.Object({
 export type InteractionHistoryResponse = Static<
   typeof InteractionHistoryResponse
 >
+
+export enum Color {
+  // TODO: replace with correct colors
+  Red,
+  Blue,
+  Green,
+  Yellow,
+  Orange
+}
+
+export type Palette = { [key in Color]: number }

@@ -34,28 +34,26 @@ export const INTERACTION_COOLDOWN_MILLIS = process.env
   : Math.max(2 * 60 * 60 * 1000, INTERACTION_DURATION_MILLIS)
 
 // Number of different theme colors
-export const COLORS_COUNT = process.env.COLORS_COUNT
-  ? parseInt(process.env.COLORS_COUNT)
-  : 7
+export const COLORS_COUNT = 5
 
 // Self interaction points
-export const SELF_INTERACTION_POINTS = process.env.SELF_INTERACTION_POINTS
-  ? parseInt(process.env.SELF_INTERACTION_POINTS)
-  : 30
+export const SELF_INTERACTION_COLOR_QUANTITY = process.env.SELF_INTERACTION_COLOR_QUANTITY
+  ? parseInt(process.env.SELF_INTERACTION_COLOR_QUANTITY)
+  : 1
 
 // Interaction base points
-export const INTERACTION_POINTS = process.env.INTERACTION_POINTS
-  ? parseInt(process.env.INTERACTION_POINTS)
-  : 800
+export const INTERACTION_COLOR_QUANTITY = process.env.INTERACTION_COLOR_QUANTITY
+  ? parseInt(process.env.INTERACTION_COLOR_QUANTITY)
+  : 10
 
 // Minimum amount of points that can be rewarded after a interaction
-export const INTERACTION_POINTS_MIN = process.env.INTERACTION_POINTS_MIN
-  ? parseInt(process.env.INTERACTION_POINTS_MIN)
-  : 50
+export const INTERACTION_COLOR_QUANTITY_MIN = process.env.INTERACTION_COLOR_QUANTITY_MIN
+  ? parseInt(process.env.INTERACTION_COLOR_QUANTITY_MIN)
+  : 1
 
 // Interaction point divisor to be applied every time the same incubation happens
-export const INTERACTION_POINTS_DIVISOR = process.env.INTERACTION_POINTS_DIVISOR
-  ? parseInt(process.env.INTERACTION_POINTS_DIVISOR)
+export const INTERACTION_COLOR_QUANTITY_DIVISOR= process.env.INTERACTION_COLOR_QUANTITY_DIVISOR
+  ? parseInt(process.env.INTERACTION_COLOR_QUANTITY_DIVISOR)
   : 2
 
 // Secp256k1 private key used for signing in the `mint` endpoint
@@ -96,9 +94,10 @@ export default {
   PLAYERS_COUNT,
   INTERACTION_COOLDOWN_MILLIS,
   INTERACTION_DURATION_MILLIS,
-  INTERACTION_POINTS,
-  INTERACTION_POINTS_DIVISOR,
-  INTERACTION_POINTS_MIN,
+  SELF_INTERACTION_COLOR_QUANTITY,
+  INTERACTION_COLOR_QUANTITY,
+  INTERACTION_COLOR_QUANTITY_MIN,
+  INTERACTION_COLOR_QUANTITY_DIVISOR,
   WITMON_ERC721_ADDRESS,
   PLAYER_MAINNET_TIMESTAMP,
 }
