@@ -32,16 +32,6 @@ export const DbPlayerVTO = Type.Object({
 
 export type DbPlayerVTO = Static<typeof DbPlayerVTO>
 
-//TODO: define Medal type
-export const Medal = Type.String()
-export type Medal = Static<typeof Medal>
-
-export const IndexedEgg = Type.Intersect([
-  PlayerVTO,
-  Type.Object({ rarityIndex: Type.String() }),
-])
-export type IndexedEgg = Static<typeof IndexedEgg>
-
 export const AuthorizationHeader = Type.Object({
   Authorization: Type.String(),
 })
@@ -57,40 +47,6 @@ export const JwtVerifyPayload = Type.Object({
   iat: Type.Number(),
 })
 export type JwtVerifyPayload = Static<typeof JwtVerifyPayload>
-
-export const EggProtected = Type.Object({
-  color: Type.Number(),
-  index: Type.Number(),
-  rarityIndex: Type.String(),
-  score: Type.Number(),
-  username: Type.Optional(Type.String()),
-})
-export type EggProtected = Static<typeof EggProtected>
-
-export const IncubateParams = Type.Object({
-  target: Type.String(),
-})
-export type IncubateParams = Static<typeof IncubateParams>
-
-export const Incubation = Type.Object({
-  to: Type.String(),
-  from: Type.String(),
-  timestamp: Type.Number(),
-  ends: Type.Number(),
-  points: Type.Number(),
-})
-export type Incubation = Static<typeof Incubation>
-
-export const ExtendedIncubation = Type.Object({
-  to: Type.String(),
-  from: Type.String(),
-  timestamp: Type.Number(),
-  ends: Type.Number(),
-  points: Type.Number(),
-  remainingDuration: Type.Number(),
-  remainingCooldown: Type.Number(),
-})
-export type ExtendedIncubation = Static<typeof ExtendedIncubation>
 
 export const DbInteractionVTO = Type.Object({
   from: Type.String(),

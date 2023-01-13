@@ -5,7 +5,7 @@ import {
   PLAYER_MAINNET_TIMESTAMP,
   COLORS_COUNT,
 } from './constants'
-import { Incubation } from './types'
+
 import {
   uniqueNamesGenerator,
   adjectives,
@@ -36,15 +36,6 @@ export function calculateRemainingDuration(
   return remainingMillis > 0 ? remainingMillis : 0
 }
 
-export function getIncubationExtendedFromBase(incubation: Incubation) {
-  return (
-    incubation && {
-      ...incubation,
-      remainingCooldown: calculateRemainingCooldown(incubation.ends),
-      remainingDuration: calculateRemainingDuration(incubation.ends),
-    }
-  )
-}
 
 export function getColorFromIndex(index: number) {
   return index % COLORS_COUNT
