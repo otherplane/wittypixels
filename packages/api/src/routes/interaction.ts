@@ -131,13 +131,17 @@ const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
             )
         }
         const selfInteraction = toPlayer.username === fromPlayer.username
-        const points = playerModel.computePoints(
+        const colorQuantity = playerModel.computeColors(
           lastInteraction,
           selfInteraction
         )
         try {
           // Add points to player
-          await playerModel.addPoints(toPlayer.toDbVTO().key, points)
+          await playerModel.addColor(
+            toPlayer.toDbVTO().key,
+            fromPlayer.color,
+            colorQuantity
+          )
         } catch (error) {
           return reply.status(403).send(error as Error)
         }
@@ -147,7 +151,8 @@ const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
           ends: currentTimestamp + INTERACTION_DURATION_MILLIS,
           from: fromPlayer.username,
           to: toPlayer.username,
-          points,
+          quantity: colorQuantity,
+          color: fromPlayer.color,
           timestamp: currentTimestamp,
         })
 
