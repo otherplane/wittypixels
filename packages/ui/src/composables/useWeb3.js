@@ -3,7 +3,7 @@ import Web3 from 'web3/dist/web3.min.js'
 
 import { useStore } from '@/stores/player'
 import { useLocalStore } from '@/stores/local'
-import jsonInterface from '../UI.abi.json'
+import jsonInterface from '../WittyPixelsUI'
 import { CONTRACT_ADDRESS, NETWORK } from '../constants'
 
 async function requestAccounts(web3) {
