@@ -45,7 +45,7 @@
 <script>
 import { defineComponent, getCurrentInstance } from 'vue'
 import { useWeb3 } from '../composables/useWeb3'
-import playerMainImage from '@/assets/egg.svg?raw'
+import playerMainImage from '@/assets/game-icon.svg?raw'
 import { useStore } from '@/stores/player'
 export default defineComponent({
   setup() {

@@ -42,7 +42,7 @@ import { defineComponent, getCurrentInstance } from 'vue'
 import { createImportLink } from '../services/exportInformation'
 import { copyTextToClipboard } from '../services/copyToClipboard'
 import { useStore } from '../stores/player'
-import playerMainImage from '@/assets/egg.svg?raw'
+import playerMainImage from '@/assets/game-icon.svg?raw'
 export default defineComponent({
   setup() {
     const instance = getCurrentInstance()
