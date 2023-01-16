@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useStore } from '@/stores/player'
+import { useLocalStore } from '@/stores/local'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -25,8 +26,8 @@ const routes = [
     name: 'home',
     component: Home,
     beforeEnter: async (to, from, next) => {
-      const store = useStore()
-      const loginInfo = store.getToken()
+      const localStore = useLocalStore()
+      const loginInfo = localStore.getToken()
       if (loginInfo && loginInfo.token) {
         next({ name: 'main', params: { id: loginInfo.key } })
       } else {
@@ -49,14 +50,15 @@ const routes = [
     path: '/init-game',
     component: InitGame,
     beforeEnter: async (to, from, next) => {
+      const localStore = useLocalStore()
       const store = useStore()
-      const loginInfo = store.getToken()
+      const loginInfo = localStore.getToken()
       const claimedPlayerError =
         store.errors.info &&
         store.errors.info.includes('Player has not been claimed yet')
       const error = store.errors.info
       if (loginInfo && claimedPlayerError) {
-        store.clearTokenInfo()
+        localStore.clearTokenInfo()
       }
       if (loginInfo && loginInfo.token && !error) {
         next({ name: 'main', params: { id: loginInfo.key } })

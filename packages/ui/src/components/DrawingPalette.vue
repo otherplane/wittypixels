@@ -58,13 +58,7 @@ export default {
     })
     const pixelToPaint = computed(() => store.pixelToPaint)
     function paintPixel() {
-      if (store.pixelToPaint) {
-        console.log(pixelToPaint.value)
-        store.paintPixel({
-          key: pixelToPaint.value.id,
-          pixel: pixelToPaint.value,
-        })
-      }
+      store.paintPixel()
     }
     return {
       colors,

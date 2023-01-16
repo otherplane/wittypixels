@@ -23,11 +23,13 @@ declare module '@vue/runtime-core' {
     ListStats: typeof import('./src/components/ListStats.vue')['default']
     MainLayout: typeof import('./src/components/MainLayout.vue')['default']
     MintInformation: typeof import('./src/components/MintInformation.vue')['default']
-    ModalClaimConfirmation: typeof import('./src/components/ModalClaimConfirmation.vue')['default']
-    ModalDialog: typeof import('./src/components/ModalDialog.vue')['default']
-    ModalExport: typeof import('./src/components/ModalExport.vue')['default']
-    ModalMint: typeof import('./src/components/ModalMint.vue')['default']
+    ModalClaimConfirmation: typeof import('./src/components/modals/ModalClaimConfirmation.vue')['default']
+    ModalDialog: typeof import('./src/components/modals/ModalDialog.vue')['default']
+    ModalExport: typeof import('./src/components/modals/ModalExport.vue')['default']
+    ModalGameOver: typeof import('./src/components/modals/ModalGameOver.vue')['default']
+    ModalMint: typeof import('./src/components/modals/ModalMint.vue')['default']
     ModalOpenEgg: typeof import('./src/components/ModalOpenEgg.vue')['default']
+    ModalRedeemInfo: typeof import('./src/components/modals/ModalRedeemInfo.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     NFTPreview: typeof import('./src/components/NFTPreview.vue')['default']
     Palette: typeof import('./src/components/Palette.vue')['default']
@@ -42,8 +44,23 @@ declare module '@vue/runtime-core' {
     SvgImage: typeof import('./src/components/SvgImage.vue')['default']
     TabButton: typeof import('./src/components/TabButton.vue')['default']
     TimeLeft: typeof import('./src/components/TimeLeft.vue')['default']
+    WitnetMarquee: typeof import('./src/components/WitnetMarquee.vue')['default']
     WitnetStrip: typeof import('./src/components/WitnetStrip.vue')['default']
     WittyCreature: typeof import('./src/components/WittyCreature.vue')['default']
+    WittyPixelsIcon: typeof import('./src/components/WittyPixelsIcon.vue')['default']
+    WittyPixelsLogo: typeof import('./src/components/WittyPixelsLogo.vue')['default']
+  }
+}
+
+export {}
+lt']
+    TabButton: typeof import('./src/components/TabButton.vue')['default']
+    TimeLeft: typeof import('./src/components/TimeLeft.vue')['default']
+    WitnetMarquee: typeof import('./src/components/WitnetMarquee.vue')['default']
+    WitnetStrip: typeof import('./src/components/WitnetStrip.vue')['default']
+    WittyCreature: typeof import('./src/components/WittyCreature.vue')['default']
+    WittyPixelsIcon: typeof import('./src/components/WittyPixelsIcon.vue')['default']
+    WittyPixelsLogo: typeof import('./src/components/WittyPixelsLogo.vue')['default']
   }
 }
 

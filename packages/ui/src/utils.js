@@ -1,4 +1,4 @@
-import { PLAYER_MAINNET_TIMESTAMP, PIXEL_SIZE, TIMEZONE } from '@/constants.js'
+import { PLAYER_MAINNET_TIMESTAMP, PIXEL_SIZE, TIMEZONE } from '@/constants'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 

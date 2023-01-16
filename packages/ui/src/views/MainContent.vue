@@ -20,15 +20,17 @@
 
 <script>
 import { useStore } from '@/stores/player'
+import { useLocalStore } from '@/stores/local'
 import { onBeforeMount, onMounted, onBeforeUnmount, reactive } from 'vue'
 import { useModal } from '@/composables/useModal'
 import { useWeb3 } from '../composables/useWeb3'
-import { POLLER_MILLISECONDS } from '@/constants.js'
+import { POLLER_MILLISECONDS } from '@/constants'
 import { useRouter } from 'vue-router'
 export default {
   setup() {
     const modal = useModal()
     const player = useStore()
+    const localStore = useLocalStore()
     const router = useRouter()
     const web3WittyCreatures = useWeb3()
     const modals = reactive({
@@ -40,7 +42,7 @@ export default {
     let playerInfoPoller = null
     // TODO: HANDLE END OF GAME
     onBeforeMount(async () => {
-      const token = await player.getToken()
+      const token = await localStore.getToken()
       if (!token) {
         await player.authorize({ key: router.currentRoute.value.params.id })
         openModal('export')
@@ -54,9 +56,8 @@ export default {
           await player.interact({ key: router.currentRoute.value.params.id })
         }
         if (player.gameOver) {
-          await player.getMintInfo()
-          await player.getPreviews()
-          if (player.minted) {
+          await localStore.getMintInfo()
+          if (localStore.minted) {
             await web3WittyCreatures.getTokenIds()
             await player.getMintedAwardsImages()
           }

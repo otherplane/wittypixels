@@ -15,7 +15,7 @@
   </div>
   <div class="btn" v-if="player.gameOver">
     <CustomButton
-      v-if="player.mintingAllow && !player.minted"
+      v-if="player.mintingAllow && !minted"
       @click="mint"
       type="dark"
       :slim="true"
@@ -34,11 +34,16 @@
 
 <script>
 import { useStore } from '@/stores/player'
+import { useLocalStore } from '@/stores/local'
 import { computed } from 'vue'
 export default {
   emits: ['openMintModal', 'addNetwork'],
   setup(_props, { emit }) {
     const player = useStore()
+    const localStore = useLocalStore()
+    const minted = computed(() => {
+      return localStore.minted
+    })
     const type = computed(() =>
       // TODO: update player.incubating naming when contracts are available
       player.incubating || (player.data && parseInt(player.data.tokenId) < 0)
@@ -58,6 +63,7 @@ export default {
     return {
       mint,
       player,
+      minted,
       type,
       addPolygonNetwork,
     }

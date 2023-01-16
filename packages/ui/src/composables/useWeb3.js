@@ -2,6 +2,7 @@ import { onMounted, ref } from 'vue'
 import Web3 from 'web3/dist/web3.min.js'
 
 import { useStore } from '@/stores/player'
+import { useLocalStore } from '@/stores/local'
 import jsonInterface from '../UI.abi.json'
 import { CONTRACT_ADDRESS, NETWORK } from '../constants'
 
@@ -38,6 +39,7 @@ const errorMintMessage = `There was an error minting your NFT.`
 export function useWeb3() {
   let web3
   const player = useStore()
+  const localStore = useLocalStore()
   const isProviderConnected = ref(false)
   const mintedAddress = ref('')
   const preview = ref('')
@@ -126,10 +128,10 @@ export function useWeb3() {
           console.error(error)
         })
         .on('transactionHash', function (transactionHash) {
-          player.saveMintInfo({ transactionHash })
+          localStore.saveMintInfo({ transactionHash })
         })
         .on('confirmation', (confirmationNumber, receipt) => {
-          player.saveMintInfo(receipt)
+          localStore.saveMintInfo(receipt)
           const data = player.getMintedAwardsImages()
           player.setData(data)
         })
