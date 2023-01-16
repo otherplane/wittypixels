@@ -19,6 +19,7 @@
 <script>
 import { ref } from 'vue'
 import { useStore } from '@/stores/player'
+import { useLocalStore } from '@/stores/local'
 import { StreamBarcodeReader } from 'vue-barcode-reader'
 import { useRouter } from 'vue-router'
 import { useModal } from '../composables/useModal'
@@ -30,6 +31,7 @@ export default {
   setup() {
     const modal = useModal()
     const player = useStore()
+    const localStore = useLocalStore()
     const playerKey = ref(null)
     const decodedString = ref('')
 
@@ -43,7 +45,7 @@ export default {
     function onDecode(value) {
       if (value) {
         decodedString.value = value
-        if (!player.getToken()) {
+        if (!localStore.getToken()) {
           modal.showModal()
         } else {
           register()

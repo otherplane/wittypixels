@@ -1,14 +1,14 @@
 <template>
-  <div v-if="player.mintInfo" class="mint-content">
-    <LabelMintStatus v-if="player.mintInfo" :status="mintStatus" />
+  <div v-if="mintInfo" class="mint-content">
+    <LabelMintStatus v-if="mintInfo" :status="mintStatus" />
     <p v-if="mintStatus === 'error'">Try claiming your NFTs again</p>
     <p class="label">TRANSACTION HASH</p>
-    <div class="mint-status" v-if="player?.mintInfo?.transactionHash">
+    <div class="mint-status" v-if="mintInfo?.transactionHash">
       <div class="info address">
         <a
-          :href="`${explorerBaseUrl}/${player.mintInfo.transactionHash}`"
+          :href="`${explorerBaseUrl}/${mintInfo.transactionHash}`"
           target="_blank"
-          >{{ player.mintInfo.transactionHash }}
+          >{{ mintInfo.transactionHash }}
         </a>
         <svgImage class="external-link-icon" :svg="externalLink" />
       </div>
@@ -16,17 +16,20 @@
   </div>
 </template>
 <script>
-import { useStore } from '@/stores/player'
+import { useLocalStore } from '@/stores/local'
 import { computed } from 'vue'
 import externalLink from '@/assets/external-black.svg?raw'
 import { EXPLORER_BASE_URL, OPENSEA_BASE_URL } from '../constants'
 export default {
   setup() {
-    const player = useStore()
+    const localStore = useLocalStore()
+    const mintInfo = computed(() => {
+      return localStore.mintInfo
+    })
     const mintStatus = computed(() => {
-      if (player.mintInfo.blockHash && player.minted) {
+      if (localStore.mintInfo.blockHash && localStore.minted) {
         return 'minted'
-      } else if (player.mintInfo.blockHash && !player.minted) {
+      } else if (localStore.mintInfo.blockHash && !localStore.minted) {
         return 'error'
       } else {
         return 'pending'
@@ -35,7 +38,7 @@ export default {
     return {
       explorerBaseUrl: EXPLORER_BASE_URL,
       openseaBaseUrl: OPENSEA_BASE_URL,
-      player,
+      mintInfo,
       externalLink,
       mintStatus,
     }

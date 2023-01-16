@@ -2,24 +2,32 @@ import { defineStore } from 'pinia'
 import { ApiService } from '@/api'
 import router from '../router'
 import {
+  type Pixel,
+  type PalettePoints,
+  type PixelMap,
+  type Errors,
+  ErrorKey,
+} from '@/types'
+import {
   TIME_TO_MINT_MILLISECONDS,
   DEMO_ENDS_TIMESTAMP,
   GAME_ENDS_TIMESTAMP,
 } from '../constants'
 import { isMainnetTime } from '@/utils'
+import { useLocalStore } from './local'
 export const useStore = defineStore('player', {
   state: () => {
     return {
       api: new ApiService(),
+      localStore: useLocalStore(),
       id: null,
-      theme: null,
       nft: [],
       username: '',
-      selectedColor: null,
-      palettePoints: [],
-      showPalettePanel: false,
-      pixelToPaint: null,
-      pixelMap: {},
+      selectedColor: null as string | null,
+      palettePoints: {} as PalettePoints,
+      showPalettePanel: false as boolean,
+      pixelToPaint: null as Pixel | null,
+      pixelMap: {} as PixelMap,
       bonus: null,
       interactionInfo: null,
       interactionIn: null,
@@ -31,44 +39,25 @@ export const useStore = defineStore('player', {
       previews: [],
       mintedAwards: [],
       history: null,
-      mintInfo: null,
       mintParams: null,
       color: null,
       tokenIds: null,
       score: null,
       playersGlobalStats: null,
-      errors: {
-        showMintedAwards: null,
-        preview: null,
-        auth: null,
-        interaction: null,
-        info: null,
-        history: null,
-        getLeaderboardInfo: null,
-        network: null,
-        getContractArgs: null,
-      },
+      errors: {} as Errors,
     }
   },
   getters: {
-    gameOver() {
+    gameOver(): boolean {
       //FIXME: make it reactive
       return this.gameOverTimeMilli < Date.now()
     },
-    mintingAllow() {
+    mintingAllow(): boolean {
       //FIXME: make it reactive
       return this.timeToMintInMilli < Date.now()
     },
-    minted() {
-      if (this.mintInfo && this.mintInfo.events && this.mintInfo.events[1]) {
-        return true
-      } else {
-        return false
-      }
-    },
-    demoOver() {
+    demoOver(): boolean {
       //FIXME: make it reactive
-      console.log(this.demoOverTimeMilli)
       return this.demoOverTimeMilli < Date.now()
     },
     isMainnetTime() {
@@ -76,117 +65,87 @@ export const useStore = defineStore('player', {
     },
   },
   actions: {
-    paintPixel({ key }) {
-      this.pixelMap[key] = {
-        author: this.username,
-        timestamp: new Date().getTime(),
-        ...this.pixelToPaint,
-        stroke: this.pixelToPaint.fill,
+    paintPixel() {
+      if (
+        this.pixelMap &&
+        this.selectedColor &&
+        this.pixelToPaint &&
+        !this.pixelMap[this.pixelToPaint.id].author
+      ) {
+        this.pixelMap[this.pixelToPaint.id] = {
+          ...this.pixelToPaint,
+          author: this.username,
+          timestamp: new Date().getTime(),
+          stroke: this.pixelToPaint.fill,
+        }
       }
     },
-    paintDefaultPixel({ key, pixel }) {
-      this.pixelMap[key] = pixel
-    },
-    setPixelToPaint(pixel) {
-      this.pixelToPaint = {
-        ...pixel,
-        stroke: pixel.stroke,
+    setPixelToPaint(pixel: Pixel) {
+      if (this.pixelMap && this.pixelMap[pixel.id].author) {
+        if (this.pixelMap) {
+          this.pixelToPaint = {
+            ...this.pixelMap[pixel.id],
+            stroke: pixel.stroke,
+          }
+        }
+      } else {
+        this.pixelToPaint = {
+          ...pixel,
+          stroke: pixel.stroke,
+        }
       }
     },
     clearPixelToPaint() {
       this.pixelToPaint = null
+      this.selectedColor = null
     },
-    togglePalettePanel(value) {
+    togglePalettePanel(value: boolean) {
       this.showPalettePanel = value
-      console.log(this.showPalettePanel)
     },
-    selectColor(color) {
+    selectColor(color: string) {
       this.selectedColor = color
     },
-    notify(payload) {
-      this.app.config.globalProperties.$notify(payload)
-    },
-    saveClaimInfo(info) {
-      localStorage.setItem(
-        'tokenInfo',
-        JSON.stringify({ ...this.getToken(), ...info })
-      )
+    notify(payload: any) {
+      const app = (this as any).app
+      app.config.globalProperties.$notify(payload)
     },
     // TODO: set NFT preview data
-    setPreviewData(preview) {
+    setPreviewData(preview: any) {
       console.log(preview)
     },
-    savePreview(preview) {
-      localStorage.setItem('preview', preview)
-      this.preview = preview
-    },
-    // Color theme
-    getTheme() {
-      const theme = localStorage.getItem('theme')
-      if (theme) {
-        this.theme = theme
-      }
-    },
-    saveTheme(theme) {
-      localStorage.setItem('theme', theme)
-      this.theme = theme
-    },
-    // Mint info
-    getMintInfo() {
-      const mintInfo = JSON.parse(localStorage.getItem('mintInfo'))
-      if (mintInfo) {
-        this.mintInfo = mintInfo
-      }
-    },
-    saveMintInfo(info) {
-      localStorage.setItem('mintInfo', JSON.stringify({ ...info }))
-      this.mintInfo = info
-    },
-    // Token Info
-    getToken() {
-      return JSON.parse(localStorage.getItem('tokenInfo'))
-    },
-    clearTokenInfo() {
-      localStorage.removeItem('tokenInfo')
-      localStorage.removeItem('theme')
-    },
     // Errors
-    clearError(error) {
+    clearError(error: ErrorKey) {
       this.errors[error] = null
     },
-    setError(name, error) {
+    setError(name: ErrorKey, error: any) {
       this.errors[name] = error.response?.data?.message || error.toString()
       this.notify({ message: this.errors[name] })
     },
 
-    async authorize({ key }) {
+    async authorize({ key }: any) {
       const request = await this.api.authorize({ key })
       if (request.error) {
         router.push('/init-game')
-        this.setError('auth', request.error)
+        this.setError(ErrorKey.auth, request.error)
       } else if (request.token) {
-        await this.saveClaimInfo(request)
-        this.clearError('auth')
+        await this.localStore.saveTokenInfo(request)
+        this.clearError(ErrorKey.auth)
         await this.getPlayerInfo()
         await this.getGlobalStats()
       }
     },
-    // Interaction
-    clearInteraction() {
-      this.interaction = null
-    },
-    async interact({ key }) {
-      const tokenInfo = this.getToken()
+    async interact({ key }: any) {
+      const tokenInfo = this.localStore.getToken()
       const request = await this.api.interact({
         token: tokenInfo.token,
         to: key,
       })
 
       if (request.error) {
-        this.setError('interaction', request.error)
+        this.setError(ErrorKey.interaction, request.error)
         router.push('/init-game')
       } else {
-        this.clearError('interaction')
+        this.clearError(ErrorKey.interaction)
         this.interactionInfo = request
         router.push('/init-game')
         this.getPlayerInfo()
@@ -194,8 +153,7 @@ export const useStore = defineStore('player', {
     },
     // History
     async getInteractionHistory(offset = 0, limit = 25) {
-      await this.getTheme()
-      const tokenInfo = this.getToken()
+      const tokenInfo = this.localStore.getToken()
       const request = await this.api.getInteractionHistory({
         token: tokenInfo && tokenInfo.token,
         id: tokenInfo && tokenInfo.key,
@@ -204,39 +162,38 @@ export const useStore = defineStore('player', {
       })
       if (request.error) {
         router.push('/init-game')
-        this.setError('history', request.error)
+        this.setError(ErrorKey.history, request.error)
       } else {
-        this.clearError('history')
+        this.clearError(ErrorKey.history)
         this.history = request.interactions
       }
     },
     // Leaderboard
     async getGlobalStats(offset = 0, limit = 25) {
-      await this.getTheme()
       await this.getPlayerInfo()
       const request = await this.api.getLeaderboardInfo({
         offset,
         limit,
       })
       if (request.error) {
-        this.setError('getLeaderboardInfo', request.error)
+        this.setError(ErrorKey.getLeaderboardInfo, request.error)
       } else {
-        this.clearError('getLeaderboardInfo')
+        this.clearError(ErrorKey.getLeaderboardInfo)
         this.playersGlobalStats = request.players
       }
     },
     // Player Info
     async getPlayerInfo() {
-      const tokenInfo = this.getToken()
+      const tokenInfo = this.localStore.getToken()
       const request = await this.api.getInfo({
         token: tokenInfo && tokenInfo.token,
         id: tokenInfo && tokenInfo.key,
       })
       if (request.error) {
         router.push({ name: 'init-game' })
-        this.setError('info', request.error)
+        this.setError(ErrorKey.info, request.error)
       } else {
-        this.clearError('info')
+        this.clearError(ErrorKey.info)
         const { key, username, score, color } = request.player
         this.id = key
         this.username = username
@@ -269,16 +226,14 @@ export const useStore = defineStore('player', {
     async getPreviews() {
       // To Be Implemented
     },
-    async getContractArgs(address) {
-      const tokenInfo = this.getToken()
+    async getContractArgs(address: string) {
+      const tokenInfo = this.localStore.getToken()
       const request = await this.api.getContractArgs({
         address,
         token: tokenInfo.token,
       })
 
-      this.mintInformation = request
-
-      return this.mintCreatureParams
+      return request
     },
   },
 })

@@ -2,8 +2,9 @@ import { onMounted, ref } from 'vue'
 import Web3 from 'web3/dist/web3.min.js'
 
 import { useStore } from '@/stores/player'
-import jsonInterface from '../WitmonERC721.json'
+import jsonInterface from '../WitmonERC721'
 import { CONTRACT_ADDRESS, NETWORK } from '../constants'
+import { useLocalStore } from '@/stores/local'
 
 async function requestAccounts(web3) {
   return await web3.givenProvider.request({ method: 'eth_requestAccounts' })
@@ -27,6 +28,7 @@ const errorPreviewMessage = `There was an error showing the preview of your NFT.
 export function useWeb3Witmon() {
   let web3
   const player = useStore()
+  const localStore = useLocalStore()
   const isProviderConnected = ref(false)
   const mintedCreatureAddress = ref('')
   const creaturePreview = ref('')
@@ -114,10 +116,10 @@ export function useWeb3Witmon() {
           console.error(error)
         })
         .on('transactionHash', function (transactionHash) {
-          player.saveMintInfo({ transactionHash })
+          localStore.saveMintInfo({ transactionHash })
         })
         .on('confirmation', (confirmationNumber, receipt) => {
-          player.saveMintInfo(receipt)
+          localStore.saveMintInfo(receipt)
           const data = getCreatureData()
           player.setCreatureData(data)
         })

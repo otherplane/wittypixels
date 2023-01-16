@@ -37,16 +37,18 @@
 
 <script>
 import { useStore } from '@/stores/player'
+import { useLocalStore } from '@/stores/local'
 import { computed } from 'vue'
 import { formatNumber } from '../utils'
 export default {
   emits: ['openExportModal'],
   setup(_props) {
     const player = useStore()
+    const localStore = useLocalStore()
     const gameOver = player.gameOver
     // TODO: HANDLE END OF GAME
     const mintStatus = computed(() =>
-      player.mintInfo.blockHash ? 'minted' : 'pending'
+      localStore.mintInfo.blockHash ? 'minted' : 'pending'
     )
     return {
       gameOver,

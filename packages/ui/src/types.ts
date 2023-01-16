@@ -1,17 +1,48 @@
 /* eslint-disable no-unused-vars */
-export enum Colors {
-  Red = 'red',
-  Orange = 'orange',
-  Yellow = 'yellow',
-  Green = 'green',
-  Blue = 'blue',
-  Purple = 'purple',
-  Black = 'black',
-  White = 'white',
-}
-
 export type Pixel = {
+  id: string
+  author: string | null
+  timestamp: number | null
+  x: number
+  y: number
+  width: number
+  height: number
+  fill: string
+  strokeWidth: number | null
+  stroke: string
+}
+export type GeneratePixelArgs = {
   x: number
   y: number
   color: string
+  strokeColor?: string
+}
+export type Coordinates = {
+  x: number
+  y: number
+}
+export interface PalettePoints {
+  [key: number]: number
+}
+export interface PixelMap {
+  [key: string]: Pixel
+}
+export type MintInfo = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  events: Array<any>
+  blockHash: string
+}
+export enum ErrorKey {
+  showMintedAwards = 'showMintedAwards',
+  preview = 'preview',
+  auth = 'auth',
+  interaction = 'interaction',
+  info = 'info',
+  history = 'history',
+  getLeaderboardInfo = 'getLeaderboardInfo',
+  network = 'network',
+  getContractArgs = 'getContractArgs',
+}
+export interface Errors {
+  [key: string]: string | null
 }

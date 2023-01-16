@@ -8,7 +8,7 @@
     >
       <v-layer ref="layer">
         <v-rect
-          v-for="pixel in Object.values(pixelMap)"
+          v-for="pixel in pixelList"
           :ref="`${pixel.x}:${pixel.y}`"
           :key="`${pixel.x}:${pixel.y}`"
           :config="pixel"
@@ -25,9 +25,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from '@/stores/player'
+import type { Pixel, Coordinates, GeneratePixelArgs } from '@/types'
 import { CANVAS_WIDTH, CANVAS_HEIGHT, PIXEL_SIZE, SCALE_BY } from '@/constants'
 export default {
   setup() {
@@ -35,14 +36,15 @@ export default {
     const pixel = ref()
     const stage = ref()
     const targetBoard = ref()
-    const configKonva = {
-      width: CANVAS_WIDTH,
-      height: CANVAS_HEIGHT,
-    }
+    let configKonva = ref({})
 
     onMounted(() => {
       drawGrid()
-      stageNode.value.draggable(true)
+      configKonva.value = {
+        width: targetBoard.value.clientWidth,
+        height: targetBoard.value.clientHeight,
+        draggable: true,
+      }
     })
 
     const selectedColor = computed(() => {
@@ -60,6 +62,9 @@ export default {
     const stageContainer = computed(() => {
       return stage.value.getStage().container()
     })
+    const pixelList = computed(() => {
+      return pixelMap.value ? Object.values(pixelMap.value) : []
+    })
 
     function drawGrid() {
       for (
@@ -74,19 +79,25 @@ export default {
         ) {
           const x = xCell * PIXEL_SIZE
           const y = yCell * PIXEL_SIZE
-          store.paintDefaultPixel({
-            key: generateId(x, y),
-            pixel: generatePixel(x, y, 'lightgrey'),
+          store.pixelMap[generateId({ x, y })] = generatePixel({
+            x,
+            y,
+            color: '#8a8a8a3d',
           })
         }
       }
     }
-    function generateId(x, y) {
+    function generateId({ x, y }: Coordinates): string {
       return `${x}:${y}`
     }
-    function generatePixel(x, y, color) {
+    function generatePixel({
+      x,
+      y,
+      color,
+      strokeColor = color,
+    }: GeneratePixelArgs): Pixel {
       return {
-        id: generateId(x, y),
+        id: generateId({ x, y }),
         author: null,
         timestamp: null,
         x: x,
@@ -95,32 +106,30 @@ export default {
         height: PIXEL_SIZE,
         fill: color,
         strokeWidth: 1,
-        stroke: color,
+        stroke: strokeColor,
       }
     }
     function showPanel() {
       store.togglePalettePanel(true)
     }
-    function previewPixelAndShowPanel({ x, y }) {
-      this.showPanel()
-      this.previewPixel({ x, y })
+    function previewPixelAndShowPanel({ x, y }: Coordinates) {
+      showPanel()
+      previewPixel({ x, y })
     }
-    function previewPixel({ x, y }) {
+    function previewPixel({ x, y }: Coordinates) {
       if (
         !pixelToPaint.value ||
-        generateId(pixelToPaint.value.x, pixelToPaint.value.y) !==
-          generateId(x, y)
+        generateId({ x: pixelToPaint.value.x, y: pixelToPaint.value.y }) !==
+          generateId({ x, y })
       ) {
-        store.setPixelToPaint({
-          id: generateId(x, y),
-          x: x,
-          y: y,
-          width: PIXEL_SIZE,
-          height: PIXEL_SIZE,
-          fill: selectedColor.value,
-          strokeWidth: 1,
-          stroke: 'black',
-        })
+        store.setPixelToPaint(
+          generatePixel({
+            x,
+            y,
+            color: selectedColor.value ?? '#8a8a8a3d',
+            strokeColor: 'black',
+          })
+        )
       }
       stageContainer.value.style.cursor = 'pointer'
     }
@@ -131,7 +140,7 @@ export default {
     function changeDragCursor() {
       stageContainer.value.style.cursor = 'move'
     }
-    function zoom(e) {
+    function zoom(e: any) {
       e.evt.preventDefault()
       // Scale
       let direction = e.evt.deltaY > 0 ? 1 : -1
@@ -167,14 +176,15 @@ export default {
       targetBoard,
       previewPixelAndShowPanel,
       showPanel,
+      pixelList,
     }
   },
 }
 </script>
 <style>
 .pixel-board {
-  max-width: 100vw;
-  height: 90vh;
+  max-width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 </style>
