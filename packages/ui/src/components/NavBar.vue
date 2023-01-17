@@ -67,7 +67,7 @@ export default {
 <style scoped lang="scss">
 .navbar {
   display: block;
-  top: 8px;
+  top: 16px;
   left: 8px;
   padding: 0;
   .logo-container {
@@ -104,7 +104,7 @@ export default {
   .dropdown {
     position: absolute;
     z-index: 50;
-    top: 40px;
+    top: 60px;
     right: 0px;
   }
 }
@@ -166,6 +166,7 @@ export default {
 }
 .target-burger {
   display: block;
+  margin-top: 16px;
   transition: 0.5s;
   display: flex;
   justify-content: center;

@@ -23,14 +23,14 @@
     <button
       @click="emitClaim"
       type="button"
-      class="w-full inline-flex justify-center rounded-md border border-primary shadow-sm px-4 py-2 bg-primary text-base font-bold text-pink hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+      class="w-full inline-flex justify-center rounded-md border border-primary shadow-sm px-4 py-2 bg-primary text-base font-bold modal-text hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
     >
       CONTINUE
     </button>
     <button
       @click="$parent.$emit('close')"
       type="button"
-      class="mt-3 w-full inline-flex justify-center rounded-md border-primary shadow-sm px-4 py-2 bg-transparent text-base font-bold text-brown hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+      class="mt-3 w-full inline-flex justify-center rounded-md border-primary shadow-sm px-4 py-2 bg-transparent text-base font-bold modal-text-2 hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
     >
       CANCEL
     </button>

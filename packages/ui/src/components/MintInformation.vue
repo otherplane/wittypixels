@@ -4,7 +4,7 @@
     <p v-if="mintStatus === 'error'">Try claiming your NFTs again</p>
     <p class="label">TRANSACTION HASH</p>
     <div class="mint-status" v-if="mintInfo?.transactionHash">
-      <div class="info address">
+      <div class="address">
         <a
           :href="`${explorerBaseUrl}/${mintInfo.transactionHash}`"
           target="_blank"
