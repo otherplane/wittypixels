@@ -1,13 +1,22 @@
 <template>
   <MainLayout v-if="player.username">
     <template v-slot:main>
-      <PlayGround />
+      <GameCountdowns />
+      <InteractionInfo />
+      <NFTPreview />
+      <MintInformation />
+      <PixelBoard />
     </template>
     <template v-slot:bottom>
       <GameActions
         @openMintModal="openModal('mint')"
         @addNetwork="addPolygonNetwork"
       />
+    </template>
+    <template v-slot:bottom-2>
+      <PanelSlider :showPanel="player.showPalettePanel">
+        <DrawingPalette />
+      </PanelSlider>
     </template>
   </MainLayout>
 
