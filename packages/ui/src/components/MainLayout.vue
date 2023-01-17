@@ -3,7 +3,7 @@
     <div class="witnet-logo-strip">
       <AppHeader :hideNavBar="hideNavBar" />
     </div>
-    <div class="layout">
+    <div ref="playGroundRef" class="layout">
       <slot name="main" />
       <div class="sticky-bottom">
         <div class="action-container">
@@ -16,6 +16,8 @@
 </template>
 <script>
 import { useStore } from '@/stores/player'
+import { ref } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 export default {
   props: {
     hideNavBar: {
@@ -25,8 +27,14 @@ export default {
   },
   setup() {
     const player = useStore()
+    const playGroundRef = ref(null)
+    onClickOutside(playGroundRef, () => {
+      player.clearPixelToPaint()
+      player.togglePalettePanel(false)
+    })
     return {
       player,
+      playGroundRef,
     }
   },
 }

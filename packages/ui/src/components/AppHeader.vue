@@ -1,5 +1,5 @@
 <template>
-  <div class="header" @click="clearPixelToPaint()">
+  <div class="header">
     <router-link to="/">
       <svgImage class="logo" :svg="wittyLogo" />
     </router-link>
@@ -17,7 +17,6 @@
 import wittyLogo from '@/assets/witty-pixels-logo.svg?raw'
 import { reactive } from 'vue'
 import { useModal } from '@/composables/useModal'
-import { useStore } from '@/stores/player'
 export default {
   props: {
     hideNavBar: {
@@ -26,7 +25,6 @@ export default {
     },
   },
   setup() {
-    const store = useStore()
     const modal = useModal()
     const modals = reactive({
       export: false,
@@ -39,15 +37,10 @@ export default {
       modals.export = false
       modal.hideModal()
     }
-    function clearPixelToPaint() {
-      store.clearPixelToPaint()
-      store.togglePalettePanel(false)
-    }
     return {
       wittyLogo,
       openModal,
       closeModal,
-      clearPixelToPaint,
       modal,
       modals,
     }
