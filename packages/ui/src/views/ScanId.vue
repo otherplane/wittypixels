@@ -93,13 +93,8 @@ export default {
   z-index: 8;
   div {
     height: 100vh;
-    video {
-      height: 100vh;
-    }
     .overlay-element {
       display: none;
-    }
-    .overlay-element {
       height: 100vh;
     }
   }

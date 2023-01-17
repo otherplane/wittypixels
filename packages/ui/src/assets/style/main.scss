@@ -19,9 +19,12 @@ body {
 }
 
 video {
-  width: 100%;
-  height: 100vh;
-  object-fit: cover;
+  width: 100% !important;
+  height: 100vh !important;;
+  object-fit: cover !important;;
+}
+.overlay-element {
+  height: 100vh !important;
 }
 
 .modal-bg-white {
