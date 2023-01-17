@@ -75,7 +75,6 @@ export default {
   .witnet-subtitle {
     font-size: 10px;
     position: relative;
-    font-family: Roboto, sans-serif;
     font-weight: 600;
   }
 }

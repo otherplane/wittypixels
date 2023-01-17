@@ -5,7 +5,8 @@
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Lexend, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: grid;
