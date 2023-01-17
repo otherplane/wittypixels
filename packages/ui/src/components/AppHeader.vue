@@ -3,7 +3,11 @@
     <router-link to="/">
       <svgImage class="logo" :svg="wittyLogo" />
     </router-link>
-    <NavBar class="navbar" @openExportModal="openModal('export')" />
+    <NavBar
+      v-if="!hideNavBar"
+      class="navbar"
+      @openExportModal="openModal('export')"
+    />
   </div>
   <ModalDialog :show="modal.visible.value" v-on:close="closeModal">
     <ModalExport v-if="modals.export" />
@@ -15,6 +19,12 @@ import { reactive } from 'vue'
 import { useModal } from '@/composables/useModal'
 import { useStore } from '@/stores/player'
 export default {
+  props: {
+    hideNavBar: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     const store = useStore()
     const modal = useModal()
@@ -60,6 +70,7 @@ export default {
   .logo {
     height: 10vh;
     position: relative;
+    cursor: pointer;
   }
   .witnet-subtitle {
     font-size: 10px;
@@ -72,9 +83,18 @@ export default {
   .header {
     margin: 0 auto;
     max-width: 700px;
+    .logo {
+      height: 120px;
+      padding: 16px 0px;
+    }
   }
-  .logo {
-    padding: 16px 0px;
+}
+@media (max-width: 300px) {
+  .header {
+    .logo {
+      height: auto;
+      width: 70vw;
+    }
   }
 }
 </style>

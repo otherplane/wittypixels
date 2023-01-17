@@ -1,27 +1,59 @@
 <template>
   <div class="background">
     <div class="witnet-logo-strip">
-      <AppHeader />
+      <AppHeader :hideNavBar="hideNavBar" />
     </div>
     <div class="layout">
       <slot name="main" />
-      <slot name="bottom" />
+      <div class="sticky-bottom">
+        <div class="action-container">
+          <slot name="bottom" />
+        </div>
+        <slot name="bottom-2" />
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent } from 'vue-demi'
 import { useStore } from '@/stores/player'
-export default defineComponent({
+export default {
+  props: {
+    hideNavBar: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     const player = useStore()
     return {
       player,
     }
   },
-})
+}
 </script>
 <style scoped lang="scss">
+.sticky-bottom {
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  max-width: 700px;
+  bottom: 0px;
+  display: grid;
+  grid-template-rows: max-content max-content;
+  justify-items: center;
+  .action-container {
+    padding: 16px;
+    width: 100%;
+  }
+}
+.cover-bottom {
+  width: 100%;
+  text-align: center;
+  bottom: 0px;
+  display: grid;
+  grid-template-rows: max-content max-content;
+  justify-items: center;
+}
 .background {
   height: 100vh;
   display: grid;
@@ -39,12 +71,12 @@ export default defineComponent({
 }
 
 .layout {
-  overflow: auto;
   z-index: 7;
   width: 100%;
   max-width: 700px;
   margin-top: 32px;
   margin: 0 auto;
+  overflow-y: auto;
   grid-template-rows: 1fr;
 }
 </style>

@@ -1,17 +1,52 @@
 <template>
-  <MainLayout :isBackground="true">
+  <MainLayout :hideNavBar="true">
     <template v-slot:main>
-      <router-link to="/disclaimer" class="link">
+      <div class="cover">
+        <h2 class="title">
+          Participate in the biggest collaborative act of NFT creation to date!
+        </h2>
+        <div class="background" />
+      </div>
+    </template>
+    <template v-slot:bottom>
+      <router-link to="/disclaimer">
         <CustomButton class="btn" type="primary"> PLAY NOW </CustomButton>
       </router-link>
     </template>
   </MainLayout>
 </template>
 
+<script lang="ts">
+import playerMainImage from '@/assets/grid.svg?raw'
+export default {
+  setup() {
+    return { playerMainImage }
+  },
+}
+</script>
+
 <style lang="scss" scoped>
-.link {
-  margin-top: 40vh;
-  width: max-content;
-  justify-self: center;
+.cover {
+  height: 80vh;
+  width: 100%;
+  overflow: hidden;
+  .title {
+    padding-bottom: 16px;
+  }
+  .background {
+    width: 100%;
+    border-top: 2px solid $black;
+    background-image: url(../assets/grid.svg);
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .cover {
+    .title {
+      padding: 16px;
+    }
+  }
 }
 </style>
