@@ -45,7 +45,11 @@ export default {
 </script>
 <style scoped lang="scss">
 .color {
-  padding: 4px 8px;
+  height: 30px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 4px;
   cursor: pointer;
   border: 2px solid $black;
