@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide-up">
+  <transition name="slide">
     <div v-if="showPanel" class="slide-up">
       <slot></slot>
     </div>
@@ -21,27 +21,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.slide-in-enter-active {
-  transition-duration: 0.2s;
-  transition-timing-function: ease-in;
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(100%);
+  transform-origin: bottom;
 }
-
-.slide-in-leave-active {
-  transition-duration: 0.2s;
-  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease-in-out;
 }
-
-.slide-in-enter-to,
-.slide-leave {
-  opacity: 1;
-}
-
-.slide-in-enter,
-.slide-in-leave-to {
-  opacity: 0;
+.slide-enter-to,
+.slide-leave-from {
+  transform: translateY(0);
+  transform-origin: bottom;
 }
 
 .slide-up {
+  position: absolute;
+  bottom: 0;
+  z-index: 20;
   width: 100%;
   padding: 16px;
   border-top-left-radius: 8px;

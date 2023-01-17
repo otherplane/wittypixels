@@ -1,10 +1,6 @@
 <template>
   <div v-if="!player.gameOver" class="button-container">
-    <router-link
-      v-if="!player.showPalettePanel"
-      class="btn"
-      :to="type === 'disable' ? '' : '/scan'"
-    >
+    <router-link class="btn" :to="type === 'disable' ? '' : '/scan'">
       <CustomButton type="dark" :slim="true">Scan</CustomButton>
     </router-link>
   </div>
