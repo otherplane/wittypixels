@@ -21,7 +21,7 @@
     </p>
   </transition>
   <transition name="fade">
-    <div class="info" v-if="!player.mintingAllow && player.previews.length">
+    <div v-if="!player.mintingAllow && player.previews.length">
       <div class="time-container">
         <p class="bonus-title">Time left to allow minting</p>
         <TimeLeft
@@ -67,6 +67,7 @@ export default {
   color: $white;
   font-weight: bold;
   font-size: 14px;
+  padding: 4px;
   padding-left: 16px;
 }
 .fade-enter-active,

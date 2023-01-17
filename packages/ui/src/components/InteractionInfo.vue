@@ -1,7 +1,7 @@
 <template>
   <div class="counter">
     <transition name="fade">
-      <div v-if="player.interactionOut" class="info left">
+      <div v-if="player.interactionOut" class="left">
         <p class="label">
           Sending
           <span class="highlight">{{
@@ -21,7 +21,7 @@
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="player.interactionIn" class="info right">
+      <div v-if="player.interactionIn" class="right">
         <p class="label">
           Receiving
           <span class="highlight">{{

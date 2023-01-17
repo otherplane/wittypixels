@@ -10,7 +10,7 @@
     </template>
     <template v-slot:bottom>
       <router-link to="/disclaimer">
-        <CustomButton class="btn" type="primary"> PLAY NOW </CustomButton>
+        <CustomButton type="primary"> PLAY NOW </CustomButton>
       </router-link>
     </template>
   </MainLayout>

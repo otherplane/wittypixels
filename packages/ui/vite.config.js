@@ -15,12 +15,14 @@ export default defineConfig({
         // and local and vuetify variables globally
         additionalData: `
               @import '@/assets/style/main.scss';
+              @import '@/assets/style/index.scss';
             `,
       },
       sass: {
         // override vuetify variables by local variables
         additionalData: `
               @import '@/assets/style/main.scss';
+              @import '@/assets/style/index.scss';
             `,
       },
     },
