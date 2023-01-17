@@ -45,7 +45,7 @@ export default {
 @media (max-width: 600px) {
   .cover {
     .title {
-      padding: 16px;
+      padding: 0 16px 16px 16px;
     }
   }
 }

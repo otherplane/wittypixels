@@ -22,7 +22,6 @@ defineProps({
   color: $white;
   padding: 8px 16px;
   border-radius: 28px;
-  font-family: Roboto;
   font-weight: bold;
   &.primary {
     color: $white;

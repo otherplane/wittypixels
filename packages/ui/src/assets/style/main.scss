@@ -5,7 +5,7 @@ $lightgrey: #BBBBBB;
 $white: white;
 $transparent: transparent;
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Zilla+Slab:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@500;600&display=swap');
 
 $black-secondary: #727272;
 $black-base-color: #fff;
@@ -51,7 +51,7 @@ $white-opacity-2: #acacac10;
 
 html,
 body {
-  font-family: 'Roboto';
+  font-family: Lexend, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
   --primary-color: #{$black};
   --secondary-color: #{$brown};
   background-color: $white;
