@@ -36,7 +36,6 @@ export function calculateRemainingDuration(
   return remainingMillis > 0 ? remainingMillis : 0
 }
 
-
 export function getColorFromIndex(index: number) {
   return index % COLORS_COUNT
 }
