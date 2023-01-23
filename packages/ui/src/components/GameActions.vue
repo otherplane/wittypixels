@@ -1,7 +1,19 @@
 <template>
   <div v-if="!player.gameOver" class="button-container">
     <router-link class="btn" :to="type === 'disable' ? '' : '/scan'">
-      <CustomButton type="dark" :slim="true">Scan</CustomButton>
+      <CustomButton :type="type" :slim="true">
+        <p v-if="type == 'dark'">Scan</p>
+        <p class="disabled-text" v-else>
+          Allow new scan in
+          <TimeLeft
+            v-if="player.interactionOut?.ends"
+            class="time-left"
+            :timestamp="player.interactionOut?.ends"
+            :seconds="true"
+            @clear-timestamp="clearTimestamp('interactionOut')"
+          />
+        </p>
+      </CustomButton>
     </router-link>
   </div>
   <div class="btn" v-if="player.gameOver">
@@ -37,10 +49,15 @@ export default {
     })
     const type = computed(() =>
       // TODO: update player.incubating naming when contracts are available
-      player.incubating || (player.data && parseInt(player.data.tokenId) < 0)
+      player.interactionOut ||
+      (player.data && parseInt(player.data.tokenId) < 0)
         ? 'disable'
-        : 'primary'
+        : 'dark'
     )
+    const clearTimestamp = interactionType => {
+      player[interactionType] = null
+      player.socialsSharedMessage = false
+    }
     function mint() {
       if (type.value !== 'disable') {
         console.log(`openModal('mint')`)
@@ -56,6 +73,7 @@ export default {
       player,
       minted,
       type,
+      clearTimestamp,
       addPolygonNetwork,
     }
   },
@@ -65,6 +83,9 @@ export default {
 <style lang="scss" scoped>
 .btn {
   width: 100%;
+}
+.disabled-text {
+  font-size: 18px;
 }
 .add-polygon {
   width: max-content;

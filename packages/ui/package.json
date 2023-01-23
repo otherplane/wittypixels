@@ -7,7 +7,7 @@
     "build:production": "vue-tsc --noEmit && vite build --outDir=./dist",
     "build:test": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
-    "start:api": "(cd ../api && pnpm start) &",
+    "start:api": "(cd ../api && pnpm dev) &",
     "test:unit": "vitest --environment jsdom",
     "test:e2e": "pnpm build:test && start-server-and-test preview http://127.0.0.1:5050/ 'cypress open'",
     "test:e2e:ci": "pnpm build:test && pnpm start:api && start-server-and-test preview http://127.0.0.1:5050/ 'cypress run'",

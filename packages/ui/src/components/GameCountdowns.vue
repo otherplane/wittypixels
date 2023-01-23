@@ -60,15 +60,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .countdown {
   background-color: $grey;
   width: 100%;
   color: $white;
   font-weight: bold;
   font-size: 14px;
-  padding: 4px;
-  padding-left: 16px;
+  padding: 2px 16px;
 }
 .fade-enter-active,
 .fade-leave-active {

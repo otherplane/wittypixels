@@ -105,7 +105,7 @@ export default {
     position: absolute;
     z-index: 50;
     top: 60px;
-    right: 0px;
+    right: 16px;
   }
 }
 .tab-container {
@@ -166,7 +166,6 @@ export default {
 }
 .target-burger {
   display: block;
-  margin-top: 16px;
   transition: 0.5s;
   display: flex;
   justify-content: center;

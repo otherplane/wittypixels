@@ -1,129 +1,79 @@
 <template>
-  <div class="counter">
-    <transition name="fade">
-      <div v-if="player.interactionOut" class="left">
-        <p class="label">
-          Sending
-          <span class="highlight">{{
-            player.interactionOut?.points || 0
-          }}</span>
-          points to
-          <span class="highlight">{{ player.interactionOut?.to || '' }}</span>
+  <transition name="fade">
+    <div v-if="interactionIn" class="counter">
+      <div class="incubation-info">
+        <p>
+          Receiving +{{ interactionIn?.points || '' }}px from
+          {{ interactionIn?.from || '' }}
         </p>
-        <div class="time-container">
-          <TimeLeft
-            class="time-left"
-            :timestamp="player.interactionOut.ends"
-            :seconds="true"
-            @clear-timestamp="player.interactionOut = null"
-          />
-        </div>
+        <TimeLeft
+          v-if="interactionIn?.ends"
+          class="time-left"
+          :timestamp="interactionIn?.ends"
+          :seconds="true"
+          @clear-timestamp="clearTimestamp('interactionIn')"
+        />
       </div>
-    </transition>
-    <transition name="fade">
-      <div v-if="player.interactionIn" class="right">
-        <p class="label">
-          Receiving
-          <span class="highlight">{{
-            player.interactionIn?.points || 'null'
-          }}</span>
-          points from
-          <span class="highlight">{{
-            player.interactionIn?.from || 'null'
-          }}</span>
-        </p>
-        <div class="time-container">
-          <TimeLeft
-            class="time-left"
-            :timestamp="player.interactionIn.ends"
-            :seconds="true"
-            @clear-timestamp="player.interactionIn = null"
-          />
-        </div>
-      </div>
-    </transition>
-    <div></div>
-  </div>
+    </div>
+  </transition>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from '@/stores/player'
 import { importSvg } from '@/composables/importSvg.js'
 export default {
   setup() {
     const player = useStore()
     const show = ref(false)
-    return { player, show, importSvg }
+    const clearTimestamp = interactionType => {
+      player[interactionType] = null
+      player.socialsSharedMessage = false
+    }
+    const interactionIn = computed(() => player.interactionIn)
+    return { player, show, importSvg, clearTimestamp, interactionIn }
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-from,
+.fade-leave-to {
+  transform: translateY(-100%);
+  opacity: 0;
+}
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.5s;
-  opacity: 0;
+  transition: all 0.2s ease-in-out;
 }
-.fade-enter-to {
+.fade-enter-to,
+.fade-leave-from {
+  transform: translateY(0);
   opacity: 1;
-}
-.fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
 }
 
 .counter {
+  color: $white;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 16px;
-  text-align: center;
+  grid-template-columns: 1fr;
+  background-color: $black;
+  max-width: 700px;
+  margin: 0 auto;
+  justify-content: center;
+  column-gap: 4px;
+  text-align: left;
   grid-template-rows: max-content;
-  .time-container {
-    width: 100%;
-    background-color: var(--primary-color-opacity-2);
-    color: var(--primary-color);
-    font-weight: 600;
-    padding: 0px 8px;
-    border-radius: 4px;
-    text-align: left;
-    display: flex;
-  }
-  .trait-icon {
-    display: inline-block;
-    width: 14px;
-  }
-  .info {
+  .incubation-info {
+    padding: 8px 16px;
     display: grid;
     grid-template-rows: max-content 1fr;
     align-items: center;
-  }
-  .left {
-    grid-column: 1;
-    display: grid;
-    grid-template-rows: max-content 1fr;
-    align-items: center;
-  }
-  .right {
-    grid-column: 2;
-    display: grid;
-    grid-template-rows: max-content 1fr;
-    align-items: center;
-  }
-  .label {
-    text-align: left;
-    margin-bottom: 8px;
-    color: var(--primary-color);
-    font-weight: bold;
-    font-size: 12px;
-    .highlight {
-      color: var(--primary-color);
-    }
   }
   .time-left {
     width: max-content;
     overflow: hidden;
     text-align: left;
-    font-size: 18px;
+    padding: 0;
   }
 }
 </style>
