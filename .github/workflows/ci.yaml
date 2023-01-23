@@ -41,13 +41,15 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
+      - name: Restore cache
+        uses: actions/cache@v3
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: |
+           ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+           ~/.cache/Cypress
+          key: cache-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-
 
       - name: Install dependencies
         run: pnpm install
