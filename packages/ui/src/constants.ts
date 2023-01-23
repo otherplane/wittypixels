@@ -46,8 +46,8 @@ export const COLORS = {
 }
 export const TIMEZONE = 'America/Denver'
 export const PIXEL_SIZE = 16
-export const CANVAS_WIDTH = 700
-export const CANVAS_HEIGHT = 600
+export const CANVAS_WIDTH = 1000
+export const CANVAS_HEIGHT = 1000
 export const SCALE_BY = 1.01
 
 export const POLLER_MILLISECONDS = import.meta.env.VITE_POLLER_MILLISECONDS

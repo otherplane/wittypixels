@@ -1,6 +1,7 @@
 <template>
   <div class="background">
     <div class="witnet-logo-strip">
+      <slot name="top" />
       <AppHeader :hideNavBar="hideNavBar" />
     </div>
     <div ref="playGroundRef" class="layout">

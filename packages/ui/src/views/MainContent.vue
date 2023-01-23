@@ -1,10 +1,14 @@
 <template>
   <MainLayout v-if="player.username">
-    <template v-slot:main>
-      <GameCountdowns />
+    <template v-slot:top>
       <InteractionInfo />
-      <NFTPreview />
-      <MintInformation />
+    </template>
+    <template v-slot:main>
+      <div class="float">
+        <GameCountdowns />
+        <NFTPreview />
+        <MintInformation />
+      </div>
       <PixelBoard />
     </template>
     <template v-slot:bottom>
@@ -108,3 +112,11 @@ export default {
   },
 }
 </script>
+<style>
+.float {
+  position: absolute;
+  max-width: 700px;
+  z-index: 20;
+  width: 100%;
+}
+</style>

@@ -55,7 +55,7 @@ export default {
   position: relative;
   text-align: end;
   top: 0px;
-  margin: 16px;
+  padding: 16px;
   display: grid;
   grid-template-columns: max-content max-content;
   grid-template-rows: max-content;
@@ -76,8 +76,7 @@ export default {
     margin: 0 auto;
     max-width: 700px;
     .logo {
-      height: 120px;
-      padding: 16px 0px;
+      height: 80px;
     }
   }
 }
