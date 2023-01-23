@@ -1,9 +1,40 @@
 <template>
-  <MainLayout>
+  <MainLayout :padding="true">
     <template v-slot:main>
       <div class="container">
-        <SectionHeader title="INSTRUCTIONS" />
-        <h2 class="title"></h2>
+        <SectionHeader title="Instructions" />
+        <p class="paragraph">
+          To <span class="bold orange">send color pixels</span> to somebody, you
+          just need to <span class="bold green">scan their QR code</span>.
+        </p>
+        <p class="paragraph">
+          These are the <span class="bold">rules</span> for sending and
+          receiving colors:
+        </p>
+        <ul class="list-container">
+          <li class="list">Scanning takes 5 minutes.</li>
+          <li class="list">
+            You can’t start scanning somebody’s QR while you are scanning
+            someone else's — you need to wait until the counter is over.
+          </li>
+          <li class="list">
+            You can scan each player’s QR's only once every 2 hours.
+          </li>
+          <li class="list">
+            Scanning somebody’s QR's gives more pixels if that is the first time
+            interacting with that player.
+          </li>
+        </ul>
+        <p class="paragraph">
+          Right after the closing ceremony, you will be able to
+          <span class="bold blue">claim your ownership</span> percentance of the
+          <span class="bold purple">fractionalized NFT</span>collectively
+          created.
+        </p>
+        <p class="paragraph">
+          The more pixels painted in the board, the more percentace of the
+          fractionalized NFT you will get.
+        </p>
       </div>
     </template>
   </MainLayout>
@@ -23,48 +54,20 @@ export default {
 <style lang="scss" scoped>
 .container {
   text-align: left;
+  font-size: 18px;
   .title {
     font-size: 24px;
   }
-  .text {
-    font-size: 18px;
-  }
-  .table-title {
-    color: var(--primary-color);
-  }
   .list {
-    list-style-type: circle;
+    list-style-type: square;
+    color: $black;
     &::marker {
       color: var(--primary-color);
     }
   }
-  .disclaimer {
-    margin: 16px;
-    padding: 16px;
-    background-color: var(--primary-color-opacity-1);
-    border-radius: 4px;
-    color: var(--primary-color);
-    text-align: center;
-    line-height: 1.5;
-    font-weight: bold;
-  }
-  .table {
-    text-align: left;
-    .col {
-      padding-right: 16px;
-      font-weight: 600;
-    }
-    .trait {
-      padding-left: 8px;
-    }
-    .row {
-      border-radius: 4px;
-      margin-bottom: 8px;
-      height: 68px;
-    }
-    .icon {
-      width: 40px;
-    }
+  .paragraph {
+    color: $black;
+    margin-bottom: 8px;
   }
   .link {
     color: var(--primary-color);
