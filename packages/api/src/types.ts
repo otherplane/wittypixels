@@ -14,7 +14,18 @@ const Palette = Type.Object({
   2: Type.Integer(),
   3: Type.Integer(),
   4: Type.Integer(),
+  5: Type.Integer(),
 })
+
+export enum Color {
+  // TODO: replace with correct colors
+  White = 0,
+  Red = 1,
+  Blue = 2,
+  Green = 3,
+  Yellow = 4,
+  Orange = 5,
+}
 
 export const PlayerVTO = Type.Object({
   key: Type.String(),
@@ -23,7 +34,7 @@ export const PlayerVTO = Type.Object({
   score: Type.Integer(),
   nft: Type.Array(Type.Optional(Type.String())),
   creationIndex: Type.Integer(),
-  color: Type.Integer(),
+  color: Type.Enum(Color),
   palette: Palette,
 })
 
@@ -36,11 +47,22 @@ export const DbPlayerVTO = Type.Object({
   score: Type.Integer(),
   nft: Type.Array(Type.Optional(Type.String())),
   creationIndex: Type.Integer(),
-  color: Type.Integer(),
+  color: Type.Enum(Color),
   palette: Palette,
 })
 
 export type DbPlayerVTO = Static<typeof DbPlayerVTO>
+
+export const DbDrawVTO = Type.Object({
+  ends: Type.Integer(),
+  player: Type.String(),
+  timestamp: Type.Number(),
+  x: Type.Number(),
+  y: Type.Number(),
+  color: Type.Enum(Color),
+})
+
+export type DbDrawVTO = Static<typeof DbDrawVTO>
 
 export const AuthorizationHeader = Type.Object({
   Authorization: Type.String(),
@@ -62,7 +84,7 @@ export const DbInteractionVTO = Type.Object({
   from: Type.String(),
   to: Type.String(),
   quantity: Type.Number(),
-  color: Type.Number(),
+  color: Type.Enum(Color),
   timestamp: Type.Number(),
   ends: Type.Number(),
 })
@@ -78,6 +100,43 @@ export const ExtendedPlayerVTO = Type.Object({
 })
 
 export type ExtendedPlayerVTO = Static<typeof ExtendedPlayerVTO>
+
+export const PixelVTO = Type.Object({
+  x: Type.Number(),
+  y: Type.Number(),
+  c: Type.Enum(Color),
+  o: Type.String(),
+})
+
+export const CanvasVTO = Type.Object({
+  pixels: Type.Array(Type.Array(PixelVTO)),
+})
+export type CanvasVTO = Static<typeof CanvasVTO>
+
+// export const DbCanvasVTO = Type.Object({
+//   pixels: Type.Array(Type.Array(PixelVTO)),
+// })
+// export type DbCanvasVTO = Static<typeof DbCanvasVTO>
+
+// {
+//   name: 0,
+//   0: PixelVTO
+//   1: PixelVTO
+//   2: PixelVTO
+//   3: PixelVTO
+//   ...
+//   49: PixelVTO
+// }
+export const DbSectorVTO = Type.Object(
+  new Array(50).fill(null).reduce(
+    (acc, val, index) => ({
+      ...acc,
+      [index]: Type.Array(PixelVTO),
+    }),
+    { name: Type.Number() }
+  )
+)
+export type DbSectorVTO = Static<typeof DbSectorVTO>
 
 export const MintParams = Type.Object({
   address: Type.String(),
@@ -135,7 +194,7 @@ export const InteractionResult = Type.Object({
   from: Type.String(),
   to: Type.String(),
   timestamp: Type.Number(),
-  color: Type.Number(),
+  color: Type.Enum(Color),
 })
 export type InteractionResult = Static<typeof InteractionParams>
 
@@ -173,6 +232,25 @@ export const InteractionHistoryParams = Type.Object({
 
 export type InteractionHistoryParams = Static<typeof InteractionHistoryParams>
 
+export const DrawParams = Type.Object({
+  x: Type.Integer(),
+  y: Type.Integer(),
+  color: Type.Enum(Color),
+})
+
+export type DrawParams = Static<typeof DrawParams>
+
+export const DrawResult = Type.Object({
+  x: Type.Integer(),
+  y: Type.Integer(),
+  color: Type.Enum(Color),
+  ends: Type.Number(),
+  player: Type.String(),
+  timestamp: Type.Number(),
+})
+
+export type DrawResult = Static<typeof DrawResult>
+
 export const InteractionHistoryResponse = Type.Object({
   interactions: Type.Object({
     interactions: Type.Array(DbInteractionVTO),
@@ -183,14 +261,5 @@ export const InteractionHistoryResponse = Type.Object({
 export type InteractionHistoryResponse = Static<
   typeof InteractionHistoryResponse
 >
-
-export enum Color {
-  // TODO: replace with correct colors
-  Red,
-  Blue,
-  Green,
-  Yellow,
-  Orange
-}
 
 export type Palette = { [key in Color]: number }

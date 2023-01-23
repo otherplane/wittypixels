@@ -37,7 +37,8 @@ export const INTERACTION_COOLDOWN_MILLIS = process.env
 export const COLORS_COUNT = 5
 
 // Self interaction points
-export const SELF_INTERACTION_COLOR_QUANTITY = process.env.SELF_INTERACTION_COLOR_QUANTITY
+export const SELF_INTERACTION_COLOR_QUANTITY = process.env
+  .SELF_INTERACTION_COLOR_QUANTITY
   ? parseInt(process.env.SELF_INTERACTION_COLOR_QUANTITY)
   : 1
 
@@ -47,12 +48,14 @@ export const INTERACTION_COLOR_QUANTITY = process.env.INTERACTION_COLOR_QUANTITY
   : 10
 
 // Minimum amount of points that can be rewarded after a interaction
-export const INTERACTION_COLOR_QUANTITY_MIN = process.env.INTERACTION_COLOR_QUANTITY_MIN
+export const INTERACTION_COLOR_QUANTITY_MIN = process.env
+  .INTERACTION_COLOR_QUANTITY_MIN
   ? parseInt(process.env.INTERACTION_COLOR_QUANTITY_MIN)
   : 1
 
 // Interaction point divisor to be applied every time the same incubation happens
-export const INTERACTION_COLOR_QUANTITY_DIVISOR= process.env.INTERACTION_COLOR_QUANTITY_DIVISOR
+export const INTERACTION_COLOR_QUANTITY_DIVISOR = process.env
+  .INTERACTION_COLOR_QUANTITY_DIVISOR
   ? parseInt(process.env.INTERACTION_COLOR_QUANTITY_DIVISOR)
   : 2
 
@@ -88,6 +91,18 @@ export const PLAYER_MAINNET_TIMESTAMP = process.env.PLAYER_MAINNET_TIMESTAMP
   ? parseInt(process.env.PLAYER_MAINNET_TIMESTAMP)
   : 1645131600 // Thursday, February 17, 2022 09:00:00 PM (UTC)
 
+export const CANVAS_MAX_X = process.env.CANVAS_MAX_X
+  ? parseInt(process.env.CANVAS_MAX_X)
+  : 700
+
+export const CANVAS_MAX_Y = process.env.CANVAS_MAX_Y
+  ? parseInt(process.env.CANVAS_MAX_Y)
+  : 700
+
+export const CANVAS_SECTOR_SIZE = process.env.CANVAS_SECTOR_SIZE
+  ? parseInt(process.env.CANVAS_SECTOR_SIZE)
+  : 50
+
 export default {
   PLAYER_KEY_LENGTH_BYTES,
   PLAYER_MINT_TIMESTAMP,
@@ -100,4 +115,6 @@ export default {
   INTERACTION_COLOR_QUANTITY_DIVISOR,
   WITMON_ERC721_ADDRESS,
   PLAYER_MAINNET_TIMESTAMP,
+  CANVAS_MAX_X,
+  CANVAS_MAX_Y,
 }
