@@ -21,21 +21,6 @@ export const BASE_URL =
 
 export const ATTRIBUTES = {}
 
-export const STATS_FILTERS = {
-  players: {
-    key: 'players',
-    active: false,
-    default: 'overall',
-    showSubtabs: false,
-    subTabs: {
-      overall: {
-        key: 'overall',
-        active: false,
-      },
-    },
-  },
-}
-
 export const COLORS = {
   0: 'red',
   1: 'orange',
