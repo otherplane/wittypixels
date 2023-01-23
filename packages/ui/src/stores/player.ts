@@ -38,12 +38,12 @@ export const useStore = defineStore('player', {
       timeToMintInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_MINT_MILLISECONDS,
       previews: [],
       mintedAwards: [],
-      history: null,
+      history: [],
       mintParams: null,
       color: null,
       tokenIds: null,
       score: null,
-      playersGlobalStats: null,
+      playersGlobalStats: [],
       errors: {} as Errors,
     }
   },
@@ -165,7 +165,10 @@ export const useStore = defineStore('player', {
         this.setError(ErrorKey.history, request.error)
       } else {
         this.clearError(ErrorKey.history)
-        this.history = request.interactions
+        return {
+          result: request.interactions?.interactions,
+          total: request.interactions?.total,
+        }
       }
     },
     // Leaderboard
@@ -179,7 +182,10 @@ export const useStore = defineStore('player', {
         this.setError(ErrorKey.getLeaderboardInfo, request.error)
       } else {
         this.clearError(ErrorKey.getLeaderboardInfo)
-        this.playersGlobalStats = request.players
+        return {
+          result: request.players.players,
+          total: request.players.total,
+        }
       }
     },
     // Player Info

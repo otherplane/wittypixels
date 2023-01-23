@@ -93,6 +93,6 @@ export default {
   grid-template-rows: 1fr;
 }
 .padding {
-  padding: 16px;
+  padding: 8px 16px;
 }
 </style>
