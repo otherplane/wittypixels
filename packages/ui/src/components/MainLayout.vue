@@ -4,7 +4,7 @@
       <slot name="top" />
       <AppHeader :hideNavBar="hideNavBar" />
     </div>
-    <div ref="playGroundRef" class="layout">
+    <div ref="playGroundRef" class="layout" :class="{ padding }">
       <slot name="main" />
       <div class="sticky-bottom">
         <div class="action-container">
@@ -22,6 +22,10 @@ import { onClickOutside } from '@vueuse/core'
 export default {
   props: {
     hideNavBar: {
+      type: Boolean,
+      default: false,
+    },
+    padding: {
       type: Boolean,
       default: false,
     },
@@ -87,5 +91,8 @@ export default {
   margin: 0 auto;
   overflow-y: auto;
   grid-template-rows: 1fr;
+}
+.padding {
+  padding: 16px;
 }
 </style>

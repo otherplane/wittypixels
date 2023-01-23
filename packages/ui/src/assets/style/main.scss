@@ -3,11 +3,15 @@
 $brown: #DA4E00;
 $red: #bd2635;
 $yellow: #ee9c03;
-$black: #3E3D3D;
+$black: #1c1c1c;
 $grey: #8A8A8A;
 $lightgrey: #BBBBBB;
 $white: white;
 $transparent: transparent;
+$orange: orange;
+$green: rgb(8, 180, 57);
+$blue: rgb(0, 145, 255);
+$purple: rgb(102, 0, 198);
 
 html,
 body {
@@ -16,6 +20,23 @@ body {
   --secondary-color: #{$brown};
   background-color: $white;
   touch-action: pan-x pan-y;
+}
+
+.orange {
+  color: $orange;
+}
+.green {
+  color: $green;
+}
+.blue {
+  color: $blue;
+}
+.purple {
+  color: $purple;
+}
+
+h3 {
+  color: $black;
 }
 
 video {
