@@ -5,9 +5,10 @@ import {
   OptionalUnlessRequiredId,
   WithId,
   MatchKeysAndValues,
+  Document,
 } from 'mongodb'
 
-export class Repository<T> {
+export class Repository<T extends Document> {
   private collection: Collection<T>
   private keyName: keyof T
 

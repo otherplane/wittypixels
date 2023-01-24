@@ -88,7 +88,17 @@ const app: FastifyPluginAsync<AppOptions> = async (
     next
   ) => {
     if (!fastify.mongo.db) throw Error('mongo db not found')
-    const canvas = new Canvas()
+    let canvas: Canvas
+
+    if (process.env.OVERWRITE_CANVAS) {
+      canvas = new Canvas()
+      console.log('Initializing canvas')
+      await fastify.canvasModel.create(canvas.toDbSectors())
+      console.log('Canvas initialized')
+    } else {
+      const sectors = await fastify.canvasModel.get()
+      canvas = new Canvas(sectors)
+    }
 
     // TODO: load canvas state from db
     fastify.decorate('canvas', canvas)

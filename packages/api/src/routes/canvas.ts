@@ -14,9 +14,7 @@ import { isTimeToMint } from '../utils'
 const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { drawModel, playerModel, canvas } = fastify
-
-  // const { canvasModel, drawModel, playerModel, canvas } = fastify
+  const { canvasModel, drawModel, playerModel, canvas } = fastify
 
   fastify.get<{
     Params: Record<string, never>
@@ -32,7 +30,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       _request: FastifyRequest<{ Params: Record<string, never> }>,
       reply
     ) => {
-      return reply.status(200).send(canvas.toDbVTO())
+      return reply.status(200).send(canvas.toVTO())
     },
   })
 
@@ -101,7 +99,12 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       // Create and return `draw` object
       await drawModel.create(draw.toDbVTO())
 
-      // canvasModel.draw(draw)
+      canvasModel.draw(draw.toDbSectorInfo(), {
+        x: request.body.x,
+        y: request.body.y,
+        c: request.body.color,
+        o: player.username,
+      })
 
       return reply.status(200).send(draw)
     },

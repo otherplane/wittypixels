@@ -1,4 +1,5 @@
 import { Static, Type, TSchema } from '@sinclair/typebox'
+import { CANVAS_SECTOR_SIZE } from './constants'
 export { Db, Collection, ObjectId, WithId } from 'mongodb'
 
 const Nullable = <T extends TSchema>(type: T) => Type.Union([type, Type.Null()])
@@ -15,16 +16,25 @@ const Palette = Type.Object({
   3: Type.Integer(),
   4: Type.Integer(),
   5: Type.Integer(),
+  6: Type.Integer(),
+  7: Type.Integer(),
 })
 
 export enum Color {
-  // TODO: replace with correct colors
   White = 0,
-  Red = 1,
-  Blue = 2,
-  Green = 3,
+  Black = 1,
+  // metaland
+  Red = 2,
+  // camp build
+  Orange = 3,
+  // dao town
   Yellow = 4,
-  Orange = 5,
+  // devtopia
+  Green = 5,
+  // regenlandia
+  Blue = 6,
+  // defi district
+  Purple = 7,
 }
 
 export const PlayerVTO = Type.Object({
@@ -101,42 +111,48 @@ export const ExtendedPlayerVTO = Type.Object({
 
 export type ExtendedPlayerVTO = Static<typeof ExtendedPlayerVTO>
 
-export const PixelVTO = Type.Object({
+export const DbPixelVTO = Type.Object({
   x: Type.Number(),
   y: Type.Number(),
   c: Type.Enum(Color),
   o: Type.String(),
 })
+export type DbPixelVTO = Static<typeof DbPixelVTO>
+
+export const PixelLocation = Type.Object({
+  sector: Type.String(),
+  x: Type.Number(),
+  y: Type.Number(),
+})
+export type PixelLocation = Static<typeof PixelLocation>
 
 export const CanvasVTO = Type.Object({
-  pixels: Type.Array(Type.Array(PixelVTO)),
+  pixels: Type.Array(Type.Array(DbPixelVTO)),
 })
 export type CanvasVTO = Static<typeof CanvasVTO>
-
-// export const DbCanvasVTO = Type.Object({
-//   pixels: Type.Array(Type.Array(PixelVTO)),
-// })
-// export type DbCanvasVTO = Static<typeof DbCanvasVTO>
-
+// If SECTOR_SIZE === 50
 // {
-//   name: 0,
-//   0: PixelVTO
-//   1: PixelVTO
-//   2: PixelVTO
-//   3: PixelVTO
+//   name: number,
+//   0: Array<PixelVTO>
+//   1: Array<PixelVTO>
+//   2: Array<PixelVTO>
+//   3: Array<PixelVTO>
 //   ...
-//   49: PixelVTO
+//   49: Array<PixelVTO>
 // }
 export const DbSectorVTO = Type.Object(
-  new Array(50).fill(null).reduce(
+  new Array(CANVAS_SECTOR_SIZE).fill(null).reduce(
     (acc, val, index) => ({
       ...acc,
-      [index]: Type.Array(PixelVTO),
+      [index]: Type.Array(DbPixelVTO),
     }),
     { name: Type.Number() }
   )
 )
 export type DbSectorVTO = Static<typeof DbSectorVTO>
+
+// export const DbCanvasVTO = Type.Array( DbSectorVTO)
+// export type DbCanvasVTO = Static<typeof DbCanvasVTO>
 
 export const MintParams = Type.Object({
   address: Type.String(),
