@@ -13,8 +13,8 @@
     "build": "pnpm build:ts",
     "docker:build": "docker build . --no-cache -t witnet/witty-creatures-api",
     "lint": "eslint . -c .eslintrc.cjs --ext .js,.ts,.cjs --fix --ignore-path .gitignore",
-    "test:e2e": "pnpm build:ts && cross-env TS_NODE_FILES=true jest test/.*spec.ts --no-coverage --runInBand --detectOpenHandles --silent=false --forceExit",
-    "test:unit": "echo \"add unit tests\""
+    "test:e2e": "pnpm build:ts && cross-env TS_NODE_FILES=true jest test/.*spec.ts --config=jest.config.js --no-coverage --runInBand --detectOpenHandles --silent=false --forceExit",
+    "test:unit": "pnpm build:ts && cross-env TS_NODE_FILES=true jest unit_test/.*spec.ts --config=jest.unit.config.js --no-coverage"
   },
   "dependencies": {
     "@fastify/autoload": "5.0.0",
