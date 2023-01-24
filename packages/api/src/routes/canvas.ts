@@ -1,8 +1,5 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
-import {
-  PLAYER_MINT_TIMESTAMP,
-  INTERACTION_DURATION_MILLIS,
-} from '../constants'
+import { PLAYER_MINT_TIMESTAMP } from '../constants'
 import { Draw } from '../domain/draw'
 
 import {
@@ -93,9 +90,9 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       }
 
       const draw: Draw = fastify.canvas.draw({
-        ends: currentTimestamp + INTERACTION_DURATION_MILLIS,
+        // ends: currentTimestamp + INTERACTION_DURATION_MILLIS,
         player: player.username,
-        timestamp: currentTimestamp,
+        // timestamp: currentTimestamp,
         x: request.body.x,
         y: request.body.y,
         color: request.body.color,

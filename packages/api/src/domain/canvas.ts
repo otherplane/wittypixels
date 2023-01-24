@@ -17,10 +17,15 @@ import { Draw } from './draw'
 export class Canvas {
   pixels: Array<
     Array<{
-      x: number
-      y: number
+      // we are using only the first letter to reduce the response size
+      // color
       c: number
+      // owner
       o: string
+      // coord x
+      x: number
+      // coord y
+      y: number
     }>
   >
 
@@ -42,7 +47,7 @@ export class Canvas {
     }
   }
 
-  draw(draw: DbDrawVTO): Draw {
+  draw(draw: Omit<DbDrawVTO, 'ends' | 'timestamp'>): Draw {
     const now = Date.now()
 
     const { x, y, player, color } = draw
