@@ -103,6 +103,10 @@ export const CANVAS_SECTOR_SIZE = process.env.CANVAS_SECTOR_SIZE
   ? parseInt(process.env.CANVAS_SECTOR_SIZE)
   : 50
 
+export const OVERWRITE_CANVAS = process.env.OVERWRITE_CANVAS
+  ? parseInt(process.env.OVERWRITE_CANVAS)
+  : false
+
 export default {
   PLAYER_KEY_LENGTH_BYTES,
   PLAYER_MINT_TIMESTAMP,

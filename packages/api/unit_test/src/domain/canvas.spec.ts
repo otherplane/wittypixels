@@ -2,6 +2,7 @@ import { Canvas } from '../../../src/domain/canvas'
 import {
   CANVAS_MAX_X,
   CANVAS_MAX_Y,
+  CANVAS_SECTOR_SIZE,
   INTERACTION_DURATION_MILLIS,
 } from '../../../src/constants'
 
@@ -49,6 +50,21 @@ describe('canvas.ts', () => {
       expect(pixel.o).toBe('123456')
       expect(pixel.x).toBe(4)
       expect(pixel.y).toBe(6)
+    })
+  })
+
+  describe('toDbSectors', () => {
+    it('should return all empty sectors if its not initialized', () => {
+      const canvas = new Canvas()
+      const dbSectors = canvas.toDbSectors()
+
+      expect(dbSectors[0].name).toBe('0-0')
+      expect(dbSectors[1].name).toBe('1-0')
+      expect(
+        dbSectors[Math.floor(CANVAS_MAX_X / CANVAS_SECTOR_SIZE)].name
+      ).toBe('0-1')
+      // Max row x === 700
+      expect(dbSectors.reverse()[0].name).toBe('13-13')
     })
   })
 })

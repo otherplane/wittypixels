@@ -1,4 +1,5 @@
-import { DbDrawVTO } from '../types'
+import { CANVAS_SECTOR_SIZE } from '../constants'
+import { DbDrawVTO, PixelLocation } from '../types'
 
 export class Draw {
   ends: number
@@ -25,6 +26,22 @@ export class Draw {
       x: this.x,
       y: this.y,
       color: this.color,
+    }
+  }
+
+  toDbSectorInfo(): PixelLocation {
+    const x = this.x % 50
+    const y = this.y % 50
+
+    const sectorX = Math.floor(x / CANVAS_SECTOR_SIZE)
+    const sectorY = Math.floor(y / CANVAS_SECTOR_SIZE)
+
+    const name = `${sectorX}-${sectorY}`
+
+    return {
+      x,
+      y,
+      sector: name,
     }
   }
 }

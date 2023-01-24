@@ -91,4 +91,17 @@ export class Player {
       total: totalPlayers,
     }
   }
+
+  static getEmptyPalette(): Palette {
+    return {
+      [Color.Black]: 0,
+      [Color.Blue]: 0,
+      [Color.Green]: 0,
+      [Color.Orange]: 0,
+      [Color.Purple]: 0,
+      [Color.Red]: 0,
+      [Color.White]: 0,
+      [Color.Yellow]: 0,
+    }
+  }
 }

@@ -49,14 +49,7 @@ export class PlayerModel {
       creationIndex: index,
       color,
       // TODO: define empty palette
-      palette: {
-        '0': 0,
-        '1': 0,
-        '2': 0,
-        '3': 0,
-        '4': 0,
-        '5': 0,
-      },
+      palette: Player.getEmptyPalette(),
     })
   }
 
