@@ -176,6 +176,7 @@ export type InteractionResult = Static<typeof InteractionParams>
 export const PlayerLeaderboardInfo = Type.Object({
   username: Type.String(),
   score: Type.Integer(),
+  color: Type.Integer(),
   position: Type.Integer(),
   creationIndex: Type.Integer(),
 })

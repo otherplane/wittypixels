@@ -56,7 +56,7 @@
 
 <script>
 import { useStore } from '@/stores/player'
-import { onBeforeMount, ref } from 'vue'
+import { ref } from 'vue'
 import router from '../router'
 import { importSvg } from '@/composables/importSvg.js'
 export default {
@@ -67,10 +67,6 @@ export default {
       //TODO: update username
     }
     const fromAuth = ref(!!router.currentRoute.value.params?.id)
-
-    onBeforeMount(() => {
-      player.getPlayerInfo()
-    })
     return { player, importSvg, setValue, fromAuth }
   },
 }

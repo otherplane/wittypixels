@@ -115,7 +115,7 @@ export default {
   list-style: none;
   text-align: left;
   visibility: visible;
-  border-radius: 4px;
+  border-radius: 24px;
   margin: 0;
   display: grid;
   opacity: 0;

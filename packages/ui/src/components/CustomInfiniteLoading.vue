@@ -66,7 +66,7 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 8px;
-  background-color: $black;
+  background-color: $white;
   color: $white;
   border-radius: 4px;
 }

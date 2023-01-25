@@ -4,7 +4,7 @@
       <div
         class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-beige sm:mx-0 sm:h-10 sm:w-10"
       >
-        <SvgImage :svg="playerMainImage" />
+        <WittyPixelsIcon />
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
         <h3 class="text-lg leading-6 font-bold text-black" id="modal-title">
@@ -23,29 +23,27 @@
     <button
       @click="emitClaim"
       type="button"
-      class="w-full inline-flex justify-center rounded-md border border-primary shadow-sm px-4 py-2 bg-primary text-base font-bold modal-text hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+      class="w-full inline-flex justify-center rounded-full border border-primary shadow-sm px-4 py-2 bg-primary text-base font-bold modal-text hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
     >
-      CONTINUE
+      Continue
     </button>
     <button
       @click="$parent.$emit('close')"
       type="button"
-      class="mt-3 w-full inline-flex justify-center rounded-md border-primary shadow-sm px-4 py-2 bg-transparent text-base font-bold modal-text-2 hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+      class="mt-3 w-full inline-flex justify-center rounded-full border-primary shadow-sm px-4 py-2 bg-transparent text-base font-bold modal-text-2 hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
     >
-      CANCEL
+      Cancel
     </button>
   </div>
 </template>
 
 <script>
 import { defineComponent, getCurrentInstance } from 'vue'
-import playerMainImage from '@/assets/game-icon.svg?raw'
 export default defineComponent({
   emits: ['claim'],
   setup() {
     const instance = getCurrentInstance()
     return {
-      playerMainImage,
       emitClaim() {
         instance.emit('claim')
       },
