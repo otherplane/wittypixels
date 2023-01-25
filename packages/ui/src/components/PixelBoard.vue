@@ -82,7 +82,8 @@ export default {
           store.pixelMap[generateId({ x, y })] = generatePixel({
             x,
             y,
-            color: '#8a8a8a3d',
+            color: 'white',
+            strokeColor: '#8a8a8a3d',
           })
         }
       }
@@ -126,7 +127,7 @@ export default {
           generatePixel({
             x,
             y,
-            color: selectedColor.value ?? '#8a8a8a3d',
+            color: selectedColor.value ?? 'white',
             strokeColor: 'black',
           })
         )

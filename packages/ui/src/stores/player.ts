@@ -40,7 +40,7 @@ export const useStore = defineStore('player', {
       mintedAwards: [],
       history: [],
       mintParams: null,
-      color: null,
+      color: 0 as number,
       tokenIds: null,
       score: null,
       playersGlobalStats: [],

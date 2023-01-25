@@ -66,7 +66,9 @@ export default {
 
 <style scoped lang="scss">
 .navbar {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   top: 16px;
   left: 8px;
   padding: 0;
@@ -104,7 +106,7 @@ export default {
   .dropdown {
     position: absolute;
     z-index: 50;
-    top: 60px;
+    top: 80px;
     right: 16px;
   }
 }

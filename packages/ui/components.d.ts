@@ -11,7 +11,6 @@ declare module '@vue/runtime-core' {
     CustomInfiniteLoading: typeof import('./src/components/CustomInfiniteLoading.vue')['default']
     CustomPagination: typeof import('./src/components/CustomPagination.vue')['default']
     DrawingPalette: typeof import('./src/components/DrawingPalette.vue')['default']
-    EggSvg: typeof import('./src/components/EggSvg.vue')['default']
     GameActions: typeof import('./src/components/GameActions.vue')['default']
     GameCountdowns: typeof import('./src/components/GameCountdowns.vue')['default']
     GameNotification: typeof import('./src/components/GameNotification.vue')['default']
@@ -43,19 +42,6 @@ declare module '@vue/runtime-core' {
     WitnetMarquee: typeof import('./src/components/WitnetMarquee.vue')['default']
     WitnetStrip: typeof import('./src/components/WitnetStrip.vue')['default']
     WittyCreature: typeof import('./src/components/WittyCreature.vue')['default']
-    WittyPixelsIcon: typeof import('./src/components/WittyPixelsIcon.vue')['default']
-    WittyPixelsLogo: typeof import('./src/components/WittyPixelsLogo.vue')['default']
-  }
-}
-
-export {}
-lt']
-    TabButton: typeof import('./src/components/TabButton.vue')['default']
-    TimeLeft: typeof import('./src/components/TimeLeft.vue')['default']
-    WitnetMarquee: typeof import('./src/components/WitnetMarquee.vue')['default']
-    WitnetStrip: typeof import('./src/components/WitnetStrip.vue')['default']
-    WittyCreature: typeof import('./src/components/WittyCreature.vue')['default']
-    WittyPixelsIcon: typeof import('./src/components/WittyPixelsIcon.vue')['default']
     WittyPixelsLogo: typeof import('./src/components/WittyPixelsLogo.vue')['default']
   }
 }
