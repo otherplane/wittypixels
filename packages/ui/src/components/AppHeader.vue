@@ -55,7 +55,7 @@ export default {
   position: relative;
   text-align: end;
   top: 0px;
-  padding: 16px;
+  padding: 8px 16px;
   display: grid;
   grid-template-columns: 1fr max-content;
   grid-gap: 24px;
