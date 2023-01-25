@@ -40,7 +40,6 @@ declare module '@vue/runtime-core' {
     TabButton: typeof import('./src/components/TabButton.vue')['default']
     TimeLeft: typeof import('./src/components/TimeLeft.vue')['default']
     WitnetMarquee: typeof import('./src/components/WitnetMarquee.vue')['default']
-    WitnetStrip: typeof import('./src/components/WitnetStrip.vue')['default']
     WittyCreature: typeof import('./src/components/WittyCreature.vue')['default']
     WittyPixelsLogo: typeof import('./src/components/WittyPixelsLogo.vue')['default']
   }

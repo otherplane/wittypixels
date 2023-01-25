@@ -2,6 +2,7 @@
   <div class="background">
     <div class="witnet-logo-strip">
       <slot name="top" />
+      <WitnetMarquee />
       <AppHeader :hideNavBar="hideNavBar" />
     </div>
     <div ref="playGroundRef" class="layout" :class="{ padding }">
