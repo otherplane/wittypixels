@@ -17,6 +17,10 @@ export type GeneratePixelArgs = {
   color: string
   strokeColor?: string
 }
+export enum Position {
+  right = 'right',
+  left = 'left',
+}
 export type Coordinates = {
   x: number
   y: number

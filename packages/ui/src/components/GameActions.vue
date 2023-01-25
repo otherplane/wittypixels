@@ -60,7 +60,6 @@ export default {
     }
     function mint() {
       if (type.value !== 'disable') {
-        console.log(`openModal('mint')`)
         emit('openMintModal')
       }
     }

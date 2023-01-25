@@ -5,11 +5,21 @@
       class="list"
     >
       <PlayerGlobalData
-        v-for="(player, index) in player.playersGlobalStats"
-        :class="{ even: index % 2 }"
-        :index="index"
+        :border="true"
+        :index="player.creationIndex"
         :key="player.username"
         :name="player.username"
+        :color="player.color"
+        :position="0"
+        :score="player.score"
+      />
+      <PlayerGlobalData
+        v-for="(player, index) in player.playersGlobalStats"
+        :class="{ even: index % 2 }"
+        :index="player.creationIndex"
+        :key="player.username"
+        :name="player.username"
+        :color="player.color"
         :position="player.position + 1"
         :score="player.score"
       />

@@ -3,21 +3,24 @@
     <template v-slot:main>
       <div class="view-container">
         <SectionHeader title="Interactions history" />
-        <div
+        <GameInfo v-if="!player.history.length" class="empty-state">
+          <div class="long-info bold">
+            <p class="state-text">No interactions yet.</p>
+            <p>
+              What are you waiting for? Go look for other players and ask them
+              to scan your Qr code now!
+            </p>
+          </div>
+        </GameInfo>
+        <InteractionEntry
           v-for="(interaction, index) in player.history"
           :key="interaction.timestamp"
-          class="interaction-container"
           :class="{ even: index % 2 }"
-        >
-          <p class="interaction-label date">
-            {{ formatDate(interaction.timestamp) }}
-          </p>
-          <p>
-            <span class="highlight">{{ interaction.from }}</span>
-            sent <span class="highlight">{{ interaction.points }}</span> px to
-            <span class="highlight">{{ interaction.to }}</span>
-          </p>
-        </div>
+          :points="interaction.points"
+          :from="interaction.to == player.username ? interaction.from : null"
+          :to="interaction.from == player.username ? interaction.to : null"
+          :timestamp="interaction.timestamp"
+        />
         <CustomInfiniteLoading
           :getItems="player.getInteractionHistory"
           :list="player.history || []"
@@ -58,20 +61,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.empty-state {
+  margin-top: 16px;
+}
 .even {
   background: $transparent-lightgrey;
   border-radius: 4px;
 }
 .view-container {
   row-gap: 0px;
-}
-.interaction-container {
-  padding: 16px;
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  grid-template-rows: max-content;
-  column-gap: 24px;
-  text-align: left;
 }
 .interaction-label {
   color: var(--primary-color);

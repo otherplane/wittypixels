@@ -103,6 +103,6 @@ export default {
   width: max-content;
   overflow: hidden;
   text-align: left;
-  font-size: 14px;
+  font-size: 12px;
 }
 </style>

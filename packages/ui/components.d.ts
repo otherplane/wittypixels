@@ -6,6 +6,7 @@ import 'vue'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppHeader: typeof import('./src/components/AppHeader.vue')['default']
+    ColorContainer: typeof import('./src/components/ColorContainer.vue')['default']
     ColorSelector: typeof import('./src/components/ColorSelector.vue')['default']
     CustomButton: typeof import('./src/components/CustomButton.vue')['default']
     CustomInfiniteLoading: typeof import('./src/components/CustomInfiniteLoading.vue')['default']
@@ -17,8 +18,10 @@ declare module '@vue/runtime-core' {
     GameInfo: typeof import('./src/components/GameInfo.vue')['default']
     GameNotification: typeof import('./src/components/GameNotification.vue')['default']
     GameOverModal: typeof import('./src/components/GameOverModal.vue')['default']
+    InteractionEntry: typeof import('./src/components/InteractionEntry.vue')['default']
     InteractionInfo: typeof import('./src/components/InteractionInfo.vue')['default']
     LabelMintStatus: typeof import('./src/components/LabelMintStatus.vue')['default']
+    LeaderBoardIndex: typeof import('./src/components/LeaderBoardIndex.vue')['default']
     ListStats: typeof import('./src/components/ListStats.vue')['default']
     MainLayout: typeof import('./src/components/MainLayout.vue')['default']
     MintInformation: typeof import('./src/components/MintInformation.vue')['default']
@@ -31,6 +34,7 @@ declare module '@vue/runtime-core' {
     ModalRedeemInfo: typeof import('./src/components/modals/ModalRedeemInfo.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     NFTPreview: typeof import('./src/components/NFTPreview.vue')['default']
+    PaintSvg: typeof import('./src/components/PaintSvg.vue')['default']
     PanelSlider: typeof import('./src/components/PanelSlider.vue')['default']
     PixelBoard: typeof import('./src/components/PixelBoard.vue')['default']
     PlayerGlobalData: typeof import('./src/components/PlayerGlobalData.vue')['default']
@@ -43,6 +47,7 @@ declare module '@vue/runtime-core' {
     TimeLeft: typeof import('./src/components/TimeLeft.vue')['default']
     WitnetMarquee: typeof import('./src/components/WitnetMarquee.vue')['default']
     WittyCreature: typeof import('./src/components/WittyCreature.vue')['default']
+    WittyPixelsIcon: typeof import('./src/components/WittyPixelsIcon.vue')['default']
     WittyPixelsLogo: typeof import('./src/components/WittyPixelsLogo.vue')['default']
   }
 }

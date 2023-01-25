@@ -13,5 +13,6 @@
   font-weight: bold;
   font-size: 12px;
   padding: 4px 16px;
+  max-width: 90vw;
 }
 </style>

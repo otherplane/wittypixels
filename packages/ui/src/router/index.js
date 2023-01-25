@@ -76,11 +76,19 @@ const routes = [
     name: 'leaderboard',
     path: '/leaderboard',
     component: LeaderBoard,
+    beforeEnter: () => {
+      const store = useStore()
+      store.getPlayerInfo()
+    },
   },
   {
     name: 'interactionHistory',
     path: '/interactions',
     component: InteractionHistory,
+    beforeEnter: () => {
+      const store = useStore()
+      store.getPlayerInfo()
+    },
   },
   {
     name: 'settings',
