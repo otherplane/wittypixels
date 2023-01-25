@@ -4,6 +4,7 @@ $brown: #DA4E00;
 $red: #bd2635;
 $yellow: #ee9c03;
 $black: #1c1c1c;
+$transparent-black: #1c1c1cb7;
 $grey: #8A8A8A;
 $lightgrey: #BBBBBB;
 $transparent-lightgrey: #bbbbbb7c;
@@ -84,11 +85,11 @@ video {
   font-size: 16px;
 }
 .dark-text {
-  font-weight: 600;
-  color: $black
+  font-weight: medium;
+  color: $black;
 }
 .light-text {
-  font-weight: 600;
+  font-weight: medium;
   color: $grey
 }
 .bold {

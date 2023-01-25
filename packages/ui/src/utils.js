@@ -33,7 +33,7 @@ export function formatDistanceFromNow(timestamp) {
       utcToZonedTime(timestamp, TIMEZONE),
       utcToZonedTime(new Date(), TIMEZONE),
       {
-        includeSeconds: true,
+        includeSeconds: false,
         addSuffix: true,
       }
     )

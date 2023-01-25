@@ -5,7 +5,12 @@
     </template>
     <template v-slot:main>
       <div class="float">
-        <GameCountdowns />
+        <div class="game-info">
+          <GameCountdowns />
+          <GameInfo
+            ><p>@{{ player.username }}</p></GameInfo
+          >
+        </div>
         <NFTPreview />
         <MintInformation />
       </div>
@@ -112,11 +117,19 @@ export default {
   },
 }
 </script>
-<style>
+<style lang="scss">
 .float {
   position: absolute;
   max-width: 700px;
   z-index: 20;
   width: 100%;
+  .game-info {
+    margin: 16px;
+    display: grid;
+    grid-template-rows: max-content max-content;
+    grid-gap: 8px;
+    justify-content: space-between;
+    grid-template-rows: 1fr;
+  }
 }
 </style>
