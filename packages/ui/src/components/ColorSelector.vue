@@ -45,7 +45,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .color {
-  height: 30px;
+  height: 24px;
   width: 60px;
   display: flex;
   justify-content: center;
@@ -53,7 +53,7 @@ export default {
   border-radius: 24px;
   cursor: pointer;
   .text {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     color: $black;
   }

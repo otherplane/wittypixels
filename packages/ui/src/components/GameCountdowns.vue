@@ -1,24 +1,28 @@
 <template>
   <transition name="fade">
-    <p v-if="!player.demoOver" class="countdown">
-      <span>DEMO ENDS IN:</span>
-      <TimeLeft
-        class="time-left"
-        :timestamp="player.demoOverTimeMilli"
-        :seconds="true"
-      />
-    </p>
-    <p v-else-if="!player.gameOver" class="countdown">
-      <span>GAME ENDS IN:</span>
-      <TimeLeft
-        class="time-left"
-        :timestamp="player.gameOverTimeMilli"
-        :seconds="true"
-      />
-    </p>
-    <p v-else class="countdown">
-      <span>GAME OVER</span>
-    </p>
+    <GameInfo v-if="!player.demoOver">
+      <p>
+        <span>DEMO ENDS IN:</span>
+        <TimeLeft
+          class="time-left"
+          :timestamp="player.demoOverTimeMilli"
+          :seconds="true"
+        />
+      </p>
+    </GameInfo>
+    <GameInfo v-else-if="!player.gameOver">
+      <p>
+        <span>GAME ENDS IN:</span>
+        <TimeLeft
+          class="time-left"
+          :timestamp="player.gameOverTimeMilli"
+          :seconds="true"
+        />
+      </p>
+    </GameInfo>
+    <GameInfo v-else>
+      <p>GAME OVER</p>
+    </GameInfo>
   </transition>
   <transition name="fade">
     <div v-if="!player.mintingAllow && player.previews.length">
@@ -61,14 +65,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.countdown {
-  background-color: $grey;
-  width: 100%;
-  color: $white;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 2px 16px;
-}
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.5s;

@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     DrawingPalette: typeof import('./src/components/DrawingPalette.vue')['default']
     GameActions: typeof import('./src/components/GameActions.vue')['default']
     GameCountdowns: typeof import('./src/components/GameCountdowns.vue')['default']
+    GameInfo: typeof import('./src/components/GameInfo.vue')['default']
     GameNotification: typeof import('./src/components/GameNotification.vue')['default']
     GameOverModal: typeof import('./src/components/GameOverModal.vue')['default']
     InteractionInfo: typeof import('./src/components/InteractionInfo.vue')['default']

@@ -6,22 +6,22 @@
         :style="{ 'background-color': pixelToPaint?.fill ?? 'lightgrey' }"
       ></div>
       <div class="pixel-info">
-        <div class="coordinates">
-          <p class="dark-text">
-            x {{ standardizePixelCoordinates(pixelToPaint?.x) }}
-          </p>
-          <p class="dark-text">
-            y {{ standardizePixelCoordinates(pixelToPaint?.y) }}
-          </p>
-        </div>
-        <div class="author">
-          <p v-if="pixelToPaint?.author" class="dark-text">
-            @{{ pixelToPaint?.author }}
-          </p>
+        <div class="info-top">
+          <div class="coordinates">
+            <p class="dark-text">
+              x {{ standardizePixelCoordinates(pixelToPaint?.x) }}
+            </p>
+            <p class="dark-text">
+              y {{ standardizePixelCoordinates(pixelToPaint?.y) }}
+            </p>
+          </div>
           <p class="light-text time">
             {{ formatDistanceFromNow(pixelToPaint?.timestamp) }}
           </p>
         </div>
+        <p v-if="pixelToPaint?.author" class="dark-text">
+          @{{ pixelToPaint?.author }}
+        </p>
       </div>
     </div>
     <div class="palette">
@@ -86,16 +86,17 @@ export default {
 }
 .selected-pixel {
   display: grid;
-  grid-template-columns: max-content 1fr max-content;
+  grid-template-columns: max-content 1fr;
   grid-gap: 16px;
   border-bottom: 2px solid $lightgrey;
   padding: 4px 8px 16px 8px;
   align-items: center;
+  justify-content: center;
   .pixel-color {
     border: 2px solid $black;
     display: flex;
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     justify-content: center;
     align-items: center;
   }
@@ -103,20 +104,23 @@ export default {
     cursor: pointer;
     display: grid;
     grid-template-rows: 1fr 1fr;
-    justify-items: flex-start;
     grid-gap: 8px;
-    .coordinates {
+    text-align: left;
+    width: 100%;
+    .info-top {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      width: 70px;
-      grid-gap: 4px;
-    }
-    .author {
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      justify-content: center;
-      grid-gap: 8px;
-      align-items: center;
+      grid-template-columns: max-content max-content;
+      justify-content: space-between;
+      .coordinates {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 70px;
+        grid-gap: 4px;
+      }
+      .time {
+        height: 100%;
+        align-self: flex-end;
+      }
     }
   }
 }
@@ -124,6 +128,6 @@ export default {
   display: grid;
   width: 100%;
   grid-template-columns: repeat(auto-fill, 60px);
-  grid-gap: 16px;
+  grid-gap: 8px;
 }
 </style>
