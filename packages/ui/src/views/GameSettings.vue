@@ -1,7 +1,16 @@
 <template>
-  <MainLayout :padding="true">
+  <MainLayout :hideNavBar="fromAuth">
     <template v-slot:main>
       <div class="container">
+        <SectionHeader title="Settings" />
+        <label class="form-label">Name</label>
+        <CustomInput
+          class="field"
+          type="text"
+          label="name"
+          :value="player.username"
+          @change="setValue"
+        />
         <SectionHeader title="Instructions" />
         <p class="paragraph">
           To <span class="bold orange">send color pixels</span> to somebody, you
@@ -37,22 +46,39 @@
         </p>
       </div>
     </template>
+    <template v-slot:bottom>
+      <router-link v-if="fromAuth" to="/">
+        <CustomButton type="secondary" :slim="true"> Continue</CustomButton>
+      </router-link>
+    </template>
   </MainLayout>
 </template>
 
 <script>
 import { useStore } from '@/stores/player'
+import { onBeforeMount, ref } from 'vue'
+import router from '../router'
 import { importSvg } from '@/composables/importSvg.js'
 export default {
   setup() {
     const player = useStore()
-    return { player, importSvg }
+
+    function setValue() {
+      //TODO: update username
+    }
+    const fromAuth = ref(!!router.currentRoute.value.params?.id)
+
+    onBeforeMount(() => {
+      player.getPlayerInfo()
+    })
+    return { player, importSvg, setValue, fromAuth }
   },
 }
 </script>
 
 <style lang="scss" scoped>
 .container {
+  padding: 16px;
   text-align: left;
   font-size: 18px;
   .title {
@@ -68,6 +94,9 @@ export default {
   .paragraph {
     color: $black;
     margin-bottom: 8px;
+  }
+  .field {
+    margin-bottom: 24px;
   }
   .link {
     color: var(--primary-color);

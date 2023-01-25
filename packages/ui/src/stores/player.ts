@@ -132,6 +132,7 @@ export const useStore = defineStore('player', {
         this.clearError(ErrorKey.auth)
         await this.getPlayerInfo()
         await this.getGlobalStats()
+        router.push(`/settings/${key}`)
       }
     },
     async interact({ key }: any) {

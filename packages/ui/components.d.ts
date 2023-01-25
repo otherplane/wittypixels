@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
     ColorSelector: typeof import('./src/components/ColorSelector.vue')['default']
     CustomButton: typeof import('./src/components/CustomButton.vue')['default']
     CustomInfiniteLoading: typeof import('./src/components/CustomInfiniteLoading.vue')['default']
+    CustomInput: typeof import('./src/components/CustomInput.vue')['default']
     CustomPagination: typeof import('./src/components/CustomPagination.vue')['default']
     DrawingPalette: typeof import('./src/components/DrawingPalette.vue')['default']
     GameActions: typeof import('./src/components/GameActions.vue')['default']

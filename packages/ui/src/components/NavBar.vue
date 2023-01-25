@@ -14,9 +14,7 @@
         <div class="tab-container" :class="{ visible: isMenuVisible }">
           <router-link class="tab" to="/leaderboard"> Leaderboard </router-link>
           <router-link class="tab" to="/interactions"> History </router-link>
-          <router-link class="tab" to="/instructions">
-            Instructions
-          </router-link>
+          <router-link class="tab" to="/settings">Settings</router-link>
           <div class="tab" @click="openExportModal()" type="dark">
             Get backup
           </div>
