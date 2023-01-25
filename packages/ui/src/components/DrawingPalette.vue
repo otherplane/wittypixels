@@ -1,24 +1,28 @@
 <template>
   <div class="palette-container" ref="targetBoard">
-    <div v-if="pixelToPaint" class="selected-pixel">
+    <div v-if="pixelToPaint" class="selected-pixel" @click="closePanel">
       <div
         class="pixel-color"
         :style="{ 'background-color': pixelToPaint?.fill ?? 'lightgrey' }"
       ></div>
       <div class="pixel-info">
-        <p class="dark-text">
-          x {{ standardizePixelCoordinates(pixelToPaint?.x) }}
-        </p>
-        <p class="dark-text">
-          y {{ standardizePixelCoordinates(pixelToPaint?.y) }}
-        </p>
-        <p v-if="pixelToPaint?.author" class="dark-text double-col">
-          @{{ pixelToPaint?.author }}
-        </p>
+        <div class="coordinates">
+          <p class="dark-text">
+            x {{ standardizePixelCoordinates(pixelToPaint?.x) }}
+          </p>
+          <p class="dark-text">
+            y {{ standardizePixelCoordinates(pixelToPaint?.y) }}
+          </p>
+        </div>
+        <div class="author">
+          <p v-if="pixelToPaint?.author" class="dark-text">
+            @{{ pixelToPaint?.author }}
+          </p>
+          <p class="light-text time">
+            {{ formatDistanceFromNow(pixelToPaint?.timestamp) }}
+          </p>
+        </div>
       </div>
-      <p class="light-text time">
-        {{ formatTimestamp(pixelToPaint?.timestamp) }}
-      </p>
     </div>
     <div class="palette">
       <ColorSelector
@@ -29,8 +33,8 @@
       />
     </div>
     <p class="light-text copy">
-      Remember: you can get more paints into your pallete by getting your
-      pendant scanned by other players!
+      Remember: you can get more paints by getting your pendant scanned by other
+      players!
     </p>
     <CustomButton type="primary" :slim="true" @click="paintPixel">
       Paint pixel
@@ -42,7 +46,7 @@
 import { COLORS } from '@/constants'
 import { computed } from 'vue'
 import { useStore } from '@/stores/player'
-import { standardizePixelCoordinates, formatTimestamp } from '@/utils'
+import { standardizePixelCoordinates, formatDistanceFromNow } from '@/utils'
 export default {
   setup() {
     const store = useStore()
@@ -60,12 +64,16 @@ export default {
     function paintPixel() {
       store.paintPixel()
     }
+    function closePanel() {
+      store.togglePalettePanel(false)
+    }
     return {
       colors,
       paintPixel,
       pixelToPaint,
       standardizePixelCoordinates,
-      formatTimestamp,
+      formatDistanceFromNow,
+      closePanel,
     }
   },
 }
@@ -81,32 +89,41 @@ export default {
   grid-template-columns: max-content 1fr max-content;
   grid-gap: 16px;
   border-bottom: 2px solid $lightgrey;
-  padding: 0 8px 16px 8px;
+  padding: 4px 8px 16px 8px;
   align-items: center;
   .pixel-color {
     border: 2px solid $black;
     display: flex;
     width: 50px;
-    height: 40px;
-    border-radius: 4px;
+    height: 50px;
     justify-content: center;
     align-items: center;
   }
   .pixel-info {
+    cursor: pointer;
     display: grid;
-    grid-template-columns: max-content max-content;
     grid-template-rows: 1fr 1fr;
     justify-items: flex-start;
     grid-gap: 8px;
-    .double-col {
-      grid-column: 1 / span 2;
+    .coordinates {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 70px;
+      grid-gap: 4px;
+    }
+    .author {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      justify-content: center;
+      grid-gap: 8px;
+      align-items: center;
     }
   }
 }
 .palette {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, 40px);
+  grid-template-columns: repeat(auto-fill, 60px);
   grid-gap: 16px;
 }
 </style>

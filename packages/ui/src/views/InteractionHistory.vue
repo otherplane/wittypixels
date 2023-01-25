@@ -10,7 +10,7 @@
           :class="{ even: index % 2 }"
         >
           <p class="interaction-label date">
-            {{ formatTimestamp(interaction.timestamp) }}
+            {{ formatDate(interaction.timestamp) }}
           </p>
           <p>
             <span class="highlight">{{ interaction.from }}</span>
@@ -33,7 +33,7 @@ import { useStore } from '@/stores/player'
 import { ref } from 'vue'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
-import { formatTimestamp } from '@/utils'
+import { formatDate } from '@/utils'
 export default {
   setup() {
     const player = useStore()
@@ -52,7 +52,7 @@ export default {
       format,
       pushItems,
       totalItems,
-      formatTimestamp,
+      formatDate,
     }
   },
 }
