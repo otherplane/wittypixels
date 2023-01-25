@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <router-link to="/">
-      <svgImage class="logo" :svg="wittyLogo" />
+      <WittyPixelsLogo class="logo" />
     </router-link>
     <NavBar
       v-if="!hideNavBar"
@@ -57,13 +57,16 @@ export default {
   top: 0px;
   padding: 16px;
   display: grid;
-  grid-template-columns: max-content max-content;
+  grid-template-columns: 1fr max-content;
+  grid-gap: 24px;
   grid-template-rows: max-content;
   justify-content: space-between;
   .logo {
-    height: 10vh;
     position: relative;
     cursor: pointer;
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
   }
   .witnet-subtitle {
     font-size: 10px;
@@ -76,7 +79,7 @@ export default {
     margin: 0 auto;
     max-width: 700px;
     .logo {
-      height: 80px;
+      width: max-content;
     }
   }
 }

@@ -21,6 +21,9 @@ export type Coordinates = {
   x: number
   y: number
 }
+export interface Colors {
+  [key: number]: string
+}
 export interface PalettePoints {
   [key: number]: number
 }

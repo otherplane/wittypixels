@@ -1,0 +1,90 @@
+<template>
+  <svg
+    width="233"
+    height="29"
+    viewBox="0 0 233 29"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M3 7.5H0V19.5H3V7.5Z" fill="black" />
+    <path d="M7.5 19.5H3V22.5H7.5V19.5Z" fill="black" />
+    <path d="M10.5 7.5H7.5V19.5H10.5V7.5Z" fill="black" />
+    <path d="M18 7.5H15V19.5H18V7.5Z" fill="black" />
+    <path d="M15 19.5H10.5V22.5H15V19.5Z" fill="black" />
+    <path d="M25.5 7.5H21V10.5H25.5V7.5Z" fill="black" />
+    <path d="M25.5 19.5H19.5V22.5H25.5V19.5Z" fill="black" />
+    <path d="M28.5 10.5H25.5V19.5H28.5V10.5Z" fill="black" />
+    <path d="M28.5 3H25.5V6H28.5V3Z" :fill="color" />
+    <path d="M34.5 19.5H28.5V22.5H34.5V19.5Z" fill="black" />
+    <path d="M39 10.5H36V19.5H39V10.5Z" fill="black" />
+    <path d="M39 3H36V7.5H39V3Z" fill="black" />
+    <path d="M46.5 7.5H39V10.5H46.5V7.5Z" fill="black" />
+    <path d="M48 19.5H39V22.5H48V19.5Z" fill="black" />
+    <path d="M52.5 10.5H49.5V19.5H52.5V10.5Z" fill="black" />
+    <path d="M52.5 3H49.5V7.5H52.5V3Z" fill="black" />
+    <path d="M60 7.5H52.5V10.5H60V7.5Z" fill="black" />
+    <path d="M61.5 19.5H52.5V22.5H61.5V19.5Z" fill="black" />
+    <path d="M66 7.5H63V19.5H66V7.5Z" fill="black" />
+    <path d="M72 19.5H66V22.5H72V19.5Z" fill="black" />
+    <path d="M76.5 7.5H73.5V25.5H76.5V7.5Z" fill="black" />
+    <path d="M73.5 25.5H63V28.5H73.5V25.5Z" fill="black" />
+    <path d="M138 10.5H135V28.5H138V10.5Z" fill="black" />
+    <path d="M147 7.5H138V10.5H147V7.5Z" fill="black" />
+    <path d="M150 10.5H147V19.5H150V10.5Z" fill="black" />
+    <path d="M147 19.5H139.5V22.5H147V19.5Z" fill="black" />
+    <path d="M157.5 7.5H153V10.5H157.5V7.5Z" fill="black" />
+    <path d="M157.5 19.5H151.5V22.5H157.5V19.5Z" fill="black" />
+    <path d="M160.5 10.5H157.5V19.5H160.5V10.5Z" fill="black" />
+    <path d="M166.5 19.5H160.5V22.5H166.5V19.5Z" fill="black" />
+    <path d="M160.5 3H157.5V6H160.5V3Z" :fill="color" />
+    <path d="M171 7.5H168V10.5H171V7.5Z" fill="black" />
+    <path d="M174 10.5H171V13.5H174V10.5Z" fill="black" />
+    <path d="M177 13.5H174V16.5H177V13.5Z" fill="black" />
+    <path d="M180 10.5H177V13.5H180V10.5Z" fill="black" />
+    <path d="M183 7.5H180V10.5H183V7.5Z" fill="black" />
+    <path d="M174 16.5H171V19.5H174V16.5Z" fill="black" />
+    <path d="M171 19.5H168V22.5H171V19.5Z" fill="black" />
+    <path d="M180 16.5H177V19.5H180V16.5Z" fill="black" />
+    <path d="M183 19.5H180V22.5H183V19.5Z" fill="black" />
+    <path d="M187.5 10.5H184.5V19.5H187.5V10.5Z" fill="black" />
+    <path d="M196.5 7.5H187.5V10.5H196.5V7.5Z" fill="black" />
+    <path d="M199.5 10.5H196.5V13.5H199.5V10.5Z" fill="black" />
+    <path d="M196.5 13.5H189V16.5H196.5V13.5Z" fill="black" />
+    <path d="M199.5 19.5H187.5V22.5H199.5V19.5Z" fill="black" />
+    <path d="M207 3H202.5V6H207V3Z" fill="black" />
+    <path d="M210 6H207V19.5H210V6Z" fill="black" />
+    <path d="M207 19.5H201V22.5H207V19.5Z" fill="black" />
+    <path d="M216 19.5H210V22.5H216V19.5Z" fill="black" />
+    <path d="M229.5 19.5H217.5V22.5H229.5V19.5Z" fill="black" />
+    <path d="M232.5 16.5H229.5V19.5H232.5V16.5Z" fill="black" />
+    <path d="M229.5 13.5H220.5V16.5H229.5V13.5Z" fill="black" />
+    <path d="M220.5 10.5H217.5V13.5H220.5V10.5Z" fill="black" />
+    <path d="M232.5 7.5H220.5V10.5H232.5V7.5Z" fill="black" />
+    <path d="M99 7.5H96V22.5H99V7.5Z" fill="black" />
+    <path d="M106.5 22.5H97.5V25.5H106.5V22.5Z" fill="black" />
+    <path d="M108 7.5H105V22.5H108V7.5Z" fill="black" />
+    <path d="M106.5 4.5H97.5V7.5H106.5V4.5Z" fill="black" />
+    <path d="M103.5 1.5H100.5V4.5H103.5V1.5Z" fill="black" />
+    <path d="M112.5 0H102V3H112.5V0Z" fill="black" />
+    <path d="M114 1.5H111V13.5H114V1.5Z" fill="black" />
+    <path d="M117 13.5H112.5V16.5H117V13.5Z" fill="black" />
+    <path d="M127.5 10.5H115.5V13.5H127.5V10.5Z" fill="black" />
+    <path d="M129 10.5H126V19.5H129V10.5Z" fill="black" />
+    <path d="M127.5 16.5H115.5V19.5H127.5V16.5Z" fill="black" />
+    <path
+      d="M85.5 7.5V10.5H88.5V7.5H85.5ZM91.5 7.5V10.5H94.5V13.5H91.5V19.5H88.5V22.5H94.5H96V10.5V7.5H91.5ZM87 13.5V16.5H90V13.5H87ZM82.5 16.5V19.5H85.5V16.5H82.5Z"
+      :fill="color"
+    />
+  </svg>
+</template>
+
+<script lang="ts">
+import { getColor } from '@/composables/getColor'
+export default {
+  setup() {
+    return {
+      color: getColor(),
+    }
+  },
+}
+</script>

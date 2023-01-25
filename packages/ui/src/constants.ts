@@ -1,3 +1,5 @@
+import type { Colors } from '@/types'
+
 export const CONTRACT_ADDRESS =
   import.meta.env.VITE_CONTRACT_ADDRESS ||
   '0xE41D6D1cFe55A0fc2035dD663D873D15f21d93c2'
@@ -21,13 +23,14 @@ export const BASE_URL =
 
 export const ATTRIBUTES = {}
 
-export const COLORS = {
+export const COLORS: Colors = {
   0: 'red',
   1: 'orange',
   2: 'yellow',
   3: 'green',
   4: 'blue',
-  5: 'purple',
+  5: '#8C52FF',
+  6: '#8C52FF',
 }
 export const TIMEZONE = 'America/Denver'
 export const PIXEL_SIZE = 16
