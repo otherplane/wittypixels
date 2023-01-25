@@ -1,7 +1,7 @@
 <template>
-  <MainLayout :padding="true">
+  <MainLayout>
     <template v-slot:main>
-      <div class="container">
+      <div class="view-container">
         <SectionHeader title="Leaderboard" />
         <ListStats :gameEntity="primaryTab" :entityAttribute="secondaryTab" />
       </div>

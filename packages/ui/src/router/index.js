@@ -10,7 +10,7 @@ import Home from '../views/App.vue'
 import MainContent from '../views/MainContent.vue'
 import InitGame from '../views/InitGame.vue'
 import Disclaimer from '../views/GameDisclaimer.vue'
-import Instructions from '../views/GameInstructions.vue'
+import GameSettings from '../views/GameSettings.vue'
 import LeaderBoard from '../views/LeaderBoard.vue'
 import InteractionHistory from '../views/InteractionHistory.vue'
 import ScanId from '../views/ScanId.vue'
@@ -83,9 +83,9 @@ const routes = [
     component: InteractionHistory,
   },
   {
-    name: 'instructions',
-    path: '/instructions',
-    component: Instructions,
+    name: 'settings',
+    path: '/settings/:id?',
+    component: GameSettings,
   },
   {
     name: 'import',

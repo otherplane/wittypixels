@@ -5,7 +5,7 @@
       <WitnetMarquee />
       <AppHeader :hideNavBar="hideNavBar" />
     </div>
-    <div ref="playGroundRef" class="layout" :class="{ padding }">
+    <div ref="playGroundRef" class="layout">
       <slot name="main" />
       <div class="sticky-bottom">
         <div class="action-container">

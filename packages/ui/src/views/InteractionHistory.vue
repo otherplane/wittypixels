@@ -1,7 +1,7 @@
 <template>
-  <MainLayout :padding="true">
+  <MainLayout>
     <template v-slot:main>
-      <div class="container">
+      <div class="view-container">
         <SectionHeader title="Interactions history" />
         <div
           v-for="(interaction, index) in player.history"
@@ -62,7 +62,7 @@ export default {
   background: $transparent-lightgrey;
   border-radius: 4px;
 }
-.container {
+.view-container {
   row-gap: 0px;
 }
 .interaction-container {
