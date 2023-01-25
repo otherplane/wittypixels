@@ -46,13 +46,12 @@ export default {
 <style scoped lang="scss">
 .color {
   height: 30px;
-  width: 40px;
+  width: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 24px;
   cursor: pointer;
-  border: 2px solid $black;
   .text {
     font-size: 14px;
     font-weight: bold;
@@ -66,6 +65,6 @@ export default {
   }
 }
 .selected {
-  border: 2px dashed $black;
+  border: 2px solid $black;
 }
 </style>
