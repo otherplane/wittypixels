@@ -107,6 +107,10 @@ export const OVERWRITE_CANVAS = process.env.OVERWRITE_CANVAS
   ? parseInt(process.env.OVERWRITE_CANVAS)
   : false
 
+export const CANVAS_CACHE_SIZE = process.env.CANVAS_CACHE_SIZE
+  ? parseInt(process.env.CANVAS_CACHE_SIZE)
+  : 100000
+
 export default {
   PLAYER_KEY_LENGTH_BYTES,
   PLAYER_MINT_TIMESTAMP,
