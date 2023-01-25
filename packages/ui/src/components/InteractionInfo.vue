@@ -53,6 +53,7 @@ export default {
 }
 
 .counter {
+  border-bottom: 1px solid $white;
   color: $white;
   display: grid;
   grid-template-columns: 1fr;

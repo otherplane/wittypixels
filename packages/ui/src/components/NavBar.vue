@@ -5,6 +5,7 @@
         <a class="target-burger" :class="{ visible: isMenuVisible }">
           <ul class="buns">
             <li class="bun"></li>
+            <li class="bun center"></li>
             <li class="bun"></li>
           </ul>
         </a>
@@ -106,7 +107,7 @@ export default {
   .dropdown {
     position: absolute;
     z-index: 50;
-    top: 80px;
+    top: 60px;
     right: 16px;
   }
 }
@@ -181,11 +182,14 @@ export default {
       width: 32px;
       height: 32px;
       li.bun {
-        -webkit-transform: rotate(45deg) translateZ(0);
-        transform: rotate(45deg) translateZ(0);
+        -webkit-transform: rotate(40deg) translateZ(0);
+        transform: rotate(40deg) translateZ(0);
+        &.center {
+          display: none;
+        }
         &:last-child {
-          -webkit-transform: rotate(-45deg) translateZ(0);
-          transform: rotate(-45deg) translateZ(0);
+          -webkit-transform: rotate(-40deg) translateZ(0);
+          transform: rotate(-40deg) translateZ(0);
         }
       }
     }
@@ -204,20 +208,24 @@ export default {
     color: var(--primary-color);
     .bun {
       width: 100%;
-      height: 3px;
+      height: 2.5px;
       background-color: var(--primary-color);
       position: absolute;
       top: 50%;
-      margin-top: -0.75px;
-      -webkit-transform: translateY(-3.75px) translateZ(0);
-      transform: translateY(-3.75px) translateZ(0);
+      margin-top: -8px;
+      -webkit-transform: translateY(-4px) translateZ(0);
+      transform: translateY(-4px) translateZ(0);
       -webkit-transition: -webkit-transform 1s cubic-bezier(0.23, 1, 0.32, 1),
         background-color 1s cubic-bezier(0.23, 1, 0.32, 1);
       transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1),
         background-color 1s cubic-bezier(0.23, 1, 0.32, 1);
+      &.center {
+        -webkit-transform: translateY(4px) translateZ(0);
+        transform: translateY(4px) translateZ(0);
+      }
       &:last-child {
-        -webkit-transform: translateY(3.75px) translateZ(0);
-        transform: translateY(3.75px) translateZ(0);
+        -webkit-transform: translateY(12px) translateZ(0);
+        transform: translateY(12px) translateZ(0);
       }
     }
   }
