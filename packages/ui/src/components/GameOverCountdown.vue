@@ -21,11 +21,12 @@
 import { useStore } from '@/stores/player'
 import { useLocalStore } from '@/stores/local'
 import { useGameStore } from '@/stores/game'
+import { useModalStore } from '@/stores/modal'
 import { formatNumber } from '../utils'
 import { useWeb3 } from '../composables/useWeb3'
-import { onMounted, onBeforeUnmount, computed, watch } from 'vue'
+import { onMounted, onBeforeUnmount, computed, watch, reactive } from 'vue'
 import { POLLER_MILLISECONDS } from '@/constants.js'
-import { TokenStatus } from '@/types'
+import { TokenStatus, ModalKey } from '@/types'
 export default {
   setup() {
     let tokenStatusPoller: any
@@ -33,11 +34,13 @@ export default {
     const player = useStore()
     const gameStore = useGameStore()
     const localStore = useLocalStore()
+    const modalStore = useModalStore()
     const web3WittyCreatures = useWeb3()
     const txHash = computed(() => localStore.mintInfo?.txHash)
     const getTokenStatus = async () => {
       if (gameStore.isGameOver) {
         gameStore.gameOver = true
+        modalStore.openModal(ModalKey.gameOver)
         await web3WittyCreatures.getTokenStatus()
         tokenStatusPoller = setInterval(async () => {
           await web3WittyCreatures.getTokenStatus()
@@ -87,6 +90,7 @@ export default {
       gameStore,
       formatNumber,
       TokenStatus,
+      modalStore,
     }
   },
 }

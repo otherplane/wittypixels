@@ -24,7 +24,7 @@
         </p>
       </div>
     </div>
-    <div class="palette">
+    <div v-if="!game.gameOver" class="palette">
       <ColorSelector
         v-for="color in colors"
         :key="color"
@@ -32,11 +32,16 @@
         :points="color.points"
       />
     </div>
-    <p class="light-text copy">
+    <p v-if="!game.gameOver" class="light-text copy">
       Remember: you can get more paints by getting your pendant scanned by other
       players!
     </p>
-    <CustomButton type="primary" :slim="true" @click="paintPixel">
+    <CustomButton
+      v-if="!game.gameOver"
+      type="primary"
+      :slim="true"
+      @click="paintPixel"
+    >
       Paint pixel
     </CustomButton>
   </div>
@@ -46,10 +51,12 @@
 import { COLORS } from '@/constants'
 import { computed } from 'vue'
 import { useStore } from '@/stores/player'
+import { useGameStore } from '@/stores/game'
 import { standardizePixelCoordinates, formatDistanceToNow } from '@/utils'
 export default {
   setup() {
     const store = useStore()
+    const game = useGameStore()
 
     const palette = computed(() => store.palettePoints)
     const colors = computed(() => {
@@ -68,6 +75,7 @@ export default {
       store.togglePalettePanel(false)
     }
     return {
+      game,
       colors,
       paintPixel,
       pixelToPaint,
@@ -88,8 +96,7 @@ export default {
   display: grid;
   grid-template-columns: max-content 1fr;
   grid-gap: 16px;
-  border-bottom: 2px solid $lightgrey;
-  padding: 4px 8px 16px 8px;
+  padding: 4px 8px;
   align-items: center;
   justify-content: center;
   .pixel-color {
@@ -125,6 +132,8 @@ export default {
   }
 }
 .palette {
+  padding-top: 16px;
+  border-top: 1px solid $lightgrey;
   display: grid;
   width: 100%;
   grid-template-columns: repeat(auto-fill, 60px);

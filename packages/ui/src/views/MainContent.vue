@@ -28,41 +28,41 @@
     </template>
   </MainLayout>
 
-  <ModalDialog :show="modal.visible.value" v-on:close="closeModal">
-    <ModalExport v-if="modals.export" />
-    <GameOverModal v-if="modals.gameOver" />
-    <ModalMint v-if="modals.mint" />
+  <ModalDialog
+    :show="modalStore.modal.visible"
+    v-on:close="modalStore.closeModal"
+  >
+    <GameOverModal v-if="modalStore.modals.gameOver" />
+    <ModalExport v-if="modalStore.modals.export" />
+    <ModalMint v-if="modalStore.modals.mint" />
   </ModalDialog>
 </template>
 
 <script>
 import { useStore } from '@/stores/player'
 import { useLocalStore } from '@/stores/local'
-import { onBeforeMount, onMounted, onBeforeUnmount, reactive } from 'vue'
-import { useModal } from '@/composables/useModal'
+import { useModalStore } from '@/stores/modal'
+import { useGameStore } from '@/stores/game'
+import { ModalKey } from '@/types'
+import { onBeforeMount, onMounted, onBeforeUnmount } from 'vue'
 import { useWeb3 } from '../composables/useWeb3'
 import { POLLER_MILLISECONDS } from '@/constants'
 import { useRouter } from 'vue-router'
 export default {
   setup() {
-    const modal = useModal()
     const player = useStore()
     const localStore = useLocalStore()
+    const gameStore = useGameStore()
     const router = useRouter()
+    const modalStore = useModalStore()
     const web3WittyCreatures = useWeb3()
-    const modals = reactive({
-      mint: false,
-      export: false,
-      preview: false,
-      gameOver: false,
-    })
     let playerInfoPoller = null
     // TODO: HANDLE END OF GAME
     onBeforeMount(async () => {
       const token = await localStore.getToken()
       if (!token) {
         await player.authorize({ key: router.currentRoute.value.params.id })
-        openModal('export')
+        modalStore.openModal(ModalKey.export)
       } else {
         await player.getPlayerInfo()
         if (
@@ -72,7 +72,7 @@ export default {
         ) {
           await player.interact({ key: router.currentRoute.value.params.id })
         }
-        if (player.gameOver) {
+        if (gameStore.gameOver) {
           await localStore.getMintInfo()
           if (localStore.minted) {
             // TODO: get token info
@@ -88,28 +88,9 @@ export default {
     onBeforeUnmount(() => {
       clearInterval(playerInfoPoller)
     })
-    function openModal(name) {
-      const needProvider = name === 'mint'
-      if (!web3WittyCreatures.isProviderConnected.value && needProvider) {
-        modals['gameOver'] = true
-      } else {
-        modals[name] = true
-      }
-      modal.showModal()
-    }
-    function closeModal() {
-      modals.mint = false
-      modals.export = false
-      modals.preview = false
-      modals.gameOver = false
-      modal.hideModal()
-    }
     return {
+      modalStore,
       player,
-      closeModal,
-      openModal,
-      modal,
-      modals,
       addPolygonNetwork: web3WittyCreatures.addPolygonNetwork,
     }
   },
