@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!player.gameOver" class="button-container">
+  <div v-if="!gameOverStore.gameOver" class="button-container">
     <router-link class="btn" :to="type === 'disable' ? '' : '/scan'">
       <CustomButton :type="type" :slim="true">
         <p v-if="type == 'dark'">Scan</p>
@@ -16,9 +16,9 @@
       </CustomButton>
     </router-link>
   </div>
-  <div class="btn" v-if="player.gameOver">
+  <div class="btn" v-if="gameOverStore.gameOver">
     <CustomButton
-      v-if="!player.redeemAllow && !minted"
+      v-if="!gameOverStore.redeemAllow && !minted"
       type="disable"
       :slim="true"
     >
@@ -26,14 +26,14 @@
         Allowing redeem in
         <TimeLeft
           class="time-left"
-          :timestamp="player.timeToRedeemInMilli"
+          :timestamp="gameOverStore.timeToRedeemInMilli"
           :seconds="true"
           @clear-timestamp="allowRedeem"
         />...
       </p>
     </CustomButton>
     <CustomButton
-      v-if="player.redeemAllow && !minted"
+      v-if="gameOverStore.redeemAllow && !minted"
       @click="mint"
       type="dark"
       :slim="true"
@@ -41,7 +41,7 @@
       Redeem ownership
     </CustomButton>
     <a
-      v-if="player.errors.network"
+      v-if="gameOverStore.errors.network"
       @click="addPolygonNetwork()"
       class="add-polygon"
     >
@@ -53,12 +53,14 @@
 <script>
 import { useStore } from '@/stores/player'
 import { useLocalStore } from '@/stores/local'
+import { useGameStore } from '@/stores/game'
 import { computed } from 'vue'
 export default {
   emits: ['openMintModal', 'addNetwork'],
   setup(_props, { emit }) {
     const player = useStore()
     const localStore = useLocalStore()
+    const gameOverStore = useGameStore()
     const minted = computed(() => {
       return localStore.minted
     })
@@ -73,7 +75,7 @@ export default {
       player[interactionType] = null
     }
     function allowRedeem() {
-      player.redeemAllow = true
+      gameOverStore.redeemAllow = true
     }
     function mint() {
       if (type.value !== 'disable') {
@@ -92,6 +94,7 @@ export default {
       clearTimestamp,
       addPolygonNetwork,
       allowRedeem,
+      gameOverStore,
     }
   },
 }
