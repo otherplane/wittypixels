@@ -6,12 +6,11 @@
     <template v-slot:main>
       <div class="float">
         <div class="game-info">
-          <GameCountdowns />
+          <GameOverCountdown />
           <GameInfo
             ><p>@{{ player.username }}</p></GameInfo
           >
         </div>
-        <NFTPreview />
         <MintInformation />
       </div>
       <PixelBoard />
@@ -76,8 +75,7 @@ export default {
         if (player.gameOver) {
           await localStore.getMintInfo()
           if (localStore.minted) {
-            await web3WittyCreatures.getTokenIds()
-            await player.getMintedAwardsImages()
+            // TODO: get token info
           }
         }
       }

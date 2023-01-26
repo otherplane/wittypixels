@@ -28,7 +28,6 @@ export default {
     const show = ref(false)
     const clearTimestamp = interactionType => {
       player[interactionType] = null
-      player.socialsSharedMessage = false
     }
     const interactionIn = computed(() => player.interactionIn)
     return { player, show, importSvg, clearTimestamp, interactionIn }
