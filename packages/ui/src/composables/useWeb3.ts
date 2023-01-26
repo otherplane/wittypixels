@@ -1,16 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { onMounted, ref } from 'vue'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import Web3 from 'web3/dist/web3.min.js'
-
 import { useStore } from '@/stores/player'
 import { useLocalStore } from '@/stores/local'
-import jsonInterface from '../WittyPixelsUI'
 import { CONTRACT_ADDRESS, NETWORK } from '../constants'
+import { ErrorKey } from '@/types'
+import WittyPixelsTokenInterface from '../IWittyPixelsToken.json'
+// import WittyPixelsTokenVaultInterface from '../IWittyPixelsTokenVault.json'
 
-async function requestAccounts(web3) {
+declare global {
+  interface Window {
+    ethereum?: any
+  }
+}
+
+async function requestAccounts(web3: Web3) {
   return await web3.givenProvider.request({ method: 'eth_requestAccounts' })
 }
 
-function createErrorMessage(message) {
+function createErrorMessage(message: string) {
   return {
     response: {
       data: {
@@ -20,7 +30,7 @@ function createErrorMessage(message) {
   }
 }
 
-function networkById(id) {
+function networkById(id: string) {
   switch (id) {
     case '137':
       return 'Polygon Mainnet'
@@ -32,12 +42,11 @@ function networkById(id) {
 const errorNetworkMessage = `Your web3 provider should be connected to the ${networkById(
   NETWORK
 )} network`
-const errorDataMessage = `There was an error getting the NFT data`
-const errorMintMessage = `There was an error minting your NFT.`
+const errorRedeemMessage = `There was an error minting your NFT.`
 // const errorPreviewMessage = `There was an error showing the preview of your NFT.`
 
 export function useWeb3() {
-  let web3
+  let web3: Web3
   const player = useStore()
   const localStore = useLocalStore()
   const isProviderConnected = ref(false)
@@ -50,7 +59,7 @@ export function useWeb3() {
       isProviderConnected.value = true
       if ((await web3.eth.net.getId()) !== Number(NETWORK)) {
         return player.setError(
-          'network',
+          ErrorKey.network,
           createErrorMessage(errorNetworkMessage)
         )
       }
@@ -70,7 +79,7 @@ export function useWeb3() {
           },
         ],
       })
-      .catch(error => {
+      .catch((error: any) => {
         console.log(error)
       })
   }
@@ -84,32 +93,43 @@ export function useWeb3() {
     }
   })
 
+  async function getTokenStatus() {
+    //TODO: get token status
+    // call WITTY_PIXELS_TOKEN_VAULT
+  }
+
   async function getTokenIds() {
-    if ((await web3.eth.net.getId()) !== Number(NETWORK)) {
-      return player.setError('network', createErrorMessage(errorNetworkMessage))
-    } else {
-      try {
-        const contract = new web3.eth.Contract(jsonInterface, CONTRACT_ADDRESS)
-        const result = await contract.methods
-          .getFarmerTokens(player.farmerId)
-          .call()
-        player.setTokenIds(result)
-        return result
-      } catch (err) {
-        console.error(err)
-        player.setError('contractData', createErrorMessage(errorDataMessage))
-      }
-    }
+    // if ((await web3.eth.net.getId()) !== Number(NETWORK)) {
+    //   return player.setError('network', createErrorMessage(errorNetworkMessage))
+    // } else {
+    //   try {
+    //     const contract = new web3.eth.Contract(jsonInterface, CONTRACT_ADDRESS)
+    //     const result = await contract.methods
+    //       .getFarmerTokens(player.farmerId)
+    //       .call()
+    //     player.setTokenIds(result)
+    //     return result
+    //   } catch (err) {
+    //     console.error(err)
+    //     player.setError('contractData', createErrorMessage(errorDataMessage))
+    //   }
+    // }
   }
 
   async function mint() {
     if ((await web3.eth.net.getId()) !== Number(NETWORK)) {
-      return player.setError('network', createErrorMessage(errorNetworkMessage))
+      return player.setError(
+        ErrorKey.network,
+        createErrorMessage(errorNetworkMessage)
+      )
     } else {
-      const contract = new web3.eth.Contract(jsonInterface, CONTRACT_ADDRESS)
+      const contract = new web3.eth.Contract(
+        WittyPixelsTokenInterface,
+        CONTRACT_ADDRESS
+      )
       const from = (await requestAccounts(web3))[0]
       const mintArgs = await player.getContractArgs(from)
-      const playerAwards = mintArgs.data.farmerAwards.map(medal =>
+      const playerAwards = mintArgs.data.farmerAwards.map((medal: any) =>
         Object.values(medal)
       )
 
@@ -123,19 +143,20 @@ export function useWeb3() {
           `0x${mintArgs.envelopedSignature.signature}`
         )
         .send({ from })
-        .on('error', error => {
-          player.setError('mint', createErrorMessage(errorMintMessage))
+        .on('error', (error: any) => {
+          player.setError(
+            ErrorKey.redeem,
+            createErrorMessage(errorRedeemMessage)
+          )
           console.error(error)
         })
-        .on('transactionHash', function (transactionHash) {
+        .on('transactionHash', function (transactionHash: string) {
           localStore.saveMintInfo({ transactionHash })
         })
-        .on('confirmation', (confirmationNumber, receipt) => {
+        .on('confirmation', (_confirmationNumber: any, receipt: any) => {
           localStore.saveMintInfo(receipt)
-          const data = player.getMintedAwardsImages()
-          player.setData(data)
         })
-        .then(newContractInstance => {
+        .then((newContractInstance: any) => {
           console.log('newContractInstance', newContractInstance)
           console.log('Witmon minted: ', newContractInstance.transactionHash)
         })
@@ -151,5 +172,6 @@ export function useWeb3() {
     addPolygonNetwork,
     open,
     getTokenIds,
+    getTokenStatus,
   }
 }

@@ -47,10 +47,12 @@ export const TIME_TO_REDEEM_MILLISECONDS = import.meta.env
   ? parseInt(import.meta.env.VITE_TIME_TO_REDEEM_MILLISECONDS)
   : 60000
 
-export const GAME_ENDS_TIMESTAMP = import.meta.env.VITE_GAME_ENDS_TIMESTAMP
-  ? parseInt(import.meta.env.VITE_GAME_ENDS_TIMESTAMP)
-  : 1658241429000 // Tue Jul 19 2022 16:37:09 GMT+0200 (Central European Summer Time)
+// export const GAME_ENDS_TIMESTAMP = import.meta.env.VITE_GAME_ENDS_TIMESTAMP
+//   ? parseInt(import.meta.env.VITE_GAME_ENDS_TIMESTAMP)
+//   : 1677891600000 // Fri, 3 March 2023 18:00 GMT-7,
+
+export const GAME_ENDS_TIMESTAMP = new Date().getTime() + 6000
 
 export const PLAYER_MAINNET_TIMESTAMP = import.meta.env.PLAYER_MAINNET_TIMESTAMP
   ? parseInt(import.meta.env.VITE_PLAYER_MAINNET_TIMESTAMP)
-  : 1658241429000 // Tue Jul 19 2022 16:37:09 GMT+0200 (Central European Summer Time)
+  : 1677218400000 // Thu, 24 February 2023 0:00 GMT-7

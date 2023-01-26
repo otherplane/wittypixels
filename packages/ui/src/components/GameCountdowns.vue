@@ -1,54 +1,87 @@
 <template>
-  <transition name="fade">
-    <GameInfo v-if="!player.gameOver">
-      <p>
-        <span>GAME ENDS IN:</span>
-        <TimeLeft
-          class="time-left"
-          :timestamp="player.gameOverTimeMilli"
-          :seconds="true"
-        />
-      </p>
-    </GameInfo>
-    <GameInfo v-else>
-      <p>GAME OVER</p>
-    </GameInfo>
-  </transition>
-  <transition name="fade">
-    <div v-if="!player.redeemAllow && player.previews.length">
-      <div class="time-container">
-        <p class="bonus-title">Time left to allow minting</p>
-        <TimeLeft
-          class="time-left"
-          :timestamp="player.timeToRedeemInMilli"
-          :seconds="true"
-          @clear-timestamp="player.timeToRedeemInMilli = null"
-        />
-      </div>
-    </div>
-  </transition>
+  <div>
+    <p v-if="!player.gameOver" class="counter">
+      <span>GAME ENDS IN: </span>
+      <TimeLeft
+        class="time-left"
+        :timestamp="player.gameOverTimeMilli"
+        :seconds="true"
+        @clear-timestamp="getTokenStatus"
+      />
+    </p>
+    <p
+      v-if="
+        player.gameOver &&
+        player.tokenStatus &&
+        player.tokenStatus == TokenStatus.Minting
+      "
+      class="game-over bold"
+    >
+      GAME OVER
+    </p>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useStore } from '@/stores/player'
-import { useLocalStore } from '@/stores/local'
-import { computed } from 'vue'
 import { formatNumber } from '../utils'
+import { useWeb3 } from '../composables/useWeb3'
+import { onMounted, onBeforeUnmount, computed, watch } from 'vue'
+import { POLLER_MILLISECONDS } from '@/constants.js'
+import { TokenStatus } from '@/types'
 export default {
-  emits: ['openExportModal'],
-  setup(_props) {
+  setup() {
+    let tokenStatusPoller: any
+    let mintConfirmationStatusPoller: any
     const player = useStore()
-    const localStore = useLocalStore()
-    const gameOver = player.gameOver
-    // TODO: HANDLE END OF GAME
-    const mintStatus = computed(() =>
-      localStore.mintInfo.blockHash ? 'minted' : 'pending'
-    )
+    const web3WittyCreatures = useWeb3()
+    const txHash = computed(() => player.mintInfo?.txHash)
+    const getTokenStatus = async () => {
+      if (player.isGameOver) {
+        player.gameOver = true
+        await web3WittyCreatures.getTokenStatus()
+        tokenStatusPoller = setInterval(async () => {
+          await web3WittyCreatures.getTokenStatus()
+        }, POLLER_MILLISECONDS)
+      }
+    }
+    onBeforeUnmount(() => {
+      clearInterval(tokenStatusPoller)
+      clearInterval(mintConfirmationStatusPoller)
+    })
+    onMounted(async () => {
+      await player.getPlayerInfo()
+      if (player.gameOver) {
+        tokenStatusPoller = await setInterval(async () => {
+          await web3WittyCreatures.getTokenStatus()
+        }, POLLER_MILLISECONDS)
+        await web3WittyCreatures.enableProvider()
+      }
+    })
+    const getGameOverInfo = async () => {
+      clearInterval(mintConfirmationStatusPoller)
+      if (player.mintInfo?.txHash && !player.mintInfo?.mintConfirmation) {
+        mintConfirmationStatusPoller = await setInterval(async () => {
+          await web3WittyCreatures.getMintConfirmationStatus()
+        }, POLLER_MILLISECONDS)
+      }
+    }
+    const tokenStatus = computed(() => player?.tokenStatus)
+    const redeemConfirmation = computed(() => player.mintInfo?.mintConfirmation)
+    watch(tokenStatus, () => {
+      getGameOverInfo()
+    })
+    watch(txHash, () => {
+      getGameOverInfo()
+    })
+    watch(redeemConfirmation, () => {
+      getGameOverInfo()
+    })
     return {
-      gameOver,
+      getTokenStatus,
       player,
-      mintStatus,
       formatNumber,
+      TokenStatus,
     }
   },
 }

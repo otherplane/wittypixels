@@ -7,6 +7,7 @@ import {
   type PixelMap,
   type Errors,
   ErrorKey,
+  TokenStatus,
 } from '@/types'
 import { TIME_TO_REDEEM_MILLISECONDS, GAME_ENDS_TIMESTAMP } from '../constants'
 import { isMainnetTime } from '@/utils'
@@ -17,8 +18,9 @@ export const useStore = defineStore('player', {
       api: new ApiService(),
       localStore: useLocalStore(),
       id: null,
-      nft: [],
       username: '',
+      score: null,
+      color: 0 as number,
       selectedColor: null as string | null,
       palettePoints: {} as PalettePoints,
       showPalettePanel: false as boolean,
@@ -28,26 +30,26 @@ export const useStore = defineStore('player', {
       interactionInfo: null,
       interactionIn: null,
       interactionOut: null,
-      //TODO: make gameOverTimeMilli take GAME_ENDS_TIMESTAMP value when gameOver is defined
-      gameOverTimeMilli: GAME_ENDS_TIMESTAMP,
-      timeToRedeemInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_REDEEM_MILLISECONDS,
-      previews: [],
-      mintedAwards: [],
       history: [],
-      mintParams: null,
-      color: 0 as number,
-      tokenIds: null,
-      score: null,
       playersGlobalStats: [],
       errors: {} as Errors,
+      // game over state
+      gameOverTimeMilli: GAME_ENDS_TIMESTAMP,
+      timeToRedeemInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_REDEEM_MILLISECONDS,
+      gameOver: false as boolean,
+      redeemAllow: false as boolean,
+      tokenStatus: null as TokenStatus | null,
+      mintInfo: null,
+      mintParams: null,
+      tokenIds: null,
     }
   },
   getters: {
-    gameOver(): boolean {
+    isGameOver(): boolean {
       //FIXME: make it reactive
       return this.gameOverTimeMilli < Date.now()
     },
-    redeemAllow(): boolean {
+    isRedeemAllow(): boolean {
       //FIXME: make it reactive
       return this.timeToRedeemInMilli < Date.now()
     },
