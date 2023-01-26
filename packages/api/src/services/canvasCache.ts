@@ -8,7 +8,7 @@ export class CanvasCache {
   lastIndex: number
   limit: number
 
-  constructor(limit: number) {
+  constructor(limit?: number) {
     this.drawCache = {}
     this.firstIndex = 0
     this.lastIndex = 0
