@@ -47,10 +47,6 @@ export const TIME_TO_MINT_MILLISECONDS = import.meta.env
   ? parseInt(import.meta.env.VITE_TIME_TO_MINT_MILLISECONDS)
   : 60000
 
-export const DEMO_ENDS_TIMESTAMP = import.meta.env.VITE_DEMO_ENDS_TIMESTAMP
-  ? parseInt(import.meta.env.VITE_DEMO_ENDS_TIMESTAMP)
-  : 1658241429000 // Tue Jul 19 2022 16:37:09 GMT+0200 (Central European Summer Time)
-
 export const GAME_ENDS_TIMESTAMP = import.meta.env.VITE_GAME_ENDS_TIMESTAMP
   ? parseInt(import.meta.env.VITE_GAME_ENDS_TIMESTAMP)
   : 1658241429000 // Tue Jul 19 2022 16:37:09 GMT+0200 (Central European Summer Time)
