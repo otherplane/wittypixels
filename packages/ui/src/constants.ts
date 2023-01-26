@@ -42,9 +42,9 @@ export const POLLER_MILLISECONDS = import.meta.env.VITE_POLLER_MILLISECONDS
   ? parseInt(import.meta.env.VITE_POLLER_MILLISECONDS)
   : 5000
 
-export const TIME_TO_MINT_MILLISECONDS = import.meta.env
-  .VITE_TIME_TO_MINT_MILLISECONDS
-  ? parseInt(import.meta.env.VITE_TIME_TO_MINT_MILLISECONDS)
+export const TIME_TO_REDEEM_MILLISECONDS = import.meta.env
+  .VITE_TIME_TO_REDEEM_MILLISECONDS
+  ? parseInt(import.meta.env.VITE_TIME_TO_REDEEM_MILLISECONDS)
   : 60000
 
 export const GAME_ENDS_TIMESTAMP = import.meta.env.VITE_GAME_ENDS_TIMESTAMP

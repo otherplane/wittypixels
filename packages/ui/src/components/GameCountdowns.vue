@@ -15,14 +15,14 @@
     </GameInfo>
   </transition>
   <transition name="fade">
-    <div v-if="!player.mintingAllow && player.previews.length">
+    <div v-if="!player.redeemAllow && player.previews.length">
       <div class="time-container">
         <p class="bonus-title">Time left to allow minting</p>
         <TimeLeft
           class="time-left"
-          :timestamp="player.timeToMintInMilli"
+          :timestamp="player.timeToRedeemInMilli"
           :seconds="true"
-          @clear-timestamp="player.timeToMintInMilli = null"
+          @clear-timestamp="player.timeToRedeemInMilli = null"
         />
       </div>
     </div>

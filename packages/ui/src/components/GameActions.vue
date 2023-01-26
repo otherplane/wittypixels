@@ -18,7 +18,7 @@
   </div>
   <div class="btn" v-if="player.gameOver">
     <CustomButton
-      v-if="player.mintingAllow && !minted"
+      v-if="player.redeemAllow && !minted"
       @click="mint"
       type="dark"
       :slim="true"
