@@ -1,0 +1,1473 @@
+{
+  "contractName": "IWittyPixelsToken",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "baseURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTokenMetadata",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "imageURI",
+              "type": "string"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "venue",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "startTs",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "endTs",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct WittyPixels.ERC721TokenEvent",
+              "name": "theEvent",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "totalDraws",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalPixels",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalPlayers",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalScans",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct WittyPixels.ERC721TokenStats",
+              "name": "theStats",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bytes32",
+                  "name": "image",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "scores",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "stats",
+                  "type": "bytes32"
+                }
+              ],
+              "internalType": "struct WittyPixels.ERC721TokenRoots",
+              "name": "theRoots",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct WittyPixels.ERC721Token",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTokenStatus",
+      "outputs": [
+        {
+          "internalType": "enum WittyPixels.ERC721TokenStatus",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTokenStatusString",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTokenVault",
+      "outputs": [
+        {
+          "internalType": "contract ITokenVaultWitnet",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTokenWitnetRequests",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "contract WitnetRequestTemplate",
+              "name": "imageDigest",
+              "type": "address"
+            },
+            {
+              "internalType": "contract WitnetRequestTemplate",
+              "name": "tokenRoots",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct WittyPixels.ERC721TokenWitnetRequests",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "metadata",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "score",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "proof",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "verifyTokenPlayerScore",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "proof",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "verifyTokenPlayerName",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"baseURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getTokenMetadata\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"imageURI\",\"type\":\"string\"},{\"components\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"venue\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"startTs\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTs\",\"type\":\"uint256\"}],\"internalType\":\"struct WittyPixels.ERC721TokenEvent\",\"name\":\"theEvent\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"totalDraws\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalPixels\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalPlayers\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalScans\",\"type\":\"uint256\"}],\"internalType\":\"struct WittyPixels.ERC721TokenStats\",\"name\":\"theStats\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"image\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"scores\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"stats\",\"type\":\"bytes32\"}],\"internalType\":\"struct WittyPixels.ERC721TokenRoots\",\"name\":\"theRoots\",\"type\":\"tuple\"}],\"internalType\":\"struct WittyPixels.ERC721Token\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getTokenStatus\",\"outputs\":[{\"internalType\":\"enum WittyPixels.ERC721TokenStatus\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getTokenStatusString\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getTokenVault\",\"outputs\":[{\"internalType\":\"contract ITokenVaultWitnet\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getTokenWitnetRequests\",\"outputs\":[{\"components\":[{\"internalType\":\"contract WitnetRequestTemplate\",\"name\":\"imageDigest\",\"type\":\"address\"},{\"internalType\":\"contract WitnetRequestTemplate\",\"name\":\"tokenRoots\",\"type\":\"address\"}],\"internalType\":\"struct WittyPixels.ERC721TokenWitnetRequests\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"metadata\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"bytes32[]\",\"name\":\"proof\",\"type\":\"bytes32[]\"}],\"name\":\"verifyTokenPlayerName\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"score\",\"type\":\"uint256\"},{\"internalType\":\"bytes32[]\",\"name\":\"proof\",\"type\":\"bytes32[]\"}],\"name\":\"verifyTokenPlayerScore\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IWittyPixelsToken.sol\":\"IWittyPixelsToken\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol\":{\"keccak256\":\"0xe798cadb41e2da274913e4b3183a80f50fb057a42238fe8467e077268100ec27\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://899f850f7df5a270bccfb765d70069959ca1c20d3a7381c1c3bda8a3ffee1935\",\"dweb:/ipfs/QmVdnAqwyX2L3nX2HDA5WKGtVBFyH1nKE9A1k7fZnPBkhP\"]},\"@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol\":{\"keccak256\":\"0x4e733d3164f73f461eaf9d8087a7ad1ea180bdc8ba0d3d61b0e1ae16d8e63dff\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://75b47c3aeca7b66ea6752f8be020ec5c1c502de6ec9065272dae23d3a52196e2\",\"dweb:/ipfs/QmUebPMHv16tYKFh5BmBQkMfRFb5b8UZ2RgVwdjxCeufVF\"]},\"@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol\":{\"keccak256\":\"0x2edcb41c121abc510932e8d83ff8b82cf9cdde35e7c297622f5c29ef0af25183\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://72460c66cd1c3b1c11b863e0d8df0a1c56f37743019e468dc312c754f43e3b06\",\"dweb:/ipfs/QmPExYKiNb9PUsgktQBupPaM33kzDHxaYoVeJdLhv8s879\"]},\"@openzeppelin/contracts/utils/introspection/ERC165Checker.sol\":{\"keccak256\":\"0x0812bc73d6e30558840122fa48d6f64ae978ccc1b1fc42e616bac190c6360f46\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3d95a53b7e19ca1d46043eaad8967b6e0b02aab2b5fefc2108bfa6d1ad425f5b\",\"dweb:/ipfs/QmQq7AUGT9juE3hun2Wy7r2BDoDBFdBn43DVwhJpK2StLV\"]},\"@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f\",\"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy\"]},\"project:/contracts/interfaces/IERC1633.sol\":{\"keccak256\":\"0x6061a974aa140b1e0da2e088337d62120dec740ea32c299345728c5673d9f74f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d64333f64be3edf0300909fac7455166d9bb5107872aed083c6d8b843b0ad2da\",\"dweb:/ipfs/QmabSqcvNXUkBpgohUvF1Fhxc6kwf8t73TvdXRED2TiWAg\"]},\"project:/contracts/interfaces/IERC165.sol\":{\"keccak256\":\"0x855fa5391b7a913d82154652e1cd781a854d6025586a8fb77dcbf159d63bedfe\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1d50f47f1ac0b9f859818e6120ea4bdcede80e10d06d5d6434dc0538d62e20c1\",\"dweb:/ipfs/Qmdm973GgbR2xy6FJ5CdnSdZGjx2o4H8ZfC9sTttcQFiLX\"]},\"project:/contracts/interfaces/IERC20Upgradeable.sol\":{\"keccak256\":\"0xa601205851a09bd01593934872e205518fea084859aca1930f28cc678b8fd0b9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fd30c3685e8e6086df436bfbe803ca6775fe38043b1b0eee5e103a77a169f615\",\"dweb:/ipfs/QmP1PH7ovbiWCEotE7NyLPvPiwgCL4GWNqqidMUhxCNs6M\"]},\"project:/contracts/interfaces/ITokenVault.sol\":{\"keccak256\":\"0x93159c044231aed39bf100fb9c47a61431417b2e23dc71619ae20b56231117d7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c0d19f9fa309b6aff3266de2c8cab42f57db815f75a5a23731788b956a967b39\",\"dweb:/ipfs/QmdJ5Bz69gj8YHXTWZ4HDh8hGgDa7HH9GhcZ4BCKca6bVF\"]},\"project:/contracts/interfaces/ITokenVaultWitnet.sol\":{\"keccak256\":\"0xdd878f69d7026c0b6341c027ebd6508ae26fc3ea2afbe42eb820efd0e25323a8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1cc77822a8758289d1dfd7378674cf28b60dea4dda6ee24a32687a20fdf93e3c\",\"dweb:/ipfs/QmP2N4NuYMcrsJEqe1VX9S6pC3zphbJpMT2sFmKtxNBGa3\"]},\"project:/contracts/interfaces/IWittyPixelsToken.sol\":{\"keccak256\":\"0x3021731bc8912f3830271ff35c4193358334d8ec0574d7f8da23925f9b2b3c3c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5914c16ec47dcf3d83548e6444b0ab1bdcd396d81454cd097dbcf95135999005\",\"dweb:/ipfs/QmdoVRCeskuPjVoqGZfrwk6JziRW52Muwbq99nNhwc3qDZ\"]},\"project:/contracts/interfaces/IWittyPixelsTokenVault.sol\":{\"keccak256\":\"0x0e033b924bcefe55b46a689ae0bbe65db7e3f1ebffb8c69e948b198dec83dfd0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://34363ae672874b6e3e848c11a5f934d42bda24afb1e128420e75492979e332a8\",\"dweb:/ipfs/QmTX7a17gqXhRTqzRAqKdoXnbLzkAomt8UYwtzNWCUAsAs\"]},\"project:/contracts/interfaces/IWittyPixelsTokenVaultAuctionDutch.sol\":{\"keccak256\":\"0x8e8d8e9c69f047107c354fef32186e42242a5ceed4bb9290a0099890d3ac439b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://491bc21136ae2af539fd029bcd5fceb50a6fb8ad855c663b9ab81be38770c7ff\",\"dweb:/ipfs/Qmc1DguxUuL6jYyLbAz1bBi1Yx4AzZqyDLFW4wEiz7Y2Bn\"]},\"project:/contracts/interfaces/IWittyPixelsTokenVaultJackpots.sol\":{\"keccak256\":\"0xc9b5413033cef45d7e581d3900024f28412022c4587d8ff513a5e735b4b8f5a9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a98063f658b76a7298ec9967ba7dee580918598c6236cf396a8a20f47a909a22\",\"dweb:/ipfs/QmdnFtovVk2X4jafVD3UqD7XeSYZAfaXBaBbn5YZ7JhaBY\"]},\"project:/contracts/libs/WittyPixels.sol\":{\"keccak256\":\"0x9098ca993394d58a168f42e1ee61b577fe57c38186c5474e5c5388c6b6981cce\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b84b8eabcd522f819cda5ff0b06ebd69e8f6833f00d992f35eada4ab966efc28\",\"dweb:/ipfs/QmfAQcJFuHzyMZuwDoEQ62poSiJZaiuXA5bWG1emsaUbzE\"]},\"witnet-solidity-bridge/contracts/UsingWitnet.sol\":{\"keccak256\":\"0x2a4d573ba6be1f00499ee10729f053592a8763064bfe1856a4faf2907c16c604\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a7bc370f1aab3e7f5bcc0e4167067981cd2859ad94d8b3b30755714e9fec942d\",\"dweb:/ipfs/QmNRoWZepAdc481vkkEr8potqgXYjPtkS79nc3mZy576Wn\"]},\"witnet-solidity-bridge/contracts/WitnetRequestBoard.sol\":{\"keccak256\":\"0x96c3f1f742e758e913fc0860248a43324ec065cfe70d65127e617e4463f150d0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e49d57758dbc22bf386e17db25a96e77c6a0500c743f86318989ce6739cff1fa\",\"dweb:/ipfs/QmckbqQbG9UN91oW28wfCEqQmfBTMnfZ7BAKpiQTEP69PX\"]},\"witnet-solidity-bridge/contracts/interfaces/IWitnetRandomness.sol\":{\"keccak256\":\"0x50a2f1822c6c2df9a033ba82dc2026499b21ebe36bdf0b50d3b1b6488fdbf619\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://df62885c9f1e44e1439f3bf353e08447a5e641927ab59fcc840f85cf2f565395\",\"dweb:/ipfs/QmfBxs2kQnkjosAZmUAZqi6BAhoBNrCVDPswgkynsv3oCv\"]},\"witnet-solidity-bridge/contracts/interfaces/IWitnetRequest.sol\":{\"keccak256\":\"0x24ee320e4683bd257620562a09f869637edc02f8675a12fe1bea98d5f65c4ff7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f727846410ea09d74fd2b30165e199256924b33f2becd4af3b27701119a812f3\",\"dweb:/ipfs/QmUTnXggHHro2HJtQg5PK2ktrDYrWVihDP9keHzZH9d1sL\"]},\"witnet-solidity-bridge/contracts/interfaces/IWitnetRequestBoardEvents.sol\":{\"keccak256\":\"0xca0e075d2da65d23fa3e2d034abfb1949773064185f546a496dc90c7c7673e98\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ae958501bcc2013686330be05210b1d4ad517294b01846adb649720cd89952c9\",\"dweb:/ipfs/QmQSisXwkMjnvsGUpDuqbsXZYWThhzGrcBG5DyvqvzN9TB\"]},\"witnet-solidity-bridge/contracts/interfaces/IWitnetRequestBoardReporter.sol\":{\"keccak256\":\"0x493e992ce95d9f0a4451cd6a992df63ccd822277003223ec5c77e90bcb83bb5f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://83cf04e04e2798f2145acbb5f0ec35d67bfbe50bce223480534ad792fc0731be\",\"dweb:/ipfs/QmeQjMV8tFTbWfh7D47AGwM62jo2adGHj4MsaoQnRGiBgs\"]},\"witnet-solidity-bridge/contracts/interfaces/IWitnetRequestBoardRequestor.sol\":{\"keccak256\":\"0x613df9c38a93b30cecf00a3c1d3a08223a1c0c2c76be78559b57070f3b954168\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9d8861f52c8d6053ffd0ddcb91336fb093c84e5250e042e331af08b45c83ead6\",\"dweb:/ipfs/QmaZJm6LEFiXnygCymPCfPzkrzeypXHFN8Xc9vMe3FgCVt\"]},\"witnet-solidity-bridge/contracts/interfaces/IWitnetRequestBoardView.sol\":{\"keccak256\":\"0x744b5f1d005a37b3db95377b15b45ca1b5c16c8ae899191c0313eb183c48de83\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://72395438d59ef30c529140723cf69eaa48f09f19b4d350dfdcdd5ae12d3f69d3\",\"dweb:/ipfs/QmWWpsHDASS5VSdHEY1DDuidG6S6rzvkB9Ejy11jqo44DR\"]},\"witnet-solidity-bridge/contracts/interfaces/IWitnetRequestParser.sol\":{\"keccak256\":\"0x6edd5ad8c140a5e555079b609f57584810f5c1cd26ce6d20256c13b24710f86c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a68fd18d9213c8409b89947116f1b94c868b54a57e96a5910d198829ad1b4709\",\"dweb:/ipfs/QmcCka3FC6rHpsptrhS1vCjFJ2UkeKBGLP2nfHXqaztEm2\"]},\"witnet-solidity-bridge/contracts/interfaces/V2/IWitnetBytecodes.sol\":{\"keccak256\":\"0xd3e71e5189f58650e62cdfb0d3043604db446d8d235c18b03741024b8a828507\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8ab48b389fb08ba1b50b33ec024ee0a0178986443ec7e39697a487611fc986eb\",\"dweb:/ipfs/QmXaZgUv8yj966FSxjqhdapwMAfZmmCUQ2FJX4t4uUwBBE\"]},\"witnet-solidity-bridge/contracts/libs/Witnet.sol\":{\"keccak256\":\"0x5c2de57a21deeea16bdd6a3b99f5ba31ea9306d37eb0dbf86bee9c916ba4144b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://896d5ad96a0ebcecbeb95ebb6e0589e74c39ed1370b3479f401ed856b47d4cfb\",\"dweb:/ipfs/QmcP9uSsWPVCAqu3xbmbd2KT8AKfjWXH5B8oxVDFPr9BXk\"]},\"witnet-solidity-bridge/contracts/libs/WitnetBuffer.sol\":{\"keccak256\":\"0xce4cba521800f4e7a8a10293c321b702d647a069012e79d4066388b4d9b19f3e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://07931cfbe0dd7094c3c5f2c4518a8d78c4826bcd628038238c682f6894285c12\",\"dweb:/ipfs/QmfNEVVySBg5wz8zdtLsaDFt2gmMLueGFE1P2enXCc4GtB\"]},\"witnet-solidity-bridge/contracts/libs/WitnetCBOR.sol\":{\"keccak256\":\"0xec8d5a1226533318668729312fa6c0dfe3951a4462212b9fe2ce7b6f5bd2a93a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fc29f0cda6d98a00d06b0e47be4f7d4a3f4f79a1080b00da5245d85f6c3ba7e0\",\"dweb:/ipfs/QmXxb3wBRcGp1JuPswEgcTCbKoDCqgtieFchi5b6vZDNmM\"]},\"witnet-solidity-bridge/contracts/libs/WitnetV2.sol\":{\"keccak256\":\"0xc15e6ad735d040ad48d3ccbce3569d1aa4c867bfd19e95322b3ef88a417959e9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4ddb091f63edfcf120b612b57e804665fac4908231143588eda70ee9e5f797f0\",\"dweb:/ipfs/QmRDZhkUucCtNtyRQuAg72rxX5saJ5Bz5LcPwfwGtVw4jB\"]},\"witnet-solidity-bridge/contracts/patterns/Clonable.sol\":{\"keccak256\":\"0x286b93f7102b7aebc556c1d4c0d30f1da11984bd7269ac47b06f0e8f509f805c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://322cf2b5a4654ee2787884c8456fa1450f9a61251dd12284916d873c612a7d64\",\"dweb:/ipfs/QmX5upCQ7m5Sq3NpQCKWDCVrJG6B7S7tNEYMQXPLskmZ2G\"]},\"witnet-solidity-bridge/contracts/patterns/Initializable.sol\":{\"keccak256\":\"0xaac470e87f361cf15d68d1618d6eb7d4913885d33ccc39c797841a9591d44296\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ef3760b2039feda8715d4bd9f8de8e3885f25573d12ba92f52d626ba880a08bf\",\"dweb:/ipfs/QmP2mfHPBKkjTAKft95sPDb4PBsjfmAwc47Kdcv3xYSf3g\"]},\"witnet-solidity-bridge/contracts/requests/WitnetRequestTemplate.sol\":{\"keccak256\":\"0x3f4f429f9f7619cdfcb2261bb720721f7e8e8dafcb1b74376ba7e4393419da8e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c98dffaf8bb67a6eaddf002cc174e72c3a4694b072d2b1bd3cf46c1db975d5ad\",\"dweb:/ipfs/QmXm8uGTW2VKNtgrygPiiRJb1nKmsdAxY2oBgEA837tiYZ\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../libs/WittyPixels.sol\";\r\n\r\ninterface IWittyPixelsToken {\r\n\r\n    function baseURI() external view returns (string memory);\r\n    function getTokenMetadata(uint256 tokenId) external view returns (WittyPixels.ERC721Token memory);\r\n    function getTokenStatus(uint256 tokenId) external view returns (WittyPixels.ERC721TokenStatus);\r\n    function getTokenStatusString(uint256 tokenId) external view returns (string memory);\r\n    function getTokenVault(uint256 tokenId) external view returns (ITokenVaultWitnet);    \r\n    function getTokenWitnetRequests(uint256 tokenId) external view returns (WittyPixels.ERC721TokenWitnetRequests memory);\r\n    function metadata(uint256 tokenId) external view returns (string memory);\r\n    function totalSupply() external view returns (uint256);\r\n    function verifyTokenPlayerScore(\r\n            uint256 tokenId,\r\n            uint256 index,\r\n            uint256 score,\r\n            bytes32[] calldata proof\r\n        ) external view returns (bool);\r\n    function verifyTokenPlayerName(\r\n            uint256 tokenId,\r\n            uint256 index,\r\n            string calldata name,\r\n            bytes32[] calldata proof\r\n        ) external view returns (bool);\r\n}",
+  "sourcePath": "C:\\Users\\guill\\github\\otherplane\\witty-pixels-contracts\\contracts\\interfaces\\IWittyPixelsToken.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/IWittyPixelsToken.sol",
+    "exportedSymbols": {
+      "AddressUpgradeable": [
+        2609
+      ],
+      "Clonable": [
+        15096
+      ],
+      "ERC165Checker": [
+        4232
+      ],
+      "IERC1633": [
+        8810
+      ],
+      "IERC165": [
+        4244
+      ],
+      "IERC20Upgradeable": [
+        1169
+      ],
+      "ITokenVault": [
+        8872
+      ],
+      "ITokenVaultWitnet": [
+        9026
+      ],
+      "IWitnetBytecodes": [
+        11762
+      ],
+      "IWitnetRandomness": [
+        11105
+      ],
+      "IWitnetRequest": [
+        11121
+      ],
+      "IWitnetRequestBoardEvents": [
+        11146
+      ],
+      "IWitnetRequestBoardReporter": [
+        11197
+      ],
+      "IWitnetRequestBoardRequestor": [
+        11227
+      ],
+      "IWitnetRequestBoardView": [
+        11340
+      ],
+      "IWitnetRequestParser": [
+        11498
+      ],
+      "IWittyPixelsToken": [
+        9114
+      ],
+      "IWittyPixelsTokenVault": [
+        9355
+      ],
+      "IWittyPixelsTokenVaultAuctionDutch": [
+        9405
+      ],
+      "IWittyPixelsTokenVaultJackpots": [
+        9476
+      ],
+      "Initializable": [
+        406
+      ],
+      "UsingWitnet": [
+        10754
+      ],
+      "Witnet": [
+        12079
+      ],
+      "WitnetBuffer": [
+        13276
+      ],
+      "WitnetCBOR": [
+        14609
+      ],
+      "WitnetRequestBoard": [
+        10774
+      ],
+      "WitnetRequestTemplate": [
+        15709
+      ],
+      "WitnetV2": [
+        14967
+      ],
+      "WittyPixels": [
+        10018
+      ]
+    },
+    "id": 9115,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 9028,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:30"
+      },
+      {
+        "absolutePath": "project:/contracts/libs/WittyPixels.sol",
+        "file": "../libs/WittyPixels.sol",
+        "id": 9029,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 9115,
+        "sourceUnit": 10019,
+        "src": "60:33:30",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IWittyPixelsToken",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 9114,
+        "linearizedBaseContracts": [
+          9114
+        ],
+        "name": "IWittyPixelsToken",
+        "nameLocation": "107:17:30",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "6c0360eb",
+            "id": 9034,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "baseURI",
+            "nameLocation": "143:7:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9030,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "150:2:30"
+            },
+            "returnParameters": {
+              "id": 9033,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9032,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9034,
+                  "src": "176:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 9031,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "176:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "175:15:30"
+            },
+            "scope": 9114,
+            "src": "134:57:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "60316801",
+            "id": 9042,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getTokenMetadata",
+            "nameLocation": "206:16:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9037,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9036,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "231:7:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9042,
+                  "src": "223:15:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9035,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "223:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "222:17:30"
+            },
+            "returnParameters": {
+              "id": 9041,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9040,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9042,
+                  "src": "263:30:30",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_ERC721Token_$9625_memory_ptr",
+                    "typeString": "struct WittyPixels.ERC721Token"
+                  },
+                  "typeName": {
+                    "id": 9039,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 9038,
+                      "name": "WittyPixels.ERC721Token",
+                      "nameLocations": [
+                        "263:11:30",
+                        "275:11:30"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 9625,
+                      "src": "263:23:30"
+                    },
+                    "referencedDeclaration": 9625,
+                    "src": "263:23:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_ERC721Token_$9625_storage_ptr",
+                      "typeString": "struct WittyPixels.ERC721Token"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "262:32:30"
+            },
+            "scope": 9114,
+            "src": "197:98:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "8f07c2b4",
+            "id": 9050,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getTokenStatus",
+            "nameLocation": "310:14:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9045,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9044,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "333:7:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9050,
+                  "src": "325:15:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9043,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "325:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "324:17:30"
+            },
+            "returnParameters": {
+              "id": 9049,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9048,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9050,
+                  "src": "365:29:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_ERC721TokenStatus_$9613",
+                    "typeString": "enum WittyPixels.ERC721TokenStatus"
+                  },
+                  "typeName": {
+                    "id": 9047,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 9046,
+                      "name": "WittyPixels.ERC721TokenStatus",
+                      "nameLocations": [
+                        "365:11:30",
+                        "377:17:30"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 9613,
+                      "src": "365:29:30"
+                    },
+                    "referencedDeclaration": 9613,
+                    "src": "365:29:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_ERC721TokenStatus_$9613",
+                      "typeString": "enum WittyPixels.ERC721TokenStatus"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "364:31:30"
+            },
+            "scope": 9114,
+            "src": "301:95:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "67dd8630",
+            "id": 9057,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getTokenStatusString",
+            "nameLocation": "411:20:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9053,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9052,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "440:7:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9057,
+                  "src": "432:15:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9051,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "432:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "431:17:30"
+            },
+            "returnParameters": {
+              "id": 9056,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9055,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9057,
+                  "src": "472:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 9054,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "472:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "471:15:30"
+            },
+            "scope": 9114,
+            "src": "402:85:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "7874ffac",
+            "id": 9065,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getTokenVault",
+            "nameLocation": "502:13:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9060,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9059,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "524:7:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9065,
+                  "src": "516:15:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9058,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "516:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "515:17:30"
+            },
+            "returnParameters": {
+              "id": 9064,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9063,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9065,
+                  "src": "556:17:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ITokenVaultWitnet_$9026",
+                    "typeString": "contract ITokenVaultWitnet"
+                  },
+                  "typeName": {
+                    "id": 9062,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 9061,
+                      "name": "ITokenVaultWitnet",
+                      "nameLocations": [
+                        "556:17:30"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 9026,
+                      "src": "556:17:30"
+                    },
+                    "referencedDeclaration": 9026,
+                    "src": "556:17:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ITokenVaultWitnet_$9026",
+                      "typeString": "contract ITokenVaultWitnet"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "555:19:30"
+            },
+            "scope": 9114,
+            "src": "493:82:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "1ba18c10",
+            "id": 9073,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getTokenWitnetRequests",
+            "nameLocation": "594:22:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9068,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9067,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "625:7:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9073,
+                  "src": "617:15:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9066,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "617:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "616:17:30"
+            },
+            "returnParameters": {
+              "id": 9072,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9071,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9073,
+                  "src": "657:44:30",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_ERC721TokenWitnetRequests_$9677_memory_ptr",
+                    "typeString": "struct WittyPixels.ERC721TokenWitnetRequests"
+                  },
+                  "typeName": {
+                    "id": 9070,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 9069,
+                      "name": "WittyPixels.ERC721TokenWitnetRequests",
+                      "nameLocations": [
+                        "657:11:30",
+                        "669:25:30"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 9677,
+                      "src": "657:37:30"
+                    },
+                    "referencedDeclaration": 9677,
+                    "src": "657:37:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_ERC721TokenWitnetRequests_$9677_storage_ptr",
+                      "typeString": "struct WittyPixels.ERC721TokenWitnetRequests"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "656:46:30"
+            },
+            "scope": 9114,
+            "src": "585:118:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "e3684e39",
+            "id": 9080,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "metadata",
+            "nameLocation": "718:8:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9076,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9075,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "735:7:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9080,
+                  "src": "727:15:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9074,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "727:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "726:17:30"
+            },
+            "returnParameters": {
+              "id": 9079,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9078,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9080,
+                  "src": "767:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 9077,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "767:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "766:15:30"
+            },
+            "scope": 9114,
+            "src": "709:73:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "18160ddd",
+            "id": 9085,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "totalSupply",
+            "nameLocation": "797:11:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9081,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "808:2:30"
+            },
+            "returnParameters": {
+              "id": 9084,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9083,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9085,
+                  "src": "834:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9082,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "834:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "833:9:30"
+            },
+            "scope": 9114,
+            "src": "788:55:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "ef83aa04",
+            "id": 9099,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "verifyTokenPlayerScore",
+            "nameLocation": "858:22:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9095,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9087,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "903:7:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9099,
+                  "src": "895:15:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9086,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "895:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9089,
+                  "mutability": "mutable",
+                  "name": "index",
+                  "nameLocation": "933:5:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9099,
+                  "src": "925:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9088,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "925:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9091,
+                  "mutability": "mutable",
+                  "name": "score",
+                  "nameLocation": "961:5:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9099,
+                  "src": "953:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9090,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "953:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9094,
+                  "mutability": "mutable",
+                  "name": "proof",
+                  "nameLocation": "1000:5:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9099,
+                  "src": "981:24:30",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_bytes32_$dyn_calldata_ptr",
+                    "typeString": "bytes32[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 9092,
+                      "name": "bytes32",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "981:7:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "id": 9093,
+                    "nodeType": "ArrayTypeName",
+                    "src": "981:9:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_bytes32_$dyn_storage_ptr",
+                      "typeString": "bytes32[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "880:136:30"
+            },
+            "returnParameters": {
+              "id": 9098,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9097,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9099,
+                  "src": "1040:4:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 9096,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1040:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1039:6:30"
+            },
+            "scope": 9114,
+            "src": "849:197:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "71a337f9",
+            "id": 9113,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "verifyTokenPlayerName",
+            "nameLocation": "1061:21:30",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9109,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9101,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "1105:7:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9113,
+                  "src": "1097:15:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9100,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1097:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9103,
+                  "mutability": "mutable",
+                  "name": "index",
+                  "nameLocation": "1135:5:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9113,
+                  "src": "1127:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9102,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1127:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9105,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "1171:4:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9113,
+                  "src": "1155:20:30",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 9104,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1155:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9108,
+                  "mutability": "mutable",
+                  "name": "proof",
+                  "nameLocation": "1209:5:30",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9113,
+                  "src": "1190:24:30",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_bytes32_$dyn_calldata_ptr",
+                    "typeString": "bytes32[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 9106,
+                      "name": "bytes32",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1190:7:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "id": 9107,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1190:9:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_bytes32_$dyn_storage_ptr",
+                      "typeString": "bytes32[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1082:143:30"
+            },
+            "returnParameters": {
+              "id": 9112,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9111,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9113,
+                  "src": "1249:4:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 9110,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1249:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1248:6:30"
+            },
+            "scope": 9114,
+            "src": "1052:203:30",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 9115,
+        "src": "97:1161:30",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:1225:30"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.17+commit.8df45f5f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.11",
+  "updatedAt": "2023-01-24T11:11:12.784Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
