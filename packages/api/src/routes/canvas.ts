@@ -1,5 +1,9 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
-import { PLAYER_MINT_TIMESTAMP } from '../constants'
+import {
+  PLAYER_MINT_TIMESTAMP,
+  INTERACTION_DURATION_MILLIS,
+  PIXEL_LOCKED_DURATION_MS,
+} from '../constants'
 import { Draw } from '../domain/draw'
 
 import {
@@ -8,6 +12,7 @@ import {
   DrawParams,
   DrawResult,
   CanvasVTO,
+  GetCanvasParams,
 } from '../types'
 import { isTimeToMint } from '../utils'
 
@@ -17,20 +22,29 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
   const { canvasModel, drawModel, playerModel, canvas } = fastify
 
   fastify.get<{
-    Params: Record<string, never>
+    Querystring: GetCanvasParams
     Reply: CanvasVTO | Error
   }>('/canvas', {
     schema: {
-      params: {},
+      querystring: GetCanvasParams,
       response: {
         200: CanvasVTO,
       },
     },
     handler: async (
-      _request: FastifyRequest<{ Params: Record<string, never> }>,
+      request: FastifyRequest<{ Querystring: GetCanvasParams }>,
       reply
     ) => {
-      return reply.status(200).send(canvas.toVTO())
+      const MAX_PIXELS_DIFF = 1000
+      const canvasCache = fastify.canvasCache
+
+      const checkpoint = request.query.checkpoint
+
+      if (!checkpoint || canvasCache.lastIndex - checkpoint > MAX_PIXELS_DIFF) {
+        return reply.status(200).send(canvas.toVTO())
+      } else {
+        return reply.status(200).send(fastify.canvasCache.getFrom(checkpoint))
+      }
     },
   })
 
@@ -78,33 +92,65 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       const currentTimestamp = Date.now()
 
       // Check 6: from can interaction (is free)
-      const lastDraw = await drawModel.getLast({
-        from: player.username,
+      const lastDraw = await drawModel.getLastByPlayer({
+        player: player.username,
       })
       if (lastDraw && lastDraw.ends > currentTimestamp) {
         return reply
           .status(409)
-          .send(new Error(`Players can only draw once every X seconds`))
+          .send(
+            new Error(
+              `Players can only draw once every ${INTERACTION_DURATION_MILLIS}ms`
+            )
+          )
+      }
+
+      const { color, x, y } = request.body
+
+      const lastPixelDraw = await drawModel.getLastByCoord({ x, y })
+
+      if (
+        lastPixelDraw &&
+        lastPixelDraw.timestamp + PIXEL_LOCKED_DURATION_MS > currentTimestamp
+      ) {
+        return reply
+          .status(409)
+          .send(
+            new Error(
+              `A pixel can only be drawn once every ${PIXEL_LOCKED_DURATION_MS}ms`
+            )
+          )
+      }
+
+      // Check 6: has the color
+      if (!player.hasColor(request.body.color)) {
+        return reply
+          .status(409)
+          .send(
+            new Error(`Player doesn't have the color ${request.body.color}`)
+          )
       }
 
       const draw: Draw = fastify.canvas.draw({
         // ends: currentTimestamp + INTERACTION_DURATION_MILLIS,
         player: player.username,
         // timestamp: currentTimestamp,
-        x: request.body.x,
-        y: request.body.y,
-        color: request.body.color,
+        x,
+        y,
+        color,
       })
-
       // Create and return `draw` object
       await drawModel.create(draw.toDbVTO())
-
       canvasModel.draw(draw.toDbSectorInfo(), {
-        x: request.body.x,
-        y: request.body.y,
-        c: request.body.color,
+        x,
+        y,
+        c: color,
         o: player.username,
       })
+
+      await playerModel.reduceColor(player.username, request.body.color)
+
+      fastify.canvasCache.add(draw)
 
       return reply.status(200).send(draw)
     },

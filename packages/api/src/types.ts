@@ -279,3 +279,8 @@ export type InteractionHistoryResponse = Static<
 >
 
 export type Palette = { [key in Color]: number }
+
+export const GetCanvasParams = Type.Object({
+  checkpoint: Type.Optional(Type.Number()),
+})
+export type GetCanvasParams = Static<typeof GetCanvasParams>

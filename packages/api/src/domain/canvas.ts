@@ -53,7 +53,7 @@ export class Canvas {
 
     sectors.forEach((sector: DbSectorVTO) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { name, ...rowMap } = sector
+      const { name, _id, ...rowMap } = sector
       const rows: Array<Omit<DbSectorVTO, 'name'>> = Object.values(rowMap)
       rows.forEach(row => {
         row.forEach((pixel: DbPixelVTO) => {
