@@ -5,12 +5,18 @@ import { FastifyPluginAsync, FastifyPluginCallback } from 'fastify'
 import fastifyMongodb from '@fastify/mongodb'
 import fp from 'fastify-plugin'
 import { join } from 'path'
-import { PLAYERS_COUNT, JWT_SECRET, MONGO_URI } from './constants'
+import {
+  PLAYERS_COUNT,
+  JWT_SECRET,
+  MONGO_URI,
+  CANVAS_CACHE_MAX_SIZE,
+} from './constants'
 import { PlayerModel } from './models/player'
 import { InteractionModel } from './models/interaction'
 import { CanvasModel } from './models/canvas'
 import { DrawModel } from './models/draw'
 import { Canvas } from './domain/canvas'
+import { CanvasCache } from './services/canvasCache'
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -19,6 +25,7 @@ declare module 'fastify' {
     canvasModel: CanvasModel
     drawModel: DrawModel
     canvas: Canvas
+    canvasCache: CanvasCache
   }
 }
 
@@ -99,9 +106,14 @@ const app: FastifyPluginAsync<AppOptions> = async (
       const sectors = await fastify.canvasModel.get()
       canvas = new Canvas(sectors)
     }
+    const { draws, total } = await fastify.drawModel.getLastDraws(
+      CANVAS_CACHE_MAX_SIZE
+    )
+    const canvasCache = new CanvasCache()
+    canvasCache.load(draws, total)
 
-    // TODO: load canvas state from db
     fastify.decorate('canvas', canvas)
+    fastify.decorate('canvasCache', canvas)
 
     next()
   }

@@ -24,4 +24,19 @@ export class DrawModel {
     const vto = await this.repository.getLast(search)
     return vto ? new Draw(vto) : null
   }
+
+  public async getLastDraws(
+    limit: number
+  ): Promise<{ draws: Array<Draw>; total: number }> {
+    const vtos = await this.repository.getSortedBy(
+      {},
+      { _id: -1 },
+      { limit, offset: 0 }
+    )
+    const totalDraws = await this.repository.count({})
+    return {
+      draws: vtos.map(vto => new Draw(vto)),
+      total: totalDraws,
+    }
+  }
 }
