@@ -32,7 +32,7 @@
     :show="modalStore.modal.visible"
     v-on:close="modalStore.closeModal"
   >
-    <GameOverModal v-if="modalStore.modals.gameOver" />
+    <ModalGameOver v-if="modalStore.modals.gameOver" />
     <ModalExport v-if="modalStore.modals.export" />
     <ModalMint v-if="modalStore.modals.mint" />
   </ModalDialog>
@@ -45,7 +45,7 @@ import { useModalStore } from '@/stores/modal'
 import { useGameStore } from '@/stores/game'
 import { ModalKey } from '@/types'
 import { onBeforeMount, onMounted, onBeforeUnmount } from 'vue'
-import { useWeb3 } from '../composables/useWeb3'
+import { useWeb3 } from '@/composables/useWeb3'
 import { POLLER_MILLISECONDS } from '@/constants'
 import { useRouter } from 'vue-router'
 export default {

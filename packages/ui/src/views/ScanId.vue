@@ -22,7 +22,7 @@ import { useStore } from '@/stores/player'
 import { useLocalStore } from '@/stores/local'
 import { StreamBarcodeReader } from 'vue-barcode-reader'
 import { useRouter } from 'vue-router'
-import { useModal } from '../composables/useModal'
+import { useModal } from '@/composables/useModal'
 
 export default {
   components: {
