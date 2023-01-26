@@ -8,7 +8,7 @@ import {
   type Errors,
   ErrorKey,
 } from '@/types'
-import { TIME_TO_MINT_MILLISECONDS, GAME_ENDS_TIMESTAMP } from '../constants'
+import { TIME_TO_REDEEM_MILLISECONDS, GAME_ENDS_TIMESTAMP } from '../constants'
 import { isMainnetTime } from '@/utils'
 import { useLocalStore } from './local'
 export const useStore = defineStore('player', {
@@ -30,7 +30,7 @@ export const useStore = defineStore('player', {
       interactionOut: null,
       //TODO: make gameOverTimeMilli take GAME_ENDS_TIMESTAMP value when gameOver is defined
       gameOverTimeMilli: GAME_ENDS_TIMESTAMP,
-      timeToMintInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_MINT_MILLISECONDS,
+      timeToRedeemInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_REDEEM_MILLISECONDS,
       previews: [],
       mintedAwards: [],
       history: [],
@@ -47,9 +47,9 @@ export const useStore = defineStore('player', {
       //FIXME: make it reactive
       return this.gameOverTimeMilli < Date.now()
     },
-    mintingAllow(): boolean {
+    redeemAllow(): boolean {
       //FIXME: make it reactive
-      return this.timeToMintInMilli < Date.now()
+      return this.timeToRedeemInMilli < Date.now()
     },
     isMainnetTime() {
       return isMainnetTime()
