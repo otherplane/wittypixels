@@ -8,10 +8,7 @@ import {
   type Errors,
   ErrorKey,
 } from '@/types'
-import {
-  TIME_TO_MINT_MILLISECONDS,
-  GAME_ENDS_TIMESTAMP,
-} from '../constants'
+import { TIME_TO_MINT_MILLISECONDS, GAME_ENDS_TIMESTAMP } from '../constants'
 import { isMainnetTime } from '@/utils'
 import { useLocalStore } from './local'
 export const useStore = defineStore('player', {
