@@ -58,6 +58,13 @@ export enum ErrorKey {
   getContractArgs = 'getContractArgs',
   redeem = 'redeem',
 }
+export enum GameOverErrorKey {
+  redeem = 'redeem',
+  network = 'network',
+}
 export interface Errors {
+  [key: string]: string | null
+}
+export interface GameOverErrors {
   [key: string]: string | null
 }

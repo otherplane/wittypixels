@@ -1,17 +1,17 @@
 <template>
   <div>
-    <GameInfo v-if="!player.gameOver">
+    <GameInfo v-if="!gameStore.gameOver">
       <p>
         <span>GAME ENDS IN: </span>
         <TimeLeft
           class="time-left"
-          :timestamp="player.gameOverTimeMilli"
+          :timestamp="gameStore.gameOverTimeMilli"
           :seconds="true"
           @clear-timestamp="getTokenStatus"
         />
       </p>
     </GameInfo>
-    <GameInfo v-if="player.gameOver">
+    <GameInfo v-if="gameStore.gameOver">
       <p class="game-over bold">GAME OVER</p>
     </GameInfo>
   </div>
@@ -19,6 +19,8 @@
 
 <script lang="ts">
 import { useStore } from '@/stores/player'
+import { useLocalStore } from '@/stores/local'
+import { useGameStore } from '@/stores/game'
 import { formatNumber } from '../utils'
 import { useWeb3 } from '../composables/useWeb3'
 import { onMounted, onBeforeUnmount, computed, watch } from 'vue'
@@ -29,11 +31,13 @@ export default {
     let tokenStatusPoller: any
     let mintConfirmationStatusPoller: any
     const player = useStore()
+    const gameStore = useGameStore()
+    const localStore = useLocalStore()
     const web3WittyCreatures = useWeb3()
-    const txHash = computed(() => player.mintInfo?.txHash)
+    const txHash = computed(() => localStore.mintInfo?.txHash)
     const getTokenStatus = async () => {
-      if (player.isGameOver) {
-        player.gameOver = true
+      if (gameStore.isGameOver) {
+        gameStore.gameOver = true
         await web3WittyCreatures.getTokenStatus()
         tokenStatusPoller = setInterval(async () => {
           await web3WittyCreatures.getTokenStatus()
@@ -46,7 +50,7 @@ export default {
     })
     onMounted(async () => {
       await player.getPlayerInfo()
-      if (player.gameOver) {
+      if (gameStore.gameOver) {
         tokenStatusPoller = await setInterval(async () => {
           await web3WittyCreatures.getTokenStatus()
         }, POLLER_MILLISECONDS)
@@ -55,14 +59,19 @@ export default {
     })
     const getGameOverInfo = async () => {
       clearInterval(mintConfirmationStatusPoller)
-      if (player.mintInfo?.txHash && !player.mintInfo?.mintConfirmation) {
+      if (
+        localStore.mintInfo?.txHash &&
+        !localStore.mintInfo?.mintConfirmation
+      ) {
         mintConfirmationStatusPoller = await setInterval(async () => {
           await web3WittyCreatures.getConfirmationStatus()
         }, POLLER_MILLISECONDS)
       }
     }
-    const tokenStatus = computed(() => player?.tokenStatus)
-    const redeemConfirmation = computed(() => player.mintInfo?.mintConfirmation)
+    const tokenStatus = computed(() => gameStore?.tokenStatus)
+    const redeemConfirmation = computed(
+      () => localStore.mintInfo?.mintConfirmation
+    )
     watch(tokenStatus, () => {
       getGameOverInfo()
     })
@@ -75,6 +84,7 @@ export default {
     return {
       getTokenStatus,
       player,
+      gameStore,
       formatNumber,
       TokenStatus,
     }

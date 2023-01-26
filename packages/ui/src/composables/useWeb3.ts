@@ -3,11 +3,11 @@ import { onMounted, ref } from 'vue'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Web3 from 'web3/dist/web3.min.js'
-import { useStore } from '@/stores/player'
 import { useLocalStore } from '@/stores/local'
 import { CONTRACT_ADDRESS, NETWORK } from '../constants'
-import { ErrorKey } from '@/types'
+import { GameOverErrorKey } from '@/types'
 import WittyPixelsTokenInterface from '../IWittyPixelsToken.json'
+import { useGameStore } from '@/stores/game'
 // import WittyPixelsTokenVaultInterface from '../IWittyPixelsTokenVault.json'
 
 declare global {
@@ -47,8 +47,8 @@ const errorRedeemMessage = `There was an error minting your NFT.`
 
 export function useWeb3() {
   let web3: Web3
-  const player = useStore()
   const localStore = useLocalStore()
+  const gameStore = useGameStore()
   const isProviderConnected = ref(false)
   const mintedAddress = ref('')
   const preview = ref('')
@@ -58,8 +58,8 @@ export function useWeb3() {
     if (accounts[0]) {
       isProviderConnected.value = true
       if ((await web3.eth.net.getId()) !== Number(NETWORK)) {
-        return player.setError(
-          ErrorKey.network,
+        return gameStore.setError(
+          GameOverErrorKey.network,
           createErrorMessage(errorNetworkMessage)
         )
       }
@@ -87,7 +87,7 @@ export function useWeb3() {
   onMounted(() => {
     if (window.ethereum) {
       web3 = new Web3(window.ethereum || 'ws://localhost:8545')
-      if (player.gameOver) {
+      if (gameStore.gameOver) {
         enableProvider()
       }
     }
@@ -111,7 +111,7 @@ export function useWeb3() {
     //     const result = await contract.methods
     //       .getFarmerTokens(player.farmerId)
     //       .call()
-    //     player.setTokenIds(result)
+    //     gameOverStore.setTokenIds(result)
     //     return result
     //   } catch (err) {
     //     console.error(err)
@@ -122,8 +122,8 @@ export function useWeb3() {
 
   async function mint() {
     if ((await web3.eth.net.getId()) !== Number(NETWORK)) {
-      return player.setError(
-        ErrorKey.network,
+      return gameStore.setError(
+        GameOverErrorKey.network,
         createErrorMessage(errorNetworkMessage)
       )
     } else {
@@ -132,7 +132,7 @@ export function useWeb3() {
         CONTRACT_ADDRESS
       )
       const from = (await requestAccounts(web3))[0]
-      const mintArgs = await player.getContractArgs(from)
+      const mintArgs = await gameStore.getContractArgs(from)
       const playerAwards = mintArgs.data.farmerAwards.map((medal: any) =>
         Object.values(medal)
       )
@@ -148,8 +148,8 @@ export function useWeb3() {
         )
         .send({ from })
         .on('error', (error: any) => {
-          player.setError(
-            ErrorKey.redeem,
+          gameStore.setError(
+            GameOverErrorKey.redeem,
             createErrorMessage(errorRedeemMessage)
           )
           console.error(error)

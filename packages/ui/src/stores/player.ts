@@ -6,12 +6,8 @@ import {
   type PalettePoints,
   type PixelMap,
   type Errors,
-  type MintInfo,
   ErrorKey,
-  TokenStatus,
 } from '@/types'
-import { TIME_TO_REDEEM_MILLISECONDS, GAME_ENDS_TIMESTAMP } from '../constants'
-import { isMainnetTime } from '@/utils'
 import { useLocalStore } from './local'
 export const useStore = defineStore('player', {
   state: () => {
@@ -22,11 +18,6 @@ export const useStore = defineStore('player', {
       username: '',
       score: null,
       color: 0 as number,
-      selectedColor: null as string | null,
-      palettePoints: {} as PalettePoints,
-      showPalettePanel: false as boolean,
-      pixelToPaint: null as Pixel | null,
-      pixelMap: {} as PixelMap,
       bonus: null,
       interactionInfo: null,
       interactionIn: null,
@@ -34,30 +25,12 @@ export const useStore = defineStore('player', {
       history: [],
       playersGlobalStats: [],
       errors: {} as Errors,
-      // game over state
-      gameOverTimeMilli: GAME_ENDS_TIMESTAMP,
-      timeToRedeemInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_REDEEM_MILLISECONDS,
-      gameOver: false as boolean,
-      allowRedeem: false as boolean,
-      redeemAllow: false as boolean,
-      tokenStatus: null as TokenStatus | null,
-      mintInfo: null as MintInfo | null,
-      mintParams: null,
-      tokenIds: null,
+      selectedColor: null as string | null,
+      palettePoints: {} as PalettePoints,
+      showPalettePanel: false as boolean,
+      pixelToPaint: null as Pixel | null,
+      pixelMap: {} as PixelMap,
     }
-  },
-  getters: {
-    isGameOver(): boolean {
-      //FIXME: make it reactive
-      return this.gameOverTimeMilli < Date.now()
-    },
-    isRedeemAllow(): boolean {
-      //FIXME: make it reactive
-      return this.timeToRedeemInMilli < Date.now()
-    },
-    isMainnetTime() {
-      return isMainnetTime()
-    },
   },
   actions: {
     paintPixel() {
@@ -218,24 +191,6 @@ export const useStore = defineStore('player', {
           this.interactionOut = request.lastInteractionOut
         }
       }
-    },
-    // Web3
-    // TODO: get minted nft
-    async getMintedAwardsImages() {
-      // To Be Implemented
-    },
-    // TODO: get preview
-    async getPreviews() {
-      // To Be Implemented
-    },
-    async getContractArgs(address: string) {
-      const tokenInfo = this.localStore.getToken()
-      const request = await this.api.getContractArgs({
-        address,
-        token: tokenInfo.token,
-      })
-
-      return request
     },
   },
 })
