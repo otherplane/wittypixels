@@ -68,7 +68,7 @@ export default {
 .notification {
   z-index: 100;
   background-color: black;
-  border-radius: 4px;
+  border-radius: 24px;
   top: 40px;
   display: flex;
   left: 0;

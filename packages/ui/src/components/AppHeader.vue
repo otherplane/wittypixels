@@ -6,17 +6,14 @@
     <NavBar
       v-if="!hideNavBar"
       class="navbar"
-      @openExportModal="openModal('export')"
+      @openExportModal="openExportModal"
     />
   </div>
-  <ModalDialog :show="modal.visible.value" v-on:close="closeModal">
-    <ModalExport v-if="modals.export" />
-  </ModalDialog>
 </template>
-<script>
+<script lang="ts">
 import wittyLogo from '@/assets/witty-pixels-logo.svg?raw'
-import { reactive } from 'vue'
-import { useModal } from '@/composables/useModal'
+import { useModalStore } from '@/stores/modal'
+import { ModalKey } from '@/types'
 export default {
   props: {
     hideNavBar: {
@@ -25,24 +22,13 @@ export default {
     },
   },
   setup() {
-    const modal = useModal()
-    const modals = reactive({
-      export: false,
-    })
-    function openModal(name) {
-      modals[name] = true
-      modal.showModal()
-    }
-    function closeModal() {
-      modals.export = false
-      modal.hideModal()
+    const modalStore = useModalStore()
+    function openExportModal() {
+      modalStore.openModal(ModalKey.export)
     }
     return {
       wittyLogo,
-      openModal,
-      closeModal,
-      modal,
-      modals,
+      openExportModal,
     }
   },
 }

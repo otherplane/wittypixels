@@ -21,6 +21,12 @@ export enum Position {
   right = 'right',
   left = 'left',
 }
+export enum ModalKey {
+  mint = 'mint',
+  export = 'export',
+  preview = 'preview',
+  gameOver = 'gameOver',
+}
 export type Coordinates = {
   x: number
   y: number
