@@ -39,9 +39,9 @@
 
 <script>
 import { defineComponent, getCurrentInstance } from 'vue'
-import { createImportLink } from '../services/exportInformation'
-import { copyTextToClipboard } from '../services/copyToClipboard'
-import { useStore } from '../stores/player'
+import { createImportLink } from '@/services/exportInformation'
+import { copyTextToClipboard } from '@/services/copyToClipboard'
+import { useStore } from '@/stores/player'
 export default defineComponent({
   setup() {
     const instance = getCurrentInstance()
