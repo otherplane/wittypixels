@@ -18,12 +18,27 @@
   </div>
   <div class="btn" v-if="player.gameOver">
     <CustomButton
+      v-if="!player.redeemAllow && !minted"
+      type="disable"
+      :slim="true"
+    >
+      <p class="disabled-text">
+        Allowing redeem in
+        <TimeLeft
+          class="time-left"
+          :timestamp="player.timeToRedeemInMilli"
+          :seconds="true"
+          @clear-timestamp="allowRedeem"
+        />...
+      </p>
+    </CustomButton>
+    <CustomButton
       v-if="player.redeemAllow && !minted"
       @click="mint"
       type="dark"
       :slim="true"
     >
-      CLAIM NFT AWARDS
+      Redeem ownership
     </CustomButton>
     <a
       v-if="player.errors.network"
@@ -56,7 +71,9 @@ export default {
     )
     const clearTimestamp = interactionType => {
       player[interactionType] = null
-      player.socialsSharedMessage = false
+    }
+    function allowRedeem() {
+      player.redeemAllow = true
     }
     function mint() {
       if (type.value !== 'disable') {
@@ -74,6 +91,7 @@ export default {
       type,
       clearTimestamp,
       addPolygonNetwork,
+      allowRedeem,
     }
   },
 }

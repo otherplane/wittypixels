@@ -98,6 +98,10 @@ export function useWeb3() {
     // call WITTY_PIXELS_TOKEN_VAULT
   }
 
+  async function getConfirmationStatus() {
+    // TODO: get confirmation status
+  }
+
   async function getTokenIds() {
     // if ((await web3.eth.net.getId()) !== Number(NETWORK)) {
     //   return player.setError('network', createErrorMessage(errorNetworkMessage))
@@ -173,5 +177,6 @@ export function useWeb3() {
     open,
     getTokenIds,
     getTokenStatus,
+    getConfirmationStatus,
   }
 }

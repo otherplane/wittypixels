@@ -38,6 +38,8 @@ export type MintInfo = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   events: Array<any>
   blockHash: string
+  mintConfirmation: boolean
+  txHash: string
 }
 export enum TokenStatus {
   Void = 'void',

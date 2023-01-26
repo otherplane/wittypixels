@@ -6,6 +6,7 @@ import {
   type PalettePoints,
   type PixelMap,
   type Errors,
+  type MintInfo,
   ErrorKey,
   TokenStatus,
 } from '@/types'
@@ -37,9 +38,10 @@ export const useStore = defineStore('player', {
       gameOverTimeMilli: GAME_ENDS_TIMESTAMP,
       timeToRedeemInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_REDEEM_MILLISECONDS,
       gameOver: false as boolean,
+      allowRedeem: false as boolean,
       redeemAllow: false as boolean,
       tokenStatus: null as TokenStatus | null,
-      mintInfo: null,
+      mintInfo: null as MintInfo | null,
       mintParams: null,
       tokenIds: null,
     }

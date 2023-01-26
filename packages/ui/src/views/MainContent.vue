@@ -6,7 +6,7 @@
     <template v-slot:main>
       <div class="float">
         <div class="game-info">
-          <GameCountdowns />
+          <GameOverCountdown />
           <GameInfo
             ><p>@{{ player.username }}</p></GameInfo
           >

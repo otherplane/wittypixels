@@ -1,24 +1,19 @@
 <template>
   <div>
-    <p v-if="!player.gameOver" class="counter">
-      <span>GAME ENDS IN: </span>
-      <TimeLeft
-        class="time-left"
-        :timestamp="player.gameOverTimeMilli"
-        :seconds="true"
-        @clear-timestamp="getTokenStatus"
-      />
-    </p>
-    <p
-      v-if="
-        player.gameOver &&
-        player.tokenStatus &&
-        player.tokenStatus == TokenStatus.Minting
-      "
-      class="game-over bold"
-    >
-      GAME OVER
-    </p>
+    <GameInfo v-if="!player.gameOver">
+      <p>
+        <span>GAME ENDS IN: </span>
+        <TimeLeft
+          class="time-left"
+          :timestamp="player.gameOverTimeMilli"
+          :seconds="true"
+          @clear-timestamp="getTokenStatus"
+        />
+      </p>
+    </GameInfo>
+    <GameInfo v-if="player.gameOver">
+      <p class="game-over bold">GAME OVER</p>
+    </GameInfo>
   </div>
 </template>
 
@@ -62,7 +57,7 @@ export default {
       clearInterval(mintConfirmationStatusPoller)
       if (player.mintInfo?.txHash && !player.mintInfo?.mintConfirmation) {
         mintConfirmationStatusPoller = await setInterval(async () => {
-          await web3WittyCreatures.getMintConfirmationStatus()
+          await web3WittyCreatures.getConfirmationStatus()
         }, POLLER_MILLISECONDS)
       }
     }
@@ -98,34 +93,5 @@ export default {
 }
 .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
-}
-.time-container {
-  width: 100%;
-  background-color: var(--primary-color-opacity-2);
-  color: var(--primary-color);
-  font-weight: 600;
-  padding: 0px 8px;
-  border-radius: 4px;
-  display: grid;
-  grid-template-columns: max-content 130px;
-  justify-content: left;
-  align-items: center;
-}
-.bonus-title {
-  text-align: left;
-  font-size: 16px;
-  color: var(--primary-color);
-  margin-right: 8px;
-  font-weight: bold;
-  .highlight {
-    color: var(--primary-color);
-  }
-}
-.time-left {
-  padding-left: 8px;
-  width: max-content;
-  overflow: hidden;
-  text-align: left;
-  font-size: 12px;
 }
 </style>
