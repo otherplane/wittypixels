@@ -10,7 +10,6 @@ import {
 } from '@/types'
 import {
   TIME_TO_MINT_MILLISECONDS,
-  DEMO_ENDS_TIMESTAMP,
   GAME_ENDS_TIMESTAMP,
 } from '../constants'
 import { isMainnetTime } from '@/utils'
@@ -34,7 +33,6 @@ export const useStore = defineStore('player', {
       interactionOut: null,
       //TODO: make gameOverTimeMilli take GAME_ENDS_TIMESTAMP value when gameOver is defined
       gameOverTimeMilli: GAME_ENDS_TIMESTAMP,
-      demoOverTimeMilli: DEMO_ENDS_TIMESTAMP,
       timeToMintInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_MINT_MILLISECONDS,
       previews: [],
       mintedAwards: [],
@@ -55,10 +53,6 @@ export const useStore = defineStore('player', {
     mintingAllow(): boolean {
       //FIXME: make it reactive
       return this.timeToMintInMilli < Date.now()
-    },
-    demoOver(): boolean {
-      //FIXME: make it reactive
-      return this.demoOverTimeMilli < Date.now()
     },
     isMainnetTime() {
       return isMainnetTime()

@@ -1,16 +1,6 @@
 <template>
   <transition name="fade">
-    <GameInfo v-if="!player.demoOver">
-      <p>
-        <span>DEMO ENDS IN:</span>
-        <TimeLeft
-          class="time-left"
-          :timestamp="player.demoOverTimeMilli"
-          :seconds="true"
-        />
-      </p>
-    </GameInfo>
-    <GameInfo v-else-if="!player.gameOver">
+    <GameInfo v-if="!player.gameOver">
       <p>
         <span>GAME ENDS IN:</span>
         <TimeLeft
