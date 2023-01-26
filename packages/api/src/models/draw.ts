@@ -17,9 +17,16 @@ export class DrawModel {
     return new Draw(await this.repository.create(vto))
   }
 
-  public async getLast(search: {
-    from?: string
-    to?: string
+  public async getLastByPlayer(search: {
+    player: string
+  }): Promise<Draw | null> {
+    const vto = await this.repository.getLast(search)
+    return vto ? new Draw(vto) : null
+  }
+
+  public async getLastByCoord(search: {
+    x: number
+    y: number
   }): Promise<Draw | null> {
     const vto = await this.repository.getLast(search)
     return vto ? new Draw(vto) : null

@@ -93,11 +93,11 @@ export const PLAYER_MAINNET_TIMESTAMP = process.env.PLAYER_MAINNET_TIMESTAMP
 
 export const CANVAS_MAX_X = process.env.CANVAS_MAX_X
   ? parseInt(process.env.CANVAS_MAX_X)
-  : 700
+  : 1000
 
 export const CANVAS_MAX_Y = process.env.CANVAS_MAX_Y
   ? parseInt(process.env.CANVAS_MAX_Y)
-  : 700
+  : 1000
 
 export const CANVAS_SECTOR_SIZE = process.env.CANVAS_SECTOR_SIZE
   ? parseInt(process.env.CANVAS_SECTOR_SIZE)
@@ -110,6 +110,11 @@ export const OVERWRITE_CANVAS = process.env.OVERWRITE_CANVAS
 export const CANVAS_CACHE_MAX_SIZE = process.env.CANVAS_CACHE_MAX_SIZE
   ? parseInt(process.env.CANVAS_CACHE_MAX_SIZE)
   : 100000
+
+// Pixel locked
+export const PIXEL_LOCKED_DURATION_MS = process.env.PIXEL_LOCKED_DURATION_MS
+  ? parseInt(process.env.PIXEL_LOCKED_DURATION_MS)
+  : 10 * 1000
 
 export default {
   PLAYER_KEY_LENGTH_BYTES,

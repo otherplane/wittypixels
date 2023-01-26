@@ -97,15 +97,20 @@ const app: FastifyPluginAsync<AppOptions> = async (
     if (!fastify.mongo.db) throw Error('mongo db not found')
     let canvas: Canvas
 
-    if (process.env.OVERWRITE_CANVAS) {
+    const canvasSectors = await fastify.canvasModel.get()
+    const needToCreateCanvas =
+      process.env.OVERWRITE_CANVAS || !canvasSectors.length
+
+    if (needToCreateCanvas) {
       canvas = new Canvas()
-      console.log('Initializing canvas')
+      console.log('Storing Canvas in DB')
       await fastify.canvasModel.create(canvas.toDbSectors())
-      console.log('Canvas initialized')
     } else {
+      console.log('Loading Canvas from DB')
       const sectors = await fastify.canvasModel.get()
       canvas = new Canvas(sectors)
     }
+    // Initializing canvas
     const { draws, total } = await fastify.drawModel.getLastDraws(
       CANVAS_CACHE_MAX_SIZE
     )
@@ -113,7 +118,7 @@ const app: FastifyPluginAsync<AppOptions> = async (
     canvasCache.load(draws, total)
 
     fastify.decorate('canvas', canvas)
-    fastify.decorate('canvasCache', canvas)
+    fastify.decorate('canvasCache', canvasCache)
 
     next()
   }

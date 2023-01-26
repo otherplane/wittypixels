@@ -69,6 +69,10 @@ export class Player {
     return showToken ? { ...vto, token: this.token } : vto
   }
 
+  hasColor(color: Color): boolean {
+    return this.palette[color] > 0
+  }
+
   static getLeaderboard(
     players: Array<Player>,
     totalPlayers: number,
@@ -95,13 +99,13 @@ export class Player {
   static getEmptyPalette(): Palette {
     return {
       [Color.Black]: 0,
-      [Color.Blue]: 0,
-      [Color.Green]: 0,
-      [Color.Orange]: 0,
-      [Color.Purple]: 0,
-      [Color.Red]: 0,
+      [Color.Blue]: 5,
+      [Color.Green]: 5,
+      [Color.Orange]: 5,
+      [Color.Purple]: 5,
+      [Color.Red]: 5,
       [Color.White]: 0,
-      [Color.Yellow]: 0,
+      [Color.Yellow]: 5,
     }
   }
 }
