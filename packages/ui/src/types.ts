@@ -26,6 +26,10 @@ export enum ModalKey {
   export = 'export',
   preview = 'preview',
   gameOver = 'gameOver',
+  redeem = 'redeem',
+}
+export interface Modals {
+  [key: string]: boolean | null
 }
 export type Coordinates = {
   x: number
@@ -64,9 +68,18 @@ export enum ErrorKey {
   getContractArgs = 'getContractArgs',
   redeem = 'redeem',
 }
+export enum InteractionType {
+  interactionOut = 'interactionOut',
+  interactionIn = 'interactionIn',
+}
+export type InteractionInfo = {
+  ends: number
+}
 export enum GameOverErrorKey {
   redeem = 'redeem',
-  network = 'network',
+  web3WrongNetwork = 'web3WrongNetwork',
+  web3Disconnected = 'web3Disconnected',
+  web3ErrorSwitchingNetworks = 'web3ErrorSwitchingNetworks',
 }
 export interface Errors {
   [key: string]: string | null

@@ -4,8 +4,8 @@ import { onMounted, ref } from 'vue'
 // @ts-ignore
 import Web3 from 'web3/dist/web3.min.js'
 import { useLocalStore } from '@/stores/local'
-import { CONTRACT_ADDRESS, NETWORK } from '../constants'
-import { GameOverErrorKey } from '@/types'
+import { CONTRACT_ADDRESS, NETWORKS, CURRENT_NETWORK } from '../constants'
+import { GameOverErrorKey, TokenStatus } from '@/types'
 import WittyPixelsTokenInterface from '../IWittyPixelsToken.json'
 import { useGameStore } from '@/stores/game'
 // import WittyPixelsTokenVaultInterface from '../IWittyPixelsTokenVault.json'
@@ -30,18 +30,8 @@ function createErrorMessage(message: string) {
   }
 }
 
-function networkById(id: string) {
-  switch (id) {
-    case '137':
-      return 'Polygon Mainnet'
-    case '80001':
-      return 'Polygon Mumbai'
-  }
-}
-
-const errorNetworkMessage = `Your web3 provider should be connected to the ${networkById(
-  NETWORK
-)} network`
+const errorNetworkMessage = `Your web3 provider should be connected to the ${NETWORKS[CURRENT_NETWORK].name} network`
+const errorWeb3Disconnected = `There is no web3 provider connected`
 const errorRedeemMessage = `There was an error minting your NFT.`
 // const errorPreviewMessage = `There was an error showing the preview of your NFT.`
 
@@ -52,50 +42,90 @@ export function useWeb3() {
   const isProviderConnected = ref(false)
   const mintedAddress = ref('')
   const preview = ref('')
-
-  async function enableProvider() {
-    const accounts = await requestAccounts(web3)
-    if (accounts[0]) {
-      isProviderConnected.value = true
-      if ((await web3.eth.net.getId()) !== Number(NETWORK)) {
-        return gameStore.setError(
-          GameOverErrorKey.network,
-          createErrorMessage(errorNetworkMessage)
-        )
-      }
-    }
-  }
-
-  async function addPolygonNetwork() {
-    await window.ethereum
-      .request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainId: '0x89',
-            chainName: 'Polygon Mainnet',
-            rpcUrls: ['https://polygon-rpc.com/'],
-            blockExplorerUrls: ['https://polygonscan.com'],
-          },
-        ],
-      })
-      .catch((error: any) => {
-        console.log(error)
-      })
-  }
+  const network = ref(NETWORKS[CURRENT_NETWORK])
 
   onMounted(() => {
     if (window.ethereum) {
       web3 = new Web3(window.ethereum || 'ws://localhost:8545')
-      if (gameStore.gameOver) {
-        enableProvider()
-      }
     }
   })
+
+  async function enableProvider() {
+    gameStore.clearError(GameOverErrorKey.web3WrongNetwork)
+    gameStore.clearError(GameOverErrorKey.web3Disconnected)
+    if (web3) {
+      let accounts
+      try {
+        accounts = await requestAccounts(web3)
+      } catch (err) {
+        gameStore.setError(
+          GameOverErrorKey.web3Disconnected,
+          createErrorMessage(errorWeb3Disconnected)
+        )
+      }
+      if (accounts[0]) {
+        isProviderConnected.value = true
+        if ((await web3.eth.net.getId()) !== Number(network.value?.id)) {
+          gameStore.setError(
+            GameOverErrorKey.web3WrongNetwork,
+            createErrorMessage(errorNetworkMessage)
+          )
+        } else {
+          gameStore.clearError(GameOverErrorKey.web3WrongNetwork)
+        }
+      } else {
+        gameStore.setError(
+          GameOverErrorKey.web3Disconnected,
+          createErrorMessage(errorWeb3Disconnected)
+        )
+      }
+    } else {
+      gameStore.setError(
+        GameOverErrorKey.web3Disconnected,
+        createErrorMessage(errorWeb3Disconnected)
+      )
+    }
+  }
+
+  async function addNetwork() {
+    gameStore.clearError(GameOverErrorKey.web3WrongNetwork)
+    gameStore.clearError(GameOverErrorKey.web3Disconnected)
+    isProviderConnected.value = true
+    await window.ethereum
+      .request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: web3.utils.toHex(network.value.id) }],
+      })
+      .catch(async (error: any) => {
+        if (error.code === 4902) {
+          await window.ethereum
+            .request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: web3.utils.toHex(network.value.id),
+                  chainName: network.value.name,
+                  rpcUrls: network.value.rpcUrls,
+                  blockExplorerUrls: network.value.rpcUrls,
+                },
+              ],
+            })
+            .catch((error: any) => {
+              console.log(error)
+              return gameStore.setError(
+                GameOverErrorKey.web3ErrorSwitchingNetworks,
+                createErrorMessage(errorNetworkMessage)
+              )
+            })
+        }
+      })
+  }
 
   async function getTokenStatus() {
     //TODO: get token status
     // call WITTY_PIXELS_TOKEN_VAULT
+    const tokenStatus: TokenStatus = TokenStatus.Fractionalized
+    gameStore.tokenStatus = tokenStatus
   }
 
   async function getConfirmationStatus() {
@@ -121,9 +151,9 @@ export function useWeb3() {
   }
 
   async function mint() {
-    if ((await web3.eth.net.getId()) !== Number(NETWORK)) {
+    if ((await web3.eth.net.getId()) !== Number(network.value.id)) {
       return gameStore.setError(
-        GameOverErrorKey.network,
+        GameOverErrorKey.web3WrongNetwork,
         createErrorMessage(errorNetworkMessage)
       )
     } else {
@@ -168,12 +198,12 @@ export function useWeb3() {
   }
 
   return {
-    mint,
-    mintedAddress,
     isProviderConnected,
     preview,
     enableProvider,
-    addPolygonNetwork,
+    addNetwork,
+    mint,
+    mintedAddress,
     open,
     getTokenIds,
     getTokenStatus,

@@ -16,10 +16,7 @@
       <PixelBoard />
     </template>
     <template v-slot:bottom>
-      <GameActions
-        @openMintModal="openModal('mint')"
-        @addNetwork="addPolygonNetwork"
-      />
+      <GameActions />
     </template>
     <template v-slot:bottom-2>
       <PanelSlider :showPanel="player.showPalettePanel">
@@ -35,6 +32,7 @@
     <ModalGameOver v-if="modalStore.modals.gameOver" />
     <ModalExport v-if="modalStore.modals.export" />
     <ModalMint v-if="modalStore.modals.mint" />
+    <ModalRedeemInfo v-if="modalStore.modals.redeem" />
   </ModalDialog>
 </template>
 
@@ -45,7 +43,6 @@ import { useModalStore } from '@/stores/modal'
 import { useGameStore } from '@/stores/game'
 import { ModalKey } from '@/types'
 import { onBeforeMount, onMounted, onBeforeUnmount } from 'vue'
-import { useWeb3 } from '@/composables/useWeb3'
 import { POLLER_MILLISECONDS } from '@/constants'
 import { useRouter } from 'vue-router'
 export default {
@@ -55,7 +52,6 @@ export default {
     const gameStore = useGameStore()
     const router = useRouter()
     const modalStore = useModalStore()
-    const web3WittyCreatures = useWeb3()
     let playerInfoPoller = null
     // TODO: HANDLE END OF GAME
     onBeforeMount(async () => {
@@ -91,7 +87,6 @@ export default {
     return {
       modalStore,
       player,
-      addPolygonNetwork: web3WittyCreatures.addPolygonNetwork,
     }
   },
 }

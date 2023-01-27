@@ -13,7 +13,7 @@ export const useGameStore = defineStore('gameStore', {
     timeToRedeemInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_REDEEM_MILLISECONDS,
     gameOver: false as boolean,
     redeemAllow: false as boolean,
-    tokenStatus: null as TokenStatus | null,
+    tokenStatus: 'Minting' as TokenStatus | null,
     mintParams: null,
     tokenIds: null,
     errors: {} as GameOverErrors,
@@ -53,6 +53,9 @@ export const useGameStore = defineStore('gameStore', {
     setError(name: GameOverErrorKey, error: any) {
       this.errors[name] = error.response?.data?.message || error.toString()
       this.notify({ message: this.errors[name] })
+    },
+    clearError(error: GameOverErrorKey) {
+      this.errors[error] = null
     },
   },
 })
