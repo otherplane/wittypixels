@@ -55,13 +55,13 @@ jobs:
       - name: Run linter
         run: pnpm lint
 
-      # See https://github.com/otherplane/wittypixels/blob/main/README.md#e2e-test)
-      # - name: Run unit tests
-      #   run: pnpm test:unit
+      - name: Run unit tests
+        run: pnpm test:unit
 
       - name: Run build
         run: pnpm build
         
-      - name: Run e2e tests 
-        run: pnpm test:e2e
+      # See https://github.com/otherplane/wittypixels/blob/main/README.md#e2e-test)
+      # - name: Run e2e tests 
+      #   run: pnpm test:e2e
 
