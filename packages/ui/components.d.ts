@@ -28,6 +28,7 @@ declare module '@vue/runtime-core' {
     ModalExport: typeof import('./src/components/modals/ModalExport.vue')['default']
     ModalGameOver: typeof import('./src/components/modals/ModalGameOver.vue')['default']
     ModalMint: typeof import('./src/components/modals/ModalMint.vue')['default']
+    ModalRedeemInfo: typeof import('./src/components/modals/ModalRedeemInfo.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     PaintSvg: typeof import('./src/components/PaintSvg.vue')['default']
     PanelSlider: typeof import('./src/components/PanelSlider.vue')['default']

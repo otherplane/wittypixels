@@ -11,7 +11,17 @@ export const OPENSEA_BASE_URL =
 export const EXPLORER_BASE_URL =
   import.meta.env.VITE_EXPLORER_BASE_URL || 'https://polygonscan.com/tx/'
 
-export const NETWORK = import.meta.env.VITE_NETWORK || 137
+export const NETWORKS = {
+  137: {
+    name: 'Polygon Mainnet',
+    id: 137,
+    contractAddress:
+      import.meta.env.VITE_POLYGON_MAINNET_CONTRACT_ADDRESS || '0x00',
+    rpcUrls: ['https://polygon-rpc.com'],
+  },
+}
+
+export const CURRENT_NETWORK = 137
 
 export const VITE_TEST = import.meta.env.VITE_TEST || false
 
@@ -47,11 +57,9 @@ export const TIME_TO_REDEEM_MILLISECONDS = import.meta.env
   ? parseInt(import.meta.env.VITE_TIME_TO_REDEEM_MILLISECONDS)
   : 60000
 
-// export const GAME_ENDS_TIMESTAMP = import.meta.env.VITE_GAME_ENDS_TIMESTAMP
-//   ? parseInt(import.meta.env.VITE_GAME_ENDS_TIMESTAMP)
-//   : 1677891600000 // Fri, 3 March 2023 18:00 GMT-7,
-
-export const GAME_ENDS_TIMESTAMP = new Date().getTime() + 6000
+export const GAME_ENDS_TIMESTAMP = import.meta.env.VITE_GAME_ENDS_TIMESTAMP
+  ? parseInt(import.meta.env.VITE_GAME_ENDS_TIMESTAMP)
+  : 1677891600000 // Fri, 3 March 2023 18:00 GMT-7,
 
 export const PLAYER_MAINNET_TIMESTAMP = import.meta.env.PLAYER_MAINNET_TIMESTAMP
   ? parseInt(import.meta.env.VITE_PLAYER_MAINNET_TIMESTAMP)

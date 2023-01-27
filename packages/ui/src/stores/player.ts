@@ -6,6 +6,7 @@ import {
   type PalettePoints,
   type PixelMap,
   type Errors,
+  type InteractionInfo,
   ErrorKey,
 } from '@/types'
 import { useLocalStore } from './local'
@@ -20,8 +21,8 @@ export const useStore = defineStore('player', {
       color: 0 as number,
       bonus: null,
       interactionInfo: null,
-      interactionIn: null,
-      interactionOut: null,
+      interactionIn: null as InteractionInfo | null,
+      interactionOut: null as InteractionInfo | null,
       history: [],
       playersGlobalStats: [],
       errors: {} as Errors,
