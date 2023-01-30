@@ -54,7 +54,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
     },
   })
 
-  fastify.patch<{ Body: DrawParams; Reply: DrawResult | Error }>('/canvas', {
+  fastify.post<{ Body: DrawParams; Reply: DrawResult | Error }>('/canvas', {
     schema: {
       body: DrawParams,
       headers: AuthorizationHeader,
