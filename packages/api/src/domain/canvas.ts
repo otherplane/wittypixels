@@ -17,6 +17,8 @@ type Pixel = {
   x: number
   // coord y
   y: number
+  // timestamp
+  t: number
 }
 
 export class Canvas {
@@ -33,21 +35,21 @@ export class Canvas {
             y: yCoord,
             c: Color.White,
             o: '',
+            t: 0,
           }
         })
       })
     }
   }
 
-  private fromDbSectorVTOs(
-    sectors: Array<DbSectorVTO>
-  ): Array<Array<{ c: number; o: string; x: number; y: number }>> {
+  private fromDbSectorVTOs(sectors: Array<DbSectorVTO>): Array<Array<Pixel>> {
     const pixels = new Array(CANVAS_MAX_X).fill(null).map(x => {
       return new Array(CANVAS_MAX_Y).fill(null).map(y => ({
         o: '',
         c: Color.White,
         x,
         y,
+        t: 0,
       }))
     })
 
