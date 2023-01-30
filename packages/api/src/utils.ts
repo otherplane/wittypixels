@@ -37,7 +37,8 @@ export function calculateRemainingDuration(
 }
 
 export function getColorFromIndex(index: number) {
-  return index % COLORS_COUNT
+  // add 2 to avoid white(0) and black(1) colors
+  return (index % COLORS_COUNT) + 2
 }
 
 export function isMainnetTime() {
