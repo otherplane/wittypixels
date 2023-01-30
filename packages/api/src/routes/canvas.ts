@@ -139,7 +139,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
 
       const draw: Draw = fastify.canvas.draw({
         // ends: currentTimestamp + INTERACTION_DURATION_MILLIS,
-        player: player.username,
+        owner: player.username,
         // timestamp: currentTimestamp,
         x,
         y,
@@ -159,7 +159,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       await playerModel.increaseScore(player.username)
 
       if (lastPixelDraw) {
-        await playerModel.decreaseScore(lastPixelDraw.player)
+        await playerModel.decreaseScore(lastPixelDraw.owner)
       }
 
       fastify.canvasCache.add(draw)

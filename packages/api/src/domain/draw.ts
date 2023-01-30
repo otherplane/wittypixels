@@ -3,7 +3,7 @@ import { DbDrawVTO, DrawVTO, PixelLocation } from '../types'
 
 export class Draw {
   ends: number
-  player: string
+  owner: string
   timestamp: number
   x: number
   y: number
@@ -11,7 +11,7 @@ export class Draw {
 
   constructor(vto: DbDrawVTO) {
     this.ends = vto.ends
-    this.player = vto.player
+    this.owner = vto.owner
     this.timestamp = vto.timestamp
     this.x = vto.x
     this.y = vto.y
@@ -21,7 +21,7 @@ export class Draw {
   toDbVTO(): DbDrawVTO {
     return {
       ends: this.ends,
-      player: this.player,
+      owner: this.owner,
       timestamp: this.timestamp,
       x: this.x,
       y: this.y,
@@ -33,7 +33,7 @@ export class Draw {
   toVTO(): DrawVTO {
     return {
       e: this.ends,
-      p: this.player,
+      o: this.owner,
       t: this.timestamp,
       x: this.x,
       y: this.y,

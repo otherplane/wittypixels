@@ -65,7 +65,7 @@ export type DbPlayerVTO = Static<typeof DbPlayerVTO>
 
 export const DbDrawVTO = Type.Object({
   ends: Type.Integer(),
-  player: Type.String(),
+  owner: Type.String(),
   timestamp: Type.Number(),
   x: Type.Number(),
   y: Type.Number(),
@@ -77,8 +77,8 @@ export type DbDrawVTO = Static<typeof DbDrawVTO>
 export const DrawVTO = Type.Object({
   // ends
   e: Type.Integer(),
-  // player
-  p: Type.String(),
+  // owner
+  o: Type.String(),
   // timestamp
   t: Type.Number(),
   // coord x
