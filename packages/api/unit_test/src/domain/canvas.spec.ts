@@ -21,7 +21,7 @@ describe('canvas.ts', () => {
       const now = Date.now()
 
       const draw = canvas.draw({
-        player: '12345',
+        owner: '12345',
         x: 0,
         y: 0,
         color: 1,
@@ -29,7 +29,7 @@ describe('canvas.ts', () => {
 
       expect(draw.color).toBe(1)
       expect(draw.ends).toBe(now + INTERACTION_DURATION_MILLIS)
-      expect(draw.player).toBe('12345')
+      expect(draw.owner).toBe('12345')
       expect(draw.timestamp).toBe(now)
       expect(draw.x).toBe(0)
       expect(draw.y).toBe(0)
@@ -39,7 +39,7 @@ describe('canvas.ts', () => {
       const canvas = new Canvas()
 
       canvas.draw({
-        player: '123456',
+        owner: '123456',
         x: 4,
         y: 6,
         color: 2,
