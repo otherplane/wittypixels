@@ -164,7 +164,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
 
       fastify.canvasCache.add(draw)
 
-      return reply.status(200).send(draw)
+      return reply.status(200).send(draw.toVTO())
     },
   })
 }

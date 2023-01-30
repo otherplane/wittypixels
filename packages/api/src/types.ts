@@ -74,6 +74,22 @@ export const DbDrawVTO = Type.Object({
 
 export type DbDrawVTO = Static<typeof DbDrawVTO>
 
+export const DrawVTO = Type.Object({
+  // ends
+  e: Type.Integer(),
+  // player
+  p: Type.String(),
+  // timestamp
+  t: Type.Number(),
+  // coord x
+  x: Type.Number(),
+  // coord y
+  y: Type.Number(),
+  // color
+  c: Type.Enum(Color),
+})
+export type DrawVTO = Static<typeof DrawVTO>
+
 export const AuthorizationHeader = Type.Object({
   Authorization: Type.String(),
 })
