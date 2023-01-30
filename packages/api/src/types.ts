@@ -116,6 +116,7 @@ export const DbPixelVTO = Type.Object({
   y: Type.Number(),
   c: Type.Enum(Color),
   o: Type.String(),
+  t: Type.Number(),
 })
 export type DbPixelVTO = Static<typeof DbPixelVTO>
 
@@ -130,6 +131,13 @@ export const CanvasVTO = Type.Object({
   pixels: Type.Array(Type.Array(DbPixelVTO)),
 })
 export type CanvasVTO = Static<typeof CanvasVTO>
+
+export const GetCanvasResponse = Type.Object({
+  canvas: CanvasVTO,
+  checkpoint: Type.Number(),
+})
+export type GetCanvasResponse = Static<typeof GetCanvasResponse>
+
 // If SECTOR_SIZE === 50
 // {
 //   name: number,

@@ -11,7 +11,7 @@ import {
   JwtVerifyPayload,
   DrawParams,
   DrawResult,
-  CanvasVTO,
+  GetCanvasResponse,
   GetCanvasParams,
 } from '../types'
 import { isTimeToMint } from '../utils'
@@ -23,12 +23,12 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
 
   fastify.get<{
     Querystring: GetCanvasParams
-    Reply: CanvasVTO | Error
+    Reply: GetCanvasResponse | Error
   }>('/canvas', {
     schema: {
       querystring: GetCanvasParams,
       response: {
-        200: CanvasVTO,
+        200: GetCanvasResponse,
       },
     },
     handler: async (
@@ -41,9 +41,15 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       const checkpoint = request.query.checkpoint
 
       if (!checkpoint || canvasCache.lastIndex - checkpoint > MAX_PIXELS_DIFF) {
-        return reply.status(200).send(canvas.toVTO())
+        return reply.status(200).send({
+          canvas: canvas.toVTO(),
+          checkpoint: canvasCache.lastIndex,
+        })
       } else {
-        return reply.status(200).send(fastify.canvasCache.getFrom(checkpoint))
+        return reply.status(200).send({
+          canvas: fastify.canvasCache.getFrom(checkpoint),
+          checkpoint: fastify.canvasCache.lastIndex,
+        })
       }
     },
   })
@@ -146,6 +152,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
         y,
         c: color,
         o: player.username,
+        t: Date.now(),
       })
 
       await playerModel.reduceColor(player.username, request.body.color)
