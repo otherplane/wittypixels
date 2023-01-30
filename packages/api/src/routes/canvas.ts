@@ -149,6 +149,11 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       })
 
       await playerModel.reduceColor(player.username, request.body.color)
+      await playerModel.increaseScore(player.username)
+
+      if (lastPixelDraw) {
+        await playerModel.decreaseScore(lastPixelDraw.player)
+      }
 
       fastify.canvasCache.add(draw)
 

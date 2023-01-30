@@ -172,4 +172,16 @@ export class PlayerModel {
   public async countActive() {
     return this.repository.count({ token: { $exists: true, $ne: undefined } })
   }
+
+  public async increaseScore(username: string): Promise<Player | null> {
+    await this.collection.updateOne({ username }, { $inc: { score: 1 } })
+
+    return await this.get(username)
+  }
+
+  public async decreaseScore(username: string): Promise<Player | null> {
+    await this.collection.updateOne({ username }, { $inc: { score: -1 } })
+
+    return await this.get(username)
+  }
 }
