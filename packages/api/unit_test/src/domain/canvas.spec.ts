@@ -51,6 +51,24 @@ describe('canvas.ts', () => {
       expect(pixel.x).toBe(4)
       expect(pixel.y).toBe(6)
     })
+
+    it('should update the timestamp to the actual onw', () => {
+      const canvas = new Canvas()
+
+      canvas.draw({
+        owner: '123456',
+        x: 4,
+        y: 6,
+        color: 2,
+      })
+
+      const pixel = canvas.pixels[4][6]
+      expect(pixel.c).toBe(2)
+      expect(pixel.o).toBe('123456')
+      expect(pixel.x).toBe(4)
+      expect(pixel.y).toBe(6)
+      expect(pixel.t).toBe(Date.now())
+    })
   })
 
   describe('toDbSectors', () => {

@@ -77,6 +77,7 @@ export class Canvas {
 
     this.pixels[x][y] = {
       ...this.pixels[x][y],
+      t: now,
       c: color,
       o: owner,
     }
