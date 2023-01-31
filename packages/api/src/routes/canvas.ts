@@ -147,13 +147,16 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       })
       // Create and return `draw` object
       await drawModel.create(draw.toDbVTO())
-      canvasModel.draw(draw.toDbSectorInfo(), {
+
+      const dbSectorInfo = draw.toDbSectorInfo()
+      const pixel = {
         x,
         y,
         c: color,
         o: player.username,
         t: Date.now(),
-      })
+      }
+      canvasModel.draw(dbSectorInfo, pixel)
 
       await playerModel.reduceColor(player.username, request.body.color)
       await playerModel.increaseScore(player.username)

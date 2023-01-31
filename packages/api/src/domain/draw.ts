@@ -41,11 +41,11 @@ export class Draw {
   }
 
   toDbSectorInfo(): PixelLocation {
-    const x = this.x % 50
-    const y = this.y % 50
+    const x = this.x % CANVAS_SECTOR_SIZE
+    const y = this.y % CANVAS_SECTOR_SIZE
 
-    const sectorX = Math.floor(x / CANVAS_SECTOR_SIZE)
-    const sectorY = Math.floor(y / CANVAS_SECTOR_SIZE)
+    const sectorX = Math.floor(this.x / CANVAS_SECTOR_SIZE)
+    const sectorY = Math.floor(this.y / CANVAS_SECTOR_SIZE)
 
     const name = `${sectorX}-${sectorY}`
 
