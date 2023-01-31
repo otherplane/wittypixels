@@ -46,4 +46,8 @@ export class DrawModel {
       total: totalDraws,
     }
   }
+
+  public async countAll(): Promise<number> {
+    return await this.repository.countAll()
+  }
 }

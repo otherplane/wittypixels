@@ -17,6 +17,7 @@ import { CanvasModel } from './models/canvas'
 import { DrawModel } from './models/draw'
 import { Canvas } from './domain/canvas'
 import { CanvasCache } from './services/canvasCache'
+import { Stats } from './domain/stats'
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -26,6 +27,7 @@ declare module 'fastify' {
     drawModel: DrawModel
     canvas: Canvas
     canvasCache: CanvasCache
+    stats: Stats
   }
 }
 
@@ -124,6 +126,21 @@ const app: FastifyPluginAsync<AppOptions> = async (
   }
 
   fastify.register(fp(initializeCanvas))
+
+  // Initialize Stats
+  const initializeStats: FastifyPluginCallback = async (
+    fastify,
+    options,
+    next
+  ) => {
+    const stats = new Stats()
+
+    fastify.decorate('stats', stats)
+
+    next()
+  }
+
+  fastify.register(fp(initializeStats))
 
   // Initialize game repositories
   fastify.register(async (fastify, options, next) => {

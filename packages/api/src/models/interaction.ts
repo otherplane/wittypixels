@@ -43,4 +43,8 @@ export class InteractionModel {
       $or: [{ from: username }, { to: username }],
     })
   }
+
+  public async countAll(): Promise<number> {
+    return this.repository.count({})
+  }
 }

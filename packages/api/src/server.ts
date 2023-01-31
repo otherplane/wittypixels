@@ -8,6 +8,7 @@ import app from './app'
 import constants, { MINT_PRIVATE_KEY } from './constants'
 
 const server = Fastify({
+  pluginTimeout: 10000,
   logger: {
     level: 'info',
     transport: {

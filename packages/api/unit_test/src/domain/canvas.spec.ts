@@ -85,4 +85,58 @@ describe('canvas.ts', () => {
       expect(dbSectors.reverse()[0].name).toBe('19-19')
     })
   })
+
+  describe('countPixelsDrawn', () => {
+    it('should count all drawn pixels when is empty', () => {
+      const canvas = new Canvas()
+      const pixelsDrawn = canvas.countPixelsDrawn()
+
+      expect(pixelsDrawn).toBe(0)
+    })
+
+    it('should count all drawn pixels after draw', () => {
+      const canvas = new Canvas()
+
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: 0,
+        y: 0,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: 1,
+        y: 0,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: 2,
+        y: 0,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: 7,
+        y: 4,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: 8,
+        y: 10,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: CANVAS_MAX_X - 1,
+        y: CANVAS_MAX_Y - 1,
+      })
+
+      const pixelsDrawn = canvas.countPixelsDrawn()
+
+      expect(pixelsDrawn).toBe(6)
+    })
+  })
 })

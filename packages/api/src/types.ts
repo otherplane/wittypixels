@@ -307,3 +307,27 @@ export const GetCanvasParams = Type.Object({
   checkpoint: Type.Optional(Type.Number()),
 })
 export type GetCanvasParams = Static<typeof GetCanvasParams>
+
+export const Stats = Type.Object({
+  playersRoot: Type.String(),
+  totalPixels: Type.Number(),
+  totalPlayers: Type.Number(),
+  totalScans: Type.Number(),
+})
+export type Stats = Static<typeof Stats>
+
+export const GetStatsParams = Type.Object({
+  token_id: Type.String(),
+})
+export type GetStatsParams = Static<typeof GetStatsParams>
+
+export const StatsVTO = Type.Object({
+  authorshipsRoot: Type.String(),
+  totalPixels: Type.Number(),
+  totalPlayers: Type.Number(),
+  totalScans: Type.Number(),
+  canvasDigest: Type.String(),
+  canvasHeight: Type.Number(),
+  canvasWidth: Type.Number(),
+})
+export type StatsVTO = Static<typeof StatsVTO>

@@ -121,4 +121,8 @@ export class Repository<T extends Document> {
   public async count(filter: Filter<T>) {
     return this.collection.countDocuments(filter)
   }
+
+  public async countAll(): Promise<number> {
+    return this.collection.countDocuments()
+  }
 }
