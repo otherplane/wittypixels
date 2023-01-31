@@ -283,10 +283,9 @@ export type DrawParams = Static<typeof DrawParams>
 export const DrawResult = Type.Object({
   x: Type.Integer(),
   y: Type.Integer(),
-  color: Type.Enum(Color),
-  ends: Type.Number(),
-  player: Type.String(),
-  timestamp: Type.Number(),
+  c: Type.Enum(Color),
+  o: Type.String(),
+  t: Type.Number(),
 })
 
 export type DrawResult = Static<typeof DrawResult>
