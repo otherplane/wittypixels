@@ -56,13 +56,12 @@ def main(config):
     images = load_images(config.input_dir, resolution)
 
     colored_images = {
-        'green': [],
-        'black': [],
         'red': [],
-        'purple': [],
-        'negative': [],
+        'orange': [],
         'yellow': [],
-        'blue': []
+        'green': [],
+        'blue': [],
+        'purple': []
     }
 
     for [color, image] in images:
@@ -75,7 +74,7 @@ def main(config):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate QR codes for WittyCreatures at Liscon 2021')
+    parser = argparse.ArgumentParser(description='Generate QR codes for WittyPixels')
     parser.add_argument('--input_dir', help='path for QR image input', default='./qr_codes/')
     parser.add_argument('--label', choices=label_sizes, help='type of DK label used for printing', default='23x23')
     parser.add_argument('--backend', choices=available_backends, help='Forces the use of a specific backend',
