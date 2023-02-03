@@ -13,13 +13,15 @@ import {
   DrawResult,
   GetCanvasResponse,
   GetCanvasParams,
+  GetPixelInfo,
+  PixelInfo,
 } from '../types'
 import { isTimeToMint } from '../utils'
 
 const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { canvasModel, drawModel, playerModel, canvas } = fastify
+  const { canvasModel, drawModel, playerModel, canvasCache, canvas } = fastify
 
   fastify.get<{
     Querystring: GetCanvasParams
@@ -35,22 +37,33 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       request: FastifyRequest<{ Querystring: GetCanvasParams }>,
       reply
     ) => {
-      const MAX_PIXELS_DIFF = 1000
-      const canvasCache = fastify.canvasCache
+      return reply.status(200).send(canvasCache.getCanvas())
+    },
+  })
 
-      const checkpoint = request.query.checkpoint
-
-      if (!checkpoint || canvasCache.lastIndex - checkpoint > MAX_PIXELS_DIFF) {
-        return reply.status(200).send({
-          canvas: canvas.toVTO(),
-          checkpoint: canvasCache.lastIndex,
-        })
-      } else {
-        return reply.status(200).send({
-          canvas: fastify.canvasCache.getFrom(checkpoint),
-          checkpoint: fastify.canvasCache.lastIndex,
-        })
+  fastify.get<{
+    Querystring: GetPixelInfo
+    Reply: PixelInfo | Error
+  }>('/canvas/pixel', {
+    schema: {
+      querystring: GetPixelInfo,
+      response: {
+        200: PixelInfo,
+      },
+    },
+    handler: async (
+      request: FastifyRequest<{ Querystring: GetPixelInfo }>,
+      reply
+    ) => {
+      // Check token is valid
+      try {
+        fastify.jwt.verify(request.headers.authorization as string)
+      } catch (err) {
+        return reply.status(403).send(new Error(`Forbidden: invalid token`))
       }
+      const { x, y } = request.query
+
+      return reply.status(200).send(canvas.getPixel(x, y))
     },
   })
 
@@ -165,9 +178,9 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
         await playerModel.decreaseScore(lastPixelDraw.owner)
       }
 
-      fastify.canvasCache.add(draw)
+      fastify.canvasCache.add(fastify.canvas.toBase64())
 
-      return reply.status(200).send(draw.toVTO())
+      return reply.status(200).send(fastify.canvasCache.getCanvas())
     },
   })
 }

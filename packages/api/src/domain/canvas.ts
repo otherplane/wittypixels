@@ -1,11 +1,38 @@
+import { createCanvas } from 'canvas'
 import {
   CANVAS_MAX_X,
   CANVAS_MAX_Y,
   CANVAS_SECTOR_SIZE,
   INTERACTION_DURATION_MILLIS,
 } from '../constants'
-import { Color, CanvasVTO, DbDrawVTO, DbSectorVTO, DbPixelVTO } from '../types'
+import {
+  Color,
+  CanvasVTO,
+  DbDrawVTO,
+  DbSectorVTO,
+  DbPixelVTO,
+  PixelInfo,
+} from '../types'
 import { Draw } from './draw'
+
+const colorToRGB: Record<number, [number, number, number, 255]> = {
+  // white,
+  0: [0, 0, 0, 255],
+  // black,
+  1: [255, 255, 255, 255],
+  // orange,
+  2: [255, 165, 0, 255],
+  // yellow
+  3: [255, 255, 0, 255],
+  // green,
+  4: [0, 255, 0, 255],
+  // blue,
+  5: [0, 0, 255, 255],
+  // red,
+  6: [255, 0, 0, 255],
+  // purple,
+  7: [141, 82, 255, 255],
+}
 
 type Pixel = {
   // we are using only the first letter to reduce the response size
@@ -152,6 +179,53 @@ export class Canvas {
         ),
       0
     )
+  }
+
+  toBase64(): string {
+    const width = this.pixels.length
+    const height = this.pixels[0].length
+
+    const buffer = new Uint8ClampedArray(
+      this.pixels.length * this.pixels[0].length * 4
+    )
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const pos = (y * width + x) * 4 // position in buffer based on x and y
+        const pixel = this.pixels[x][y]
+        const color = colorToRGB[pixel.c]
+        buffer[pos] = color[0] // some R value [0, 255]
+        buffer[pos + 1] = color[1] // some G value
+        buffer[pos + 2] = color[2] // some B value
+        buffer[pos + 3] = color[3] // set alpha channel
+      }
+    }
+
+    const canvas = createCanvas(width, height)
+    const ctx = canvas.getContext('2d')
+    canvas.width = width
+    canvas.height = height
+    // create imageData object
+    const idata = ctx.createImageData(width, height)
+    // set our buffer as source
+    idata.data.set(buffer)
+    // update canvas with new data
+    ctx.putImageData(idata, 0, 0)
+    const dataUri = canvas.toDataURL()
+
+    return dataUri
+  }
+
+  getPixel(x: number, y: number): PixelInfo {
+    const pixel = this.pixels[x][y]
+
+    return {
+      x,
+      y,
+      owner: pixel.o,
+      color: pixel.c,
+      timestamp: pixel.t,
+    }
   }
 }
 

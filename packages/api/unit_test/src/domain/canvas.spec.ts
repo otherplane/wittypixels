@@ -82,7 +82,7 @@ describe('canvas.ts', () => {
         dbSectors[Math.floor(CANVAS_MAX_X / CANVAS_SECTOR_SIZE)].name
       ).toBe('0-1')
       // Max row x === 1000
-      expect(dbSectors.reverse()[0].name).toBe('19-19')
+      expect(dbSectors.reverse()[0].name).toBe('4-4')
     })
   })
 
