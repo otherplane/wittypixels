@@ -5,10 +5,14 @@ import hashlib
 import os
 import qrcode
 
+from PIL import Image
 from typing import List
 from qrcode.image.pure import PymagingImage
 
 colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
+
+logo = Image.open('./logo.png')
+
 
 class Player:
     def __init__(self, index, key):
@@ -37,13 +41,31 @@ def generate_qr_code(player: Player, base_url: str, output_dir: str, bonus: bool
     url = f'{base_url}{player.key}'
     output_path = f'{output_dir}/{player.index}-{player.key}-{colorize(player.index)}.png'
 
-    border = 4 if bonus else 0
+    border = 4.5 if bonus else 0
     box_size = 30 if bonus else 1
 
-    img = qrcode.make(url, image_factory=PymagingImage, error_correction=qrcode.ERROR_CORRECT_M, border=border, box_size=box_size)
+    img = qrcode.make(url, image_factory=PymagingImage, error_correction=qrcode.ERROR_CORRECT_M, border=border,
+                      box_size=box_size)
 
     with open(output_path, 'wb') as file:
         img.save(file, 'PNG')
+
+    if bonus:
+        im = Image.open(output_path)
+
+        center = (im.width - logo.width) // 2
+        margin = 20
+
+        logo_90 = logo.rotate(90, expand=1)
+        logo_180 = logo_90.rotate(90, expand=1)
+        logo_270 = logo_180.rotate(90, expand=1)
+
+        im.paste(logo, (center, margin), logo)
+        im.paste(logo_90, (margin, center), logo_90)
+        im.paste(logo_180, (center, im.height - logo_180.height - margin), logo_180)
+        im.paste(logo_270, (im.width - logo_270.width - margin, center), logo_270)
+
+        im.save(output_path)
 
 
 def generate_qr_codes(players: List[Player], base_url: str, output_dir: str, bonus: bool):
