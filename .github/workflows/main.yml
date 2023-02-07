@@ -39,12 +39,12 @@ jobs:
           sed -i "s#API-REPLACE-ME#$API_ENDPOINT#g" ./ansible/docker-compose.yml
       - name: Build Containers
         run: |
-          docker build -t witnet/witty-pixels-ui:latest -f ./ansible/docker/ui.dockerfile ./packages/ui
-          docker build -t witnet/witty-pixels-api:latest -f ./ansible/docker/api.dockerfile ./packages/api
+          docker build -t witnet/witty-pixels-ethdenver-2023-ui:latest -f ./ansible/docker/ui.dockerfile ./packages/ui
+          docker build -t witnet/witty-pixels-ethdenver-2023-api:latest -f ./ansible/docker/api.dockerfile ./packages/api
       - name: Publish Containers
         run: |
-          docker push witnet/witty-pixels-ui:latest
-          docker push witnet/witty-pixels-api:latest
+          docker push witnet/witty-pixels-ethdenver-2023-ui:latest
+          docker push witnet/witty-pixels-ethdenver-2023-api:latest
       - name: Deploy with Ansible
         shell: bash
         env:

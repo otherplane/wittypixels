@@ -33,7 +33,7 @@ services:
 
   # & UI
   ui:
-    image: witnet/data-feed-app-ui:latest
+    image: witnet/witty-pixels-ethdenver-2023-ui:latest
     environment:
       API_ENDPOINT: "API-REPLACE-ME"
     networks:
@@ -42,7 +42,7 @@ services:
 
   # & API
   api:
-    image: witnet/data-feed-app-api:latest
+    image: witnet/witty-pixels-ethdenver-2023-api:latest
     env_file:
       - /home/ubuntu/wp/.env
     networks:
