@@ -1,0 +1,54 @@
+---
+- hosts: all
+  tasks:
+    - name: Create Deployment Directory
+      file:
+        path: /home/ubuntu/wp
+        state: directory
+
+    - name: Copy .env File
+      copy:
+        src: ./.env
+        dest: /home/ubuntu/wp/.env
+
+    - name: Copy Caddy File
+      copy:
+        src: ./Caddyfile
+        dest: /home/ubuntu/wp/Caddyfile
+      register: Domain
+
+    - name: Copy Docker Swarm Stack File
+      copy:
+        src: ./docker-compose.yml
+        dest: /home/ubuntu/wp/docker-compose.yml
+
+    - name: Login Into Docker hub Registry
+      community.docker.docker_login:
+        username: "{{ lookup('env','DOCKER_USERNAME') }}"
+        password: "{{ lookup('env','DOCKER_PASSWORD') }}"
+        reauthorize: yes
+
+    - name: Stack History limit
+      shell: docker swarm update --task-history-limit 2
+
+    - name: Deploy Docker Stack
+      shell: |
+        cd /home/ubuntu/wp
+        docker stack deploy -c <(docker-compose config) wp --with-registry-auth
+        sleep 60
+      args:
+        executable: /bin/bash
+
+    - name: Prune Useless Docker Images
+      shell: |
+        docker container prune -f
+        docker image prune -a -f
+
+    - name: Update Webserver in case of DNS change
+      shell: docker service update --force wp_webserver
+      when: Domain.changed
+
+    - name: List Images & Containers for SHA256 Comparsion if needed
+      shell: |
+        docker image ls
+        docker stack ps wp
