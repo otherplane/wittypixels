@@ -6,7 +6,7 @@ COPY . ./
 
 RUN pnpm install
 
-EXPOSE 3000
+EXPOSE 4000
 
 RUN pnpm build
 
