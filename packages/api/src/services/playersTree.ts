@@ -42,13 +42,25 @@ function keccak256(x: any) {
   })
 }
 
+export function calculateLeaf(player: {
+  creationIndex: number
+  score: number
+}): string {
+  const leaf = web3.utils.soliditySha3(
+    { t: 'uint256', v: new BN(player.creationIndex) },
+    { t: 'uint256', v: new BN(player.score) }
+  ) as string
+  if (!leaf) {
+    throw new Error(
+      `Leaf for player creationIndex ${player.creationIndex} score ${player.score} cant be calculated`
+    )
+  }
+
+  return leaf
+}
+
 export function mapLeaves(
   players: Array<{ creationIndex: number; score: number }>
 ): Array<string | null> {
-  return players.map(player => {
-    return web3.utils.soliditySha3(
-      { t: 'uint256', v: new BN(player.creationIndex) },
-      { t: 'uint256', v: new BN(player.score) }
-    )
-  })
+  return players.map(calculateLeaf)
 }

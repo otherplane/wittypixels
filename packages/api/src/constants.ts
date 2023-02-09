@@ -116,6 +116,14 @@ export const PIXEL_LOCKED_DURATION_MS = process.env.PIXEL_LOCKED_DURATION_MS
   ? parseInt(process.env.PIXEL_LOCKED_DURATION_MS)
   : 10 * 1000
 
+export const PARENT_TOKEN = process.env.PARENT_TOKEN
+  ? process.env.PARENT_TOKEN
+  : '0xc0ffee3c6F66dE5a0adcCEc65Dc6bB20C8C6A454'
+
+export const PARENT_TOKEN_ID = process.env.PARENT_TOKEN_ID
+  ? parseInt(process.env.PARENT_TOKEN_ID)
+  : 1
+
 export default {
   PLAYER_KEY_LENGTH_BYTES,
   PLAYER_MINT_TIMESTAMP,

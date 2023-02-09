@@ -190,11 +190,12 @@ export const MintOutput = Type.Object({
     signature: Type.String(),
   }),
   data: Type.Object({
-    address: Type.String(),
-    index: Type.Number(),
-    rank: Type.Number(),
-    score: Type.Number(),
-    total: Type.Number(),
+    parentToken: Type.String(),
+    parentTokenId: Type.Number(),
+    playerAddress: Type.String(),
+    playerIndex: Type.Number(),
+    playerPixels: Type.Number(),
+    playerPixelsProof: Type.Array(Type.String()),
   }),
 })
 export type MintOutput = Static<typeof MintOutput>

@@ -140,6 +140,19 @@ export class Canvas {
       0
     )
   }
+
+  countPixels(username: string): number {
+    return this.pixels.reduce(
+      (totalPixelsDrawn, row: Array<Pixel>) =>
+        totalPixelsDrawn +
+        row.reduce(
+          (pixelsDrawnInDraw, pixel: Pixel) =>
+            pixel.o === username ? pixelsDrawnInDraw + 1 : pixelsDrawnInDraw,
+          0
+        ),
+      0
+    )
+  }
 }
 
 export function getSectorsPerRow(maxX: number, sectorSize: number) {

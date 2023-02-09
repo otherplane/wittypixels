@@ -139,4 +139,58 @@ describe('canvas.ts', () => {
       expect(pixelsDrawn).toBe(6)
     })
   })
+
+  describe('countPixels', () => {
+    it('should return 0 when canvas is empty', () => {
+      const canvas = new Canvas()
+      const pixelsDrawn = canvas.countPixels('empty')
+
+      expect(pixelsDrawn).toBe(0)
+    })
+
+    it('should count all drawn pixels after draw', () => {
+      const canvas = new Canvas()
+
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: 0,
+        y: 0,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: 1,
+        y: 0,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: 2,
+        y: 0,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: 7,
+        y: 4,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '11111',
+        x: 8,
+        y: 10,
+      })
+      canvas.draw({
+        color: 3,
+        owner: '12345',
+        x: CANVAS_MAX_X - 1,
+        y: CANVAS_MAX_Y - 1,
+      })
+
+      const pixelsDrawn = canvas.countPixels('12345')
+
+      expect(pixelsDrawn).toBe(5)
+    })
+  })
 })
