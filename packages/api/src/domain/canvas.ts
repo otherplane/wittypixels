@@ -17,9 +17,9 @@ import { Draw } from './draw'
 
 const colorToRGB: Record<number, [number, number, number, 255]> = {
   // white,
-  0: [0, 0, 0, 255],
+  0: [255, 255, 255, 255],
   // black,
-  1: [255, 255, 255, 255],
+  1: [0, 0, 0, 255],
   // orange,
   2: [255, 165, 0, 255],
   // yellow
