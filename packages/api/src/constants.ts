@@ -125,6 +125,13 @@ export const ERC721_TOKEN_ID = process.env.ERC721_TOKEN_ID
   ? parseInt(process.env.ERC721_TOKEN_ID)
   : 1
 
+// Default bonus time: 30 minutes
+export const POAP_BONUS_TIME: number = parseInt(
+  process.env.POAP_BONUS_TIME || '1800000'
+)
+
+export const BONUS_MULTIPLIER = parseInt(process.env.BONUS_MULTIPLIER || '2')
+
 export default {
   PLAYER_KEY_LENGTH_BYTES,
   ERC20_TOKEN_START_TS,
@@ -140,4 +147,6 @@ export default {
   CANVAS_MAX_X,
   CANVAS_MAX_Y,
   CANVAS_CACHE_MAX_SIZE,
+  POAP_BONUS_TIME,
+  BONUS_MULTIPLIER,
 }

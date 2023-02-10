@@ -59,6 +59,8 @@ export const DbPlayerVTO = Type.Object({
   creationIndex: Type.Integer(),
   color: Type.Enum(Color),
   palette: Palette,
+  scannedBonuses: Type.Array(Type.String()),
+  bonusEndsAt: Type.Number(),
 })
 
 export type DbPlayerVTO = Static<typeof DbPlayerVTO>
@@ -320,3 +322,13 @@ export const StatsVTO = Type.Object({
   canvasWidth: Type.Number(),
 })
 export type StatsVTO = Static<typeof StatsVTO>
+
+export const BonusParams = Type.Object({
+  url: Type.String(),
+})
+export type BonusParams = Static<typeof BonusParams>
+
+export const BonusReply = Type.Object({
+  bonusEndsAt: Type.Number(),
+})
+export type BonusReply = Static<typeof BonusReply>

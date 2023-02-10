@@ -1,3 +1,4 @@
+import { POAP_BONUS_TIME } from '../constants'
 import {
   DbPlayerVTO,
   ExtendedPlayerVTO,
@@ -18,6 +19,8 @@ export class Player {
   score: number
   nft: Array<string> = []
   palette: Palette
+  scannedBonuses: Array<string>
+  bonusEndsAt: number
 
   constructor(vto: DbPlayerVTO) {
     this.key = vto.key
@@ -28,6 +31,8 @@ export class Player {
     this.creationIndex = vto.creationIndex
     this.color = vto.color
     this.palette = vto.palette
+    this.bonusEndsAt = vto.bonusEndsAt
+    this.scannedBonuses = vto.scannedBonuses
   }
 
   toExtendedPlayerVTO({
@@ -64,6 +69,8 @@ export class Player {
       creationIndex: this.creationIndex,
       color: this.color,
       palette: this.palette,
+      bonusEndsAt: this.bonusEndsAt,
+      scannedBonuses: this.scannedBonuses,
     }
 
     return showToken ? { ...vto, token: this.token } : vto
@@ -107,5 +114,14 @@ export class Player {
       [Color.White]: 0,
       [Color.Yellow]: 5,
     }
+  }
+
+  addBonusTime(currentTimestamp: number) {
+    this.bonusEndsAt =
+      Math.max(currentTimestamp, this.bonusEndsAt) + POAP_BONUS_TIME
+  }
+
+  hasActiveBonus(): boolean {
+    return this.bonusEndsAt > Date.now()
   }
 }

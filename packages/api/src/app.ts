@@ -5,6 +5,7 @@ import { FastifyPluginAsync, FastifyPluginCallback } from 'fastify'
 import fastifyMongodb from '@fastify/mongodb'
 import fp from 'fastify-plugin'
 import { join } from 'path'
+import fs from 'fs'
 import {
   PLAYERS_COUNT,
   JWT_SECRET,
@@ -19,6 +20,7 @@ import { Canvas } from './domain/canvas'
 import { CanvasCache } from './services/canvasCache'
 import { Stats } from './domain/stats'
 import { SignRedemptionModel } from './models/signRedemption'
+import { BonusValidator } from './services/bonusValidator'
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -30,6 +32,7 @@ declare module 'fastify' {
     canvas: Canvas
     canvasCache: CanvasCache
     stats: Stats
+    bonusValidator: BonusValidator
   }
 }
 
@@ -91,6 +94,27 @@ const app: FastifyPluginAsync<AppOptions> = async (
   }
 
   fastify.register(fp(initializeModels))
+
+  // Load POAP List
+  const initializeBonusValidator: FastifyPluginCallback = async (
+    fastify,
+    options,
+    next
+  ) => {
+    const bonusses: Array<string> = JSON.parse(
+      await fs.readFileSync(join(__dirname, 'bonus.json'), {
+        encoding: 'utf-8',
+      })
+    )
+
+    const bonusValidator = new BonusValidator(bonusses)
+
+    fastify.decorate('bonusValidator', bonusValidator)
+
+    next()
+  }
+
+  fastify.register(fp(initializeBonusValidator))
 
   // Initialize Canvas
   const initializeCanvas: FastifyPluginCallback = async (
