@@ -3,7 +3,7 @@ import keccak from 'keccak'
 import secp256k1 from 'secp256k1'
 import Web3 from 'web3'
 import {
-  PLAYER_MINT_TIMESTAMP,
+  ERC20_TOKEN_START_TS,
   MINT_PRIVATE_KEY,
   WEB3_PROVIDER,
   ERC721_TOKEN_ADDRESS,
@@ -33,7 +33,7 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
     },
     handler: async (request: FastifyRequest<{ Body: MintParams }>, reply) => {
       // Check 0: incubation period
-      if (PLAYER_MINT_TIMESTAMP && !isTimeToMint())
+      if (ERC20_TOKEN_START_TS && !isTimeToMint())
         return reply
           .status(403)
           .send(new Error(`Forbidden: mint is not enabled yet`))

@@ -68,9 +68,9 @@ export const PLAYERS_COUNT: number = process.env.PLAYERS_COUNT
   : 10
 
 // Awards date in millis
-// If `PLAYER_MINT_TIMESTAMP=0`, checks are ignored (for testing purposes)
-export const PLAYER_MINT_TIMESTAMP = process.env.PLAYER_MINT_TIMESTAMP
-  ? parseInt(process.env.PLAYER_MINT_TIMESTAMP)
+// If `ERC20_TOKEN_START_TS=0`, checks are ignored (for testing purposes)
+export const ERC20_TOKEN_START_TS = process.env.ERC20_TOKEN_START_TS
+  ? parseInt(process.env.ERC20_TOKEN_START_TS)
   : 1645351200 // Sunday, February 20, 2022 18:00:00 PM (UTC)
 
 // Web3 provider URL
@@ -126,7 +126,7 @@ export const ERC721_TOKEN_ID = process.env.ERC721_TOKEN_ID
 
 export default {
   PLAYER_KEY_LENGTH_BYTES,
-  PLAYER_MINT_TIMESTAMP,
+  ERC20_TOKEN_START_TS,
   PLAYERS_COUNT,
   INTERACTION_COOLDOWN_MILLIS,
   INTERACTION_DURATION_MILLIS,

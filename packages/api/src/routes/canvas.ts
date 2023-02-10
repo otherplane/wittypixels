@@ -1,6 +1,6 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
 import {
-  PLAYER_MINT_TIMESTAMP,
+  ERC20_TOKEN_START_TS,
   INTERACTION_DURATION_MILLIS,
   PIXEL_LOCKED_DURATION_MS,
 } from '../constants'
@@ -64,7 +64,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
     },
     handler: async (request: FastifyRequest<{ Body: DrawParams }>, reply) => {
       // Check 0: interaction period
-      if (PLAYER_MINT_TIMESTAMP && isTimeToMint())
+      if (ERC20_TOKEN_START_TS && isTimeToMint())
         return reply.status(403).send(new Error(`Interaction period is over.`))
 
       // Check 1: token is valid

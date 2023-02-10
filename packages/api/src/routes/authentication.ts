@@ -1,6 +1,6 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
 
-import { PLAYER_MINT_TIMESTAMP } from '../constants'
+import { ERC20_TOKEN_START_TS } from '../constants'
 import { ClaimPlayerParams, DbPlayerVTO } from '../types'
 import { isTimeToMint } from '../utils'
 
@@ -23,7 +23,7 @@ const authentication: FastifyPluginAsync = async (fastify): Promise<void> => {
         reply
       ) => {
         // Check 0: check if game is over
-        if (PLAYER_MINT_TIMESTAMP && isTimeToMint())
+        if (ERC20_TOKEN_START_TS && isTimeToMint())
           return reply
             .status(403)
             .send(

@@ -1,8 +1,5 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
-import {
-  PLAYER_MINT_TIMESTAMP,
-  INTERACTION_DURATION_MILLIS,
-} from '../constants'
+import { ERC20_TOKEN_START_TS, INTERACTION_DURATION_MILLIS } from '../constants'
 
 import {
   AuthorizationHeader,
@@ -38,7 +35,7 @@ const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
         reply
       ) => {
         // Check 0: interaction period
-        if (PLAYER_MINT_TIMESTAMP && isTimeToMint())
+        if (ERC20_TOKEN_START_TS && isTimeToMint())
           return reply
             .status(403)
             .send(new Error(`Interaction period is over.`))

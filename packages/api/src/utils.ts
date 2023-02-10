@@ -1,5 +1,5 @@
 import {
-  PLAYER_MINT_TIMESTAMP,
+  ERC20_TOKEN_START_TS,
   INTERACTION_COOLDOWN_MILLIS,
   INTERACTION_DURATION_MILLIS,
   PLAYER_MAINNET_TIMESTAMP,
@@ -50,7 +50,7 @@ export function fromHexToUint8Array(hex: string) {
 }
 
 export function isTimeToMint() {
-  return Date.now() >= PLAYER_MINT_TIMESTAMP * 1000
+  return Date.now() >= ERC20_TOKEN_START_TS * 1000
 }
 
 export function printRemainingMillis(millis: number) {
