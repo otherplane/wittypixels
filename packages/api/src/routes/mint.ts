@@ -6,7 +6,7 @@ import {
   PLAYER_MINT_TIMESTAMP,
   MINT_PRIVATE_KEY,
   WEB3_PROVIDER,
-  PARENT_TOKEN,
+  ERC721_TOKEN_ADDRESS,
   ERC721_TOKEN_ID,
 } from '../constants'
 import { calculateLeaf } from '../services/playersTree'
@@ -94,7 +94,7 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
       const message = web3.eth.abi.encodeParameters(
         ['address', 'uint256', 'address', 'uint256', 'uint256', 'bytes32[]'],
         [
-          PARENT_TOKEN,
+          ERC721_TOKEN_ADDRESS,
           ERC721_TOKEN_ID,
           request.body.address,
           player.creationIndex,
@@ -128,7 +128,7 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
           signature,
         },
         data: {
-          parentToken: PARENT_TOKEN,
+          parentToken: ERC721_TOKEN_ADDRESS,
           parentTokenId: ERC721_TOKEN_ID,
           playerAddress: request.body.address,
           playerIndex: player.creationIndex,
