@@ -92,15 +92,7 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
         throw new Error('Proof is empty in /mint')
       }
       const message = web3.eth.abi.encodeParameters(
-        [
-          'address',
-          'uint256',
-          'address',
-          'uint256',
-          'uint256',
-          'bytes32[]',
-          'bytes',
-        ],
+        ['address', 'uint256', 'address', 'uint256', 'uint256', 'bytes32[]'],
         [
           PARENT_TOKEN,
           PARENT_TOKEN_ID,
