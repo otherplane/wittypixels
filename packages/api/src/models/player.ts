@@ -50,6 +50,8 @@ export class PlayerModel {
       creationIndex: index,
       color,
       palette: Player.getEmptyPalette(),
+      bonusEndsAt: 0,
+      scannedBonuses: [],
     })
   }
 
@@ -202,5 +204,18 @@ export class PlayerModel {
     })
 
     return players.map(p => new Player(p))
+  }
+
+  public async updateBonuses(
+    username: string,
+    scannedBonuses: Array<string>,
+    bonusEndsAt: number
+  ): Promise<Player | null> {
+    const vto = await this.repository.updateOne(
+      { username },
+      { bonusEndsAt, scannedBonuses }
+    )
+
+    return vto ? new Player(vto) : null
   }
 }
