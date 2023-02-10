@@ -67,6 +67,8 @@ export const DbPlayerVTO = Type.Object({
   creationIndex: Type.Integer(),
   color: Type.Enum(Color),
   palette: Palette,
+  scannedBonuses: Type.Array(Type.String()),
+  bonusEndsAt: Type.Number(),
 })
 
 export type DbPlayerVTO = Static<typeof DbPlayerVTO>

@@ -15,6 +15,7 @@ import { CanvasCache } from './services/canvasCache'
 import { PlayerCache } from './services/playerCache'
 import { Stats } from './domain/stats'
 import { SignRedemptionModel } from './models/signRedemption'
+import { BonusValidator } from './services/bonusValidator'
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -27,6 +28,7 @@ declare module 'fastify' {
     canvasCache: CanvasCache
     playerCache: PlayerCache
     stats: Stats
+    bonusValidator: BonusValidator
   }
 }
 
@@ -90,6 +92,27 @@ const app: FastifyPluginAsync<AppOptions> = async (
   }
 
   fastify.register(fp(initializeModels))
+
+  // Load POAP List
+  const initializeBonusValidator: FastifyPluginCallback = async (
+    fastify,
+    options,
+    next
+  ) => {
+    const bonusses: Array<string> = JSON.parse(
+      await fs.readFileSync(join(__dirname, 'bonus.json'), {
+        encoding: 'utf-8',
+      })
+    )
+
+    const bonusValidator = new BonusValidator(bonusses)
+
+    fastify.decorate('bonusValidator', bonusValidator)
+
+    next()
+  }
+
+  fastify.register(fp(initializeBonusValidator))
 
   // Initialize Canvas
   const initializeCanvas: FastifyPluginCallback = async (

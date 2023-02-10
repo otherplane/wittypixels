@@ -1,5 +1,9 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
-import { ERC20_TOKEN_START_TS, INTERACTION_DURATION_MILLIS } from '../constants'
+import {
+  BONUS_MULTIPLIER,
+  ERC20_TOKEN_START_TS,
+  INTERACTION_DURATION_MILLIS,
+} from '../constants'
 
 import {
   AuthorizationHeader,
@@ -132,12 +136,19 @@ const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
           lastInteraction,
           selfInteraction
         )
+
+        const hasActiveBonus = toPlayer.hasActiveBonus()
+
+        const totalColorQuantity = hasActiveBonus
+          ? colorQuantity * BONUS_MULTIPLIER
+          : colorQuantity
+
         try {
           // Add points to player
           await playerModel.addColor(
             toPlayer.toDbVTO().key,
             fromPlayer.color,
-            colorQuantity
+            totalColorQuantity
           )
         } catch (error) {
           return reply.status(403).send(error as Error)
