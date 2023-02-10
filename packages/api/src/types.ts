@@ -184,19 +184,7 @@ export const SignRedemptionParams = Type.Object({
 export type SignRedemptionParams = Static<typeof SignRedemptionParams>
 
 export const SignRedemptionOutput = Type.Object({
-  envelopedSignature: Type.Object({
-    message: Type.String(),
-    messageHash: Type.Optional(Type.String()),
-    signature: Type.String(),
-  }),
-  data: Type.Object({
-    parentToken: Type.String(),
-    parentTokenId: Type.Number(),
-    playerAddress: Type.String(),
-    playerIndex: Type.Number(),
-    playerPixels: Type.Number(),
-    playerPixelsProof: Type.Array(Type.String()),
-  }),
+  deeds: Type.String(),
 })
 export type SignRedemptionOutput = Static<typeof SignRedemptionOutput>
 

@@ -130,23 +130,31 @@ const signRedemption: FastifyPluginAsync = async (
       const signature = Buffer.from(signatureObj.signature)
         .toString('hex')
         .concat(signV)
-      const response = {
-        envelopedSignature: {
-          message: message.substring(2),
-          messageHash: messageHash.toString('hex'),
-          signature,
-        },
-        data: {
-          parentToken: ERC721_TOKEN_ADDRESS,
-          parentTokenId: ERC721_TOKEN_ID,
-          playerAddress: request.body.address,
-          playerIndex: player.creationIndex,
+
+      const deeds = web3.eth.abi.encodeParameters(
+        [
+          'address',
+          'uint256',
+          'address',
+          'uint256',
+          'uint256',
+          'bytes32[]',
+          'bytes',
+        ],
+        [
+          ERC721_TOKEN_ADDRESS,
+          ERC721_TOKEN_ID,
+          request.body.address,
+          player.creationIndex,
           playerPixels,
-          playerPixelsProof: proof,
-        },
-      }
-      await signRedemptionModel.create(response)
-      return reply.status(200).send(response)
+          proof,
+          signature,
+        ]
+      )
+
+      await signRedemptionModel.create({ deeds })
+
+      return reply.status(200).send({ deeds })
     },
   })
 }

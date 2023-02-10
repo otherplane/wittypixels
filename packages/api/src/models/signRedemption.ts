@@ -10,7 +10,7 @@ export class SignRedemptionModel {
   constructor(db: Db) {
     this.collection = db.collection('signRedemptions')
     // FIXME: allow nested objects: data.index
-    this.repository = new Repository(this.collection, 'data')
+    this.repository = new Repository(this.collection, 'deeds')
   }
 
   public async create(
