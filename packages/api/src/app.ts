@@ -18,7 +18,7 @@ import { DrawModel } from './models/draw'
 import { Canvas } from './domain/canvas'
 import { CanvasCache } from './services/canvasCache'
 import { Stats } from './domain/stats'
-import { MintModel } from './models/mint'
+import { SignRedemptionModel } from './models/signRedemption'
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -26,7 +26,7 @@ declare module 'fastify' {
     interactionModel: InteractionModel
     canvasModel: CanvasModel
     drawModel: DrawModel
-    mintModel: MintModel
+    signRedemptionModel: SignRedemptionModel
     canvas: Canvas
     canvasCache: CanvasCache
     stats: Stats

@@ -59,7 +59,7 @@ export const INTERACTION_COLOR_QUANTITY_DIVISOR = process.env
   ? parseInt(process.env.INTERACTION_COLOR_QUANTITY_DIVISOR)
   : 2
 
-// Secp256k1 private key used for signing in the `mint` endpoint
+// Secp256k1 private key used for signing in the `signRedemption` endpoint
 export const ERC721_TOKEN_CURATOR_PK =
   process.env.ERC721_TOKEN_CURATOR_PK || '0x00'
 

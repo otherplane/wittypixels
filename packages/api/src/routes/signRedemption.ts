@@ -13,30 +13,39 @@ import { calculateLeaf } from '../services/playersTree'
 import {
   AuthorizationHeader,
   JwtVerifyPayload,
-  MintOutput,
-  MintParams,
+  SignRedemptionOutput,
+  SignRedemptionParams,
 } from '../types'
 import { fromHexToUint8Array, isTimeToMint } from '../utils'
 
-const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
+const signRedemption: FastifyPluginAsync = async (
+  fastify,
+  _opts
+): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { mintModel, playerModel, canvas, stats } = fastify
+  const { signRedemptionModel, playerModel, canvas, stats } = fastify
 
-  fastify.post<{ Body: MintParams; Reply: MintOutput | Error }>('/mint', {
+  fastify.post<{
+    Body: SignRedemptionParams
+    Reply: SignRedemptionOutput | Error
+  }>('/sign_redemption', {
     schema: {
-      body: MintParams,
+      body: SignRedemptionParams,
       headers: AuthorizationHeader,
       response: {
-        200: MintOutput,
+        200: SignRedemptionOutput,
       },
     },
-    handler: async (request: FastifyRequest<{ Body: MintParams }>, reply) => {
+    handler: async (
+      request: FastifyRequest<{ Body: SignRedemptionParams }>,
+      reply
+    ) => {
       // Check 0: incubation period
       if (ERC20_TOKEN_START_TS && !isTimeToMint())
         return reply
           .status(403)
-          .send(new Error(`Forbidden: mint is not enabled yet`))
+          .send(new Error(`Forbidden: signRedemption is not enabled yet`))
 
       // Check 1: token is valid
       let key: string
@@ -68,10 +77,10 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
           .send(new Error(`Player has no id (key: ${key})`))
       }
 
-      // If previously minted, reply with same mint output
-      const prevMint = await mintModel.get(player.creationIndex)
-      if (prevMint) {
-        return reply.status(200).send(prevMint)
+      // If previously signed, reply with same signed output
+      const prevSign = await signRedemptionModel.get(player.creationIndex)
+      if (prevSign) {
+        return reply.status(200).send(prevSign)
       }
       const web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER))
       // Check address is valid
@@ -85,11 +94,11 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
 
       const leaf = calculateLeaf(player)
       if (!stats.merkleTree) {
-        throw new Error('No tree exists inside stats in /mint')
+        throw new Error('No tree exists inside stats in /sign_redemption')
       }
       const proof = stats.merkleTree.getProof(leaf) as Array<string>
       if (!proof) {
-        throw new Error('Proof is empty in /mint')
+        throw new Error('Proof is empty in /sign_redemption')
       }
       const message = web3.eth.abi.encodeParameters(
         ['address', 'uint256', 'address', 'uint256', 'uint256', 'bytes32[]'],
@@ -136,10 +145,10 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
           playerPixelsProof: proof,
         },
       }
-      await mintModel.create(response)
+      await signRedemptionModel.create(response)
       return reply.status(200).send(response)
     },
   })
 }
 
-export default mint
+export default signRedemption

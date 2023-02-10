@@ -178,12 +178,12 @@ export type DbSectorVTO = Static<typeof DbSectorVTO>
 // export const DbCanvasVTO = Type.Array( DbSectorVTO)
 // export type DbCanvasVTO = Static<typeof DbCanvasVTO>
 
-export const MintParams = Type.Object({
+export const SignRedemptionParams = Type.Object({
   address: Type.String(),
 })
-export type MintParams = Static<typeof MintParams>
+export type SignRedemptionParams = Static<typeof SignRedemptionParams>
 
-export const MintOutput = Type.Object({
+export const SignRedemptionOutput = Type.Object({
   envelopedSignature: Type.Object({
     message: Type.String(),
     messageHash: Type.Optional(Type.String()),
@@ -198,7 +198,7 @@ export const MintOutput = Type.Object({
     playerPixelsProof: Type.Array(Type.String()),
   }),
 })
-export type MintOutput = Static<typeof MintOutput>
+export type SignRedemptionOutput = Static<typeof SignRedemptionOutput>
 
 export const EggMetadata = Type.Object({
   // TODO: verify that it does not break anything with OpenSea
