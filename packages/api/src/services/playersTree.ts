@@ -4,20 +4,22 @@ import web3 from 'web3'
 import BN from 'bn.js'
 
 export class PlayersTree {
-  tree?: MerkleTree
+  merkleTree?: MerkleTree
   initialized?: boolean
 
   public initialize(players: Array<Pick<Player, 'creationIndex' | 'score'>>) {
     const leaves = mapLeaves(players)
 
-    this.tree = new MerkleTree(leaves, keccak256, {
+    this.merkleTree = new MerkleTree(leaves, keccak256, {
       sort: true,
     })
     this.initialized = true
   }
 
   public getProof(leaf: string) {
-    return this.tree?.getProof(leaf).map(x => `0x${x.data.toString('hex')}`)
+    return this.merkleTree
+      ?.getProof(leaf)
+      .map(x => `0x${x.data.toString('hex')}`)
   }
 
   public getRoot(): string {
@@ -25,7 +27,7 @@ export class PlayersTree {
       throw new Error('Merkle tree no initialized')
     }
 
-    return `0x${this.tree?.getRoot().toString('hex')}`
+    return `0x${this.merkleTree?.getRoot().toString('hex')}`
   }
 
   isInitialized(): boolean {

@@ -84,10 +84,10 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
       const playerPixels = canvas.countPixels(player.username)
 
       const leaf = calculateLeaf(player)
-      if (!stats.tree) {
+      if (!stats.merkleTree) {
         throw new Error('No tree exists inside stats in /mint')
       }
-      const proof = stats.tree.getProof(leaf) as Array<string>
+      const proof = stats.merkleTree.getProof(leaf) as Array<string>
       if (!proof) {
         throw new Error('Proof is empty in /mint')
       }

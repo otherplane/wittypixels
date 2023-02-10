@@ -5,7 +5,7 @@ import { CANVAS_MAX_X } from '../constants'
 import { CANVAS_MAX_Y } from '../constants'
 
 export class Stats {
-  tree?: PlayersTree
+  merkleTree?: PlayersTree
   initialized?: boolean
 
   totalPixels?: number
@@ -25,8 +25,8 @@ export class Stats {
     totalScans: number
     canvasPixels: number
   }) {
-    this.tree = new PlayersTree()
-    this.tree.initialize(players)
+    this.merkleTree = new PlayersTree()
+    this.merkleTree.initialize(players)
     this.totalPlayers = players.length
     this.totalScans = totalScans
     this.totalPixels = totalPixels
@@ -55,7 +55,7 @@ export class Stats {
 
   toJson(): StatsVTO {
     return {
-      authorshipsRoot: this.tree?.getRoot().slice(2),
+      authorshipsRoot: this.merkleTree?.getRoot().slice(2),
       // TODO: add canvasDigest
       canvasDigest: '',
       canvasHeight: CANVAS_MAX_Y,
