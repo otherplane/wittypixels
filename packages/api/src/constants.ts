@@ -60,7 +60,8 @@ export const INTERACTION_COLOR_QUANTITY_DIVISOR = process.env
   : 2
 
 // Secp256k1 private key used for signing in the `mint` endpoint
-export const MINT_PRIVATE_KEY = process.env.MINT_PRIVATE_KEY || '0x00'
+export const ERC721_TOKEN_CURATOR_PK =
+  process.env.ERC721_TOKEN_CURATOR_PK || '0x00'
 
 // Tell how many players to generate
 export const PLAYERS_COUNT: number = process.env.PLAYERS_COUNT

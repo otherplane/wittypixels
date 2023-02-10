@@ -5,7 +5,7 @@ import Fastify from 'fastify'
 import Web3 from 'web3'
 
 import app from './app'
-import constants, { MINT_PRIVATE_KEY } from './constants'
+import constants, { ERC721_TOKEN_CURATOR_PK } from './constants'
 
 const server = Fastify({
   pluginTimeout: 10000,
@@ -26,7 +26,7 @@ server
   .then(() => {
     // Public key
     const account = new Web3().eth.accounts.privateKeyToAccount(
-      MINT_PRIVATE_KEY
+      ERC721_TOKEN_CURATOR_PK
     )
     console.log('[Server] ECDSA public Key: ', account.address)
     console.log('[Server] Non-sensitive config:', constants)

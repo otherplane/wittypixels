@@ -4,7 +4,7 @@ import secp256k1 from 'secp256k1'
 import Web3 from 'web3'
 import {
   ERC20_TOKEN_START_TS,
-  MINT_PRIVATE_KEY,
+  ERC721_TOKEN_CURATOR_PK,
   WEB3_PROVIDER,
   ERC721_TOKEN_ADDRESS,
   ERC721_TOKEN_ID,
@@ -113,7 +113,7 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
       // Note: web3.eth.accounts.sign is not used because it prefixes the message to sign
       const signatureObj = secp256k1.ecdsaSign(
         messageHash,
-        fromHexToUint8Array(MINT_PRIVATE_KEY)
+        fromHexToUint8Array(ERC721_TOKEN_CURATOR_PK)
       )
       // `V` signature component (V = 27 + recid)
       const signV = (27 + signatureObj.recid).toString(16)
