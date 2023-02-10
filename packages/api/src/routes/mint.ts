@@ -7,7 +7,7 @@ import {
   MINT_PRIVATE_KEY,
   WEB3_PROVIDER,
   PARENT_TOKEN,
-  PARENT_TOKEN_ID,
+  ERC721_TOKEN_ID,
 } from '../constants'
 import { calculateLeaf } from '../services/playersTree'
 import {
@@ -95,7 +95,7 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
         ['address', 'uint256', 'address', 'uint256', 'uint256', 'bytes32[]'],
         [
           PARENT_TOKEN,
-          PARENT_TOKEN_ID,
+          ERC721_TOKEN_ID,
           request.body.address,
           player.creationIndex,
           playerPixels,
@@ -129,7 +129,7 @@ const mint: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
         },
         data: {
           parentToken: PARENT_TOKEN,
-          parentTokenId: PARENT_TOKEN_ID,
+          parentTokenId: ERC721_TOKEN_ID,
           playerAddress: request.body.address,
           playerIndex: player.creationIndex,
           playerPixels,

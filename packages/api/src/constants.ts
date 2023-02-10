@@ -120,8 +120,8 @@ export const PARENT_TOKEN = process.env.PARENT_TOKEN
   ? process.env.PARENT_TOKEN
   : '0xc0ffee3c6F66dE5a0adcCEc65Dc6bB20C8C6A454'
 
-export const PARENT_TOKEN_ID = process.env.PARENT_TOKEN_ID
-  ? parseInt(process.env.PARENT_TOKEN_ID)
+export const ERC721_TOKEN_ID = process.env.ERC721_TOKEN_ID
+  ? parseInt(process.env.ERC721_TOKEN_ID)
   : 1
 
 export default {
