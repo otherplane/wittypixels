@@ -9,6 +9,10 @@ export default defineConfig({
     emptyOutDir: true,
   },
   plugins: [vue(), Components()],
+  test: {
+    minThreads: 0,
+    maxThreads: 1,
+  },
   css: {
     preprocessorOptions: {
       scss: {
