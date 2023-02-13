@@ -136,8 +136,6 @@ export const useStore = defineStore('player', {
       } else if (request.token) {
         await this.localStore.saveTokenInfo(request)
         this.clearError(ErrorKey.auth)
-        await this.getPlayerInfo()
-        await this.getGlobalStats()
         router.push(`/settings/${key}`)
       }
     },

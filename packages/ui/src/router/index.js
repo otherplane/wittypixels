@@ -99,6 +99,10 @@ const routes = [
     name: 'settings',
     path: '/settings/:id?',
     component: GameSettings,
+    beforeEnter: () => {
+      const player = useStore()
+      player.getPlayerInfo()
+    },
   },
   {
     name: 'import',
