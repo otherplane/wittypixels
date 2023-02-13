@@ -26,7 +26,7 @@ export default {
     const gameStore = useGameStore()
     function setGameOver() {
       if (gameStore.isGameOver) {
-        gameStore.gameOver = true
+        gameStore.setGameOver()
       }
     }
     return {

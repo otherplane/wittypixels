@@ -2,7 +2,7 @@
   <teleport to="body">
     <div
       v-if="showModal"
-      class="fixed z-10 inset-0 overflow-y-auto"
+      class="fixed z-200 inset-0 overflow-y-auto"
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"

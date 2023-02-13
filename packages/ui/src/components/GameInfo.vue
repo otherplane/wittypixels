@@ -14,5 +14,8 @@
   font-size: 12px;
   padding: 4px 16px;
   max-width: 90vw;
+  justify-items: center;
+  align-content: center;
+  display: grid;
 }
 </style>

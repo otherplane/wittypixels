@@ -1,7 +1,9 @@
 <template>
   <div class="background">
     <div class="witnet-logo-strip">
-      <slot name="top" />
+      <div class="top">
+        <slot name="top" />
+      </div>
       <WitnetMarquee />
       <AppHeader :hideNavBar="hideNavBar" />
     </div>
@@ -77,6 +79,9 @@ export default {
   z-index: 3;
   background-color: $white;
   background: $white;
+  .top {
+    background-color: $black;
+  }
 }
 .witnet-logo-strip {
   position: relative;

@@ -3,17 +3,11 @@
     <router-link to="/">
       <WittyPixelsLogo class="logo" />
     </router-link>
-    <NavBar
-      v-if="!hideNavBar"
-      class="navbar"
-      @openExportModal="openExportModal"
-    />
+    <NavBar v-if="!hideNavBar" class="navbar" />
   </div>
 </template>
 <script lang="ts">
 import wittyLogo from '@/assets/witty-pixels-logo.svg?raw'
-import { useModalStore } from '@/stores/modal'
-import { ModalKey } from '@/types'
 export default {
   props: {
     hideNavBar: {
@@ -22,13 +16,8 @@ export default {
     },
   },
   setup() {
-    const modalStore = useModalStore()
-    function openExportModal() {
-      modalStore.openModal(ModalKey.export)
-    }
     return {
       wittyLogo,
-      openExportModal,
     }
   },
 }

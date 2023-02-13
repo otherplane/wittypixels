@@ -1,14 +1,14 @@
 <template>
-  <div v-if="mintInfo" class="mint-content">
-    <LabelMintStatus v-if="mintInfo" :status="mintStatus" />
-    <p v-if="mintStatus === 'error'">Try claiming your NFTs again</p>
+  <div v-if="txInfo" class="mint-content">
+    <LabelMintStatus v-if="txInfo" :status="txStatus" />
+    <p v-if="txStatus === 'error'">Try claiming your NFTs again</p>
     <p class="label">TRANSACTION HASH</p>
-    <div class="mint-status" v-if="mintInfo?.transactionHash">
+    <div class="mint-status" v-if="txInfo?.transactionHash">
       <div class="address">
         <a
-          :href="`${explorerBaseUrl}/${mintInfo.transactionHash}`"
+          :href="`${explorerBaseUrl}/${txInfo.transactionHash}`"
           target="_blank"
-          >{{ mintInfo.transactionHash }}
+          >{{ txInfo.transactionHash }}
         </a>
         <svgImage class="external-link-icon" :svg="externalLink" />
       </div>
@@ -23,13 +23,13 @@ import { EXPLORER_BASE_URL, OPENSEA_BASE_URL } from '../constants'
 export default {
   setup() {
     const localStore = useLocalStore()
-    const mintInfo = computed(() => {
-      return localStore.mintInfo
+    const txInfo = computed(() => {
+      return localStore.txInfo
     })
-    const mintStatus = computed(() => {
-      if (localStore.mintInfo.blockHash && localStore.minted) {
+    const txStatus = computed(() => {
+      if (localStore.txInfo.blockHash && localStore.minted) {
         return 'minted'
-      } else if (localStore.mintInfo.blockHash && !localStore.minted) {
+      } else if (localStore.txInfo.blockHash && !localStore.minted) {
         return 'error'
       } else {
         return 'pending'
@@ -38,9 +38,9 @@ export default {
     return {
       explorerBaseUrl: EXPLORER_BASE_URL,
       openseaBaseUrl: OPENSEA_BASE_URL,
-      mintInfo,
+      txInfo,
       externalLink,
-      mintStatus,
+      txStatus,
     }
   },
 }

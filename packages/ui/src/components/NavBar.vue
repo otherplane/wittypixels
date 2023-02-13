@@ -26,14 +26,17 @@
 
 <script>
 import { onClickOutside } from '@vueuse/core'
+import { useModalStore } from '@/stores/modal'
 import { ref } from 'vue'
+import { ModalKey } from '@/types'
 export default {
-  setup(props, { emit }) {
+  setup() {
     const target = ref(null)
     const displayBox = ref(false)
     const isMenuVisible = ref(false)
+    const modalStore = useModalStore()
     function openExportModal() {
-      emit('openExportModal')
+      modalStore.openModal(ModalKey.export)
     }
     function closeMenu() {
       isMenuVisible.value = false
