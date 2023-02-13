@@ -72,7 +72,7 @@ export const PLAYERS_COUNT: number = process.env.PLAYERS_COUNT
 // If `ERC20_TOKEN_START_TS=0`, checks are ignored (for testing purposes)
 export const ERC20_TOKEN_START_TS = process.env.ERC20_TOKEN_START_TS
   ? parseInt(process.env.ERC20_TOKEN_START_TS)
-  : 1645351200 // Sunday, February 20, 2022 18:00:00 PM (UTC)
+  : 1677891600 // Fri, 3 March 2023 18:00 GMT-7,
 
 // Web3 provider URL
 export const WEB3_PROVIDER =
