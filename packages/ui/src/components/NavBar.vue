@@ -10,7 +10,7 @@
           </ul>
         </a>
       </label>
-      <div class="dropdown">
+      <div class="dropdown" :class="{ visible: isMenuVisible }">
         <div class="tab-container" :class="{ visible: isMenuVisible }">
           <router-link class="tab" to="/leaderboard"> Leaderboard </router-link>
           <router-link class="tab" to="/interactions"> History </router-link>
@@ -109,7 +109,10 @@ export default {
     position: absolute;
     z-index: 50;
     top: 60px;
-    right: 16px;
+    right: 0;
+    &.visible {
+      right: 16px;
+    }
   }
 }
 .tab-container {
