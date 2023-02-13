@@ -4,6 +4,7 @@
 
 <script>
 import { computed, ref, onBeforeMount } from 'vue'
+import { PAGINATION_LIMIT } from '@/constants'
 export default {
   props: {
     list: {
@@ -26,23 +27,22 @@ export default {
   emits: ['result'],
   setup(props, { emit }) {
     const currentPage = ref(0)
-    const limit = ref(10)
     const offset = computed(() => {
-      return limit.value * currentPage.value
+      return PAGINATION_LIMIT * currentPage.value
     })
     onBeforeMount(async () => {
-      await props.getItems(offset.value, limit.value)
+      await props.getItems(offset.value, PAGINATION_LIMIT)
     })
 
     const load = async $state => {
       try {
-        const request = await props.getItems(offset.value, limit.value)
+        const request = await props.getItems(offset.value, PAGINATION_LIMIT)
         const requestData = props.filter ? request[props.filter] : request
         if (props.list.length >= requestData.total) {
           return $state.complete()
         }
         if (
-          requestData.total < limit.value &&
+          requestData.total < PAGINATION_LIMIT &&
           requestData.result.length !== props.total
         ) {
           emit('result', request)

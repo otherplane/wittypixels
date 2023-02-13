@@ -5,8 +5,9 @@
 <script>
 import { intervalToDuration, formatDuration } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
+import { TIMEZONE } from '@/constants'
 import { ref, watch, onBeforeUnmount } from 'vue'
-const timeZone = 'America/Denver'
+const timeZone = TIMEZONE
 export default {
   props: {
     timestamp: Number,
@@ -22,7 +23,7 @@ export default {
         dateNow.value = new Date()
       }, 0)
     )
-    const timeLeft = ref(1)
+    const timeLeft = ref(0)
     const formatWithSeconds = ['days', 'hours', 'minutes', 'seconds']
     const format = ['days', 'hours', 'minutes']
     const formatDistanceLocale = {
