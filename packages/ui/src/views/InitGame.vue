@@ -22,7 +22,6 @@
 </template>
 
 <script lang="ts">
-import playerMainImage from '@/assets/grid.svg?raw'
 import { useGameStore } from '@/stores/game'
 import { computed, onMounted } from 'vue'
 import { TxType } from '@/types'
@@ -39,7 +38,7 @@ export default {
     })
     const gameOver = computed(() => gameStore.gameOver)
     const redeemCountdownOver = computed(() => gameStore.redeemCountdownOver)
-    return { playerMainImage, gameOver, redeemCountdownOver, TxType }
+    return { gameOver, redeemCountdownOver, TxType }
   },
 }
 </script>
