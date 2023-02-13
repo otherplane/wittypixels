@@ -76,11 +76,13 @@ const app: FastifyPluginAsync<AppOptions> = async (
     const interactionModel = new InteractionModel(fastify.mongo.db)
     const canvasModel = new CanvasModel(fastify.mongo.db)
     const drawModel = new DrawModel(fastify.mongo.db)
+    const signRedemption = new SignRedemptionModel(fastify.mongo.db)
 
     fastify.decorate('playerModel', playerModel)
     fastify.decorate('interactionModel', interactionModel)
     fastify.decorate('canvasModel', canvasModel)
     fastify.decorate('drawModel', drawModel)
+    fastify.decorate('signRedemptionModel', signRedemption)
 
     next()
   }
