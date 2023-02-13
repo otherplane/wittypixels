@@ -63,6 +63,9 @@ video {
 .modal-bg-white {
   background-color: $white !important;
 }
+.z-200 {
+  z-index: 200 !important;
+}
 .modal-text {
   color: $white;
 }
