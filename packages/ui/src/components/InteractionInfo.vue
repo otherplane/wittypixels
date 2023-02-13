@@ -3,7 +3,7 @@
     <div v-if="interactionIn" class="counter">
       <div class="incubation-info">
         <p>
-          Receiving +{{ interactionIn?.points || '' }}px from
+          Receiving +{{ interactionIn?.quantity || '' }}px from
           {{ interactionIn?.from || '' }}
         </p>
         <TimeLeft

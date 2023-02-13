@@ -4,7 +4,8 @@
       v-if="gameEntity === 'players' && player.playersGlobalStats"
       class="list"
     >
-      <PlayerGlobalData
+      <!-- TODO: Uncomment when the API supports the player ranking -->
+      <!-- <PlayerGlobalData
         :border="true"
         :index="player.creationIndex"
         :key="player.username"
@@ -12,7 +13,7 @@
         :color="player.color"
         :position="0"
         :score="player.score"
-      />
+      /> -->
       <PlayerGlobalData
         v-for="(player, index) in player.playersGlobalStats"
         :class="{ even: index % 2 }"

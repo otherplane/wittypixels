@@ -66,8 +66,8 @@ export default {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-color: $white;
-  border-top: 2px solid $grey;
-  border-left: 2px solid $grey;
-  border-right: 2px solid $grey;
+  border-top: 1.5px solid $grey;
+  border-left: 1.5px solid $grey;
+  border-right: 1.5px solid $grey;
 }
 </style>

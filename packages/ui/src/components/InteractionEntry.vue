@@ -1,6 +1,9 @@
 <template>
   <div class="interaction-container">
-    <ColorContainer :direction="from ? Position.left : Position.right">
+    <ColorContainer
+      :color="color"
+      :direction="from ? Position.left : Position.right"
+    >
       <p class="points bold">+{{ points }}px</p>
     </ColorContainer>
     <p v-if="from" class="origin">
@@ -25,6 +28,10 @@ export default {
   props: {
     points: {
       type: Number,
+      required: true,
+    },
+    color: {
+      type: String,
       required: true,
     },
     to: {

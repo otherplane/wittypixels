@@ -16,7 +16,8 @@
           v-for="(interaction, index) in player.history"
           :key="interaction.timestamp"
           :class="{ even: index % 2 }"
-          :points="interaction.points"
+          :color="COLORS[interaction.color]"
+          :points="interaction.quantity"
           :from="interaction.to == player.username ? interaction.from : null"
           :to="interaction.from == player.username ? interaction.to : null"
           :timestamp="interaction.timestamp"
@@ -37,6 +38,7 @@ import { ref } from 'vue'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 import { formatDate } from '@/utils'
+import { COLORS } from '@/constants'
 export default {
   setup() {
     const player = useStore()
@@ -49,6 +51,7 @@ export default {
       }
     }
     return {
+      COLORS,
       player,
       utcToZonedTime,
       timeZone,

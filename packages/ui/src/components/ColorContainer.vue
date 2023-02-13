@@ -26,7 +26,7 @@ export default {
     },
     color: {
       type: String,
-      default: 'lightgrey',
+      default: 'white',
     },
   },
   setup() {
@@ -46,7 +46,7 @@ export default {
   height: 32px;
 }
 .index-container {
-  border: 2px solid $black;
+  border: 1.5px solid $black;
   display: flex;
   justify-content: center;
   align-items: center;
