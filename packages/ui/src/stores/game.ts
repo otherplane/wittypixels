@@ -2,7 +2,15 @@ import { defineStore } from 'pinia'
 import { ApiService } from '@/api'
 import { useLocalStore } from './local'
 import { isMainnetTime } from '@/utils'
-import type { TokenStatus, GameOverErrors, GameOverErrorKey } from '@/types'
+import {
+  TokenStatus,
+  type Errors,
+  GameOverErrorKey,
+  type Provider,
+  TxType,
+  TransactionStatus,
+  GameOverStatus,
+} from '@/types'
 import { TIME_TO_REDEEM_MILLISECONDS, GAME_ENDS_TIMESTAMP } from '../constants'
 
 export const useGameStore = defineStore('gameStore', {
@@ -12,19 +20,36 @@ export const useGameStore = defineStore('gameStore', {
     gameOverTimeMilli: GAME_ENDS_TIMESTAMP,
     timeToRedeemInMilli: GAME_ENDS_TIMESTAMP + TIME_TO_REDEEM_MILLISECONDS,
     gameOver: false as boolean,
-    redeemAllow: false as boolean,
-    tokenStatus: 'Minting' as TokenStatus | null,
+    redeemCountdownOver: false as boolean,
+    gameOverStatus: null as GameOverStatus | null,
+    tokenStatus: null as TokenStatus | null,
+    provider: {} as Provider,
     mintParams: null,
     tokenIds: null,
-    errors: {} as GameOverErrors,
+    currentTxType: null as TxType | null,
+    errors: {} as Errors,
   }),
   getters: {
     isGameOver(): boolean {
-      //FIXME: make it reactive
       return this.gameOverTimeMilli < Date.now()
+    },
+    isRedeemCountdownOver(): boolean {
+      return this.timeToRedeemInMilli < Date.now()
     },
     isMainnetTime() {
       return isMainnetTime()
+    },
+    txStatus(): TransactionStatus {
+      if (
+        this.localStore.txInfo?.txConfirmation ||
+        this.localStore.txInfo?.externalConfirmation
+      ) {
+        return TransactionStatus.Confirmed
+      } else if (this.errors.transaction) {
+        return TransactionStatus.Error
+      } else {
+        return TransactionStatus.InProgress
+      }
     },
   },
   actions: {
@@ -45,6 +70,24 @@ export const useGameStore = defineStore('gameStore', {
       })
 
       return request
+    },
+    setTokenStatus(status: TokenStatus) {
+      this.tokenStatus = status
+    },
+    setCurrentTxType(type: TxType) {
+      this.currentTxType = type
+    },
+    setGameOverStatus(status: GameOverStatus) {
+      this.gameOverStatus = status
+    },
+    setGameOver() {
+      this.gameOver = true
+    },
+    setRedeemCountdownOver() {
+      this.redeemCountdownOver = true
+    },
+    setProvider(provider: Provider) {
+      this.provider = provider
     },
     notify(payload: any) {
       const app = (this as any).app

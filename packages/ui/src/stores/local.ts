@@ -1,33 +1,33 @@
 import { defineStore } from 'pinia'
-import type { MintInfo } from '@/types'
+import type { TxInfo } from '@/types'
 
 export const useLocalStore = defineStore('localStore', {
   state: () => ({
-    mintInfo: null as MintInfo | null,
+    txInfo: null as TxInfo | null,
   }),
-  getters: {
-    mintStatus(): string {
-      return this.mintInfo?.blockHash ? 'minted' : 'pending'
-    },
-    minted(): boolean {
-      if (this.mintInfo && this.mintInfo.events && this.mintInfo.events[1]) {
-        return true
-      } else {
-        return false
-      }
-    },
-  },
   actions: {
     // Mint info
-    getMintInfo() {
-      const mintInfo = JSON.parse(localStorage.getItem('mintInfo') ?? '')
-      if (mintInfo) {
-        this.mintInfo = mintInfo
+    getTxInfo() {
+      const txInfo = JSON.parse(localStorage.getItem('wpxTxInfo') ?? '')
+      if (txInfo) {
+        this.txInfo = txInfo
       }
     },
-    saveMintInfo(info: any) {
-      localStorage.setItem('mintInfo', JSON.stringify({ ...info }))
-      this.mintInfo = info
+    saveTxInfo(info: TxInfo) {
+      localStorage.setItem('wpxTxInfo', JSON.stringify({ ...info }))
+      this.txInfo = info
+    },
+    clearTxInfo() {
+      localStorage.removeItem('wpxTxInfo')
+      this.txInfo = null
+    },
+    clearTxBlockInfo() {
+      this.txInfo = {
+        ...this.txInfo,
+        blockNumber: 0,
+        blockHash: '0',
+      }
+      localStorage.setItem('wpxTxInfo', JSON.stringify(this.txInfo))
     },
     // Token Info
     getToken() {

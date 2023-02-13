@@ -2,13 +2,14 @@ import { defineStore } from 'pinia'
 import { ApiService } from '@/api'
 import router from '../router'
 import {
-  type Pixel,
   type PalettePoints,
-  type PixelMap,
+  type PixelDB,
   type Errors,
   type InteractionInfo,
+  type SelectedPixel,
   ErrorKey,
 } from '@/types'
+import { PAGINATION_LIMIT } from '@/constants'
 import { useLocalStore } from './local'
 export const useStore = defineStore('player', {
   state: () => {
@@ -16,53 +17,87 @@ export const useStore = defineStore('player', {
       api: new ApiService(),
       localStore: useLocalStore(),
       id: null,
+      creationIndex: null as number | null,
       username: '',
       score: null,
-      color: 0 as number,
-      bonus: null,
+      color: 7 as number,
+      bonus: null as number | null,
       interactionInfo: null,
       interactionIn: null as InteractionInfo | null,
       interactionOut: null as InteractionInfo | null,
       history: [],
       playersGlobalStats: [],
       errors: {} as Errors,
-      selectedColor: null as string | null,
+      selectedColor: null as number | null,
       palettePoints: {} as PalettePoints,
       showPalettePanel: false as boolean,
-      pixelToPaint: null as Pixel | null,
-      pixelMap: {} as PixelMap,
+      pixelToPaint: null as PixelDB | null,
+      pixelMap: [] as Array<Array<PixelDB>>,
+      pixelMapImage: null as string | null,
+      checkpoint: null,
+      selectedPixelInfo: null as SelectedPixel | null,
+      pixelImageUpdated: false as boolean,
     }
   },
+  getters: {
+    isBonusOver(): boolean {
+      return this.bonus < Date.now()
+    },
+  },
   actions: {
-    paintPixel() {
-      if (
-        this.pixelMap &&
-        this.selectedColor &&
-        this.pixelToPaint &&
-        !this.pixelMap[this.pixelToPaint.id].author
-      ) {
-        this.pixelMap[this.pixelToPaint.id] = {
-          ...this.pixelToPaint,
-          author: this.username,
-          timestamp: new Date().getTime(),
-          stroke: this.pixelToPaint.fill,
+    async getPixelMapImage() {
+      const request = await this.api.getCanvas({
+        checkpoint: this.checkpoint ?? 0,
+      })
+      if (request.error) {
+        this.setError(ErrorKey.canvas, request.error)
+      } else {
+        if (this.checkpoint !== request.checkpoint) {
+          if (!this.pixelImageUpdated) {
+            this.pixelMapImage = request.canvas
+          }
+          this.checkpoint = request.checkpoint
+        }
+        this.clearError(ErrorKey.canvas)
+      }
+      this.pixelImageUpdated = false
+    },
+    async getPixelInfo(x: number, y: number) {
+      const tokenInfo = this.localStore.getToken()
+      const request = await this.api.getPixel({
+        x,
+        y,
+        token: tokenInfo.token,
+      })
+      if (request.error) {
+        this.setError(ErrorKey.pixel, request.error)
+      } else {
+        this.selectedPixelInfo = request
+        this.clearError(ErrorKey.pixel)
+      }
+    },
+    async paintPixel() {
+      if (this.pixelToPaint && this.selectedColor) {
+        const tokenInfo = this.localStore.getToken()
+        const params = {
+          x: this.pixelToPaint.x,
+          y: this.pixelToPaint.y,
+          color: this.selectedColor ? this.selectedColor : this.pixelToPaint.c,
+          token: tokenInfo.token,
+        }
+        console.log('pixel params', params)
+        const request = await this.api.drawPixel(params)
+        if (request.error) {
+          this.setError(ErrorKey.paint, request.error)
+        } else {
+          this.pixelMapImage = request.canvas
+          this.pixelImageUpdated = true
+          this.clearError(ErrorKey.paint)
         }
       }
     },
-    setPixelToPaint(pixel: Pixel) {
-      if (this.pixelMap && this.pixelMap[pixel.id].author) {
-        if (this.pixelMap) {
-          this.pixelToPaint = {
-            ...this.pixelMap[pixel.id],
-            stroke: pixel.stroke,
-          }
-        }
-      } else {
-        this.pixelToPaint = {
-          ...pixel,
-          stroke: pixel.stroke,
-        }
-      }
+    setPixelToPaint(pixel: PixelDB) {
+      this.pixelToPaint = pixel
     },
     clearPixelToPaint() {
       this.pixelToPaint = null
@@ -71,16 +106,18 @@ export const useStore = defineStore('player', {
     togglePalettePanel(value: boolean) {
       this.showPalettePanel = value
     },
-    selectColor(color: string) {
+    selectColor(color: number) {
       this.selectedColor = color
+      if (this.pixelToPaint) {
+        this.pixelToPaint.c = color
+      }
+    },
+    setBonusOver() {
+      this.bonus = null
     },
     notify(payload: any) {
       const app = (this as any).app
       app.config.globalProperties.$notify(payload)
-    },
-    // TODO: set NFT preview data
-    setPreviewData(preview: any) {
-      console.log(preview)
     },
     // Errors
     clearError(error: ErrorKey) {
@@ -104,6 +141,23 @@ export const useStore = defineStore('player', {
         router.push(`/settings/${key}`)
       }
     },
+    //Bonus
+    async addBonus({ url }: any) {
+      const tokenInfo = this.localStore.getToken()
+      const request = await this.api.bonus({
+        token: tokenInfo.token,
+        url,
+      })
+
+      if (request.error) {
+        this.setError(ErrorKey.bonus, request.error)
+        router.push('/init-game')
+      } else {
+        this.clearError(ErrorKey.bonus)
+        this.bonus = request.bonusEndsAt
+        router.push('/init-game')
+      }
+    },
     async interact({ key }: any) {
       const tokenInfo = this.localStore.getToken()
       const request = await this.api.interact({
@@ -122,7 +176,7 @@ export const useStore = defineStore('player', {
       }
     },
     // History
-    async getInteractionHistory(offset = 0, limit = 25) {
+    async getInteractionHistory(offset = 0, limit = PAGINATION_LIMIT) {
       const tokenInfo = this.localStore.getToken()
       const request = await this.api.getInteractionHistory({
         token: tokenInfo && tokenInfo.token,
@@ -142,7 +196,7 @@ export const useStore = defineStore('player', {
       }
     },
     // Leaderboard
-    async getGlobalStats(offset = 0, limit = 25) {
+    async getGlobalStats(offset = 0, limit = PAGINATION_LIMIT) {
       await this.getPlayerInfo()
       const request = await this.api.getLeaderboardInfo({
         offset,
@@ -170,21 +224,14 @@ export const useStore = defineStore('player', {
         this.setError(ErrorKey.info, request.error)
       } else {
         this.clearError(ErrorKey.info)
-        const { key, username, score, color } = request.player
+        const { key, username, score, color, palette, creationIndex } =
+          request.player
         this.id = key
         this.username = username
         this.score = score
-        this.palettePoints = {
-          0: 5000,
-          1: 0,
-          2: 0,
-          3: 0,
-          4: 0,
-          5: 0,
-          6: 0,
-          7: 5000,
-        }
+        this.palettePoints = palette
         this.color = color
+        this.creationIndex = creationIndex
         if (request.lastInteractionIn) {
           this.interactionIn = request.lastInteractionIn
         }
