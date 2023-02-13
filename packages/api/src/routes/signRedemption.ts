@@ -148,7 +148,7 @@ const signRedemption: FastifyPluginAsync = async (
           player.creationIndex,
           playerPixels,
           proof,
-          signature,
+          '0x' + signature,
         ]
       )
 
