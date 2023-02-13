@@ -1,10 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useStore } from '@/stores/player'
 import { useLocalStore } from '@/stores/local'
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
-import App from '@/App.vue'
 
 import Home from '../views/App.vue'
 import MainContent from '../views/MainContent.vue'
@@ -14,11 +10,6 @@ import GameSettings from '../views/GameSettings.vue'
 import LeaderBoard from '../views/LeaderBoard.vue'
 import InteractionHistory from '../views/InteractionHistory.vue'
 import ScanId from '../views/ScanId.vue'
-
-export const pinia = createPinia()
-
-const app = createApp(App)
-app.use(pinia)
 
 const routes = [
   {
@@ -44,6 +35,20 @@ const routes = [
     name: 'main',
     path: '/:id',
     component: MainContent,
+  },
+  {
+    name: 'bonus',
+    path: '/bonus/:id',
+    component: MainContent,
+    beforeEnter: async (to, from, next) => {
+      const localStore = useLocalStore()
+      const player = useStore()
+      const loginInfo = localStore.getToken()
+      if (loginInfo.key && router.currentRoute.value.params.id) {
+        await player.addBonus({ url: router.currentRoute.value.fullPath })
+      }
+      next({ name: 'main', params: { id: loginInfo.key } })
+    },
   },
   {
     name: 'init-game',

@@ -8,8 +8,9 @@
       <div class="float">
         <div class="game-info">
           <GameOverCountdown />
-          <GameInfo
-            ><p>@{{ player.username }}</p></GameInfo
+          <BonusCountdown v-if="player.bonus" />
+          <GameInfo>
+            <p>@{{ player.username }}</p></GameInfo
           >
         </div>
       </div>
