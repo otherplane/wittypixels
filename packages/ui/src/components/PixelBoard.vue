@@ -1,145 +1,200 @@
 <template>
   <div class="pixel-board" ref="targetBoard">
+    <LoadingSpinner v-if="!konvaPixelMapImage" />
     <v-stage
       ref="stage"
-      :config="configKonva"
+      class="stage"
+      :config="stageConfig"
       @wheel="zoom"
-      @dragStart="changeDragCursor"
-    >
-      <v-layer ref="layer">
-        <v-rect
-          v-for="pixel in pixelList"
-          :ref="`${pixel.x}:${pixel.y}`"
-          :key="`${pixel.x}:${pixel.y}`"
-          :config="pixel"
-          @click="previewPixelAndShowPanel({ x: pixel.x, y: pixel.y })"
-          @tap="previewPixelAndShowPanel({ x: pixel.x, y: pixel.y })"
-        ></v-rect>
-        <v-rect
-          v-if="pixelToPaint"
-          :config="pixelToPaint"
-          @click="showPanel()"
-        ></v-rect>
-      </v-layer>
-    </v-stage>
+      @dragstart="changeToMoveCursor"
+      @dragend="changeToPointerCursor"
+    ></v-stage>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import {
+  COLORS,
+  SCALE_BY,
+  POLLER_MILLISECONDS,
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+} from '@/constants'
+import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue'
 import { useStore } from '@/stores/player'
-import type { Pixel, Coordinates, GeneratePixelArgs } from '@/types'
-import { CANVAS_WIDTH, CANVAS_HEIGHT, PIXEL_SIZE, SCALE_BY } from '@/constants'
+import Konva from 'konva'
+import { ColorHexMap, type Coordinates } from '@/types'
+
 export default {
   setup() {
+    let pixelMapPoller: any = null
     const store = useStore()
-    const pixel = ref()
     const stage = ref()
     const targetBoard = ref()
-    let configKonva = ref({})
-
+    const stageConfig = ref()
+    const pixelColor = ref()
+    const layer = new Konva.Layer()
+    const gridGroup = new Konva.Group()
+    const pixelGroup = new Konva.Group()
+    const pixelMapImage = new Image()
+    const pixelSelection = new Konva.Rect({
+      author: null,
+      timestamp: null,
+      x: 0,
+      y: 0,
+      width: 1,
+      height: 1,
+      fill: 'transparent',
+      strokeWidth: 0.1,
+      stroke: 'transparent',
+    })
+    const konvaPixelMapImage = ref()
     onMounted(() => {
-      drawGrid()
-      configKonva.value = {
+      stageConfig.value = {
         width: targetBoard.value.clientWidth,
         height: targetBoard.value.clientHeight,
+        pixelRatio: 1,
         draggable: true,
+        colorSpace: 'display-p3',
+      }
+      pixelMapPoller = setInterval(async () => {
+        await store.getPixelMapImage()
+      }, POLLER_MILLISECONDS)
+      if (store.pixelMapImage) {
+        buildCanvas()
       }
     })
-
+    onBeforeUnmount(() => {
+      clearInterval(pixelMapPoller)
+    })
+    const pixelMapBase64 = computed(() => {
+      return store.pixelMapImage
+    })
     const selectedColor = computed(() => {
       return store.selectedColor
     })
-    const pixelMap = computed(() => {
-      return store.pixelMap
+    const isPanelClosed = computed(() => {
+      return !store.showPalettePanel
     })
-    const pixelToPaint = computed(() => {
-      return store.pixelToPaint
-    })
-    const stageNode = computed(() => {
-      return stage.value.getNode()
-    })
-    const stageContainer = computed(() => {
-      return stage.value.getStage().container()
-    })
-    const pixelList = computed(() => {
-      return pixelMap.value ? Object.values(pixelMap.value) : []
-    })
-
-    function drawGrid() {
-      for (
-        let xCell = 0;
-        xCell < Math.round(CANVAS_WIDTH / PIXEL_SIZE);
-        xCell++
-      ) {
-        for (
-          let yCell = 0;
-          yCell < Math.round(CANVAS_HEIGHT / PIXEL_SIZE);
-          yCell++
-        ) {
-          const x = xCell * PIXEL_SIZE
-          const y = yCell * PIXEL_SIZE
-          store.pixelMap[generateId({ x, y })] = generatePixel({
-            x,
-            y,
-            color: 'white',
-            strokeColor: '#8a8a8a3d',
-          })
-        }
+    const selectedPixelInfo = computed(() => store.selectedPixelInfo)
+    const stageNode = computed(() => stage.value.getNode())
+    watch(pixelMapBase64, value => {
+      if (value) {
+        buildCanvas()
       }
+    })
+    watch(selectedColor, value => {
+      if (value) {
+        setSelectedPixelColor()
+      } else {
+        setSelectedPixelToDefault()
+      }
+    })
+    watch(selectedPixelInfo, value => {
+      if (value) {
+        setSelectedPixelColor()
+      } else {
+        setSelectedPixelToDefault()
+      }
+    })
+    watch(isPanelClosed, isClosed => {
+      if (isClosed) {
+        setSelectedPixelToDefault()
+      }
+    })
+    function changeToMoveCursor() {
+      stage.value.getStage().container().style.cursor = 'move'
     }
-    function generateId({ x, y }: Coordinates): string {
+    function changeToDefaultCursor() {
+      stage.value.getStage().container().style.cursor = 'auto'
+    }
+    function changeToPointerCursor() {
+      stage.value.getStage().container().style.cursor = 'pointer'
+    }
+    function pixelId({ x, y }: Coordinates): string {
       return `${x}:${y}`
     }
-    function generatePixel({
-      x,
-      y,
-      color,
-      strokeColor = color,
-    }: GeneratePixelArgs): Pixel {
-      return {
-        id: generateId({ x, y }),
-        author: null,
-        timestamp: null,
-        x: x,
-        y: y,
-        width: PIXEL_SIZE,
-        height: PIXEL_SIZE,
-        fill: color,
-        strokeWidth: 1,
-        stroke: strokeColor,
+    function onClick() {
+      //If authorized Player show panel to paint
+      if (store.username) {
+        const relativePointerPosition =
+          konvaPixelMapImage.value.getRelativePointerPosition()
+        const pixelCoordinates = {
+          x: Math.floor(relativePointerPosition.x),
+          y: Math.floor(relativePointerPosition.y),
+        }
+        pixelSelection.position(pixelCoordinates)
+        layer.batchDraw()
+        store.togglePalettePanel(true)
+        setSelectedPixel(pixelCoordinates)
       }
     }
-    function showPanel() {
-      store.togglePalettePanel(true)
-    }
-    function previewPixelAndShowPanel({ x, y }: Coordinates) {
-      showPanel()
-      previewPixel({ x, y })
-    }
-    function previewPixel({ x, y }: Coordinates) {
+    function setSelectedPixel({ x, y }: Coordinates) {
       if (
-        !pixelToPaint.value ||
-        generateId({ x: pixelToPaint.value.x, y: pixelToPaint.value.y }) !==
-          generateId({ x, y })
+        !store.pixelToPaint ||
+        pixelId({ x: store.pixelToPaint.x, y: store.pixelToPaint.y }) !==
+          pixelId({ x, y })
       ) {
-        store.setPixelToPaint(
-          generatePixel({
-            x,
-            y,
-            color: selectedColor.value ?? 'white',
-            strokeColor: 'black',
-          })
-        )
+        store.getPixelInfo(x, y)
+        store.setPixelToPaint({
+          x: x,
+          y: y,
+          c: store.selectedColor ?? 0,
+        })
       }
-      stageContainer.value.style.cursor = 'pointer'
     }
-    function clearPixelToPaint() {
-      store.clearPixelToPaint()
-      store.togglePalettePanel(false)
+    function buildCanvas() {
+      loadImages()
+      gridGroup.removeChildren()
+      gridGroup.add(konvaPixelMapImage.value)
+      if (stageNode.value.children.length) {
+        layer.batchDraw()
+      } else {
+        pixelGroup.add(pixelSelection)
+        layer.add(gridGroup)
+        layer.add(pixelGroup)
+        stageNode.value.add(layer)
+        stageNode.value.scale({ x: 16, y: 16 })
+      }
+      gridGroup.on('click tap', onClick)
+      gridGroup.on('mouseover', changeToPointerCursor)
+      gridGroup.on('mouseout', changeToDefaultCursor)
     }
-    function changeDragCursor() {
-      stageContainer.value.style.cursor = 'move'
+    function setSelectedPixelColor() {
+      if (store.selectedPixelInfo?.owner) {
+        pixelSelection.attrs.fill = COLORS[store.selectedPixelInfo?.color]
+      } else if (store.selectedColor) {
+        pixelSelection.attrs.fill = COLORS[store.selectedColor]
+      } else {
+        pixelSelection.attrs.fill = ColorHexMap.white
+      }
+      pixelSelection.attrs.stroke = ColorHexMap.black
+      layer.batchDraw()
+    }
+    function setSelectedPixelToDefault() {
+      pixelSelection.attrs.fill = 'transparent'
+      pixelSelection.attrs.stroke = 'transparent'
+      layer.batchDraw()
+    }
+    function avoidBlurryCanvas() {
+      const ctx = layer.getContext()
+      ctx._context.imageSmoothingEnabled = false
+    }
+    function loadImages() {
+      if (pixelMapBase64.value) {
+        pixelMapImage.onload = function () {
+          avoidBlurryCanvas()
+          konvaPixelMapImage.value.image(pixelMapImage)
+        }
+        pixelMapImage.src = pixelMapBase64.value
+        konvaPixelMapImage.value = new Konva.Image({
+          image: pixelMapImage,
+          x: 0,
+          y: 0,
+          width: CANVAS_WIDTH,
+          height: CANVAS_HEIGHT,
+        })
+      }
     }
     function zoom(e: any) {
       e.evt.preventDefault()
@@ -157,7 +212,6 @@ export default {
         x: pointerPosition.x - mousePointTo.x * nextScale,
         y: pointerPosition.y - mousePointTo.y * nextScale,
       }
-
       // Zoom on trackpad
       if (e.evt.ctrlKey) direction = -direction
       stageNode.value.scale({ x: nextScale, y: nextScale })
@@ -165,24 +219,20 @@ export default {
       stageNode.value.batchDraw()
     }
     return {
-      pixel,
-      configKonva,
-      pixelMap,
-      previewPixel,
-      pixelToPaint,
-      stage,
-      zoom,
-      changeDragCursor,
-      clearPixelToPaint,
       targetBoard,
-      previewPixelAndShowPanel,
-      showPanel,
-      pixelList,
+      stageConfig,
+      stage,
+      pixelColor,
+      zoom,
+      onClick,
+      konvaPixelMapImage,
+      changeToMoveCursor,
+      changeToPointerCursor,
     }
   },
 }
 </script>
-<style>
+<style lang="scss">
 .pixel-board {
   max-width: 100%;
   height: 100%;

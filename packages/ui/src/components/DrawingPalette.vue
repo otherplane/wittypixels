@@ -1,43 +1,49 @@
 <template>
   <div class="palette-container" ref="targetBoard">
-    <div v-if="pixelToPaint" class="selected-pixel" @click="closePanel">
+    <div v-if="selectedPixelInfo" class="selected-pixel" @click="closePanel">
       <div
         class="pixel-color"
-        :style="{ 'background-color': pixelToPaint?.fill ?? 'lightgrey' }"
+        :style="{
+          'background-color': COLORS[selectedPixelInfo?.color] ?? 'white',
+        }"
       ></div>
       <div class="pixel-info">
         <div class="info-top">
           <div class="coordinates">
-            <p class="dark-text">
-              x {{ standardizePixelCoordinates(pixelToPaint?.x) }}
-            </p>
-            <p class="dark-text">
-              y {{ standardizePixelCoordinates(pixelToPaint?.y) }}
-            </p>
+            <p class="dark-text">x {{ selectedPixelInfo?.x }}</p>
+            <p class="dark-text">y {{ selectedPixelInfo?.y }}</p>
           </div>
-          <p class="light-text time">
-            {{ formatDistanceToNow(pixelToPaint?.timestamp) }}
+          <p v-if="selectedPixelInfo?.timestamp" class="light-text time">
+            {{ formatDistanceToNow(selectedPixelInfo?.timestamp) }}
           </p>
         </div>
-        <p v-if="pixelToPaint?.author" class="dark-text">
-          @{{ pixelToPaint?.author }}
+        <p v-if="selectedPixelInfo?.owner" class="dark-text">
+          @{{ selectedPixelInfo?.owner }}
         </p>
       </div>
     </div>
-    <div v-if="!game.gameOver" class="palette">
-      <ColorSelector
-        v-for="color in colors"
-        :key="color"
-        :color="color.color"
-        :points="color.points"
-      />
+    <div v-if="!gameOver" class="colors-container">
+      <div class="palette">
+        <ColorSelector
+          v-for="color in colors"
+          :key="color"
+          :color="color.color"
+          :points="color.points"
+        />
+      </div>
+      <div class="total">
+        <p>Wpx</p>
+        <div class="total-points">
+          <p class="text">{{ score }}x</p>
+        </div>
+      </div>
     </div>
-    <p v-if="!game.gameOver" class="light-text copy">
+    <p v-if="!gameOver" class="light-text copy">
       Remember: you can get more paints by getting your pendant scanned by other
       players!
     </p>
     <CustomButton
-      v-if="!game.gameOver"
+      v-if="!gameOver"
       type="primary"
       :slim="true"
       @click="paintPixel"
@@ -52,7 +58,7 @@ import { COLORS } from '@/constants'
 import { computed } from 'vue'
 import { useStore } from '@/stores/player'
 import { useGameStore } from '@/stores/game'
-import { standardizePixelCoordinates, formatDistanceToNow } from '@/utils'
+import { formatDistanceToNow } from '@/utils'
 export default {
   setup() {
     const store = useStore()
@@ -60,28 +66,40 @@ export default {
 
     const palette = computed(() => store.palettePoints)
     const colors = computed(() => {
-      return Object.keys(COLORS).map(key => {
-        return {
-          points: palette.value[key] ?? 0,
-          color: COLORS[key],
-        }
-      })
+      return Object.keys(COLORS)
+        .map(key => {
+          if (key !== '0' && key !== '1') {
+            return {
+              points: palette.value[key] ?? 0,
+              color: Number(key),
+            }
+          }
+        })
+        .filter(value => !!value)
     })
-    const pixelToPaint = computed(() => store.pixelToPaint)
+    const selectedPixelInfo = computed(() => {
+      return store.selectedPixelInfo
+    })
+    const score = computed(() => store.score)
     function paintPixel() {
       store.paintPixel()
     }
     function closePanel() {
+      store.clearPixelToPaint()
       store.togglePalettePanel(false)
     }
+    // TODO: Does this avoid re-render?
+    const gameOver = computed(() => game.gameOver)
     return {
       game,
+      gameOver,
       colors,
       paintPixel,
-      pixelToPaint,
-      standardizePixelCoordinates,
+      selectedPixelInfo,
       formatDistanceToNow,
       closePanel,
+      score,
+      COLORS,
     }
   },
 }
@@ -100,7 +118,7 @@ export default {
   align-items: center;
   justify-content: center;
   .pixel-color {
-    border: 2px solid $black;
+    border: 1.5px solid $black;
     display: flex;
     width: 48px;
     height: 48px;
@@ -120,7 +138,7 @@ export default {
       justify-content: space-between;
       .coordinates {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: max-content max-content;
         width: 70px;
         grid-gap: 4px;
       }
@@ -131,12 +149,34 @@ export default {
     }
   }
 }
-.palette {
-  padding-top: 16px;
-  border-top: 1px solid $lightgrey;
+.colors-container {
   display: grid;
-  width: 100%;
-  grid-template-columns: repeat(auto-fill, 60px);
-  grid-gap: 8px;
+  grid-template-columns: 1fr max-content;
+  border-top: 1px solid $lightgrey;
+  padding-top: 16px;
+  .palette {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, 60px);
+    grid-gap: 8px;
+  }
+  .total {
+    display: grid;
+    .total-points {
+      height: 24px;
+      min-width: 80px;
+      padding: 0 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 24px;
+      border: 1.5px solid $black;
+      .text {
+        font-size: 12px;
+        color: $black;
+      }
+    }
+  }
 }
 </style>
