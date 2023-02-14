@@ -1,10 +1,13 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
+import { Player } from '../domain/player'
 
 import {
   AuthorizationHeader,
   GetByStringKeyParams,
   JwtVerifyPayload,
   ExtendedPlayerVTO,
+  UpdateNameBody,
+  UpdateNameParams,
 } from '../types'
 
 const players: FastifyPluginAsync = async (fastify): Promise<void> => {
@@ -24,7 +27,7 @@ const players: FastifyPluginAsync = async (fastify): Promise<void> => {
       },
     },
     handler: async (
-      request: FastifyRequest<{ Params: { key: string } }>,
+      request: FastifyRequest<{ Params: GetByStringKeyParams }>,
       reply
     ) => {
       const { key } = request.params
@@ -54,6 +57,78 @@ const players: FastifyPluginAsync = async (fastify): Promise<void> => {
           .status(405)
           .send(new Error(`Player has not been claimed yet (key: ${key})`))
       }
+
+      const extendedPlayer: ExtendedPlayerVTO =
+        await player.toExtendedPlayerVTO({
+          // get last incoming interaction
+          lastInteractionIn: await fastify.interactionModel.getLast({
+            to: player.username,
+          }),
+          // get last outgoing interaction
+          lastInteractionOut: await fastify.interactionModel.getLast({
+            from: player.username,
+          }),
+        })
+
+      return reply.status(200).send(extendedPlayer)
+    },
+  })
+
+  fastify.put<{
+    Params: UpdateNameParams
+    Body: UpdateNameBody
+    Reply: ExtendedPlayerVTO | Error
+  }>('/players/:key', {
+    schema: {
+      body: UpdateNameBody,
+      params: GetByStringKeyParams,
+      headers: AuthorizationHeader,
+      response: {
+        200: ExtendedPlayerVTO,
+      },
+    },
+    handler: async (
+      request: FastifyRequest<{
+        Params: UpdateNameParams
+        Body: UpdateNameBody
+      }>,
+      reply
+    ) => {
+      const { key } = request.params
+      let playerKey: string
+      try {
+        const decoded: JwtVerifyPayload = fastify.jwt.verify(
+          request.headers.authorization as string
+        )
+        playerKey = decoded.id
+      } catch (err) {
+        return reply.status(403).send(new Error(`Forbidden: invalid token`))
+      }
+      if (playerKey !== key)
+        return reply.status(403).send(new Error(`Forbidden: invalid token`))
+
+      // Unreachable: valid server issued token refers to non-existent player
+      const player = await playerModel.get(key)
+      if (!player) {
+        return reply
+          .status(404)
+          .send(new Error(`Player does not exist (key: ${key})`))
+      }
+
+      // Unreachable: valid server issued token refers to an unclaimed player
+      if (!player.token) {
+        return reply
+          .status(405)
+          .send(new Error(`Player has not been claimed yet (key: ${key})`))
+      }
+      const isValidName = Player.isValidName(request.body.name)
+      if (!isValidName) {
+        return reply
+          .status(405)
+          .send(new Error(`Name should have between 2 and 34 characters`))
+      }
+
+      playerModel.updateName(request.params.key, request.body.name)
 
       const extendedPlayer: ExtendedPlayerVTO =
         await player.toExtendedPlayerVTO({

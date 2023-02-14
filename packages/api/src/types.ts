@@ -60,6 +60,7 @@ export const DbPlayerVTO = Type.Object({
   key: Type.String(),
   token: Type.Optional(Type.String()),
   username: Type.String(),
+  name: Type.String(),
   score: Type.Integer(),
   nft: Type.Array(Type.Optional(Type.String())),
   creationIndex: Type.Integer(),
@@ -371,3 +372,13 @@ export const DrawHistoryResponse = Type.Object({
   }),
 })
 export type DrawHistoryResponse = Static<typeof DrawHistoryResponse>
+
+export const UpdateNameParams = Type.Object({
+  key: Type.String(),
+})
+export type UpdateNameParams = Static<typeof UpdateNameParams>
+
+export const UpdateNameBody = Type.Object({
+  name: Type.String(),
+})
+export type UpdateNameBody = Static<typeof UpdateNameBody>
