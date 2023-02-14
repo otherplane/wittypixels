@@ -1,5 +1,5 @@
 # ! Build Front-end
-FROM node:18-alpine as build
+FROM node:lts-alpine as build
 
 WORKDIR /app
 COPY . ./
