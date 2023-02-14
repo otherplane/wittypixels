@@ -54,6 +54,7 @@ export const DbPlayerVTO = Type.Object({
   key: Type.String(),
   token: Type.Optional(Type.String()),
   username: Type.String(),
+  name: Type.String(),
   score: Type.Integer(),
   nft: Type.Array(Type.Optional(Type.String())),
   creationIndex: Type.Integer(),
@@ -332,3 +333,13 @@ export const PixelInfo = Type.Object({
   owner: Type.String(),
 })
 export type PixelInfo = Static<typeof PixelInfo>
+
+export const UpdateNameParams = Type.Object({
+  key: Type.String(),
+})
+export type UpdateNameParams = Static<typeof UpdateNameParams>
+
+export const UpdateNameBody = Type.Object({
+  name: Type.String(),
+})
+export type UpdateNameBody = Static<typeof UpdateNameBody>

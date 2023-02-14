@@ -15,6 +15,7 @@ export class Player {
   key: string
   color: Color
   username: string
+  name: string
   score: number
   nft: Array<string> = []
   palette: Palette
@@ -22,6 +23,7 @@ export class Player {
   constructor(vto: DbPlayerVTO) {
     this.key = vto.key
     this.username = vto.username
+    this.name = vto.name
     this.score = vto.score
     this.nft = vto.nft
     this.token = vto.token
@@ -58,6 +60,7 @@ export class Player {
       lastInteractionOut: this.lastInteractionOut,
       key: this.key,
       username: this.username,
+      name: this.name,
       score: this.score,
       nft: this.nft,
       token: this.token,
@@ -87,6 +90,7 @@ export class Player {
         )
         .map((p, index) => ({
           username: p.username,
+          name: p.name,
           creationIndex: p.creationIndex,
           score: p.score,
           color: p.color,
@@ -107,5 +111,9 @@ export class Player {
       [Color.White]: 0,
       [Color.Yellow]: 5,
     }
+  }
+
+  static isValidName(name: string) {
+    return !!(name && name.length > 3 && name.length < 34)
   }
 }

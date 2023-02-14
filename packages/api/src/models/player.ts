@@ -44,6 +44,7 @@ export class PlayerModel {
     return new Player({
       key,
       username,
+      name: username,
       nft,
       score,
       creationIndex: index,
@@ -89,6 +90,10 @@ export class PlayerModel {
     const { username } = player
 
     return new Player(await this.repository.updateOne({ username }, player))
+  }
+
+  public async updateName(key: string, name: string): Promise<Player> {
+    return new Player(await this.repository.updateOne({ key }, { name }))
   }
 
   public async get(key: string): Promise<Player | null> {
