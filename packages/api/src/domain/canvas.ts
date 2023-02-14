@@ -218,6 +218,14 @@ export class Canvas {
     return dataUri
   }
 
+  toPng() {
+    const b64 = this.toBase64()
+    const data = b64.replace(/^data:image\/\w+;base64,/, '')
+    const buffer = Buffer.from(data, 'base64')
+
+    return buffer
+  }
+
   getPixel(x: number, y: number): PixelInfo {
     const pixel = this.pixels[x][y]
 
@@ -244,4 +252,19 @@ function sectorFactory(name: string): DbSectorVTO {
   sector.name = name
 
   return sector
+}
+
+export function convertDataUrlToBlob(dataUrl: string) {
+  const arr: Array<string> = dataUrl.split(',')
+  // const mime = arr[0]?.match(/:(.*?);/)?.[1]
+  const bstr = Buffer.from(arr[1], 'base64').toString('base64')
+  let n = bstr.length
+  const u8arr = new Uint8Array(n)
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
+  }
+
+  // return new Blob([u8arr], { type: mime })
+  return u8arr
 }

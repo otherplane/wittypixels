@@ -332,3 +332,16 @@ export const PixelInfo = Type.Object({
   owner: Type.String(),
 })
 export type PixelInfo = Static<typeof PixelInfo>
+
+export const GetImageParams = Type.Object({
+  token_id: Type.String(),
+})
+export type GetImageParams = Static<typeof GetImageParams>
+
+export const GetImageResponse = Type.Any()
+export type GetImageResponse = Static<typeof GetImageResponse>
+
+export const GetImageQueryParams = Type.Object({
+  base64: Type.Optional(Type.Boolean()),
+})
+export type GetImageQueryParams = Static<typeof GetImageQueryParams>
