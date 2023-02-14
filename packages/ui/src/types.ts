@@ -62,17 +62,8 @@ export type RedeemPlayerInfo = {
   // Number of pixels redeemed by the UI’s player index
   pixels: number
 }
-export enum ColorHexMap {
-  white = 'white',
-  black = 'black',
-  lightgrey = '#8a8a8a3d',
-  red = '#EA033A',
-  orange = '#FF5730',
-  yellow = '#F5EA0A',
-  green = '#56C553',
-  blue = '#5C96FF',
-  purple = '#8D52FF',
-}
+export type ColorShade = Record<number, [number, number, number]>
+export type ColorMap = Record<number, ColorShade>
 export type GeneratePixelArgs = {
   x: number
   y: number

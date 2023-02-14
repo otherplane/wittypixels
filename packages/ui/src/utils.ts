@@ -15,6 +15,14 @@ export function isMainnetTime() {
   return Date.now() >= PLAYER_MAINNET_TIMESTAMP * 1000
 }
 
+export function isNumber(number) {
+  return typeof number === 'number'
+}
+
+export function getRgbaColor(r, g, b, a = 255) {
+  return `rgba(${r}, ${g}, ${b}, ${a})`
+}
+
 export function cropMiddle(text: string, length: number) {
   if (text.length > length) {
     const leftSizeLengh = Math.floor((length - 3) / 2)

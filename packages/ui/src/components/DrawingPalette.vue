@@ -1,11 +1,9 @@
 <template>
-  <div class="palette-container" ref="targetBoard">
+  <div class="palette-container">
     <div v-if="selectedPixelInfo" class="selected-pixel" @click="closePanel">
       <div
         class="pixel-color"
-        :style="{
-          'background-color': COLORS[selectedPixelInfo?.color] ?? 'white',
-        }"
+        :style="{ background: getColor(selectedPixelInfo?.color, 3).value }"
       ></div>
       <div class="pixel-info">
         <div class="info-top">
@@ -38,6 +36,16 @@
         </div>
       </div>
     </div>
+    <transition name="slide">
+      <div class="shades-selector" v-if="selectedColor && !gameOver">
+        <ShadeSelector
+          v-for="shade in shades"
+          class="shade-box"
+          :key="shade"
+          :shade="shade"
+        />
+      </div>
+    </transition>
     <p v-if="!gameOver" class="light-text copy">
       Remember: you can get more paints by getting your pendant scanned by other
       players!
@@ -55,10 +63,11 @@
 
 <script>
 import { COLORS } from '@/constants'
+import { getColor } from '@/composables/getColor'
 import { computed } from 'vue'
 import { useStore } from '@/stores/player'
 import { useGameStore } from '@/stores/game'
-import { formatDistanceToNow } from '@/utils'
+import { formatDistanceToNow, getRgbaColor } from '@/utils'
 export default {
   setup() {
     const store = useStore()
@@ -80,7 +89,20 @@ export default {
     const selectedPixelInfo = computed(() => {
       return store.selectedPixelInfo
     })
+    const shades = computed(() => {
+      return Object.keys(COLORS[selectedColor.value]).map(key => {
+        const shadeData = COLORS[selectedColor.value][key]
+        return {
+          key,
+          color: getRgbaColor(shadeData[0], shadeData[1], shadeData[2]),
+        }
+      })
+    })
     const score = computed(() => store.score)
+    const selectedColor = computed(() => store.selectedColor)
+    function selectShade(shade) {
+      store.selectedShade = shade.key
+    }
     function paintPixel() {
       store.paintPixel()
     }
@@ -92,19 +114,41 @@ export default {
     const gameOver = computed(() => game.gameOver)
     return {
       game,
+      selectShade,
       gameOver,
+      selectedColor,
       colors,
       paintPixel,
       selectedPixelInfo,
       formatDistanceToNow,
       closePanel,
       score,
-      COLORS,
+      shades,
+      getColor,
     }
   },
 }
 </script>
 <style scoped lang="scss">
+.slide-enter-active {
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in;
+}
+
+.slide-leave-active {
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slide-enter-to,
+.slide-leave {
+  opacity: 1;
+}
+
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+}
 .palette-container {
   font-size: 14px;
   display: grid;
@@ -146,6 +190,26 @@ export default {
         height: 100%;
         align-self: flex-end;
       }
+    }
+  }
+}
+.shades-selector {
+  display: grid;
+  border-radius: 24px;
+  align-items: center;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, 48px);
+  grid-gap: 0;
+  .shade-box {
+    height: 24px;
+    cursor: pointer;
+    &:first-child {
+      border-top-left-radius: 24px;
+      border-bottom-left-radius: 24px;
+    }
+    &:last-child {
+      border-top-right-radius: 24px;
+      border-bottom-right-radius: 24px;
     }
   }
 }

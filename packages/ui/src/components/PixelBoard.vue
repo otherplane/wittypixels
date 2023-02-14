@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import {
-  COLORS,
   SCALE_BY,
   POLLER_MILLISECONDS,
   CANVAS_HEIGHT,
@@ -25,8 +24,9 @@ import {
 } from '@/constants'
 import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue'
 import { useStore } from '@/stores/player'
+import { getColor } from '@/composables/getColor'
 import Konva from 'konva'
-import { ColorHexMap, type Coordinates } from '@/types'
+import type { Coordinates } from '@/types'
 
 export default {
   setup() {
@@ -78,6 +78,9 @@ export default {
     const selectedColor = computed(() => {
       return store.selectedColor
     })
+    const selectedShade = computed(() => {
+      return store.selectedShade
+    })
     const isPanelClosed = computed(() => {
       return !store.showPalettePanel
     })
@@ -92,6 +95,13 @@ export default {
       }
     })
     watch(selectedColor, value => {
+      if (value) {
+        setSelectedPixelColor()
+      } else {
+        setSelectedPixelToDefault()
+      }
+    })
+    watch(selectedShade, value => {
       if (value) {
         setSelectedPixelColor()
       } else {
@@ -172,13 +182,15 @@ export default {
     }
     function setSelectedPixelColor() {
       if (store.selectedColor) {
-        pixelSelection.attrs.fill = COLORS[store.selectedColor]
+        pixelSelection.attrs.fill = getColor().value
       } else if (store.selectedPixelInfo?.owner) {
-        pixelSelection.attrs.fill = COLORS[store.selectedPixelInfo?.color]
+        pixelSelection.attrs.fill = getColor(
+          store.selectedPixelInfo?.color
+        ).value
       } else {
-        pixelSelection.attrs.fill = ColorHexMap.white
+        pixelSelection.attrs.fill = getColor(0, 3).value
       }
-      pixelSelection.attrs.stroke = ColorHexMap.black
+      pixelSelection.attrs.stroke = getColor(1, 3).value
       layer.batchDraw()
     }
     function setSelectedPixelToDefault() {

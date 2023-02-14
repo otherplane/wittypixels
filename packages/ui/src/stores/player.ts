@@ -30,6 +30,7 @@ export const useStore = defineStore('player', {
       playersGlobalStats: [],
       errors: {} as Errors,
       selectedColor: null as number | null,
+      selectedShade: 3 as number,
       palettePoints: {} as PalettePoints,
       showPalettePanel: false as boolean,
       pixelToPaint: null as PixelDB | null,
@@ -103,6 +104,7 @@ export const useStore = defineStore('player', {
     clearPixelToPaint() {
       this.pixelToPaint = null
       this.selectedColor = null
+      this.selectedShade = 3
     },
     togglePalettePanel(value: boolean) {
       this.showPalettePanel = value

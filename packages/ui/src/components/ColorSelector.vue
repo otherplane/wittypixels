@@ -2,7 +2,7 @@
   <div
     class="color"
     :class="{ selected, ['disabled']: !points }"
-    :style="{ 'background-color': COLORS[color] }"
+    :style="{ 'background-color': background }"
     @click="selectColor"
   >
     <p class="text" :class="{ [color]: color, ['disabled']: !points }">
@@ -12,7 +12,7 @@
 </template>
 <script>
 import { useStore } from '@/stores/player'
-import { COLORS } from '@/constants'
+import { getColor } from '@/composables/getColor'
 import { computed } from 'vue'
 export default {
   props: {
@@ -39,8 +39,7 @@ export default {
         store.selectColor(null)
       }
     }
-
-    return { selectColor, selected, COLORS }
+    return { selectColor, selected, background: getColor(props.color, 3) }
   },
 }
 </script>

@@ -1,9 +1,8 @@
 import {
-  type ColorsFromIndex,
-  type ColorFromHex,
+  type ColorShade,
+  type ColorMap,
   type NetworkMap,
   TokenStatus,
-  ColorHexMap,
   TxType,
 } from '@/types'
 
@@ -121,26 +120,78 @@ export const BASE_URL =
 
 export const ATTRIBUTES = {}
 
-export const COLORS: ColorsFromIndex = {
-  0: ColorHexMap.white,
-  1: ColorHexMap.black,
-  2: ColorHexMap.orange,
-  3: ColorHexMap.yellow,
-  4: ColorHexMap.green,
-  5: ColorHexMap.blue,
-  6: ColorHexMap.red,
-  7: ColorHexMap.purple,
+export const RED_SHADES: ColorShade = {
+  0: [255, 219, 227],
+  1: [254, 147, 172],
+  2: [253, 75, 117],
+  3: [234, 3, 58],
+  4: [180, 2, 45],
+  5: [108, 1, 27],
+  6: [36, 0, 9],
 }
-export const COLOR_FROM_HEX: ColorFromHex = {
-  [ColorHexMap.white]: 0,
-  [ColorHexMap.black]: 1,
-  [ColorHexMap.orange]: 2,
-  [ColorHexMap.yellow]: 3,
-  [ColorHexMap.green]: 4,
-  [ColorHexMap.blue]: 5,
-  [ColorHexMap.red]: 6,
-  [ColorHexMap.purple]: 7,
+export const ORANGE_SHADES: ColorShade = {
+  0: [255, 225, 219],
+  1: [255, 166, 146],
+  2: [255, 107, 73],
+  3: [255, 87, 48],
+  4: [182, 34, 0],
+  5: [109, 21, 0],
+  6: [36, 7, 0],
 }
+export const YELLOW_SHADES: ColorShade = {
+  0: [254, 252, 220],
+  1: [251, 246, 150],
+  2: [248, 240, 80],
+  3: [245, 234, 10],
+  4: [175, 167, 7],
+  5: [105, 100, 4],
+  6: [35, 33, 1],
+}
+export const GREEN_SHADES: ColorShade = {
+  0: [228, 246, 228],
+  1: [175, 227, 173],
+  2: [121, 209, 119],
+  3: [86, 197, 83],
+  4: [48, 136, 46],
+  5: [29, 82, 28],
+  6: [10, 27, 9],
+}
+export const BLUE_SHADES: ColorShade = {
+  0: [219, 232, 255],
+  1: [146, 185, 255],
+  2: [73, 138, 255],
+  3: [92, 150, 255],
+  4: [0, 65, 182],
+  5: [0, 39, 109],
+  6: [0, 13, 36],
+}
+export const PURPLE_SHADES: ColorShade = {
+  0: [231, 219, 255],
+  1: [183, 146, 255],
+  2: [135, 73, 255],
+  3: [141, 82, 255],
+  4: [62, 0, 182],
+  5: [37, 0, 109],
+  6: [12, 0, 36],
+}
+export const WHITE_SHADES = {
+  3: [255, 255, 255],
+}
+export const BLACK_SHADES = {
+  3: [0, 0, 0],
+}
+
+export const COLORS: ColorMap = {
+  0: WHITE_SHADES,
+  1: BLACK_SHADES,
+  2: ORANGE_SHADES,
+  3: YELLOW_SHADES,
+  4: GREEN_SHADES,
+  5: BLUE_SHADES,
+  6: RED_SHADES,
+  7: PURPLE_SHADES,
+}
+
 export const TOKEN_STATUS: Record<number, TokenStatus> = {
   0: TokenStatus.Void,
   1: TokenStatus.Launching,

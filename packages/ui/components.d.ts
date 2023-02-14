@@ -45,6 +45,8 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SectionHeader: typeof import('./src/components/SectionHeader.vue')['default']
+    SelectedPixelColor: typeof import('./src/components/SelectedPixelColor.vue')['default']
+    ShadeSelector: typeof import('./src/components/ShadeSelector.vue')['default']
     SubtabButton: typeof import('./src/components/SubtabButton.vue')['default']
     SvgImage: typeof import('./src/components/SvgImage.vue')['default']
     TabButton: typeof import('./src/components/TabButton.vue')['default']

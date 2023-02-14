@@ -58,11 +58,11 @@
 </template>
 
 <script lang="ts">
-import { getColor } from '@/composables/getColor'
+import { getPlayerColor } from '@/composables/getPlayerColor'
 export default {
   setup() {
     return {
-      color: getColor(),
+      color: getPlayerColor(),
     }
   },
 }
