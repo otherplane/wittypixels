@@ -10,7 +10,7 @@ RUN pnpm run build:production
 
 
 # ! Create Static SPA Container
-FROM node:lts-alpine3.17-alpine as prod
+FROM node:lts-alpine as prod
 
 # ? Copy files from previous stage
 COPY --from=build /app/dist /app
