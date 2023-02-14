@@ -161,10 +161,10 @@ export default {
       gridGroup.on('mouseout', changeToDefaultCursor)
     }
     function setSelectedPixelColor() {
-      if (store.selectedPixelInfo?.owner) {
-        pixelSelection.attrs.fill = COLORS[store.selectedPixelInfo?.color]
-      } else if (store.selectedColor) {
+      if (store.selectedColor) {
         pixelSelection.attrs.fill = COLORS[store.selectedColor]
+      } else if (store.selectedPixelInfo?.owner) {
+        pixelSelection.attrs.fill = COLORS[store.selectedPixelInfo?.color]
       } else {
         pixelSelection.attrs.fill = ColorHexMap.white
       }
