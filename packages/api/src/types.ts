@@ -366,3 +366,13 @@ export const UpdateNameBody = Type.Object({
   name: Type.String(),
 })
 export type UpdateNameBody = Static<typeof UpdateNameBody>
+
+export const BonusParams = Type.Object({
+  url: Type.String(),
+})
+export type BonusParams = Static<typeof BonusParams>
+
+export const BonusReply = Type.Object({
+  bonusEndsAt: Type.Number(),
+})
+export type BonusReply = Static<typeof BonusReply>
