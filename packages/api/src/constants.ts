@@ -126,12 +126,16 @@ export const ERC721_TOKEN_ID = process.env.ERC721_TOKEN_ID
   : 1
 export const DEFAULT_RGB: [number, number, number] = [255, 255, 255]
 
-// Default bonus time: 30 minutes
-export const POAP_BONUS_TIME: number = parseInt(
-  process.env.POAP_BONUS_TIME || '1800000'
+// Default bonus time: 15 minutes
+export const BONUS_TIME: number = parseInt(
+  process.env.BONUS_TIME || process.env.POAP_BONUS_TIME || '900000'
 )
 
+// Multiplier that will be applied to how many pixels you get out of being scanned during the bonus period
 export const BONUS_MULTIPLIER = parseInt(process.env.BONUS_MULTIPLIER || '2')
+
+// How many bonus codes to pre-compute
+export const BONUS_COUNT = parseInt(process.env.BONUS_COUNT || '500')
 
 export default {
   PLAYER_KEY_LENGTH_BYTES,
@@ -149,6 +153,7 @@ export default {
   CANVAS_MAX_Y,
   CANVAS_CACHE_MAX_SIZE,
   DEFAULT_RGB,
-  POAP_BONUS_TIME,
+  BONUS_COUNT,
   BONUS_MULTIPLIER,
+  BONUS_TIME,
 }

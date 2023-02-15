@@ -182,15 +182,16 @@ const players: FastifyPluginAsync = async (fastify): Promise<void> => {
 
       const bonusUrl = request.body.url
 
-      // TODO: real validate bonus url
       if (!fastify.bonusValidator.isValid(bonusUrl)) {
-        return reply.status(403).send(new Error(`Invalid POAP`))
+        return reply.status(403).send(new Error(`The bonus code is invalid`))
       }
       if (player.scannedBonuses.includes(bonusUrl)) {
-        return reply.status(403).send(new Error(`POAP already claimed`))
+        return reply
+          .status(403)
+          .send(new Error(`This bonus code was already claimed`))
       }
 
-      // Valid POAP: add to scannedBonuses, increment bonusEndsAt, and store to database
+      // Valid bonus code: add to scannedBonuses, increment bonusEndsAt, and store to database
       player.scannedBonuses.push(bonusUrl)
       const currentTimestamp = Date.now()
       player.addBonusTime(currentTimestamp)
