@@ -180,19 +180,19 @@ const players: FastifyPluginAsync = async (fastify): Promise<void> => {
           .send(new Error(`Player does not exist (key: ${fromKey})`))
       }
 
-      const bonusUrl = request.body.url
+      const bonusCode = request.body.url.split('/').pop()
 
-      if (!fastify.bonusValidator.isValid(bonusUrl)) {
+      if (!fastify.bonusValidator.isValid(bonusCode)) {
         return reply.status(403).send(new Error(`The bonus code is invalid`))
       }
-      if (player.scannedBonuses.includes(bonusUrl)) {
+      if (player.scannedBonuses.includes(bonusCode)) {
         return reply
           .status(403)
           .send(new Error(`This bonus code was already claimed`))
       }
 
       // Valid bonus code: add to scannedBonuses, increment bonusEndsAt, and store to database
-      player.scannedBonuses.push(bonusUrl)
+      player.scannedBonuses.push(bonusCode)
       const currentTimestamp = Date.now()
       player.addBonusTime(currentTimestamp)
       // Save to DB

@@ -8,8 +8,8 @@ export class BonusValidator {
     this.bonusList = generateBonuses(salt, count)
   }
 
-  isValid(bonusUrl: string): boolean {
-    return this.bonusList.has(bonusUrl)
+  isValid(bonusCode: string): boolean {
+    return this.bonusList.has(bonusCode)
   }
 }
 
