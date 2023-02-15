@@ -47,6 +47,7 @@ export const PlayerVTO = Type.Object({
   key: Type.String(),
   token: Type.Optional(Type.String()),
   username: Type.String(),
+  name: Type.String(),
   score: Type.Integer(),
   nft: Type.Array(Type.Optional(Type.String())),
   creationIndex: Type.Integer(),
