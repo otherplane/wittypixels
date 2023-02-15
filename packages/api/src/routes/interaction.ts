@@ -18,7 +18,7 @@ import {
 const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { playerModel, interactionModel } = fastify
+  const { playerModel, interactionModel, drawModel } = fastify
 
   fastify.post<{ Body: InteractionParams; Reply: InteractionResult | Error }>(
     '/interactions',
@@ -158,11 +158,11 @@ const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
     }
   )
 
-  // GET /history?limit=LIMIT&offset=OFFSET
+  // GET /interactions?limit=LIMIT&offset=OFFSET
   fastify.get<{
     Querystring: InteractionHistoryParams
     Reply: InteractionHistoryResponse | Error
-  }>('/history', {
+  }>('/interactions', {
     schema: {
       querystring: InteractionHistoryParams,
       headers: AuthorizationHeader,
