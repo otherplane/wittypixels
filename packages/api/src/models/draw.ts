@@ -50,4 +50,23 @@ export class DrawModel {
   public async countAll(): Promise<number> {
     return await this.repository.countAll()
   }
+
+  public async getManyByUsername(
+    username: string,
+    paginationParams: { limit: number; offset: number }
+  ): Promise<Array<DbDrawVTO>> {
+    return await this.repository.getSortedBy(
+      {
+        $or: [{ owner: username }, { stolenTo: username }],
+      },
+      { timestamp: 'desc' },
+      paginationParams
+    )
+  }
+
+  public async count(username: string): Promise<number> {
+    return this.repository.count({
+      $or: [{ owner: username }, { stolenTo: username }],
+    })
+  }
 }

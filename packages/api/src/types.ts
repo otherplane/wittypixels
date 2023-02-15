@@ -70,6 +70,7 @@ export const DbDrawVTO = Type.Object({
   x: Type.Number(),
   y: Type.Number(),
   color: Type.Enum(Color),
+  stolenTo: Type.String(),
 })
 
 export type DbDrawVTO = Static<typeof DbDrawVTO>
@@ -87,6 +88,8 @@ export const DrawVTO = Type.Object({
   y: Type.Number(),
   // color
   c: Type.Enum(Color),
+  // stolenTo
+  st: Type.String(),
 })
 export type DrawVTO = Static<typeof DrawVTO>
 
@@ -332,3 +335,18 @@ export const PixelInfo = Type.Object({
   owner: Type.String(),
 })
 export type PixelInfo = Static<typeof PixelInfo>
+
+// Interactions history
+export const DrawHistoryQueryParams = Type.Object({
+  limit: Type.Optional(Type.Integer()),
+  offset: Type.Optional(Type.Integer()),
+})
+export type DrawHistoryQueryParams = Static<typeof DrawHistoryQueryParams>
+
+export const DrawHistoryResponse = Type.Object({
+  draws: Type.Object({
+    draws: Type.Array(DbDrawVTO),
+    total: Type.Integer(),
+  }),
+})
+export type DrawHistoryResponse = Static<typeof DrawHistoryResponse>

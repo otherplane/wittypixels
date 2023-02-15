@@ -10,6 +10,7 @@ describe('draw.ts', () => {
       timestamp: 1675178195287,
       x: 70,
       y: 70,
+      stolenTo: '',
     })
 
     expect(canvas.toDbVTO()).toStrictEqual({
@@ -19,6 +20,7 @@ describe('draw.ts', () => {
       timestamp: 1675178195287,
       x: 70,
       y: 70,
+      stolenTo: '',
     })
   })
 
@@ -30,6 +32,7 @@ describe('draw.ts', () => {
       timestamp: 1675178195287,
       x: 70,
       y: 70,
+      stolenTo: '',
     })
 
     expect(canvas.toVTO()).toStrictEqual({
@@ -38,6 +41,7 @@ describe('draw.ts', () => {
       t: 1675178195287,
       x: 70,
       y: 70,
+      st: '',
     })
   })
 
@@ -49,6 +53,7 @@ describe('draw.ts', () => {
       timestamp: 1675178195287,
       x: 0,
       y: 0,
+      stolenTo: '',
     })
 
     expect(canvas.toDbSectorInfo()).toStrictEqual({ sector: '0-0', x: 0, y: 0 })
@@ -62,6 +67,7 @@ describe('draw.ts', () => {
       timestamp: 1675178195287,
       x: CANVAS_SECTOR_SIZE + 1,
       y: CANVAS_SECTOR_SIZE + 1,
+      stolenTo: '',
     })
 
     expect(canvas.toDbSectorInfo()).toStrictEqual({ sector: '1-1', x: 1, y: 1 })
