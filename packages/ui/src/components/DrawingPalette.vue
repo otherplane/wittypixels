@@ -18,7 +18,7 @@
           </p>
         </div>
         <p v-if="selectedPixelInfo?.owner" class="dark-text">
-          @{{ selectedPixelInfo?.owner }}
+          @{{ selectedPixelInfo?.ownerName || selectedPixelInfo?.owner }}
         </p>
       </div>
     </div>

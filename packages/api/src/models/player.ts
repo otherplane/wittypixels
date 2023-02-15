@@ -190,6 +190,12 @@ export class PlayerModel {
     return await this.get(username)
   }
 
+  public async getAll(): Promise<Array<Player>> {
+    const players = await this.repository.get({})
+
+    return players.map(p => new Player(p))
+  }
+
   public async getActivePlayers(): Promise<Array<Player>> {
     const players = await this.repository.get({
       token: { $exists: true, $ne: undefined },

@@ -218,7 +218,7 @@ export class Canvas {
     return dataUri
   }
 
-  getPixel(x: number, y: number): PixelInfo {
+  getPixel(x: number, y: number): Omit<PixelInfo, 'ownerName'> {
     const pixel = this.pixels[x][y]
 
     return {
