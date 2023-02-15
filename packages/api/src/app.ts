@@ -5,7 +5,13 @@ import { FastifyPluginAsync, FastifyPluginCallback } from 'fastify'
 import fastifyMongodb from '@fastify/mongodb'
 import fp from 'fastify-plugin'
 import { join } from 'path'
-import { PLAYERS_COUNT, JWT_SECRET, MONGO_URI } from './constants'
+import {
+  PLAYERS_COUNT,
+  JWT_SECRET,
+  MONGO_URI,
+  PLAYER_KEY_SALT,
+  BONUS_COUNT,
+} from './constants'
 import { PlayerModel } from './models/player'
 import { InteractionModel } from './models/interaction'
 import { CanvasModel } from './models/canvas'
@@ -93,19 +99,13 @@ const app: FastifyPluginAsync<AppOptions> = async (
 
   fastify.register(fp(initializeModels))
 
-  // Load POAP List
+  // Pre-compute bonuses list
   const initializeBonusValidator: FastifyPluginCallback = async (
     fastify,
     options,
     next
   ) => {
-    const bonusses: Array<string> = JSON.parse(
-      await fs.readFileSync(join(__dirname, 'bonus.json'), {
-        encoding: 'utf-8',
-      })
-    )
-
-    const bonusValidator = new BonusValidator(bonusses)
+    const bonusValidator = new BonusValidator(PLAYER_KEY_SALT, BONUS_COUNT)
 
     fastify.decorate('bonusValidator', bonusValidator)
 

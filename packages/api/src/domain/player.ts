@@ -1,5 +1,6 @@
 import { PlayerCache } from '../services/playerCache'
 import { POAP_BONUS_TIME } from '../constants'
+import { BONUS_TIME } from '../constants'
 import {
   DbPlayerVTO,
   ExtendedPlayerVTO,
@@ -125,8 +126,7 @@ export class Player {
   }
 
   addBonusTime(currentTimestamp: number) {
-    this.bonusEndsAt =
-      Math.max(currentTimestamp, this.bonusEndsAt) + POAP_BONUS_TIME
+    this.bonusEndsAt = Math.max(currentTimestamp, this.bonusEndsAt) + BONUS_TIME
   }
 
   hasActiveBonus(): boolean {
