@@ -6,6 +6,8 @@
       class="stage"
       :config="stageConfig"
       @wheel="zoom"
+      @touchmove="touchmove"
+      @touchend="touchend"
       @dragstart="changeToMoveCursor"
       @dragend="changeToPointerCursor"
     ></v-stage>
@@ -30,6 +32,8 @@ export default {
     let pixelMapPoller: any = null
     const store = useStore()
     const stage = ref()
+    const lastCenter = ref()
+    const lastDist = ref(0)
     const targetBoard = ref()
     const stageConfig = ref()
     const pixelColor = ref()
@@ -196,6 +200,80 @@ export default {
         })
       }
     }
+    function touchmove(e: any) {
+      e.evt.preventDefault()
+      const touch1 = e.evt.touches[0]
+      const touch2 = e.evt.touches[1]
+
+      if (touch1 && touch2) {
+        // if the stage was under Konva's drag&drop
+        // we need to stop it, and implement our own pan logic with two pointers
+        if (stageNode.value.isDragging()) {
+          stageNode.value.stopDrag()
+        }
+
+        const p1 = {
+          x: touch1.clientX,
+          y: touch1.clientY,
+        }
+        const p2 = {
+          x: touch2.clientX,
+          y: touch2.clientY,
+        }
+
+        if (!lastCenter.value) {
+          lastCenter.value = getCenter(p1, p2)
+          return
+        }
+        const newCenter = getCenter(p1, p2)
+
+        const dist = getDistance(p1, p2)
+
+        if (!lastDist.value) {
+          lastDist.value = dist
+        }
+
+        // local coordinates of center point
+        const pointTo = {
+          x: (newCenter.x - stageNode.value.x()) / stageNode.value.scaleX(),
+          y: (newCenter.y - stageNode.value.y()) / stageNode.value.scaleX(),
+        }
+
+        const scale = stage.value.scaleX() * (dist / lastDist.value)
+
+        stageNode.value.scaleX(scale)
+        stageNode.value.scaleY(scale)
+
+        // calculate new position of the stage
+        const dx = newCenter.x - lastCenter.value.x
+        const dy = newCenter.y - lastCenter.value.y
+
+        const newPos = {
+          x: newCenter.x - pointTo.x * scale + dx,
+          y: newCenter.y - pointTo.y * scale + dy,
+        }
+
+        stageNode.value.position(newPos)
+
+        lastDist.value = dist
+        lastCenter.value = newCenter
+        stageNode.value.batchDraw()
+      }
+    }
+    function touchend() {
+      lastDist.value = 0
+      lastCenter.value = null
+    }
+    function getDistance(p1: any, p2: any) {
+      return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
+    }
+
+    function getCenter(p1: any, p2: any) {
+      return {
+        x: (p1.x + p2.x) / 2,
+        y: (p1.y + p2.y) / 2,
+      }
+    }
     function zoom(e: any) {
       e.evt.preventDefault()
       // Scale
@@ -225,6 +303,8 @@ export default {
       pixelColor,
       zoom,
       onClick,
+      touchmove,
+      touchend,
       konvaPixelMapImage,
       changeToMoveCursor,
       changeToPointerCursor,
