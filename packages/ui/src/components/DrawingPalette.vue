@@ -31,12 +31,6 @@
           :points="color.points"
         />
       </div>
-      <div class="total">
-        <p>Wpx</p>
-        <div class="total-points">
-          <p class="text">{{ score }}x</p>
-        </div>
-      </div>
     </div>
     <transition name="slide">
       <div class="shades-selector" v-if="isNumber(selectedColor) && !gameOver">

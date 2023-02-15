@@ -19,6 +19,7 @@ export const useStore = defineStore('player', {
       id: null,
       creationIndex: null as number | null,
       username: '',
+      name: '',
       score: null,
       color: 5 as number,
       bonus: null as number | null,
@@ -173,7 +174,7 @@ export const useStore = defineStore('player', {
       if (request.error) {
         this.setError(ErrorKey.updateName, request.error)
       } else {
-        this.username = request.player.username
+        this.name = request.player.name
         this.clearError(ErrorKey.updateName)
         this.bonus = request.bonusEndsAt
       }
@@ -298,10 +299,11 @@ export const useStore = defineStore('player', {
         this.setError(CallApiKey.info, request.error)
       } else {
         this.clearError(CallApiKey.info)
-        const { key, username, score, color, palette, creationIndex } =
+        const { key, username, score, color, palette, creationIndex, name } =
           request.player
         this.id = key
         this.username = username
+        this.name = name
         this.score = score
         this.palettePoints = palette
         this.color = color
