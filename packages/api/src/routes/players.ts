@@ -107,7 +107,7 @@ const players: FastifyPluginAsync = async (fastify): Promise<void> => {
           .send(new Error(`Player does not exist (key: ${fromKey})`))
       }
 
-      const bonusCode = request.body.url.split('/').pop()
+      const bonusCode = request.body.url.split('/').pop() || ''
 
       if (!fastify.bonusValidator.isValid(bonusCode)) {
         return reply.status(403).send(new Error(`The bonus code is invalid`))
