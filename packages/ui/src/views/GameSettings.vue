@@ -63,8 +63,10 @@ export default {
   setup() {
     const player = useStore()
 
-    function setValue() {
-      //TODO: update username
+    function setValue(value) {
+      if (value.value) {
+        player.updateName({ name: value.value })
+      }
     }
     const fromAuth = ref(!!router.currentRoute.value.params?.id)
     return { player, importSvg, setValue, fromAuth }

@@ -1,7 +1,6 @@
 <template>
   <input
     class="input"
-    disabled
     v-model.lazy="localValue"
     :placeholder="`Type your ${label}`"
     :data-lpignore="true"

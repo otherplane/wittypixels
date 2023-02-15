@@ -150,7 +150,7 @@ const app: FastifyPluginAsync<AppOptions> = async (
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   fastify.register(require('@fastify/cors'), {
     origin: '*',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT'],
   })
 
   // JWT

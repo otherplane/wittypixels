@@ -34,6 +34,13 @@ export class ApiService {
       .catch(this._handleError)
   }
 
+  _put({ url, data, params }) {
+    return axios
+      .put(url, data, params)
+      .then(this._handleResponse)
+      .catch(this._handleError)
+  }
+
   _post({ url, data, params }) {
     return axios
       .post(url, data, params)
@@ -52,6 +59,14 @@ export class ApiService {
     return this._get({
       url: `${this.baseUrl}/players/${params.id}`,
       config: { headers: { authorization: params.token } },
+    })
+  }
+
+  updatePlayerName({ name, id, token }) {
+    return this._put({
+      url: `${this.baseUrl}/players/${id}`,
+      data: { name },
+      params: { headers: { authorization: token } },
     })
   }
 

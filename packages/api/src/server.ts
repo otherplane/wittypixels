@@ -8,7 +8,7 @@ import app from './app'
 import constants, { ERC721_TOKEN_CURATOR_PK } from './constants'
 
 const server = Fastify({
-  pluginTimeout: 10000,
+  pluginTimeout: 100000,
   logger: {
     level: 'info',
     transport: {

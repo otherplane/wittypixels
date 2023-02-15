@@ -139,6 +139,21 @@ export const useStore = defineStore('player', {
         router.push(`/settings/${key}`)
       }
     },
+    async updateName({ name }) {
+      const tokenInfo = this.localStore.getToken()
+      const request = await this.api.updatePlayerName({
+        token: tokenInfo.token,
+        id: tokenInfo.key,
+        name,
+      })
+      if (request.error) {
+        this.setError(ErrorKey.updateName, request.error)
+      } else {
+        this.username = request.player.username
+        this.clearError(ErrorKey.updateName)
+        this.bonus = request.bonusEndsAt
+      }
+    },
     //Bonus
     async addBonus({ url }: any) {
       const tokenInfo = this.localStore.getToken()
