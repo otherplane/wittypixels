@@ -10,8 +10,8 @@
           <GameOverCountdown />
           <BonusCountdown v-if="player.bonus" />
           <GameInfo>
-            <p>@{{ player.username }}</p></GameInfo
-          >
+            <p>{{ player.score }} Wpx</p>
+          </GameInfo>
         </div>
       </div>
       <MintInformation />

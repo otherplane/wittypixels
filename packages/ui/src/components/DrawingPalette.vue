@@ -31,12 +31,6 @@
           :points="color.points"
         />
       </div>
-      <div class="total">
-        <p>Wpx</p>
-        <div class="total-points">
-          <p class="text">{{ score }}x</p>
-        </div>
-      </div>
     </div>
     <p v-if="!gameOver" class="light-text copy">
       Remember: you can get more paints by getting your pendant scanned by other

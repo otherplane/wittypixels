@@ -8,7 +8,7 @@
           class="field"
           type="text"
           label="name"
-          :value="player.username"
+          :value="player.name"
           @change="setValue"
         />
         <SectionHeader title="Instructions" />

@@ -19,6 +19,7 @@ export const useStore = defineStore('player', {
       id: null,
       creationIndex: null as number | null,
       username: '',
+      name: '',
       score: null,
       color: 7 as number,
       bonus: null as number | null,
@@ -85,7 +86,6 @@ export const useStore = defineStore('player', {
           color: this.selectedColor ? this.selectedColor : this.pixelToPaint.c,
           token: tokenInfo.token,
         }
-        console.log('pixel params', params)
         const request = await this.api.drawPixel(params)
         if (request.error) {
           this.setError(ErrorKey.paint, request.error)
@@ -149,7 +149,7 @@ export const useStore = defineStore('player', {
       if (request.error) {
         this.setError(ErrorKey.updateName, request.error)
       } else {
-        this.username = request.player.username
+        this.name = request.player.name
         this.clearError(ErrorKey.updateName)
         this.bonus = request.bonusEndsAt
       }
@@ -237,10 +237,11 @@ export const useStore = defineStore('player', {
         this.setError(ErrorKey.info, request.error)
       } else {
         this.clearError(ErrorKey.info)
-        const { key, username, score, color, palette, creationIndex } =
+        const { key, username, score, color, palette, creationIndex, name } =
           request.player
         this.id = key
         this.username = username
+        this.name = name
         this.score = score
         this.palettePoints = palette
         this.color = color
