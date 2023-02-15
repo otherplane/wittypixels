@@ -85,9 +85,9 @@ export const useStore = defineStore('player', {
           x: this.pixelToPaint.x,
           y: this.pixelToPaint.y,
           color: this.selectedColor ? this.selectedColor : this.pixelToPaint.c,
+          shade: this.selectedShade ? this.selectedShade : 3,
           token: tokenInfo.token,
         }
-        console.log('pixel params', params)
         const request = await this.api.drawPixel(params)
         if (request.error) {
           this.setError(ErrorKey.paint, request.error)

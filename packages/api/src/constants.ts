@@ -124,6 +124,7 @@ export const ERC721_TOKEN_ADDRESS = process.env.ERC721_TOKEN_ADDRESS
 export const ERC721_TOKEN_ID = process.env.ERC721_TOKEN_ID
   ? parseInt(process.env.ERC721_TOKEN_ID)
   : 1
+export const WHITE_RGBA: [number, number, number] = [255, 255, 255]
 
 export default {
   PLAYER_KEY_LENGTH_BYTES,
@@ -140,4 +141,5 @@ export default {
   CANVAS_MAX_X,
   CANVAS_MAX_Y,
   CANVAS_CACHE_MAX_SIZE,
+  WHITE_RGBA,
 }

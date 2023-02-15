@@ -174,22 +174,16 @@ export const PURPLE_SHADES: ColorShade = {
   5: [37, 0, 109],
   6: [12, 0, 36],
 }
-export const WHITE_SHADES = {
-  3: [255, 255, 255],
-}
-export const BLACK_SHADES = {
-  3: [0, 0, 0],
-}
+export const WHITE_RGBA = [255, 255, 255]
+export const BLACK_RGBA = [0, 0, 0]
 
 export const COLORS: ColorMap = {
-  0: WHITE_SHADES,
-  1: BLACK_SHADES,
-  2: ORANGE_SHADES,
-  3: YELLOW_SHADES,
-  4: GREEN_SHADES,
-  5: BLUE_SHADES,
-  6: RED_SHADES,
-  7: PURPLE_SHADES,
+  0: RED_SHADES,
+  1: ORANGE_SHADES,
+  2: YELLOW_SHADES,
+  3: GREEN_SHADES,
+  4: BLUE_SHADES,
+  5: PURPLE_SHADES,
 }
 
 export const TOKEN_STATUS: Record<number, TokenStatus> = {

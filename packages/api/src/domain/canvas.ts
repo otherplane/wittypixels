@@ -4,42 +4,90 @@ import {
   CANVAS_MAX_Y,
   CANVAS_SECTOR_SIZE,
   INTERACTION_DURATION_MILLIS,
+  WHITE_RGBA,
 } from '../constants'
 import {
-  Color,
   CanvasVTO,
   DbDrawVTO,
   DbSectorVTO,
   DbPixelVTO,
   PixelInfo,
+  Shade,
+  ColorMap,
+  ColorShade,
 } from '../types'
 import { Draw } from './draw'
 
-const colorToRGB: Record<number, [number, number, number, 255]> = {
-  // white,
-  0: [255, 255, 255, 255],
-  // black,
-  1: [0, 0, 0, 255],
-  // orange,
-  2: [255, 87, 48, 255],
-  // yellow
-  3: [245, 234, 10, 255],
-  // green,
-  4: [86, 197, 83, 255],
-  // blue,
-  5: [92, 150, 255, 255],
-  // red,
-  6: [234, 3, 58, 255],
-  // purple,
-  7: [141, 82, 255, 255],
-  // light grey
-  // 8: [138, 138, 138, 255]
+export const RED_SHADES: ColorShade = {
+  0: [255, 219, 227],
+  1: [254, 147, 172],
+  2: [253, 75, 117],
+  3: [234, 3, 58],
+  4: [180, 2, 45],
+  5: [108, 1, 27],
+  6: [36, 0, 9],
+}
+export const ORANGE_SHADES: ColorShade = {
+  0: [255, 225, 219],
+  1: [255, 166, 146],
+  2: [255, 107, 73],
+  3: [255, 87, 48],
+  4: [182, 34, 0],
+  5: [109, 21, 0],
+  6: [36, 7, 0],
+}
+export const YELLOW_SHADES: ColorShade = {
+  0: [254, 252, 220],
+  1: [251, 246, 150],
+  2: [248, 240, 80],
+  3: [245, 234, 10],
+  4: [175, 167, 7],
+  5: [105, 100, 4],
+  6: [35, 33, 1],
+}
+export const GREEN_SHADES: ColorShade = {
+  0: [228, 246, 228],
+  1: [175, 227, 173],
+  2: [121, 209, 119],
+  3: [86, 197, 83],
+  4: [48, 136, 46],
+  5: [29, 82, 28],
+  6: [10, 27, 9],
+}
+export const BLUE_SHADES: ColorShade = {
+  0: [219, 232, 255],
+  1: [146, 185, 255],
+  2: [73, 138, 255],
+  3: [92, 150, 255],
+  4: [0, 65, 182],
+  5: [0, 39, 109],
+  6: [0, 13, 36],
+}
+export const PURPLE_SHADES: ColorShade = {
+  0: [231, 219, 255],
+  1: [183, 146, 255],
+  2: [135, 73, 255],
+  3: [141, 82, 255],
+  4: [62, 0, 182],
+  5: [37, 0, 109],
+  6: [12, 0, 36],
+}
+
+const colorToRGB: ColorMap = {
+  0: RED_SHADES,
+  1: ORANGE_SHADES,
+  2: YELLOW_SHADES,
+  3: GREEN_SHADES,
+  4: BLUE_SHADES,
+  5: PURPLE_SHADES,
 }
 
 type Pixel = {
   // we are using only the first letter to reduce the response size
+  // shade
+  s: number
   // color
-  c: number
+  c: number | null
   // owner
   o: string
   // coord x
@@ -62,9 +110,10 @@ export class Canvas {
           return {
             x: xCoord,
             y: yCoord,
-            c: Color.White,
+            c: null,
             o: '',
             t: 0,
+            s: Shade.Shade3,
           }
         })
       })
@@ -72,15 +121,18 @@ export class Canvas {
   }
 
   private fromDbSectorVTOs(sectors: Array<DbSectorVTO>): Array<Array<Pixel>> {
-    const pixels = new Array(CANVAS_MAX_X).fill(null).map(x => {
-      return new Array(CANVAS_MAX_Y).fill(null).map(y => ({
-        o: '',
-        c: Color.White,
-        x,
-        y,
-        t: 0,
-      }))
-    })
+    const pixels: Array<Array<Pixel>> = new Array(CANVAS_MAX_X)
+      .fill(null)
+      .map(x => {
+        return new Array(CANVAS_MAX_Y).fill(null).map(y => ({
+          o: '',
+          c: null,
+          x,
+          y,
+          t: 0,
+          s: Shade.Shade3,
+        }))
+      })
 
     sectors.forEach((sector: DbSectorVTO) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -102,13 +154,13 @@ export class Canvas {
   draw(draw: Omit<DbDrawVTO, 'ends' | 'timestamp'>): Draw {
     const now = Date.now()
 
-    const { x, y, owner, color } = draw
-    const previousOwner = this.pixels[x][y].o
+    const { x, y, owner, color, shade } = draw
 
     this.pixels[x][y] = {
       ...this.pixels[x][y],
       t: now,
       c: color,
+      s: shade,
       o: owner,
     }
 
@@ -118,6 +170,7 @@ export class Canvas {
       x,
       y,
       owner,
+      shade,
       timestamp: now,
       stolenTo: previousOwner,
     })
@@ -197,11 +250,11 @@ export class Canvas {
       for (let x = 0; x < width; x++) {
         const pos = (y * width + x) * 4 // position in buffer based on x and y
         const pixel = this.pixels[x][y]
-        const color = colorToRGB[pixel.c]
+        const color = pixel.c ? colorToRGB[pixel.c][pixel.s] : WHITE_RGBA
         buffer[pos] = color[0] // some R value [0, 255]
         buffer[pos + 1] = color[1] // some G value
         buffer[pos + 2] = color[2] // some B value
-        buffer[pos + 3] = color[3] // set alpha channel
+        buffer[pos + 3] = 255 // set alpha channel
       }
     }
 

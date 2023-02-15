@@ -125,10 +125,10 @@ export class ApiService {
     })
   }
 
-  drawPixel({ x, y, color, token }) {
+  drawPixel({ x, y, color, shade, token }) {
     return this._post({
       url: `${this.baseUrl}/canvas`,
-      data: { x, y, color },
+      data: { x, y, color, shade },
       params: { headers: { authorization: token } },
     })
   }

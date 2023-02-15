@@ -124,7 +124,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
           )
       }
 
-      const { color, x, y } = request.body
+      const { color, shade, x, y } = request.body
 
       const lastPixelDraw = await drawModel.getLastByCoord({ x, y })
 
@@ -157,6 +157,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
         // timestamp: currentTimestamp,
         x,
         y,
+        shade,
         color,
         stolenTo: pixel.owner,
       })
@@ -170,6 +171,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
         c: color,
         o: player.username,
         t: Date.now(),
+        s: shade,
       }
       canvasModel.draw(dbSectorInfo, newPixel)
 

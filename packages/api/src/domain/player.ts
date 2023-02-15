@@ -98,13 +98,11 @@ export class Player {
 
   static getEmptyPalette(): Palette {
     return {
-      [Color.Black]: 0,
       [Color.Blue]: 5,
       [Color.Green]: 5,
       [Color.Orange]: 5,
       [Color.Purple]: 5,
       [Color.Red]: 5,
-      [Color.White]: 0,
       [Color.Yellow]: 5,
     }
   }

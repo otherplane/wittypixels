@@ -16,25 +16,31 @@ const Palette = Type.Object({
   3: Type.Integer(),
   4: Type.Integer(),
   5: Type.Integer(),
-  6: Type.Integer(),
-  7: Type.Integer(),
 })
 
 export enum Color {
-  White = 0,
-  Black = 1,
   // metaland
-  Red = 2,
+  Red = 0,
   // camp build
-  Orange = 3,
+  Orange = 1,
   // dao town
-  Yellow = 4,
+  Yellow = 2,
   // devtopia
-  Green = 5,
+  Green = 3,
   // regenlandia
-  Blue = 6,
+  Blue = 4,
   // defi district
-  Purple = 7,
+  Purple = 5,
+}
+
+export enum Shade {
+  Shade0 = 0,
+  Shade1 = 1,
+  Shade2 = 2,
+  Shade3 = 3,
+  Shade4 = 4,
+  Shade5 = 5,
+  Shade6 = 6,
 }
 
 export const PlayerVTO = Type.Object({
@@ -71,6 +77,7 @@ export const DbDrawVTO = Type.Object({
   y: Type.Number(),
   color: Type.Enum(Color),
   stolenTo: Type.String(),
+  shade: Type.Enum(Shade),
 })
 
 export type DbDrawVTO = Static<typeof DbDrawVTO>
@@ -90,6 +97,8 @@ export const DrawVTO = Type.Object({
   c: Type.Enum(Color),
   // stolenTo
   st: Type.String(),
+  // shade
+  s: Type.Enum(Shade),
 })
 export type DrawVTO = Static<typeof DrawVTO>
 
@@ -133,7 +142,8 @@ export type ExtendedPlayerVTO = Static<typeof ExtendedPlayerVTO>
 export const DbPixelVTO = Type.Object({
   x: Type.Number(),
   y: Type.Number(),
-  c: Type.Enum(Color),
+  c: Nullable(Type.Enum(Color)),
+  s: Type.Enum(Shade),
   o: Type.String(),
   t: Type.Number(),
 })
@@ -263,12 +273,16 @@ export const InteractionHistoryParams = Type.Object({
   offset: Type.Optional(Type.Integer()),
 })
 
+export type ColorShade = Record<number, [number, number, number]>
+export type ColorMap = Record<number, ColorShade>
+
 export type InteractionHistoryParams = Static<typeof InteractionHistoryParams>
 
 export const DrawParams = Type.Object({
   x: Type.Integer(),
   y: Type.Integer(),
   color: Type.Enum(Color),
+  shade: Type.Enum(Shade),
 })
 
 export type DrawParams = Static<typeof DrawParams>
@@ -330,7 +344,7 @@ export type GetPixelInfo = Static<typeof GetPixelInfo>
 export const PixelInfo = Type.Object({
   x: Type.Number(),
   y: Type.Number(),
-  color: Type.Enum(Color),
+  color: Nullable(Type.Enum(Color)),
   timestamp: Type.Number(),
   owner: Type.String(),
 })

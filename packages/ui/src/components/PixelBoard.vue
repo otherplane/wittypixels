@@ -188,9 +188,9 @@ export default {
           store.selectedPixelInfo?.color
         ).value
       } else {
-        pixelSelection.attrs.fill = getColor(0, 3).value
+        pixelSelection.attrs.fill = 'rgba(255,255,255,255)'
       }
-      pixelSelection.attrs.stroke = getColor(1, 3).value
+      pixelSelection.attrs.stroke = 'rgba(0,0,0,355)'
       layer.batchDraw()
     }
     function setSelectedPixelToDefault() {

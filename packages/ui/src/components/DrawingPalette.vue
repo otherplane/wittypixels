@@ -3,7 +3,12 @@
     <div v-if="selectedPixelInfo" class="selected-pixel" @click="closePanel">
       <div
         class="pixel-color"
-        :style="{ background: getColor(selectedPixelInfo?.color, 3).value }"
+        :style="{
+          background: getColor(
+            selectedPixelInfo?.color,
+            selectedPixelInfo?.shade
+          ).value,
+        }"
       ></div>
       <div class="pixel-info">
         <div class="info-top">
@@ -75,16 +80,12 @@ export default {
 
     const palette = computed(() => store.palettePoints)
     const colors = computed(() => {
-      return Object.keys(COLORS)
-        .map(key => {
-          if (key !== '0' && key !== '1') {
-            return {
-              points: palette.value[key] ?? 0,
-              color: Number(key),
-            }
-          }
-        })
-        .filter(value => !!value)
+      return Object.keys(COLORS).map(key => {
+        return {
+          points: palette.value[key] ?? 0,
+          color: Number(key),
+        }
+      })
     })
     const selectedPixelInfo = computed(() => {
       return store.selectedPixelInfo
@@ -198,7 +199,7 @@ export default {
   border-radius: 24px;
   align-items: center;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, 48px);
+  grid-template-columns: repeat(auto-fill, 46px);
   grid-gap: 0;
   .shade-box {
     height: 24px;

@@ -7,8 +7,9 @@ export class Draw {
   timestamp: number
   x: number
   y: number
-  color: number
+  color: number | null
   stolenTo: string
+  shade: number
 
   constructor(vto: DbDrawVTO) {
     this.ends = vto.ends
@@ -18,6 +19,7 @@ export class Draw {
     this.y = vto.y
     this.color = vto.color
     this.stolenTo = vto.stolenTo
+    this.shade = vto.shade
   }
 
   toDbVTO(): DbDrawVTO {
@@ -29,6 +31,7 @@ export class Draw {
       y: this.y,
       color: this.color,
       stolenTo: this.stolenTo,
+      shade: this.shade,
     }
   }
 
@@ -41,6 +44,7 @@ export class Draw {
       y: this.y,
       c: this.color,
       st: this.stolenTo,
+      s: this.shade,
     }
   }
 
