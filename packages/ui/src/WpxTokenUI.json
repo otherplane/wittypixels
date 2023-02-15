@@ -10,7 +10,7 @@
     "name": "getTokenStatus",
     "outputs": [
       {
-        "internalType": "enum WittyPixels.ERC721TokenStatus",
+        "internalType": "enum WittyPixelsLib.ERC721TokenStatus",
         "name": "",
         "type": "uint8"
       }

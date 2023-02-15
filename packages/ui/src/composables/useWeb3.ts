@@ -214,7 +214,7 @@ export function useWeb3() {
         .call()
       if (
         result == TokenStatus.Fractionalized ||
-        result == TokenStatus.SoldOut
+        result == TokenStatus.Acquired
       ) {
         const erc20ContractAddress = await getTokenVaultAddress()
         if (!erc20Contract) {
@@ -234,7 +234,7 @@ export function useWeb3() {
         if (erc20PlayerInfo?.address === ZERO_ADDRESS) {
           gameStore.setGameOverStatus(GameOverStatus.AllowRedeem)
         } else {
-          if (erc20Info?.status == ERC20Status.SoldOut) {
+          if (erc20Info?.status == ERC20Status.Acquired) {
             gameStore.setGameOverStatus(GameOverStatus.AllowWithdraw)
           } else if (erc20Info?.status == ERC20Status.Auctioning) {
             gameStore.setGameOverStatus(GameOverStatus.AllowSale)
@@ -330,7 +330,7 @@ export function useWeb3() {
     const fromTxCount = await web3.eth.getTransactionCount(from)
     try {
       return await erc20Contract.methods
-        .afmijnen(gameStore.provider.address)
+        .acquire(gameStore.provider.address)
         .send({ from, gasPrice })
         .on('error', (error: any) => {
           gameStore.setError(

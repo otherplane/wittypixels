@@ -146,7 +146,7 @@ export const TOKEN_STATUS: Record<number, TokenStatus> = {
   1: TokenStatus.Launching,
   2: TokenStatus.Minting,
   3: TokenStatus.Fractionalized,
-  4: TokenStatus.SoldOut,
+  4: TokenStatus.Acquired,
 }
 export const TX_ACTION_COPY: Record<TxType, string> = {
   [TxType.Redeem]: 'Redeem ownership',
@@ -159,7 +159,6 @@ export const TX_ACTION_PROGRESS_COPY: Record<TxType, string> = {
   [TxType.Withdraw]: 'Withdrawing...',
 }
 export const TIMEZONE = 'America/Denver'
-export const PIXEL_SIZE = 16
 export const CANVAS_WIDTH = import.meta.env.CANVAS_WIDTH
   ? parseInt(import.meta.env.VITE_CANVAS_WIDTH)
   : 250

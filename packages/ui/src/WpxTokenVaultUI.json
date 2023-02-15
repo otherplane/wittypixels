@@ -34,40 +34,13 @@
         "type": "address"
       },
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "deltaPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "deltaSeconds",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reservePrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startingPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startingTs",
-            "type": "uint256"
-          }
-        ],
         "indexed": false,
-        "internalType": "struct IWittyPixelsTokenVaultAuctionDutch.Settings",
+        "internalType": "bytes",
         "name": "settings",
-        "type": "tuple"
+        "type": "bytes"
       }
     ],
-    "name": "SettingsChanged",
+    "name": "AuctionSettings",
     "type": "event"
   },
   {
@@ -86,7 +59,7 @@
         "type": "uint256"
       }
     ],
-    "name": "SoldOut",
+    "name": "Acquired",
     "type": "event"
   },
   {
@@ -120,13 +93,13 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "member",
+        "name": "from",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "dividend",
+        "name": "value",
         "type": "uint256"
       }
     ],
@@ -135,7 +108,7 @@
   },
   {
     "inputs": [],
-    "name": "afmijnen",
+    "name": "acquire",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -194,7 +167,7 @@
   },
   {
     "inputs": [],
-    "name": "price",
+    "name": "getPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -220,39 +193,12 @@
   },
   {
     "inputs": [],
-    "name": "settings",
+    "name": "getAuctionSettings",
     "outputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "deltaPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "deltaSeconds",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reservePrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startingPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startingTs",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IWittyPixelsTokenVaultAuctionDutch.Settings",
+        "internalType": "bytes",
         "name": "",
-        "type": "tuple"
+        "type": "bytes"
       }
     ],
     "stateMutability": "view",
@@ -260,7 +206,7 @@
   },
   {
     "inputs": [],
-    "name": "soldOut",
+    "name": "acquired",
     "outputs": [
       {
         "internalType": "bool",
@@ -329,6 +275,11 @@
         "internalType": "address[]",
         "name": "",
         "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",

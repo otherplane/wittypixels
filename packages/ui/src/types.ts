@@ -29,7 +29,7 @@ export enum ERC20Status {
   Awaiting = 'Awaiting',
   Randomizing = 'Randomizing',
   Auctioning = 'Auctioning',
-  SoldOut = 'SoldOut',
+  Acquired = 'Acquired',
 }
 export type ERC20Stats = {
   redeemedPixels: number
@@ -160,7 +160,7 @@ export enum TokenStatus {
   Launching = 'launching',
   Minting = 'minting',
   Fractionalized = 'fractionalized',
-  SoldOut = 'soldOut',
+  Acquired = 'Acquired',
 }
 export enum ErrorKey {
   preview = 'preview',
