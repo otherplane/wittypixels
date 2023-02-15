@@ -103,6 +103,7 @@ export class Canvas {
     const now = Date.now()
 
     const { x, y, owner, color } = draw
+    const previousOwner = this.pixels[x][y].o
 
     this.pixels[x][y] = {
       ...this.pixels[x][y],
@@ -118,6 +119,7 @@ export class Canvas {
       y,
       owner,
       timestamp: now,
+      stolenTo: previousOwner,
     })
   }
 

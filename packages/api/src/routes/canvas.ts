@@ -150,6 +150,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
           )
       }
 
+      const pixel = canvas.getPixel(x, y)
       const draw: Draw = fastify.canvas.draw({
         // ends: currentTimestamp + INTERACTION_DURATION_MILLIS,
         owner: player.username,
@@ -157,19 +158,20 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
         x,
         y,
         color,
+        stolenTo: pixel.owner,
       })
       // Create and return `draw` object
       await drawModel.create(draw.toDbVTO())
 
       const dbSectorInfo = draw.toDbSectorInfo()
-      const pixel = {
+      const newPixel = {
         x,
         y,
         c: color,
         o: player.username,
         t: Date.now(),
       }
-      canvasModel.draw(dbSectorInfo, pixel)
+      canvasModel.draw(dbSectorInfo, newPixel)
 
       await playerModel.reduceColor(player.username, request.body.color)
       await playerModel.increaseScore(player.username)
