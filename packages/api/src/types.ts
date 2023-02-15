@@ -201,22 +201,13 @@ export const SignRedemptionOutput = Type.Object({
 })
 export type SignRedemptionOutput = Static<typeof SignRedemptionOutput>
 
-export const EggMetadata = Type.Object({
-  // TODO: verify that it does not break anything with OpenSea
-  token_id: Type.Number(),
-  name: Type.String(),
-  description: Type.String(),
-  image_data: Type.String(),
-  external_url: Type.String(),
-  attributes: Type.Array(
-    Type.Object({
-      trait_type: Type.String(),
-      value: Type.Union([Type.String(), Type.Number()]),
-    })
-  ),
-})
+export const CanvasMetadata = Type.String()
+export type CanvasMetadata = Static<typeof CanvasMetadata>
 
-export type EggMetadata = Static<typeof EggMetadata>
+export const MetadataParams = Type.Object({
+  token: Type.Integer(),
+})
+export type MetadataParams = Static<typeof MetadataParams>
 
 export const GetByNumericKeyParams = Type.Object({
   key: Type.Number(),

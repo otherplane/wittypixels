@@ -1,61 +1,48 @@
-import { FastifyPluginAsync } from 'fastify'
-//import Web3 from 'web3'
+import { FastifyPluginAsync, FastifyRequest } from 'fastify'
+import Web3 from 'web3'
+import { WEB3_PROVIDER, ERC721_TOKEN_ADDRESS } from '../constants'
 
 //import { WEB3_PROVIDER, WITMON_ERC721_ADDRESS } from '../constants'
 //import { MetadataRepository } from '../repositories/metadata'
-import { EggMetadata, GetByNumericKeyParams } from '../types'
+import { CanvasMetadata, MetadataParams } from '../types'
 
-//const WITMON_ERCC721 = require('../assets/WitmonERC721.json')
+// More info aboout why we have to use required instead of import:
+// https://github.com/web3/web3.js/issues/3310#issuecomment-701590114
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const WITTY_PIXELS_ERC721_ABI = require('../assets/WpxTokenABI.json')
 
 const metadata: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
-  //const metadataRepository = new MetadataRepository(fastify.mongo.db)
 
-  fastify.get<{ Params: GetByNumericKeyParams; Reply: EggMetadata | Error }>(
-    '/metadata/:key',
+  fastify.get<{ Params: MetadataParams; Reply: CanvasMetadata | Error }>(
+    '/metadata/:token',
     {
       schema: {
-        params: GetByNumericKeyParams,
+        params: MetadataParams,
         response: {
-          200: EggMetadata,
+          200: CanvasMetadata,
         },
       },
-      handler: async () =>
-        // _request: FastifyRequest<{ Params: { key: number } }>,
-        // _reply
-        {
-          /*
-        const { key } = request.params
-        // Check if metadata already exists in DB
-        const eggMetadataFromDb = await metadataRepository.get(key)
-        if (eggMetadataFromDb) {
-          return reply.status(200).send(eggMetadataFromDb)
-        }
-        // Fetch metadata from contract using Web3
-        const web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER))
-        const { abi } = WITMON_ERCC721
-        const contract = new web3.eth.Contract(abi, WITMON_ERC721_ADDRESS)
+      handler: async (
+        request: FastifyRequest<{ Params: MetadataParams }>,
+        reply
+      ) => {
+        const { token } = request.params
         let callResult
+        const web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER))
+        const contract = new web3.eth.Contract(
+          WITTY_PIXELS_ERC721_ABI,
+          ERC721_TOKEN_ADDRESS
+        )
+
         try {
-          callResult = await contract.methods.metadata(key).call()
+          callResult = await contract.methods.metadata(token).call()
         } catch (err) {
           console.error('[Server] Metadata error:', err)
-          return reply
-            .status(404)
-            .send(
-              new Error(`Metadata for token id ${key} could not be fetched`)
-            )
+          return reply.status(404).send(new Error(`Metadata`))
         }
-        // Parse contract call result
-        const metadataFromContract: EggMetadata = {
-          ...JSON.parse(callResult),
-          token_id: key,
-        }
-        // Save metadata into DB
-        await metadataRepository.create(metadataFromContract)
-        return reply.status(200).send(metadataFromContract)
-        */
-        },
+        return reply.status(200).send(callResult)
+      },
     }
   )
 }
