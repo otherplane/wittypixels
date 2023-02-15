@@ -291,7 +291,7 @@ export class Canvas {
     return sha256(imageBytes)
   }
 
-  getPixel(x: number, y: number): PixelInfo {
+  getPixel(x: number, y: number): Omit<PixelInfo, 'ownerName'> {
     const pixel = this.pixels[x][y]
 
     return {

@@ -13,7 +13,7 @@ import {
 const players: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { playerModel } = fastify
+  const { playerModel, playerCache } = fastify
 
   fastify.get<{
     Params: GetByStringKeyParams
@@ -129,6 +129,7 @@ const players: FastifyPluginAsync = async (fastify): Promise<void> => {
       }
 
       playerModel.updateName(request.params.key, request.body.name)
+      playerCache.add({ name: request.body.name, username: player.username })
 
       const extendedPlayer: ExtendedPlayerVTO =
         await player.toExtendedPlayerVTO({

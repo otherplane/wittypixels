@@ -22,7 +22,14 @@ import { msToSeconds } from '../utils/msToSeconds'
 const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { canvasModel, drawModel, playerModel, canvasCache, canvas } = fastify
+  const {
+    canvasModel,
+    drawModel,
+    playerModel,
+    canvasCache,
+    canvas,
+    playerCache,
+  } = fastify
 
   fastify.get<{
     Querystring: GetCanvasParams
@@ -63,8 +70,10 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
         return reply.status(403).send(new Error(`Forbidden: invalid token`))
       }
       const { x, y } = request.query
-
-      return reply.status(200).send(canvas.getPixel(x, y))
+      const pixel = canvas.getPixel(x, y)
+      return reply
+        .status(200)
+        .send({ ...pixel, ownerName: playerCache.getName(pixel.owner) })
     },
   })
 

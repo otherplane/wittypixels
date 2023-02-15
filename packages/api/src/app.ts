@@ -12,6 +12,7 @@ import { CanvasModel } from './models/canvas'
 import { DrawModel } from './models/draw'
 import { Canvas } from './domain/canvas'
 import { CanvasCache } from './services/canvasCache'
+import { PlayerCache } from './services/playerCache'
 import { Stats } from './domain/stats'
 import { SignRedemptionModel } from './models/signRedemption'
 
@@ -24,6 +25,7 @@ declare module 'fastify' {
     signRedemptionModel: SignRedemptionModel
     canvas: Canvas
     canvasCache: CanvasCache
+    playerCache: PlayerCache
     stats: Stats
   }
 }
@@ -122,6 +124,23 @@ const app: FastifyPluginAsync<AppOptions> = async (
   }
 
   fastify.register(fp(initializeCanvas))
+
+  // Initialize Players cache
+  const initializePlayerCache: FastifyPluginCallback = async (
+    fastify,
+    options,
+    next
+  ) => {
+    if (!fastify.mongo.db) throw Error('mongo db not found')
+    const players = await fastify.playerModel.getAll()
+    // Initializing canvas cache
+    const playerCache = new PlayerCache(players)
+
+    fastify.decorate('playerCache', playerCache)
+    next()
+  }
+
+  fastify.register(fp(initializePlayerCache))
 
   // Initialize Stats
   const initializeStats: FastifyPluginCallback = async (

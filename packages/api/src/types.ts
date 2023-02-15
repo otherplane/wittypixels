@@ -344,6 +344,7 @@ export const PixelInfo = Type.Object({
   shade: Type.Enum(Shade),
   timestamp: Type.Number(),
   owner: Type.String(),
+  ownerName: Type.String(),
 })
 export type PixelInfo = Static<typeof PixelInfo>
 
