@@ -17,6 +17,7 @@ import {
   PixelInfo,
 } from '../types'
 import { isTimeToMint } from '../utils'
+import { msToSeconds } from '../utils/msToSeconds'
 
 const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
@@ -119,7 +120,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
           .status(409)
           .send(
             new Error(
-              `Players can only draw once every ${INTERACTION_DURATION_MILLIS}ms`
+              `Players can only draw once every ${msToSeconds(INTERACTION_DURATION_MILLIS)}s`
             )
           )
       }
@@ -136,7 +137,7 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
           .status(409)
           .send(
             new Error(
-              `A pixel can only be drawn once every ${PIXEL_LOCKED_DURATION_MS}ms`
+              `A pixel can only be drawn once every ${msToSeconds(PIXEL_LOCKED_DURATION_MS)}s`
             )
           )
       }
