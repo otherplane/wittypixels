@@ -11,6 +11,7 @@ describe('draw.ts', () => {
       x: 70,
       y: 70,
       stolenTo: '',
+      shade: 3,
     })
 
     expect(canvas.toDbVTO()).toStrictEqual({
@@ -21,6 +22,7 @@ describe('draw.ts', () => {
       x: 70,
       y: 70,
       stolenTo: '',
+      shade: 3,
     })
   })
 
@@ -33,6 +35,7 @@ describe('draw.ts', () => {
       x: 70,
       y: 70,
       stolenTo: '',
+      shade: 3,
     })
 
     expect(canvas.toVTO()).toStrictEqual({
@@ -42,6 +45,7 @@ describe('draw.ts', () => {
       x: 70,
       y: 70,
       st: '',
+      s: 3,
     })
   })
 
@@ -54,6 +58,7 @@ describe('draw.ts', () => {
       x: 0,
       y: 0,
       stolenTo: '',
+      shade: 3,
     })
 
     expect(canvas.toDbSectorInfo()).toStrictEqual({ sector: '0-0', x: 0, y: 0 })
@@ -68,6 +73,7 @@ describe('draw.ts', () => {
       x: CANVAS_SECTOR_SIZE + 1,
       y: CANVAS_SECTOR_SIZE + 1,
       stolenTo: '',
+      shade: 3,
     })
 
     expect(canvas.toDbSectorInfo()).toStrictEqual({ sector: '1-1', x: 1, y: 1 })

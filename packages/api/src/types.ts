@@ -75,7 +75,7 @@ export const DbDrawVTO = Type.Object({
   timestamp: Type.Number(),
   x: Type.Number(),
   y: Type.Number(),
-  color: Type.Enum(Color),
+  color: Nullable(Type.Enum(Color)),
   stolenTo: Type.String(),
   shade: Type.Enum(Shade),
 })
@@ -94,7 +94,7 @@ export const DrawVTO = Type.Object({
   // coord y
   y: Type.Number(),
   // color
-  c: Type.Enum(Color),
+  c: Nullable(Type.Enum(Color)),
   // stolenTo
   st: Type.String(),
   // shade

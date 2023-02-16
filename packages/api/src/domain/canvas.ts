@@ -4,7 +4,7 @@ import {
   CANVAS_MAX_Y,
   CANVAS_SECTOR_SIZE,
   INTERACTION_DURATION_MILLIS,
-  WHITE_RGBA,
+  DEFAULT_RGBA,
 } from '../constants'
 import {
   CanvasVTO,
@@ -155,6 +155,7 @@ export class Canvas {
     const now = Date.now()
 
     const { x, y, owner, color, shade } = draw
+    const previousOwner = this.pixels[x][y].o
 
     this.pixels[x][y] = {
       ...this.pixels[x][y],
@@ -250,7 +251,7 @@ export class Canvas {
       for (let x = 0; x < width; x++) {
         const pos = (y * width + x) * 4 // position in buffer based on x and y
         const pixel = this.pixels[x][y]
-        const color = pixel.c ? colorToRGB[pixel.c][pixel.s] : WHITE_RGBA
+        const color = pixel.c ? colorToRGB[pixel.c][pixel.s] : DEFAULT_RGBA
         buffer[pos] = color[0] // some R value [0, 255]
         buffer[pos + 1] = color[1] // some G value
         buffer[pos + 2] = color[2] // some B value
