@@ -4,7 +4,7 @@ import {
   CANVAS_MAX_Y,
   CANVAS_SECTOR_SIZE,
   INTERACTION_DURATION_MILLIS,
-  DEFAULT_RGBA,
+  DEFAULT_RGB,
 } from '../constants'
 import {
   CanvasVTO,
@@ -251,7 +251,7 @@ export class Canvas {
       for (let x = 0; x < width; x++) {
         const pos = (y * width + x) * 4 // position in buffer based on x and y
         const pixel = this.pixels[x][y]
-        const color = pixel.c ? colorToRGB[pixel.c][pixel.s] : DEFAULT_RGBA
+        const color = pixel.c ? colorToRGB[pixel.c][pixel.s] : DEFAULT_RGB
         buffer[pos] = color[0] // some R value [0, 255]
         buffer[pos + 1] = color[1] // some G value
         buffer[pos + 2] = color[2] // some B value
