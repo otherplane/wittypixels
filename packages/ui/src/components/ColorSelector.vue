@@ -6,7 +6,7 @@
     @click="selectColor"
   >
     <p class="text" :class="{ [color]: color, ['disabled']: !points }">
-      {{ points ? `${points}x` : '' }}
+      {{ points ? `${points}x` : '0x' }}
     </p>
   </div>
 </template>
@@ -59,9 +59,9 @@ export default {
   .black {
     color: $white;
   }
-  &.disabled {
-    opacity: 0.5;
-  }
+  // &.disabled {
+  //   opacity: 0.5;
+  // }
 }
 .selected {
   border: 1.5px solid $black;
