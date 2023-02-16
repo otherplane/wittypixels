@@ -88,14 +88,14 @@ export default {
   top: 0;
   bottom: 0;
   left: 0;
-  height: 100vh;
+  height: -webkit-fill-available;
   width: 100vw;
   z-index: 8;
   div {
-    height: 100vh;
+    height: -webkit-fill-available;
     .overlay-element {
       display: none;
-      height: 100vh;
+      height: -webkit-fill-available;
     }
   }
 }

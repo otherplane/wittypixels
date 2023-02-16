@@ -45,7 +45,7 @@ export default {
 
 <style lang="scss" scoped>
 .cover {
-  height: 90vh;
+  height: 100%;
   width: 100%;
   overflow: hidden;
   .title {

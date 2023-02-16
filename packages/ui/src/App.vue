@@ -31,7 +31,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   display: grid;
   grid-template-rows: max-content 1fr;
-  height: 100vh;
+  height: -webkit-fill-available;
   overflow: hidden;
 }
 </style>

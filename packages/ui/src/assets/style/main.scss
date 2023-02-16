@@ -53,11 +53,11 @@ h3 {
 
 video {
   width: 100% !important;
-  height: 100vh !important;;
+  height: -webkit-fill-available !important;
   object-fit: cover !important;;
 }
 .overlay-element {
-  height: 100vh !important;
+  height: -webkit-fill-available !important;
 }
 
 .modal-bg-white {
