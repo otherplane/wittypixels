@@ -225,14 +225,13 @@ export default {
       e.evt.preventDefault()
       const touch1 = e.evt.touches[0]
       const touch2 = e.evt.touches[1]
-
       if (touch1 && touch2) {
+        const prevScale = stageNode.value.scaleX()
         // if the stage was under Konva's drag&drop
         // we need to stop it, and implement our own pan logic with two pointers
         if (stageNode.value.isDragging()) {
           stageNode.value.stopDrag()
         }
-
         const p1 = {
           x: touch1.clientX,
           y: touch1.clientY,
@@ -241,7 +240,6 @@ export default {
           x: touch2.clientX,
           y: touch2.clientY,
         }
-
         if (!lastCenter.value) {
           lastCenter.value = getCenter(p1, p2)
           return
@@ -253,32 +251,24 @@ export default {
         if (!lastDist.value) {
           lastDist.value = dist
         }
-
-        // local coordinates of center point
         const pointTo = {
-          x: (newCenter.x - stageNode.value.x()) / stageNode.value.scaleX(),
-          y: (newCenter.y - stageNode.value.y()) / stageNode.value.scaleX(),
+          x: (newCenter.x - stageNode.value.x()) / prevScale,
+          y: (newCenter.y - stageNode.value.y()) / prevScale,
         }
-
-        const scale = stage.value.scaleX() * (dist / lastDist.value)
-
+        const scale = prevScale * (dist / lastDist.value)
         stageNode.value.scaleX(scale)
         stageNode.value.scaleY(scale)
 
         // calculate new position of the stage
         const dx = newCenter.x - lastCenter.value.x
         const dy = newCenter.y - lastCenter.value.y
-
         const newPos = {
           x: newCenter.x - pointTo.x * scale + dx,
           y: newCenter.y - pointTo.y * scale + dy,
         }
-
         stageNode.value.position(newPos)
-
         lastDist.value = dist
         lastCenter.value = newCenter
-        stageNode.value.batchDraw()
       }
     }
     function touchend() {
