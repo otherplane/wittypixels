@@ -15,6 +15,7 @@ export type PixelDB = {
   x: number
   y: number
   c: number
+  s?: number
   o?: string
   t?: number
 }
@@ -22,6 +23,7 @@ export type SelectedPixel = {
   x: number
   y: number
   color: number
+  shade: number
   timestamp: number
   owner: string
 }

@@ -7,7 +7,6 @@ export function getColor(
   color: number | null = null,
   shade: number | null = null
 ) {
-  console.log('colorshade', color, shade)
   const store = useStore()
   const selectedShade = computed(() =>
     isNumber(shade) ? shade : store.selectedShade

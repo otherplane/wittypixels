@@ -24,6 +24,7 @@ import {
 } from '@/constants'
 import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue'
 import { useStore } from '@/stores/player'
+import { isNumber } from '@/utils'
 import { getColor } from '@/composables/getColor'
 import Konva from 'konva'
 import type { Coordinates } from '@/types'
@@ -98,7 +99,7 @@ export default {
       }
     })
     watch(selectedColor, value => {
-      if (value) {
+      if (isNumber(value)) {
         setSelectedPixelColor()
       } else {
         setSelectedPixelToDefault()
@@ -161,6 +162,7 @@ export default {
           x: x,
           y: y,
           c: store.selectedColor ?? 0,
+          s: store.selectedShade ?? 3,
         })
       }
     }
@@ -184,11 +186,12 @@ export default {
       gridGroup.on('mouseout', changeToDefaultCursor)
     }
     function setSelectedPixelColor() {
-      if (store.selectedColor) {
+      if (isNumber(store.selectedColor)) {
         pixelSelection.attrs.fill = getColor().value
       } else if (store.selectedPixelInfo?.owner) {
         pixelSelection.attrs.fill = getColor(
-          store.selectedPixelInfo?.color
+          store.selectedPixelInfo?.color,
+          store.selectedPixelInfo?.shade
         ).value
       } else {
         pixelSelection.attrs.fill = 'rgba(255,255,255,255)'

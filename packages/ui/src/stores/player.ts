@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ApiService } from '@/api'
 import router from '../router'
+import { isNumber } from '@/utils'
 import {
   type PalettePoints,
   type PixelDB,
@@ -20,7 +21,7 @@ export const useStore = defineStore('player', {
       creationIndex: null as number | null,
       username: '',
       score: null,
-      color: 0 as number,
+      color: 5 as number,
       bonus: null as number | null,
       interactionInfo: null,
       interactionIn: null as InteractionInfo | null,
@@ -79,12 +80,14 @@ export const useStore = defineStore('player', {
       }
     },
     async paintPixel() {
-      if (this.pixelToPaint && this.selectedColor) {
+      if (this.pixelToPaint && isNumber(this.selectedColor)) {
         const tokenInfo = this.localStore.getToken()
         const params = {
           x: this.pixelToPaint.x,
           y: this.pixelToPaint.y,
-          color: this.selectedColor ? this.selectedColor : this.pixelToPaint.c,
+          color: isNumber(this.selectedColor)
+            ? this.selectedColor
+            : this.pixelToPaint.c,
           shade: this.selectedShade ? this.selectedShade : 3,
           token: tokenInfo.token,
         }
@@ -92,6 +95,9 @@ export const useStore = defineStore('player', {
         if (request.error) {
           this.setError(ErrorKey.paint, request.error)
         } else {
+          this.notify({
+            message: `Pixel (${this.pixelToPaint.x}:${this.pixelToPaint.y}) painted`,
+          })
           this.getPixelInfo(this.pixelToPaint.x, this.pixelToPaint.y)
           this.pixelMapImage = request.canvas
           this.pixelImageUpdated = true
@@ -206,7 +212,6 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
-      console.log('request', request)
       if (request.error) {
         router.push('/init-game')
         this.setError(ErrorKey.canvasHistory, request.error)

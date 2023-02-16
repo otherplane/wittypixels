@@ -4,9 +4,7 @@
       <div
         class="pixel-color"
         :style="{
-          background: selectedPixelInfo?.color
-            ? getColor(selectedPixelInfo?.color, selectedPixelInfo?.shade).value
-            : 'white',
+          background: selectedPixelColor,
         }"
       ></div>
       <div class="pixel-info">
@@ -41,7 +39,7 @@
       </div>
     </div>
     <transition name="slide">
-      <div class="shades-selector" v-if="selectedColor !== null && !gameOver">
+      <div class="shades-selector" v-if="isNumber(selectedColor) && !gameOver">
         <ShadeSelector
           v-for="shade in shades"
           class="shade-box"
@@ -71,7 +69,7 @@ import { getColor } from '@/composables/getColor'
 import { computed } from 'vue'
 import { useStore } from '@/stores/player'
 import { useGameStore } from '@/stores/game'
-import { formatDistanceToNow, getRgbaColor } from '@/utils'
+import { formatDistanceToNow, getRgbaColor, isNumber } from '@/utils'
 export default {
   setup() {
     const store = useStore()
@@ -87,7 +85,6 @@ export default {
       })
     })
     const selectedPixelInfo = computed(() => {
-      console.log('selectedPixelInfo', store.selectedPixelInfo)
       return store.selectedPixelInfo
     })
     const shades = computed(() => {
@@ -98,6 +95,14 @@ export default {
           color: getRgbaColor(shadeData[0], shadeData[1], shadeData[2]),
         }
       })
+    })
+    const selectedPixelColor = computed(() => {
+      return isNumber(selectedPixelInfo.value?.color)
+        ? getColor(
+            selectedPixelInfo.value?.color,
+            selectedPixelInfo.value?.shade
+          ).value
+        : 'white'
     })
     const score = computed(() => store.score)
     const selectedColor = computed(() => store.selectedColor)
@@ -126,6 +131,8 @@ export default {
       score,
       shades,
       getColor,
+      isNumber,
+      selectedPixelColor,
     }
   },
 }

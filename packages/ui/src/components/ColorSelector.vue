@@ -35,8 +35,6 @@ export default {
     function selectColor() {
       if (props.points > 0) {
         store.selectColor(props.color)
-      } else {
-        store.selectColor(null)
       }
     }
     return { selectColor, selected, background: getColor(props.color, 3) }
