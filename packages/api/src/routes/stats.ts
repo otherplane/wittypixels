@@ -8,17 +8,17 @@ const stats: FastifyPluginAsync = async (fastify): Promise<void> => {
   const { interactionModel, playerModel, canvas, stats, drawModel } = fastify
 
   fastify.get<{
-    Querystring: GetStatsParams
+    Params: GetStatsParams
     Reply: Stats | Error
   }>('/stats/:token_id', {
     schema: {
-      querystring: GetStatsParams,
+      params: GetStatsParams,
       response: {
         200: Stats,
       },
     },
     handler: async (
-      _request: FastifyRequest<{ Querystring: GetStatsParams }>,
+      _request: FastifyRequest<{ Params: GetStatsParams }>,
       reply
     ) => {
       const canvasPixels = canvas.countPixelsDrawn()
