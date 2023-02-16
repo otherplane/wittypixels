@@ -9,8 +9,6 @@
       class="stage"
       :config="stageConfig"
       @wheel="zoom"
-      @touchmove="touchmove"
-      @touchend="touchend"
       @dragstart="changeToMoveCursor"
       @dragend="changeToPointerCursor"
     ></v-stage>
@@ -167,6 +165,8 @@ export default {
         stageNode.value.scale({ x: 16, y: 16 })
       }
       gridGroup.on('click tap', onClick)
+      gridGroup.on('touchmove', touchmove)
+      gridGroup.on('touchend', touchend)
       gridGroup.on('mouseover', changeToPointerCursor)
       gridGroup.on('mouseout', changeToDefaultCursor)
     }
