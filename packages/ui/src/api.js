@@ -98,12 +98,9 @@ export class ApiService {
     })
   }
 
-  getCanvas({ checkpoint }) {
+  getCanvas() {
     return this._get({
       url: `${this.baseUrl}/canvas`,
-      config: {
-        params: { checkpoint },
-      },
     })
   }
 

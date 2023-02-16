@@ -111,9 +111,11 @@ const app: FastifyPluginAsync<AppOptions> = async (
       const sectors = await fastify.canvasModel.get()
       canvas = new Canvas(sectors)
     }
+    const checkpoint = await fastify.drawModel.countAll()
     // Initializing canvas cache
     const b64 = canvas.toBase64()
-    const canvasCache = new CanvasCache(b64)
+    // if we restart the app past b64s won't be in the cache
+    const canvasCache = new CanvasCache(b64, checkpoint)
 
     fastify.decorate('canvas', canvas)
     fastify.decorate('canvasCache', canvasCache)

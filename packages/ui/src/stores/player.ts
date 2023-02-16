@@ -49,9 +49,7 @@ export const useStore = defineStore('player', {
   },
   actions: {
     async getPixelMapImage() {
-      const request = await this.api.getCanvas({
-        checkpoint: this.checkpoint ?? 0,
-      })
+      const request = await this.api.getCanvas()
       if (request.error) {
         this.setError(ErrorKey.canvas, request.error)
       } else {
