@@ -20,7 +20,7 @@
         :index="player.creationIndex"
         :key="player.username"
         :name="player.username"
-        :color="player.color"
+        :color="getColor(player.color, 3).value"
         :position="player.position + 1"
         :score="player.score"
       />
@@ -37,6 +37,7 @@
 <script>
 import { useStore } from '@/stores/player'
 import { ref } from 'vue'
+import { getColor } from '@/composables/getColor'
 export default {
   props: {
     gameEntity: {
@@ -61,6 +62,7 @@ export default {
       player,
       totalGlobalItems,
       pushGlobalItems,
+      getColor,
     }
   },
 }

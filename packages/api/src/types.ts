@@ -345,6 +345,7 @@ export const PixelInfo = Type.Object({
   x: Type.Number(),
   y: Type.Number(),
   color: Nullable(Type.Enum(Color)),
+  shade: Type.Enum(Shade),
   timestamp: Type.Number(),
   owner: Type.String(),
 })

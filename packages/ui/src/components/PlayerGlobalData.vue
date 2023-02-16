@@ -2,9 +2,9 @@
   <div
     class="players-container"
     :class="{ border }"
-    :style="{ 'border-color': playerColor }"
+    :style="{ 'border-color': color }"
   >
-    <ColorContainer :color="playerColor">
+    <ColorContainer :color="color">
       <p class="item player-name">{{ position }}</p>
     </ColorContainer>
     <p class="item player-name">{{ name }}</p>
@@ -13,25 +13,17 @@
 </template>
 
 <script>
-import { COLORS } from '@/constants'
-import { computed } from 'vue'
 export default {
   props: {
     index: Number,
     name: String,
     score: Number,
     position: Number,
-    color: Number,
+    color: String,
     border: {
       type: Boolean,
       default: false,
     },
-  },
-  setup(props) {
-    const playerColor = computed(() => {
-      return COLORS[props.color]
-    })
-    return { playerColor }
   },
 }
 </script>

@@ -4,10 +4,9 @@
       <div
         class="pixel-color"
         :style="{
-          background: getColor(
-            selectedPixelInfo?.color,
-            selectedPixelInfo?.shade
-          ).value,
+          background: selectedPixelInfo?.color
+            ? getColor(selectedPixelInfo?.color, selectedPixelInfo?.shade).value
+            : 'white',
         }"
       ></div>
       <div class="pixel-info">
@@ -42,7 +41,7 @@
       </div>
     </div>
     <transition name="slide">
-      <div class="shades-selector" v-if="selectedColor && !gameOver">
+      <div class="shades-selector" v-if="selectedColor !== null && !gameOver">
         <ShadeSelector
           v-for="shade in shades"
           class="shade-box"
@@ -88,6 +87,7 @@ export default {
       })
     })
     const selectedPixelInfo = computed(() => {
+      console.log('selectedPixelInfo', store.selectedPixelInfo)
       return store.selectedPixelInfo
     })
     const shades = computed(() => {

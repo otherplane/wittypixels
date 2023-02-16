@@ -120,7 +120,9 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
           .status(409)
           .send(
             new Error(
-              `Players can only draw once every ${msToSeconds(INTERACTION_DURATION_MILLIS)}s`
+              `Players can only draw once every ${msToSeconds(
+                INTERACTION_DURATION_MILLIS
+              )}s`
             )
           )
       }
@@ -137,7 +139,9 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
           .status(409)
           .send(
             new Error(
-              `A pixel can only be drawn once every ${msToSeconds(PIXEL_LOCKED_DURATION_MS)}s`
+              `A pixel can only be drawn once every ${msToSeconds(
+                PIXEL_LOCKED_DURATION_MS
+              )}s`
             )
           )
       }

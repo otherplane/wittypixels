@@ -20,7 +20,7 @@ export const useStore = defineStore('player', {
       creationIndex: null as number | null,
       username: '',
       score: null,
-      color: 7 as number,
+      color: 0 as number,
       bonus: null as number | null,
       interactionInfo: null,
       interactionIn: null as InteractionInfo | null,
@@ -92,6 +92,7 @@ export const useStore = defineStore('player', {
         if (request.error) {
           this.setError(ErrorKey.paint, request.error)
         } else {
+          this.getPixelInfo(this.pixelToPaint.x, this.pixelToPaint.y)
           this.pixelMapImage = request.canvas
           this.pixelImageUpdated = true
           this.clearError(ErrorKey.paint)

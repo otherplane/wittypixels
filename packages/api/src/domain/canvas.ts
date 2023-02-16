@@ -290,6 +290,7 @@ export class Canvas {
       y,
       owner: pixel.o,
       color: pixel.c,
+      shade: pixel.s,
       timestamp: pixel.t,
     }
   }

@@ -16,7 +16,7 @@
           v-for="(interaction, index) in player.canvasHistory"
           :key="interaction.timestamp"
           :class="{ even: index % 2 }"
-          :color="COLORS[interaction.color]"
+          :color="getColor(interaction.color, 3).value"
           :x="interaction.x"
           :y="interaction.y"
           :owner="interaction.owner"
@@ -41,6 +41,7 @@ import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 import { formatDate } from '@/utils'
 import { COLORS } from '@/constants'
+import { getColor } from '@/composables/getColor'
 export default {
   setup() {
     const player = useStore()
@@ -59,7 +60,7 @@ export default {
       )
     }
     return {
-      COLORS,
+      getColor,
       player,
       utcToZonedTime,
       timeZone,
