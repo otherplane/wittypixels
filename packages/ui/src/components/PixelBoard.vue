@@ -54,6 +54,9 @@ export default {
       stroke: 'transparent',
     })
     const konvaPixelMapImage = ref()
+    // Fetch canvas before the component is mounted and before the first setInterval cycle
+    store.getPixelMapImage()
+
     onMounted(() => {
       stageConfig.value = {
         width: targetBoard.value.clientWidth,
