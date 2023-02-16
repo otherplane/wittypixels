@@ -5,6 +5,8 @@ import { getRgbaColor } from '@/utils'
 
 export function getPlayerColor() {
   const playerColor = computed(() => useStore().color)
-  const shadeData = COLORS[playerColor.value][3]
-  return computed(() => getRgbaColor(shadeData[0], shadeData[1], shadeData[2]))
+  const shadeData = computed(() => COLORS[playerColor.value][3])
+  return computed(() =>
+    getRgbaColor(shadeData.value[0], shadeData.value[1], shadeData.value[2])
+  )
 }

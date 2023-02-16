@@ -71,7 +71,8 @@ export default {
   justify-items: center;
 }
 .background {
-  height: -webkit-fill-available;
+  height: 100vh;
+  max-height: -webkit-fill-available;
   overflow: hidden;
   display: grid;
   grid-template-rows: max-content 1fr;
