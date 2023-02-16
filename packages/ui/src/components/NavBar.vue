@@ -13,8 +13,11 @@
       <div class="dropdown" :class="{ visible: isMenuVisible }">
         <div class="tab-container" :class="{ visible: isMenuVisible }">
           <router-link class="tab" to="/leaderboard"> Leaderboard </router-link>
-          <router-link class="tab" to="/interactions"> History </router-link>
-          <router-link class="tab" to="/settings">Settings</router-link>
+          <router-link class="tab" to="/interactions">
+            Interactions
+          </router-link>
+          <router-link class="tab" to="/history"> History </router-link>
+          <router-link class="tab" to="/settings">Info</router-link>
           <div class="tab" @click="openExportModal()" type="dark">
             Get backup
           </div>
@@ -134,7 +137,7 @@ export default {
     padding: 8px 0px;
     top: 8px;
     opacity: 1;
-    width: 148px;
+    width: 160px;
     height: 174px;
     .tab {
       cursor: pointer;

@@ -2,29 +2,31 @@
   <MainLayout>
     <template v-slot:main>
       <div class="view-container">
-        <SectionHeader title="Interactions history" />
-        <GameInfo v-if="!player.interactionHistory.length" class="empty-state">
+        <SectionHeader title="Canvas history" />
+        <GameInfo v-if="!player.canvasHistory.length" class="empty-state">
           <div class="long-info bold">
-            <p class="state-text">No interactions yet.</p>
+            <p class="state-text">No canvas interaction yet.</p>
             <p>
-              What are you waiting for? Go look for other players and ask them
-              to scan your Qr code now!
+              What are you waiting for? Start drawing pixels in the canvas and
+              get WPX
             </p>
           </div>
         </GameInfo>
-        <InteractionEntry
-          v-for="(interaction, index) in player.interactionHistory"
+        <CanvasHistoryEntry
+          v-for="(interaction, index) in player.canvasHistory"
           :key="interaction.timestamp"
           :class="{ even: index % 2 }"
           :color="COLORS[interaction.color]"
-          :points="interaction.quantity"
-          :from="interaction.to == player.username ? interaction.from : null"
-          :to="interaction.from == player.username ? interaction.to : null"
+          :x="interaction.x"
+          :y="interaction.y"
+          :owner="interaction.owner"
+          :stolenTo="!isPixelStolen(interaction) ? interaction.stolenTo : null"
+          :stolenFrom="isPixelStolen(interaction) ? interaction.owner : null"
           :timestamp="interaction.timestamp"
         />
         <CustomInfiniteLoading
-          :getItems="player.getInteractionHistory"
-          :list="player.interactionHistory || []"
+          :getItems="player.getCanvasHistory"
+          :list="player.canvasHistory || []"
           :total="totalItems"
           @result="pushItems"
         />
@@ -46,9 +48,15 @@ export default {
     const totalItems = ref(0)
     const pushItems = items => {
       if (items) {
-        player.interactionHistory.push(...items.result)
+        player.canvasHistory.push(...items.result)
         totalItems.value = items.total
       }
+    }
+    function isPixelStolen(interaction) {
+      return (
+        interaction?.stolenTo !== '' &&
+        interaction?.stolenTo === (player.name || player.username)
+      )
     }
     return {
       COLORS,
@@ -59,6 +67,7 @@ export default {
       pushItems,
       totalItems,
       formatDate,
+      isPixelStolen,
     }
   },
 }

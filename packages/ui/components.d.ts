@@ -7,6 +7,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppHeader: typeof import('./src/components/AppHeader.vue')['default']
     BonusCountdown: typeof import('./src/components/BonusCountdown.vue')['default']
+    CanvasHistoryEntry: typeof import('./src/components/CanvasHistoryEntry.vue')['default']
     CanvasPixel: typeof import('./src/components/CanvasPixel.vue')['default']
     ColorContainer: typeof import('./src/components/ColorContainer.vue')['default']
     ColorSelector: typeof import('./src/components/ColorSelector.vue')['default']

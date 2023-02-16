@@ -9,6 +9,7 @@ import Disclaimer from '../views/GameDisclaimer.vue'
 import GameSettings from '../views/GameSettings.vue'
 import LeaderBoard from '../views/LeaderBoard.vue'
 import InteractionHistory from '../views/InteractionHistory.vue'
+import CanvasHistory from '../views/CanvasHistory.vue'
 import ScanId from '../views/ScanId.vue'
 
 const routes = [
@@ -90,6 +91,15 @@ const routes = [
     name: 'interactionHistory',
     path: '/interactions',
     component: InteractionHistory,
+    beforeEnter: () => {
+      const store = useStore()
+      store.getPlayerInfo()
+    },
+  },
+  {
+    name: 'canvasHistory',
+    path: '/history',
+    component: CanvasHistory,
     beforeEnter: () => {
       const store = useStore()
       store.getPlayerInfo()

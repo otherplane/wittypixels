@@ -55,7 +55,7 @@ export class ApiService {
     })
   }
 
-  getInteractionsHistory(params) {
+  getInteractionHistory(params) {
     return this._get({
       url: `${this.baseUrl}/interactions`,
       config: {
@@ -65,29 +65,9 @@ export class ApiService {
     })
   }
 
-  getMintedAwardsImages(params) {
+  getCanvasHistory(params) {
     return this._get({
-      url: `${this.baseUrl}/players/images`,
-      config: {
-        headers: { authorization: params.token },
-        params: { token_ids: params.tokenIds },
-      },
-    })
-  }
-
-  getPreviews(params) {
-    return this._get({
-      url: `${this.baseUrl}/players/preview`,
-      config: {
-        params: { key: params.key },
-        headers: { authorization: params.token },
-      },
-    })
-  }
-
-  getInteractionHistory(params) {
-    return this._get({
-      url: `${this.baseUrl}/history`,
+      url: `${this.baseUrl}/draws`,
       config: {
         headers: { authorization: params.token },
         params: { offset: params.offset, limit: params.limit },

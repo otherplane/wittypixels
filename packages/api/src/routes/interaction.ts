@@ -18,7 +18,7 @@ import {
 const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { playerModel, interactionModel, drawModel } = fastify
+  const { playerModel, interactionModel } = fastify
 
   fastify.post<{ Body: InteractionParams; Reply: InteractionResult | Error }>(
     '/interactions',

@@ -25,7 +25,8 @@ export const useStore = defineStore('player', {
       interactionInfo: null,
       interactionIn: null as InteractionInfo | null,
       interactionOut: null as InteractionInfo | null,
-      history: [],
+      canvasHistory: [],
+      interactionHistory: [],
       playersGlobalStats: [],
       errors: {} as Errors,
       selectedColor: null as number | null,
@@ -173,7 +174,7 @@ export const useStore = defineStore('player', {
         this.getPlayerInfo()
       }
     },
-    // History
+    // Interactions History
     async getInteractionHistory(offset = 0, limit = PAGINATION_LIMIT) {
       const tokenInfo = this.localStore.getToken()
       const request = await this.api.getInteractionHistory({
@@ -190,6 +191,27 @@ export const useStore = defineStore('player', {
         return {
           result: request.interactions?.interactions,
           total: request.interactions?.total,
+        }
+      }
+    },
+    // Canvas History
+    async getCanvasHistory(offset = 0, limit = PAGINATION_LIMIT) {
+      const tokenInfo = this.localStore.getToken()
+      const request = await this.api.getCanvasHistory({
+        token: tokenInfo && tokenInfo.token,
+        id: tokenInfo && tokenInfo.key,
+        offset,
+        limit,
+      })
+      console.log('request', request)
+      if (request.error) {
+        router.push('/init-game')
+        this.setError(ErrorKey.canvasHistory, request.error)
+      } else {
+        this.clearError(ErrorKey.canvasHistory)
+        return {
+          result: request.draws?.draws,
+          total: request.draws?.total,
         }
       }
     },
