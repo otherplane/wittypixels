@@ -50,6 +50,7 @@ export default {
 
     .logo {
       height: 20px;
+      width: 100px;
       padding: 0 4px;
       position: inline-block;
     }

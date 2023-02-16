@@ -44,6 +44,7 @@ export default {
 }
 .color {
   height: 32px;
+  width: 31px;
 }
 .index-container {
   border: 1.5px solid $black;
