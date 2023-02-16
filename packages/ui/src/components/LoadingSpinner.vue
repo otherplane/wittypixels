@@ -1,14 +1,24 @@
 <template>
-  <div class="loading-container">
+  <div class="loading-container" :style="{ height: `${vheight}vh` }">
     <div class="loading"></div>
     <p class="text">Loading</p>
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  props: {
+    vheight: {
+      type: Number,
+      default: 60,
+    },
+  },
+}
+</script>
+
 <style lang="scss">
 .loading-container {
   max-width: 100%;
-  height: 60vh;
   max-height: 90vh;
   overflow: hidden;
   display: grid;

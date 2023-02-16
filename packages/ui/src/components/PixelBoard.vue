@@ -1,6 +1,9 @@
 <template>
   <div class="pixel-board" ref="targetBoard">
-    <LoadingSpinner v-if="!konvaPixelMapImage" />
+    <LoadingSpinner
+      v-if="!konvaPixelMapImage"
+      :vheight="authPlayer ? 60 : 40"
+    />
     <v-stage
       ref="stage"
       class="stage"
@@ -80,6 +83,9 @@ export default {
     const isPanelClosed = computed(() => {
       return !store.showPalettePanel
     })
+    const authPlayer = computed(() => {
+      return !!store.username
+    })
     const selectedPixelInfo = computed(() => store.selectedPixelInfo)
     const stageNode = computed(() => stage.value.getNode())
     watch(pixelMapBase64, value => {
@@ -120,7 +126,7 @@ export default {
     }
     function onClick() {
       //If authorized Player show panel to paint
-      if (store.username) {
+      if (authPlayer.value) {
         const relativePointerPosition =
           konvaPixelMapImage.value.getRelativePointerPosition()
         const pixelCoordinates = {
@@ -299,6 +305,7 @@ export default {
     return {
       targetBoard,
       stageConfig,
+      authPlayer,
       stage,
       pixelColor,
       zoom,
