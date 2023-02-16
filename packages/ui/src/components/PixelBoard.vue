@@ -175,6 +175,7 @@ export default {
       } else {
         pixelGroup.add(pixelSelection)
         layer.add(gridGroup)
+        drawLinesSolution1()
         layer.add(pixelGroup)
         stageNode.value.add(layer)
         stageNode.value.scale({ x: 16, y: 16 })
@@ -185,6 +186,38 @@ export default {
       gridGroup.on('mouseover', changeToPointerCursor)
       gridGroup.on('mouseout', changeToDefaultCursor)
     }
+
+    function drawLinesSolution1() {
+      const stepSize = 1
+      const xSize = stageNode.value.width(),
+        ySize = stageNode.value.height(),
+        xSteps = Math.round(xSize / stepSize),
+        ySteps = Math.round(ySize / stepSize)
+
+      for (let i = 0; i <= xSteps; i++) {
+        layer.add(
+          new Konva.Line({
+            x: i * stepSize,
+            points: [0, 0, 0, ySize],
+            stroke: 'rgba(191, 191, 191, 0.40)',
+            strokeWidth: 0.08,
+          })
+        )
+      }
+      for (let i = 0; i <= ySteps; i++) {
+        layer.add(
+          new Konva.Line({
+            y: i * stepSize,
+            points: [0, 0, xSize, 0],
+            stroke: 'rgba(191, 191, 191, 0.40)',
+            strokeWidth: 0.08,
+          })
+        )
+      }
+
+      layer.batchDraw()
+    }
+
     function setSelectedPixelColor() {
       if (isNumber(store.selectedColor)) {
         pixelSelection.attrs.fill = getColor().value
@@ -330,8 +363,7 @@ export default {
 <style lang="scss">
 .pixel-board {
   max-width: 100%;
-  height: 100%;
-  max-height: 90vh;
+  max-height: -webkit-fill-available;
   overflow: hidden;
 }
 </style>
