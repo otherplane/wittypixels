@@ -35,7 +35,7 @@
 <script>
 import { useStore } from '@/stores/player'
 import { getColor } from '@/composables/getColor'
-import { ErrorKey } from '@/types'
+import { CallApiKey } from '@/types'
 import { ref, computed } from 'vue'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
@@ -48,7 +48,7 @@ export default {
     const totalItems = ref(0)
     const showEmptyState = computed(
       () =>
-        !player.loadings[ErrorKey.interactionHistory] &&
+        !player.loadings[CallApiKey.interactionHistory] &&
         !player.interactionHistory.length
     )
     const pushItems = items => {
@@ -59,7 +59,7 @@ export default {
     }
     return {
       showEmptyState,
-      ErrorKey,
+      CallApiKey,
       COLORS,
       player,
       utcToZonedTime,

@@ -40,7 +40,7 @@ import { ref, computed } from 'vue'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 import { formatDate } from '@/utils'
-import { ErrorKey } from '@/types'
+import { CallApiKey } from '@/types'
 import { getColor } from '@/composables/getColor'
 export default {
   setup() {
@@ -49,7 +49,8 @@ export default {
     const totalItems = ref(0)
     const showEmptyState = computed(
       () =>
-        !player.loadings[ErrorKey.canvasHistory] && !player.canvasHistory.length
+        !player.loadings[CallApiKey.canvasHistory] &&
+        !player.canvasHistory.length
     )
     const pushItems = items => {
       if (items) {
@@ -65,7 +66,7 @@ export default {
     }
     return {
       showEmptyState,
-      ErrorKey,
+      CallApiKey,
       getColor,
       player,
       utcToZonedTime,

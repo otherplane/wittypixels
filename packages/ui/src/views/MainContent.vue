@@ -34,7 +34,7 @@
 import { useStore } from '@/stores/player'
 import { useLocalStore } from '@/stores/local'
 import { useModalStore } from '@/stores/modal'
-import { ModalKey, ErrorKey } from '@/types'
+import { ModalKey, CallApiKey } from '@/types'
 import { onBeforeMount, onMounted, onBeforeUnmount } from 'vue'
 import { POLLER_MILLISECONDS } from '@/constants'
 import { useRouter } from 'vue-router'
@@ -50,7 +50,7 @@ export default {
       const token = await localStore.getToken()
       if (!token) {
         await player.authorize({ key: router.currentRoute.value.params.id })
-        if (!player.errors[ErrorKey.auth]) {
+        if (!player.errors[CallApiKey.auth]) {
           modalStore.openModal(ModalKey.export)
         }
       } else {

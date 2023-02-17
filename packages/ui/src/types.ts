@@ -157,7 +157,7 @@ export enum TokenStatus {
   Fractionalized = 'fractionalized',
   Acquired = 'Acquired',
 }
-export enum ErrorKey {
+export enum CallApiKey {
   preview = 'preview',
   auth = 'auth',
   interaction = 'interaction',

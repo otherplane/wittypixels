@@ -8,7 +8,7 @@ import {
   type Errors,
   type InteractionInfo,
   type SelectedPixel,
-  ErrorKey,
+  CallApiKey,
 } from '@/types'
 import { PAGINATION_LIMIT } from '@/constants'
 import { useLocalStore } from './local'
@@ -30,7 +30,7 @@ export const useStore = defineStore('player', {
       interactionHistory: [],
       playersGlobalStats: [],
       errors: {} as Errors,
-      loadings: {} as Record<ErrorKey, boolean>,
+      loadings: {} as Record<CallApiKey, boolean>,
       selectedColor: null as number | null,
       selectedShade: 3 as number,
       palettePoints: {} as PalettePoints,
@@ -54,7 +54,7 @@ export const useStore = defineStore('player', {
         checkpoint: this.checkpoint ?? 0,
       })
       if (request.error) {
-        this.setError(ErrorKey.canvas, request.error)
+        this.setError(CallApiKey.canvas, request.error)
       } else {
         if (this.checkpoint !== request.checkpoint) {
           if (!this.pixelImageUpdated) {
@@ -62,7 +62,7 @@ export const useStore = defineStore('player', {
           }
           this.checkpoint = request.checkpoint
         }
-        this.clearError(ErrorKey.canvas)
+        this.clearError(CallApiKey.canvas)
       }
       this.pixelImageUpdated = false
     },
@@ -74,10 +74,10 @@ export const useStore = defineStore('player', {
         token: tokenInfo.token,
       })
       if (request.error) {
-        this.setError(ErrorKey.pixel, request.error)
+        this.setError(CallApiKey.pixel, request.error)
       } else {
         this.selectedPixelInfo = request
-        this.clearError(ErrorKey.pixel)
+        this.clearError(CallApiKey.pixel)
       }
     },
     async paintPixel() {
@@ -94,7 +94,7 @@ export const useStore = defineStore('player', {
         }
         const request = await this.api.drawPixel(params)
         if (request.error) {
-          this.setError(ErrorKey.paint, request.error)
+          this.setError(CallApiKey.paint, request.error)
         } else {
           this.notify({
             message: `Pixel (${this.pixelToPaint.x}:${this.pixelToPaint.y}) painted`,
@@ -102,7 +102,7 @@ export const useStore = defineStore('player', {
           this.getPixelInfo(this.pixelToPaint.x, this.pixelToPaint.y)
           this.pixelMapImage = request.canvas
           this.pixelImageUpdated = true
-          this.clearError(ErrorKey.paint)
+          this.clearError(CallApiKey.paint)
         }
       }
     },
@@ -131,10 +131,10 @@ export const useStore = defineStore('player', {
       app.config.globalProperties.$notify(payload)
     },
     // Errors
-    clearError(error: ErrorKey) {
+    clearError(error: CallApiKey) {
       this.errors[error] = null
     },
-    setError(name: ErrorKey, error: any) {
+    setError(name: CallApiKey, error: any) {
       this.errors[name] = error.response?.data?.message || error.toString()
       this.notify({ message: this.errors[name] })
     },
@@ -143,10 +143,10 @@ export const useStore = defineStore('player', {
       const request = await this.api.authorize({ key })
       if (request.error) {
         router.push('/init-game')
-        this.setError(ErrorKey.auth, request.error)
+        this.setError(CallApiKey.auth, request.error)
       } else if (request.token) {
         await this.localStore.saveTokenInfo(request)
-        this.clearError(ErrorKey.auth)
+        this.clearError(CallApiKey.auth)
         router.push(`/settings/${key}`)
       }
     },
@@ -159,10 +159,10 @@ export const useStore = defineStore('player', {
       })
 
       if (request.error) {
-        this.setError(ErrorKey.bonus, request.error)
+        this.setError(CallApiKey.bonus, request.error)
         router.push('/init-game')
       } else {
-        this.clearError(ErrorKey.bonus)
+        this.clearError(CallApiKey.bonus)
         this.bonus = request.bonusEndsAt
         router.push('/init-game')
       }
@@ -175,10 +175,10 @@ export const useStore = defineStore('player', {
       })
 
       if (request.error) {
-        this.setError(ErrorKey.interaction, request.error)
+        this.setError(CallApiKey.interaction, request.error)
         router.push('/init-game')
       } else {
-        this.clearError(ErrorKey.interaction)
+        this.clearError(CallApiKey.interaction)
         this.interactionInfo = request
         router.push('/init-game')
         this.getPlayerInfo()
@@ -193,14 +193,14 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
-      this.loadings[ErrorKey.history] = true
+      this.loadings[CallApiKey.history] = true
       if (request.error) {
         router.push('/init-game')
-        this.loadings[ErrorKey.interactionHistory] = false
-        this.setError(ErrorKey.interactionHistory, request.error)
+        this.loadings[CallApiKey.interactionHistory] = false
+        this.setError(CallApiKey.interactionHistory, request.error)
       } else {
-        this.clearError(ErrorKey.interactionHistory)
-        this.loadings[ErrorKey.interactionHistory] = false
+        this.clearError(CallApiKey.interactionHistory)
+        this.loadings[CallApiKey.interactionHistory] = false
         return {
           result: request.interactions?.interactions,
           total: request.interactions?.total,
@@ -216,14 +216,14 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
-      this.loadings[ErrorKey.canvasHistory] = true
+      this.loadings[CallApiKey.canvasHistory] = true
       if (request.error) {
         router.push('/init-game')
-        this.setError(ErrorKey.canvasHistory, request.error)
-        this.loadings[ErrorKey.canvasHistory] = false
+        this.setError(CallApiKey.canvasHistory, request.error)
+        this.loadings[CallApiKey.canvasHistory] = false
       } else {
-        this.clearError(ErrorKey.canvasHistory)
-        this.loadings[ErrorKey.canvasHistory] = false
+        this.clearError(CallApiKey.canvasHistory)
+        this.loadings[CallApiKey.canvasHistory] = false
         return {
           result: request.draws?.draws,
           total: request.draws?.total,
@@ -237,13 +237,13 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
-      this.loadings[ErrorKey.getLeaderboardInfo] = true
+      this.loadings[CallApiKey.getLeaderboardInfo] = true
       if (request.error) {
-        this.loadings[ErrorKey.getLeaderboardInfo] = false
-        this.setError(ErrorKey.getLeaderboardInfo, request.error)
+        this.loadings[CallApiKey.getLeaderboardInfo] = false
+        this.setError(CallApiKey.getLeaderboardInfo, request.error)
       } else {
-        this.loadings[ErrorKey.getLeaderboardInfo] = false
-        this.clearError(ErrorKey.getLeaderboardInfo)
+        this.loadings[CallApiKey.getLeaderboardInfo] = false
+        this.clearError(CallApiKey.getLeaderboardInfo)
         return {
           result: request.players.players,
           total: request.players.total,
@@ -259,9 +259,9 @@ export const useStore = defineStore('player', {
       })
       if (request.error) {
         router.push({ name: 'init-game' })
-        this.setError(ErrorKey.info, request.error)
+        this.setError(CallApiKey.info, request.error)
       } else {
-        this.clearError(ErrorKey.info)
+        this.clearError(CallApiKey.info)
         const { key, username, score, color, palette, creationIndex } =
           request.player
         this.id = key
