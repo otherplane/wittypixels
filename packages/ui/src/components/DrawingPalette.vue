@@ -1,6 +1,6 @@
 <template>
-  <div class="palette-container">
-    <div v-if="selectedPixelInfo" class="selected-pixel" @click="closePanel">
+  <div class="palette-container" v-touch:swipe.bottom="closePanel">
+    <div v-if="selectedPixelInfo" class="selected-pixel">
       <div
         class="pixel-color"
         :style="{
@@ -54,7 +54,7 @@
     </p>
     <CustomButton
       v-if="!gameOver"
-      type="primary"
+      :type="paintButtonType"
       :slim="true"
       @click="paintPixel"
     >
@@ -66,7 +66,7 @@
 <script>
 import { COLORS } from '@/constants'
 import { getColor } from '@/composables/getColor'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from '@/stores/player'
 import { useGameStore } from '@/stores/game'
 import { formatDistanceToNow, getRgbaColor, isNumber } from '@/utils'
@@ -74,7 +74,7 @@ export default {
   setup() {
     const store = useStore()
     const game = useGameStore()
-
+    const paintButtonType = ref()
     const palette = computed(() => store.palettePoints)
     const colors = computed(() => {
       return Object.keys(COLORS).map(key => {
@@ -109,10 +109,13 @@ export default {
     function selectShade(shade) {
       store.selectedShade = shade.key
     }
-    function paintPixel() {
-      store.paintPixel()
+    async function paintPixel() {
+      paintButtonType.value = 'disable'
+      await store.paintPixel()
+      paintButtonType.value = 'primary'
     }
     function closePanel() {
+      console.log('close panel!!')
       store.clearPixelToPaint()
       store.togglePalettePanel(false)
     }
@@ -132,6 +135,7 @@ export default {
       shades,
       getColor,
       isNumber,
+      paintButtonType,
       selectedPixelColor,
     }
   },

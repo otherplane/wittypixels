@@ -138,6 +138,8 @@ export default {
     }
     function onClick() {
       //If authorized Player show panel to paint
+      pixelSelection.attrs.fill = 'transparent'
+      layer.batchDraw()
       if (authPlayer.value) {
         const relativePointerPosition =
           konvaPixelMapImage.value.getRelativePointerPosition()
