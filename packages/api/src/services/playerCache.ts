@@ -12,6 +12,6 @@ export class PlayerCache {
   }
 
   getName(username: string) {
-    return this.playerMap[username]
+    return this.playerMap[username] || ''
   }
 }

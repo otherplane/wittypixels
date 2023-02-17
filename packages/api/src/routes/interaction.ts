@@ -18,7 +18,7 @@ import {
 const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { playerModel, interactionModel } = fastify
+  const { playerModel, interactionModel, playerCache } = fastify
 
   fastify.post<{ Body: InteractionParams; Reply: InteractionResult | Error }>(
     '/interactions',
@@ -202,15 +202,25 @@ const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
           )
       }
 
+      const interactions = await interactionModel.getManyByUsername(
+        player.username,
+        {
+          limit: request.query.limit || 10,
+          offset: request.query.offset || 0,
+        }
+      )
+      // asign the custom name to the interactions
+      const computedInteractions = interactions.map(interaction => {
+        return {
+          ...interaction,
+          from: playerCache.getName(interaction.from) || interaction.from,
+          to: playerCache.getName(interaction.to) || interaction.to,
+        }
+      })
+
       return reply.status(200).send({
         interactions: {
-          interactions: await interactionModel.getManyByUsername(
-            player.username,
-            {
-              limit: request.query.limit || 10,
-              offset: request.query.offset || 0,
-            }
-          ),
+          interactions: computedInteractions,
           total: await interactionModel.count(player.username),
         },
       })

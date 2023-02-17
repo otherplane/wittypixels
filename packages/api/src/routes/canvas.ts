@@ -71,9 +71,8 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       }
       const { x, y } = request.query
       const pixel = canvas.getPixel(x, y)
-      return reply
-        .status(200)
-        .send({ ...pixel, ownerName: playerCache.getName(pixel.owner) })
+      const ownerName = playerCache.getName(pixel.owner) || pixel.owner
+      return reply.status(200).send({ ...pixel, ownerName })
     },
   })
 
