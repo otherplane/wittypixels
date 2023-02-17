@@ -5,15 +5,17 @@
     </template>
     <template v-slot:main>
       <ProviderConnected class="provider-info" />
-      <div class="float">
-        <div class="game-info">
-          <GameOverCountdown />
-          <BonusCountdown v-if="player.bonus" />
-          <GameInfo>
-            <p>@{{ player.username }}</p></GameInfo
-          >
+      <transition name="fade">
+        <div class="float" v-if="!player.showPalettePanel">
+          <div class="game-info">
+            <GameOverCountdown />
+            <BonusCountdown v-if="player.bonus" />
+            <GameInfo>
+              <p>@{{ player.username }}</p></GameInfo
+            >
+          </div>
         </div>
-      </div>
+      </transition>
       <MintInformation />
       <PixelBoard />
     </template>
@@ -77,6 +79,18 @@ export default {
 }
 </script>
 <style lang="scss">
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.2s ease-in-out;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
 .float {
   position: absolute;
   max-width: max-content;
