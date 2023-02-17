@@ -6,6 +6,8 @@ import {
   TxType,
 } from '@/types'
 
+export const MAX_ERROR_COUNTER = 2
+
 export const ERC721_ADDRESS =
   import.meta.env.VITE_ERC721_ADDRESS ||
   '0xc0FFee029589de1082f8e14d7809F27f452e5191'

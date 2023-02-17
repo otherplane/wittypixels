@@ -10,7 +10,7 @@ import {
   type SelectedPixel,
   CallApiKey,
 } from '@/types'
-import { PAGINATION_LIMIT } from '@/constants'
+import { PAGINATION_LIMIT, MAX_ERROR_COUNTER } from '@/constants'
 import { useLocalStore } from './local'
 export const useStore = defineStore('player', {
   state: () => {
@@ -30,6 +30,7 @@ export const useStore = defineStore('player', {
       interactionHistory: [],
       playersGlobalStats: [],
       errors: {} as Errors,
+      errorCounter: {} as Errors,
       loadings: {} as Record<CallApiKey, boolean>,
       selectedColor: null as number | null,
       selectedShade: 3 as number,
@@ -136,6 +137,13 @@ export const useStore = defineStore('player', {
     },
     setError(name: CallApiKey, error: any) {
       this.errors[name] = error.response?.data?.message || error.toString()
+      if (this.errorCounter[name] < MAX_ERROR_COUNTER) {
+        this.errorCounter[name] = this.errorCounter[name]
+          ? (this.errorCounter[name] += 1)
+          : 1
+      } else {
+        this.errorCounter[name] = 1
+      }
       this.notify({ message: this.errors[name] })
     },
 
@@ -160,11 +168,11 @@ export const useStore = defineStore('player', {
 
       if (request.error) {
         this.setError(CallApiKey.bonus, request.error)
-        router.push('/init-game')
+        router.push('/')
       } else {
         this.clearError(CallApiKey.bonus)
         this.bonus = request.bonusEndsAt
-        router.push('/init-game')
+        router.push('/')
       }
     },
     async interact({ key }: any) {
@@ -176,11 +184,11 @@ export const useStore = defineStore('player', {
 
       if (request.error) {
         this.setError(CallApiKey.interaction, request.error)
-        router.push('/init-game')
+        router.push('/')
       } else {
         this.clearError(CallApiKey.interaction)
         this.interactionInfo = request
-        router.push('/init-game')
+        router.push('/')
         this.getPlayerInfo()
       }
     },
@@ -195,7 +203,11 @@ export const useStore = defineStore('player', {
       })
       this.loadings[CallApiKey.history] = true
       if (request.error) {
-        router.push('/init-game')
+        if (
+          this.errorCounter[CallApiKey.interactionHistory] > MAX_ERROR_COUNTER
+        ) {
+          router.push('/init-game')
+        }
         this.loadings[CallApiKey.interactionHistory] = false
         this.setError(CallApiKey.interactionHistory, request.error)
       } else {
@@ -218,7 +230,9 @@ export const useStore = defineStore('player', {
       })
       this.loadings[CallApiKey.canvasHistory] = true
       if (request.error) {
-        router.push('/init-game')
+        if (this.errorCounter[CallApiKey.canvasHistory] > MAX_ERROR_COUNTER) {
+          router.push('/init-game')
+        }
         this.setError(CallApiKey.canvasHistory, request.error)
         this.loadings[CallApiKey.canvasHistory] = false
       } else {
@@ -258,7 +272,9 @@ export const useStore = defineStore('player', {
         id: tokenInfo && tokenInfo.key,
       })
       if (request.error) {
-        router.push({ name: 'init-game' })
+        if (this.errorCounter[CallApiKey.info] > MAX_ERROR_COUNTER) {
+          router.push({ name: 'init-game' })
+        }
         this.setError(CallApiKey.info, request.error)
       } else {
         this.clearError(CallApiKey.info)
