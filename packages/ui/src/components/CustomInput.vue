@@ -1,27 +1,28 @@
 <template>
   <input
     class="input"
-    v-model.lazy="localValue"
+    v-model="localValue"
     :placeholder="`Type your ${label}`"
     :data-lpignore="true"
   />
 </template>
 
 <script>
-import { useLocalValue } from '@/composables/localValueGetSet'
+import { useVModel } from '@vueuse/core'
 export default {
   props: {
     label: {
       type: String,
       required: true,
     },
-    value: {
+    modelValue: {
       type: String,
       default: '',
     },
   },
-  setup() {
-    const { localValue } = useLocalValue()
+  setup(props, { emit }) {
+    const localValue = useVModel(props, 'modelValue', emit)
+
     return { localValue }
   },
 }

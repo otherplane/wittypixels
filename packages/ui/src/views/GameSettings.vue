@@ -4,13 +4,7 @@
       <div class="container">
         <SectionHeader title="Settings" />
         <label class="form-label">Name</label>
-        <CustomInput
-          class="field"
-          type="text"
-          label="name"
-          :value="player.name"
-          @change="setValue"
-        />
+        <CustomInput class="field" type="text" label="name" v-model="name" />
         <SectionHeader title="Instructions" />
         <p class="paragraph">
           To <span class="bold orange">send color pixels</span> to somebody, you
@@ -56,20 +50,29 @@
 
 <script>
 import { useStore } from '@/stores/player'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import router from '../router'
 import { importSvg } from '@/composables/importSvg.js'
+
+import debounce from 'lodash.debounce'
+
 export default {
   setup() {
     const player = useStore()
-
-    function setValue(value) {
-      if (value.value) {
-        player.updateName({ name: value.value })
+    const updateName = debounce(val => {
+      if (val !== player.name) {
+        player.updateName({ name: val })
       }
-    }
+    }, 1200)
+    const name = computed({
+      get() {
+        return player.name
+      },
+      set: updateName,
+    })
+
     const fromAuth = ref(!!router.currentRoute.value.params?.id)
-    return { player, importSvg, setValue, fromAuth }
+    return { player, importSvg, fromAuth, name }
   },
 }
 </script>
