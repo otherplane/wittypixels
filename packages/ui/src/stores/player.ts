@@ -30,6 +30,7 @@ export const useStore = defineStore('player', {
       interactionHistory: [],
       playersGlobalStats: [],
       errors: {} as Errors,
+      loadings: {} as Record<ErrorKey, boolean>,
       selectedColor: null as number | null,
       selectedShade: 3 as number,
       palettePoints: {} as PalettePoints,
@@ -192,11 +193,14 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
+      this.loadings[ErrorKey.history] = true
       if (request.error) {
         router.push('/init-game')
-        this.setError(ErrorKey.history, request.error)
+        this.loadings[ErrorKey.interactionHistory] = false
+        this.setError(ErrorKey.interactionHistory, request.error)
       } else {
-        this.clearError(ErrorKey.history)
+        this.clearError(ErrorKey.interactionHistory)
+        this.loadings[ErrorKey.interactionHistory] = false
         return {
           result: request.interactions?.interactions,
           total: request.interactions?.total,
@@ -212,11 +216,14 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
+      this.loadings[ErrorKey.canvasHistory] = true
       if (request.error) {
         router.push('/init-game')
         this.setError(ErrorKey.canvasHistory, request.error)
+        this.loadings[ErrorKey.canvasHistory] = false
       } else {
         this.clearError(ErrorKey.canvasHistory)
+        this.loadings[ErrorKey.canvasHistory] = false
         return {
           result: request.draws?.draws,
           total: request.draws?.total,
@@ -230,9 +237,12 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
+      this.loadings[ErrorKey.getLeaderboardInfo] = true
       if (request.error) {
+        this.loadings[ErrorKey.getLeaderboardInfo] = false
         this.setError(ErrorKey.getLeaderboardInfo, request.error)
       } else {
+        this.loadings[ErrorKey.getLeaderboardInfo] = false
         this.clearError(ErrorKey.getLeaderboardInfo)
         return {
           result: request.players.players,

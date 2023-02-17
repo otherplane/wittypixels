@@ -16,8 +16,8 @@
           <router-link class="tab" to="/interactions">
             Interactions
           </router-link>
-          <router-link class="tab" to="/history"> History </router-link>
-          <router-link class="tab" to="/settings">Info</router-link>
+          <router-link class="tab" to="/history"> Canvas history </router-link>
+          <router-link class="tab" to="/settings">Information</router-link>
           <div class="tab" @click="openExportModal()" type="dark">
             Get backup
           </div>
@@ -137,7 +137,7 @@ export default {
     padding: 8px 0px;
     top: 8px;
     opacity: 1;
-    width: 160px;
+    width: 180px;
     height: 174px;
     .tab {
       cursor: pointer;
@@ -151,7 +151,7 @@ export default {
     align-items: center;
   }
   .tab {
-    width: 148px;
+    width: 178px;
     cursor: pointer;
     align-items: left;
     text-decoration: none;

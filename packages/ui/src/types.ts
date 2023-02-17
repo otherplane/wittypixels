@@ -163,6 +163,8 @@ export enum ErrorKey {
   interaction = 'interaction',
   info = 'info',
   history = 'history',
+  canvasHistory = 'canvasHistory',
+  interactionHistory = 'interactionHistory',
   getLeaderboardInfo = 'getLeaderboardInfo',
   network = 'network',
   getContractArgs = 'getContractArgs',

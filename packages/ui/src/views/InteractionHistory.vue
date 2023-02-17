@@ -3,7 +3,7 @@
     <template v-slot:main>
       <div class="view-container">
         <SectionHeader title="Interactions history" />
-        <GameInfo v-if="!player.interactionHistory.length" class="empty-state">
+        <GameInfo v-if="showEmptyState" class="empty-state">
           <div class="long-info bold">
             <p class="state-text">No interactions yet.</p>
             <p>
@@ -35,7 +35,8 @@
 <script>
 import { useStore } from '@/stores/player'
 import { getColor } from '@/composables/getColor'
-import { ref } from 'vue'
+import { ErrorKey } from '@/types'
+import { ref, computed } from 'vue'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 import { formatDate } from '@/utils'
@@ -45,6 +46,11 @@ export default {
     const player = useStore()
     const timeZone = 'America/Denver'
     const totalItems = ref(0)
+    const showEmptyState = computed(
+      () =>
+        !player.loadings[ErrorKey.interactionHistory] &&
+        !player.interactionHistory.length
+    )
     const pushItems = items => {
       if (items) {
         player.interactionHistory.push(...items.result)
@@ -52,6 +58,8 @@ export default {
       }
     }
     return {
+      showEmptyState,
+      ErrorKey,
       COLORS,
       player,
       utcToZonedTime,

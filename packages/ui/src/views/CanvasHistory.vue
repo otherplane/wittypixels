@@ -3,7 +3,7 @@
     <template v-slot:main>
       <div class="view-container">
         <SectionHeader title="Canvas history" />
-        <GameInfo v-if="!player.canvasHistory.length" class="empty-state">
+        <GameInfo v-if="showEmptyState" class="empty-state">
           <div class="long-info bold">
             <p class="state-text">No canvas interaction yet.</p>
             <p>
@@ -36,17 +36,21 @@
 </template>
 <script>
 import { useStore } from '@/stores/player'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 import { formatDate } from '@/utils'
-import { COLORS } from '@/constants'
+import { ErrorKey } from '@/types'
 import { getColor } from '@/composables/getColor'
 export default {
   setup() {
     const player = useStore()
     const timeZone = 'America/Denver'
     const totalItems = ref(0)
+    const showEmptyState = computed(
+      () =>
+        !player.loadings[ErrorKey.canvasHistory] && !player.canvasHistory.length
+    )
     const pushItems = items => {
       if (items) {
         player.canvasHistory.push(...items.result)
@@ -60,6 +64,8 @@ export default {
       )
     }
     return {
+      showEmptyState,
+      ErrorKey,
       getColor,
       player,
       utcToZonedTime,
