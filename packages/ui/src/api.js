@@ -75,6 +75,12 @@ export class ApiService {
     })
   }
 
+  getGameStats({ tokenId }) {
+    return this._get({
+      url: `${this.baseUrl}/stats/${tokenId}`,
+    })
+  }
+
   getLeaderboardInfo(params) {
     return this._get({
       url: `${this.baseUrl}/leaderboard`,

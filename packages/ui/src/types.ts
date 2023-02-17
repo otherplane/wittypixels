@@ -187,6 +187,8 @@ export enum GameOverErrorKey {
   tokenVault = 'tokenVault',
   web3WrongNetwork = 'web3WrongNetwork',
   web3Disconnected = 'web3Disconnected',
+  contractArgs = 'contractArgs',
+  gameStats = 'gameStats',
 }
 export interface Errors {
   [key: string]: string | null

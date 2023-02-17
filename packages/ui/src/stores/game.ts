@@ -11,7 +11,11 @@ import {
   TransactionStatus,
   GameOverStatus,
 } from '@/types'
-import { TIME_TO_REDEEM_MILLISECONDS, GAME_ENDS_TIMESTAMP } from '../constants'
+import {
+  TIME_TO_REDEEM_MILLISECONDS,
+  GAME_ENDS_TIMESTAMP,
+  ERC721_TOKEN_ID,
+} from '../constants'
 
 export const useGameStore = defineStore('gameStore', {
   state: () => ({
@@ -25,6 +29,7 @@ export const useGameStore = defineStore('gameStore', {
     tokenStatus: null as TokenStatus | null,
     provider: {} as Provider,
     mintParams: null,
+    gameStats: null,
     tokenIds: null,
     currentTxType: null as TxType | null,
     errors: {} as Errors,
@@ -69,7 +74,25 @@ export const useGameStore = defineStore('gameStore', {
         token: tokenInfo.token,
       })
 
-      return request
+      if (request.error) {
+        this.setError(GameOverErrorKey.contractArgs, request.error)
+      } else {
+        return request
+        this.clearError(GameOverErrorKey.contractArgs)
+      }
+    },
+    // Global game stats: number of pixels painted and ownership percentage
+    async getGameStats() {
+      const request = await this.api.getGameStats({
+        tokenId: ERC721_TOKEN_ID,
+      })
+
+      if (request.error) {
+        this.setError(GameOverErrorKey.gameStats, request.error)
+      } else {
+        this.gameStats = request
+        this.clearError(GameOverErrorKey.gameStats)
+      }
     },
     setTokenStatus(status: TokenStatus) {
       this.tokenStatus = status

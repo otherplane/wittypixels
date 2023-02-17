@@ -12,9 +12,10 @@
         </h3>
         <div class="mt-2">
           <p class="text-sm text-black mb-2">
-            The canvas is now finalized with a total of 12,345 pixels drawn by
-            1,234 active players. ... reference to Witnet ... Remember to come
-            back and claim ownership of this unique piece of art...
+            The canvas is now finalized with a total of
+            {{ totalPixelsDrawn }} pixels drawn by {{ activePlayers }} active
+            players. ... reference to Witnet ... Remember to come back and claim
+            ownership of this unique piece of art...
           </p>
         </div>
       </div>
@@ -30,3 +31,20 @@
     </button>
   </div>
 </template>
+
+<script>
+import { onBeforeMount, computed } from 'vue'
+import { useGameStore } from '@/stores/game'
+
+export default {
+  setup() {
+    const gameStore = useGameStore()
+    onBeforeMount(() => {
+      gameStore.getGameStats()
+    })
+    const totalPixelsDrawn = computed(() => gameStore.gameStats?.totalPixels)
+    const activePlayers = computed(() => gameStore.gameStats?.totalPlayers)
+    return { activePlayers, totalPixelsDrawn }
+  },
+}
+</script>
