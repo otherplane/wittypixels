@@ -1,6 +1,6 @@
 <template>
   <div class="palette-container" v-touch:swipe.bottom="closePanel">
-    <div v-if="selectedPixelInfo" class="selected-pixel">
+    <div v-if="selectedPixelInfo" class="selected-pixel" @click="closePanel">
       <div
         class="pixel-color"
         :style="{
@@ -115,7 +115,6 @@ export default {
       paintButtonType.value = 'primary'
     }
     function closePanel() {
-      console.log('close panel!!')
       store.clearPixelToPaint()
       store.togglePalettePanel(false)
     }

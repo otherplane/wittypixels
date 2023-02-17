@@ -135,6 +135,7 @@ importers:
       vue-router: 4.0.14
       vue-select: ^4.0.0-beta.3
       vue-tsc: 0.34.16
+      vue3-touch-events: ^4.1.0
       web3: 1.7.3
     dependencies:
       '@hennge/vue3-pagination': 1.0.17_vue@3.2.33
@@ -154,6 +155,7 @@ importers:
       vue-konva: 3.0.2_konva@8.4.0
       vue-router: 4.0.14_vue@3.2.33
       vue-select: 4.0.0-beta.6_vue@3.2.33
+      vue3-touch-events: 4.1.0
       web3: 1.7.3
     devDependencies:
       '@pinia/testing': 0.0.14_pinia@2.0.13+vue@3.2.33
@@ -10232,6 +10234,10 @@ packages:
       '@vue/runtime-dom': 3.2.33
       '@vue/server-renderer': 3.2.33_vue@3.2.33
       '@vue/shared': 3.2.33
+
+  /vue3-touch-events/4.1.0:
+    resolution: {integrity: sha512-fZKusOiBJzDPsY34tXYl/Wo9c2ONzBuQmF0+oHqVWr+TDbf90CgMWLHZsTv1KaShXjt+oeLow7BDVBpXW6lfXQ==}
+    dev: false
 
   /w3c-hr-time/1.0.2:
     resolution: {integrity: sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ==}
