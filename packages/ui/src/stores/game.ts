@@ -19,6 +19,7 @@ import {
 
 export const useGameStore = defineStore('gameStore', {
   state: () => ({
+    web3: useWeb3(),
     api: new ApiService(),
     localStore: useLocalStore(),
     gameOverTimeMilli: GAME_ENDS_TIMESTAMP,

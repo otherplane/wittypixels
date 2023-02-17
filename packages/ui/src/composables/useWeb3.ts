@@ -61,10 +61,11 @@ export function useWeb3() {
   const gameStore = useGameStore()
   const player = useStore()
   const network = ref(NETWORKS[CURRENT_NETWORK])
+  const checkIfExist = ref()
   let erc721Contract: any
   let erc20Contract: any
 
-  onMounted(() => {
+  onMounted(async () => {
     if (window.ethereum && !web3) {
       web3 = new Web3(window.ethereum || 'ws://localhost:8545')
       // detect account change
@@ -210,14 +211,14 @@ export function useWeb3() {
   async function checkTokenStatus() {
     try {
       const result = await erc721Contract.methods
-        .getTokenStatus(ERC721_TOKEN_ID)
+        .getTokenStatusString(ERC721_TOKEN_ID)
         .call()
       if (
         result == TokenStatus.Fractionalized ||
         result == TokenStatus.Acquired
       ) {
-        const erc20ContractAddress = await getTokenVaultAddress()
         if (!erc20Contract) {
+          const erc20ContractAddress = await getTokenVaultAddress()
           erc20Contract = new web3.eth.Contract(
             WittyPixelsTokenVaultInterface,
             erc20ContractAddress
@@ -226,12 +227,12 @@ export function useWeb3() {
       } else {
         gameStore.setGameOverStatus(GameOverStatus.Fractionalizing)
       }
-      gameStore.setTokenStatus(TOKEN_STATUS[result] ?? null)
+      gameStore.setTokenStatus(result)
       if (erc20Contract) {
         const erc20PlayerInfo: RedeemPlayerInfo | null =
           await getRedeemPlayerInfo()
         const erc20Info: ERC20ContractInfo | null = await getERC20ContractInfo()
-        if (erc20PlayerInfo?.address === ZERO_ADDRESS) {
+        if (erc20PlayerInfo?.playerAddress === ZERO_ADDRESS) {
           gameStore.setGameOverStatus(GameOverStatus.AllowRedeem)
         } else {
           if (erc20Info?.status == ERC20Status.Acquired) {
@@ -240,6 +241,7 @@ export function useWeb3() {
             gameStore.setGameOverStatus(GameOverStatus.AllowSale)
           } else {
             gameStore.setGameOverStatus(GameOverStatus.AwaitSale)
+            //GET REDEEM INFO
           }
         }
       }
@@ -258,7 +260,13 @@ export function useWeb3() {
       const ERC20ContractInfo: ERC20ContractInfo = await erc20Contract.methods
         .getInfo()
         .call()
-      return ERC20ContractInfo
+      const currentPrice = await web3.utils.fromWei(
+        ERC20ContractInfo.currentPrice
+      )
+      return {
+        ...ERC20ContractInfo,
+        currentPrice,
+      }
     } catch (err) {
       console.log('Error getting ERC20 Contract information', err)
     }
@@ -280,10 +288,17 @@ export function useWeb3() {
 
   async function getWalletInfo({ walletAddress }: { walletAddress: string }) {
     try {
+      const balance = await erc20Contract.methods
+        .balanceOf(walletAddress)
+        .call()
+      const standardizeBalance = await web3.utils.fromWei(balance)
       const ERC20WalletInfo: ERC20WalletInfo = await erc20Contract.methods
         .getWalletInfo(walletAddress)
         .call()
-      return ERC20WalletInfo
+      return {
+        ...ERC20WalletInfo,
+        balance: standardizeBalance,
+      }
     } catch (err) {
       console.log('Error getting wallet info', err)
     }
@@ -294,10 +309,9 @@ export function useWeb3() {
     const redeemArgs = await gameStore.getContractArgs(from)
     const gasPrice = await web3.eth.getGasPrice()
     const fromTxCount = await web3.eth.getTransactionCount(from)
-
     try {
       erc20Contract.methods
-        .redeem(redeemArgs)
+        .redeem(redeemArgs.deeds)
         .send({ from, gasPrice })
         .on('error', (error: any) => {
           gameStore.setError(
@@ -437,7 +451,7 @@ export function useWeb3() {
                 'The transaction was reverted, please try again'
               )
             )
-            localStore.clearTxInfo()
+            localStore.saveTxInfo({ txType: localStore?.txInfo?.txType })
           }
         } else {
           // No receipt yet for transaction hash
@@ -465,7 +479,7 @@ export function useWeb3() {
                     'The transaction was cancelled, please try again'
                   )
                 )
-                localStore.clearTxInfo()
+                localStore.saveTxInfo({ txType: localStore?.txInfo?.txType })
               }
             }
           } catch (err) {
@@ -486,7 +500,9 @@ export function useWeb3() {
     checkTransactionStatus,
     redeemOwnership,
     withdrawNFTOwnership,
+    getRedeemPlayerInfo,
     buyNFT,
     getWalletInfo,
+    getERC20ContractInfo,
   }
 }

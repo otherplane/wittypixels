@@ -14,7 +14,6 @@
           </GameInfo>
         </div>
       </div>
-      <MintInformation />
       <PixelBoard />
     </template>
     <template v-slot:bottom>

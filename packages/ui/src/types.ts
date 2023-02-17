@@ -28,10 +28,10 @@ export type SelectedPixel = {
   owner: string
 }
 export enum ERC20Status {
-  Awaiting = 'Awaiting',
-  Randomizing = 'Randomizing',
-  Auctioning = 'Auctioning',
-  Acquired = 'Acquired',
+  Awaiting = '0',
+  Randomizing = '1',
+  Auctioning = '2',
+  Acquired = '3',
 }
 export type ERC20Stats = {
   redeemedPixels: number
@@ -151,10 +151,10 @@ export enum GameOverStatus {
   AllowWithdraw = 'AllowWithdraw',
 }
 export enum TokenStatus {
-  Void = 'void',
-  Launching = 'launching',
-  Minting = 'minting',
-  Fractionalized = 'fractionalized',
+  Void = 'Void',
+  Launching = 'Launching',
+  Minting = 'Minting',
+  Fractionalized = 'Fractionalized',
   Acquired = 'Acquired',
 }
 export enum CallApiKey {

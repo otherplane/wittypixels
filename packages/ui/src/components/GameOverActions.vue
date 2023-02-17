@@ -23,11 +23,22 @@
       ...
     </p>
   </CustomButton>
-  <ConnectToProvider
-    id="connect-to-provider"
-    v-if="gameStore.redeemCountdownOver"
-  />
-  <CreateTransaction id="transaction-action" v-if="txType" :txType="txType" />
+  <div v-if="gameStore.redeemCountdownOver">
+    <ConnectToProvider id="connect-to-provider" />
+    <RedeemCompleteInfo
+      id="redeem-complete-info"
+      class="await-sale"
+      v-if="
+        !gameStore.errors.web3WrongNetwork &&
+        gameStore.gameOverStatus === GameOverStatus.AwaitSale
+      "
+    />
+    <CreateTransaction
+      id="transaction-action"
+      v-if="txType && !gameStore.errors.web3WrongNetwork"
+      :txType="txType"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -46,6 +57,13 @@ export default {
     const gameOver = computed(() => gameStore.gameOver)
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
     const txType = computed(() => localStore.txInfo?.txType)
+    const showRedeemCompleteInfo = computed(
+      () =>
+        (gameOverStatus.value === GameOverStatus.AwaitSale ||
+          gameOverStatus.value === GameOverStatus.AllowSale ||
+          gameOverStatus.value === GameOverStatus.AllowWithdraw) &&
+        !gameStore.errors.web3WrongNetwork
+    )
     const fractionalizing = computed(() => {
       return (
         !gameOverStatus.value ||
@@ -77,12 +95,21 @@ export default {
     })
 
     return {
+      showRedeemCompleteInfo,
       gameStore,
       NETWORKS,
       CURRENT_NETWORK,
       txType,
       fractionalizing,
+      GameOverStatus,
     }
   },
 }
 </script>
+
+<style lang="scss">
+.await-sale {
+  width: 100% !important;
+  margin-bottom: 16px;
+}
+</style>

@@ -14,6 +14,7 @@
       v-if="transactionConfirmed"
       id="marketplace-button"
       :href="marketplaceUrl"
+      target="_blank"
     >
       <CustomButton :type="web3Disconnected ? 'disable' : 'dark'" :slim="true">
         Check on {{ marketplaceName }}
@@ -27,7 +28,6 @@ import { useLocalStore } from '@/stores/local'
 import { useGameStore } from '@/stores/game'
 import { useModalStore } from '@/stores/modal'
 import { ModalKey, TxType } from '@/types'
-import { useWeb3 } from '@/composables/useWeb3'
 import {
   POLLER_MILLISECONDS,
   NETWORKS,
@@ -51,7 +51,7 @@ export default {
     const localStore = useLocalStore()
     const modalStore = useModalStore()
     const gameStore = useGameStore()
-    const web3WittyPixels = useWeb3()
+    const web3WittyPixels = gameStore.web3
 
     onMounted(() => {
       if (txHash.value && !transactionConfirmed.value) {
@@ -88,7 +88,9 @@ export default {
         `${NETWORKS[CURRENT_NETWORK].marketplace}/${ERC721_ADDRESS}/${ERC721_TOKEN_ID}`
     )
     const txHash = computed(() => localStore.txInfo?.txHash)
-    const marketplaceName = computed(() => NETWORKS[CURRENT_NETWORK])
+    const marketplaceName = computed(
+      () => NETWORKS[CURRENT_NETWORK].marketplaceName
+    )
 
     watch(txHash, value => {
       clearInterval(txConfirmationStatusPoller)
@@ -106,7 +108,8 @@ export default {
         modalStore.openModal(ModalKey.txError)
       }
     })
-    function setTxConfirmationsPoller() {
+    async function setTxConfirmationsPoller() {
+      await web3WittyPixels.checkTransactionStatus()
       txConfirmationStatusPoller = setInterval(async () => {
         await web3WittyPixels.checkTransactionStatus()
       }, POLLER_MILLISECONDS)
@@ -115,13 +118,13 @@ export default {
       clearInterval(txConfirmationStatusPoller)
       txConfirmationStatusPoller = null
     }
-    function gameOverAction() {
+    async function gameOverAction() {
       if (props.txType == TxType.Redeem) {
-        web3WittyPixels.redeemOwnership()
+        await web3WittyPixels.redeemOwnership()
       } else if (props.txType == TxType.Buy) {
-        web3WittyPixels.buyNFT()
+        await web3WittyPixels.buyNFT()
       } else if (props.txType == TxType.Withdraw) {
-        web3WittyPixels.withdrawNFTOwnership()
+        await web3WittyPixels.withdrawNFTOwnership()
       }
     }
     return {

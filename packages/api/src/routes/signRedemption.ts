@@ -24,7 +24,14 @@ const signRedemption: FastifyPluginAsync = async (
 ): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { signRedemptionModel, playerModel, canvas, stats } = fastify
+  const {
+    signRedemptionModel,
+    playerModel,
+    canvas,
+    stats,
+    drawModel,
+    interactionModel,
+  } = fastify
 
   fastify.post<{
     Body: SignRedemptionParams
@@ -94,9 +101,22 @@ const signRedemption: FastifyPluginAsync = async (
 
       const leaf = calculateLeaf(player)
       if (!stats.merkleTree) {
-        throw new Error('No tree exists inside stats in /sign_redemption')
+        const canvasPixels = canvas.countPixelsDrawn()
+        const totalPixels = await drawModel.countAll()
+        const players = await playerModel.getActivePlayers()
+        const totalScans = await interactionModel.countAll()
+
+        const statsParams = {
+          players,
+          totalPixels,
+          totalScans,
+          canvasPixels,
+        }
+        if (stats.hasChanged(statsParams)) {
+          stats.update(statsParams)
+        }
       }
-      const proof = stats.merkleTree.getProof(leaf) as Array<string>
+      const proof = stats.merkleTree?.getProof(leaf) as Array<string>
       if (!proof) {
         throw new Error('Proof is empty in /sign_redemption')
       }

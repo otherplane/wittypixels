@@ -113,7 +113,7 @@ export class ApiService {
 
   getContractArgs({ address, token }) {
     return this._post({
-      url: `${this.baseUrl}/mint`,
+      url: `${this.baseUrl}/sign_redemption`,
       data: { address },
       params: { headers: { authorization: token } },
     })
