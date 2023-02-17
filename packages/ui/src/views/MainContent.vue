@@ -4,18 +4,14 @@
       <InteractionInfo />
     </template>
     <template v-slot:main>
-      <ProviderConnected class="provider-info" />
-      <transition name="fade">
-        <div class="float" v-if="!player.showPalettePanel">
-          <div class="game-info">
-            <GameOverCountdown />
-            <BonusCountdown v-if="player.bonus" />
-            <GameInfo>
-              <p>@{{ player.username }}</p></GameInfo
-            >
-          </div>
-        </div>
-      </transition>
+      <div class="game-info">
+        <ProviderConnected class="provider-info" />
+        <GameOverCountdown />
+        <BonusCountdown v-if="player.bonus" />
+        <GameInfo>
+          <p>@{{ player.username }}</p></GameInfo
+        >
+      </div>
       <MintInformation />
       <PixelBoard />
     </template>
@@ -91,27 +87,20 @@ export default {
 .fade-leave-from {
   opacity: 1;
 }
-.float {
+.game-info {
   position: absolute;
   max-width: max-content;
   z-index: 20;
-  .game-info {
-    margin: 16px;
-    display: grid;
-    grid-template-rows: max-content max-content;
-    grid-template-columns: 1fr;
-    grid-gap: 8px;
-    justify-content: space-between;
-    grid-template-rows: 1fr;
+  margin: 16px;
+  display: grid;
+  grid-template-rows: max-content max-content max-content;
+  grid-template-columns: 1fr;
+  grid-gap: 8px;
+  justify-content: space-between;
+  grid-template-rows: 1fr;
+  .provider-info {
+    max-width: 670px;
+    width: 90vw;
   }
-}
-.provider-info {
-  position: relative;
-  max-width: 700px;
-  z-index: 20;
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 16px;
-  top: 0px;
 }
 </style>
