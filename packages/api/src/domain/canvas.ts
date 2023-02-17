@@ -16,6 +16,7 @@ import {
   ColorMap,
   ColorShade,
 } from '../types'
+import { sha256 } from '../utils'
 import { Draw } from './draw'
 
 export const RED_SHADES: ColorShade = {
@@ -281,6 +282,13 @@ export class Canvas {
     const buffer = Buffer.from(data, 'base64')
 
     return buffer
+  }
+
+  // calculate SHA-256 of the canvas and returns de value as hex
+  toSHA256(): string {
+    const imageBytes = this.toPng()
+
+    return sha256(imageBytes)
   }
 
   getPixel(x: number, y: number): PixelInfo {

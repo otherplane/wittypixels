@@ -1,3 +1,5 @@
+import crypto from 'crypto'
+
 import {
   ERC20_TOKEN_START_TS,
   INTERACTION_COOLDOWN_MILLIS,
@@ -79,4 +81,9 @@ export function generateUsernameList(count: number): Array<string> {
 
   // Convert set into array to allow indexing by index
   return Array.from(usernames)
+}
+
+// Calculate SHA-256 and return the result as hex
+export function sha256(data: Buffer): string {
+  return crypto.createHash('sha256').update(data).digest('hex')
 }

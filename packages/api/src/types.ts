@@ -363,7 +363,7 @@ export const GetImageResponse = Type.Any()
 export type GetImageResponse = Static<typeof GetImageResponse>
 
 export const GetImageQueryParams = Type.Object({
-  base64: Type.Optional(Type.Boolean()),
+  digest: Type.Optional(Type.String()),
 })
 export type GetImageQueryParams = Static<typeof GetImageQueryParams>
 // Interactions history

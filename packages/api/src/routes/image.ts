@@ -25,8 +25,9 @@ const image: FastifyPluginAsync = async (fastify): Promise<void> => {
       }>,
       reply
     ) => {
-      if (request.query.base64) {
-        return reply.status(200).send(canvas.toBase64())
+      const digest = request.query.digest
+      if (digest && digest.toLowerCase() === 'sha-256') {
+        return reply.status(200).send('sha-256: ' + canvas.toSHA256())
       } else {
         reply.header('Content-disposition', 'attachment; filename=wittypixels')
         return reply.type('image/png').send(canvas.toPng())
