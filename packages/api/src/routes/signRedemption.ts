@@ -131,25 +131,27 @@ const signRedemption: FastifyPluginAsync = async (
         .toString('hex')
         .concat(signV)
 
-      const deeds = web3.eth.abi.encodeParameters(
-        [
-          'address',
-          'uint256',
-          'address',
-          'uint256',
-          'uint256',
-          'bytes32[]',
-          'bytes',
-        ],
-        [
-          ERC721_TOKEN_ADDRESS,
-          ERC721_TOKEN_ID,
-          request.body.address,
-          player.creationIndex,
-          playerPixels,
-          proof,
-          '0x' + signature,
-        ]
+      const deeds = web3.eth.abi.encodeParameter(
+        {
+          TokenVaultOwnershipDeeds: {
+            parentToken: 'address',
+            parentTokenId: 'uint256',
+            playerAddress: 'address',
+            playerIndex: 'uint256',
+            playerPixels: 'uint256',
+            playerPixelsProof: 'bytes32[]',
+            signature: 'bytes',
+          },
+        },
+        {
+          parentToken: ERC721_TOKEN_ADDRESS,
+          parentTokenId: ERC721_TOKEN_ID,
+          playerAddress: request.body.address,
+          playerIndex: player.creationIndex,
+          playerPixels: playerPixels,
+          playerPixelsProof: proof,
+          signature: '0x' + signature,
+        }
       )
 
       await signRedemptionModel.create({ deeds })
