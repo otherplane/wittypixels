@@ -232,9 +232,7 @@ export default {
         const prevScale = stageNode.value.scaleX()
         // if the stage was under Konva's drag&drop
         // we need to stop it, and implement our own pan logic with two pointers
-        if (stageNode.value.isDragging()) {
-          stageNode.value.stopDrag()
-        }
+        stageConfig.value.draggable = false
         const p1 = {
           x: touch1.clientX,
           y: touch1.clientY,
