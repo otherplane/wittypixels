@@ -1,5 +1,4 @@
 import { PlayerCache } from '../services/playerCache'
-import { POAP_BONUS_TIME } from '../constants'
 import { BONUS_TIME } from '../constants'
 import {
   DbPlayerVTO,
@@ -51,6 +50,7 @@ export class Player {
     return {
       player: {
         ...protectedplayerVTO,
+        bonusEndsAt: this.hasActiveBonus() ? this.bonusEndsAt : null,
       },
       lastInteractionIn: lastInteractionIn?.isActive()
         ? lastInteractionIn.toVTO()

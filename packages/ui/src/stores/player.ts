@@ -184,7 +184,6 @@ export const useStore = defineStore('player', {
         token: tokenInfo.token,
         url,
       })
-
       if (request.error) {
         this.setError(CallApiKey.bonus, request.error)
         router.push('/')
@@ -288,8 +287,17 @@ export const useStore = defineStore('player', {
         this.setError(CallApiKey.info, request.error)
       } else {
         this.clearError(CallApiKey.info)
-        const { key, username, score, color, palette, creationIndex, name } =
-          request.player
+        const {
+          key,
+          username,
+          score,
+          color,
+          palette,
+          creationIndex,
+          name,
+          bonusEndsAt,
+        } = request.player
+        this.bonus = bonusEndsAt
         this.id = key
         this.username = name || username
         this.score = score

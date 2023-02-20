@@ -45,8 +45,8 @@ const routes = [
       const localStore = useLocalStore()
       const player = useStore()
       const loginInfo = localStore.getToken()
-      if (loginInfo.key && router.currentRoute.value.params.id) {
-        await player.addBonus({ url: router.currentRoute.value.fullPath })
+      if (loginInfo.key && to.params.id) {
+        await player.addBonus({ url: to.fullPath })
       }
       next({ name: 'main', params: { id: loginInfo.key } })
     },

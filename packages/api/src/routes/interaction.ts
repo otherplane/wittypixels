@@ -159,7 +159,7 @@ const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
           ends: currentTimestamp + INTERACTION_DURATION_MILLIS,
           from: fromPlayer.username,
           to: toPlayer.username,
-          quantity: colorQuantity,
+          quantity: totalColorQuantity,
           color: fromPlayer.color,
           timestamp: currentTimestamp,
         })

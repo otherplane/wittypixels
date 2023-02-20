@@ -50,6 +50,7 @@ export const PlayerVTO = Type.Object({
   name: Type.String(),
   score: Type.Integer(),
   nft: Type.Array(Type.Optional(Type.String())),
+  bonusEndsAt: Nullable(Type.Number()),
   creationIndex: Type.Integer(),
   color: Type.Enum(Color),
   palette: Palette,
