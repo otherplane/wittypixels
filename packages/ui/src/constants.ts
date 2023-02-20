@@ -8,7 +8,7 @@ import {
 
 export const ERC721_ADDRESS =
   import.meta.env.VITE_ERC721_ADDRESS ||
-  '0xc0ffee3c6F66dE5a0adcCEc65Dc6bB20C8C6A454'
+  '0xc0FFee029589de1082f8e14d7809F27f452e5191'
 
 export const OPENSEA_BASE_URL =
   import.meta.env.VITE_OPENSEA_BASE_URL ||

@@ -375,13 +375,23 @@
     "name": "getWalletInfo",
     "outputs": [
       {
-        "internalType": "uint16",
-        "name": "sharePercentage100",
-        "type": "uint16"
+        "internalType": "uint256",
+        "name": "wpxBalance",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "withdrawableFunds",
+        "name": "wpxShare10000",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "withdrawableWeis",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "soulboundPixels",
         "type": "uint256"
       }
     ],

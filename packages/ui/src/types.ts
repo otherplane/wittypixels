@@ -49,10 +49,12 @@ export type ERC20ContractInfo = {
   nextPriceBlock: number
 }
 export type ERC20WalletInfo = {
+  wpxBalance: number
   // wallet’s percentage share, multiplied by a 100
-  sharePercentage100: number
+  wpxShare10000: number
   // amount of funds that can be potentially witdrawn from walletAddr
-  withdrawableFunds: number
+  withdrawableWeis: number
+  soulboundPixels: number
 }
 export type Provider = {
   network: string
