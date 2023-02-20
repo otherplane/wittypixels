@@ -123,7 +123,7 @@ export default {
   border: 2px solid var(--primary-color);
   list-style: none;
   text-align: left;
-  visibility: visible;
+  visibility: hidden;
   border-radius: 24px;
   margin: 0;
   display: grid;
@@ -142,6 +142,7 @@ export default {
     .tab {
       cursor: pointer;
       opacity: 1;
+      display: block;
       transition: all 0.3s;
     }
   }
