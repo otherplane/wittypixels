@@ -10,7 +10,7 @@ import {
 const draws: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { playerModel, drawModel } = fastify
+  const { playerModel, drawModel, playerCache } = fastify
 
   // GET /draws?limit=LIMIT&offset=OFFSET
   fastify.get<{
@@ -56,12 +56,18 @@ const draws: FastifyPluginAsync = async (fastify): Promise<void> => {
           )
       }
 
+      const draws = await drawModel.getManyByUsername(
+        player.username,
+        {
+          limit: request.query.limit || 10,
+          offset: request.query.offset || 0,
+        },
+        playerCache
+      )
+
       return reply.status(200).send({
         draws: {
-          draws: await drawModel.getManyByUsername(player.username, {
-            limit: request.query.limit || 10,
-            offset: request.query.offset || 0,
-          }),
+          draws: draws.map(draw => draw.toDbVTO()),
           total: await drawModel.count(player.username),
         },
       })

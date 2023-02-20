@@ -26,29 +26,6 @@ describe('draw.ts', () => {
     })
   })
 
-  it('should return the correct object calling toVTO', async () => {
-    const canvas = new Draw({
-      color: 0,
-      ends: 1675178197787,
-      owner: 'abcde',
-      timestamp: 1675178195287,
-      x: 70,
-      y: 70,
-      stolenTo: '',
-      shade: 3,
-    })
-
-    expect(canvas.toVTO()).toStrictEqual({
-      c: 0,
-      o: 'abcde',
-      t: 1675178195287,
-      x: 70,
-      y: 70,
-      st: '',
-      s: 3,
-    })
-  })
-
   it('should calculate the database sector toDbSectorInfo with when pixel is smaller than cache size', async () => {
     const canvas = new Draw({
       color: 0,

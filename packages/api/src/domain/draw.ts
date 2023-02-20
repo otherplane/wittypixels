@@ -1,5 +1,5 @@
 import { CANVAS_SECTOR_SIZE } from '../constants'
-import { DbDrawVTO, DrawVTO, PixelLocation } from '../types'
+import { DbDrawVTO, PixelLocation } from '../types'
 
 export class Draw {
   ends: number
@@ -32,19 +32,6 @@ export class Draw {
       color: this.color,
       stolenTo: this.stolenTo,
       shade: this.shade,
-    }
-  }
-
-  // This method returns DbDrawVTO with the same keys used in the canvas
-  toVTO(): DrawVTO {
-    return {
-      o: this.owner,
-      t: this.timestamp,
-      x: this.x,
-      y: this.y,
-      c: this.color,
-      st: this.stolenTo,
-      s: this.shade,
     }
   }
 

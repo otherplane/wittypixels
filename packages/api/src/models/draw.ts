@@ -2,6 +2,7 @@ import { Collection, Db } from 'mongodb'
 import { Draw } from '../domain/draw'
 
 import { Repository } from '../repository'
+import { PlayerCache } from '../services/playerCache'
 import { DbDrawVTO } from '../types'
 
 export class DrawModel {
@@ -53,14 +54,24 @@ export class DrawModel {
 
   public async getManyByUsername(
     username: string,
-    paginationParams: { limit: number; offset: number }
-  ): Promise<Array<DbDrawVTO>> {
-    return await this.repository.getSortedBy(
+    paginationParams: { limit: number; offset: number },
+    playerCache: PlayerCache
+  ): Promise<Array<Draw>> {
+    const draws = await this.repository.getSortedBy(
       {
         $or: [{ owner: username }, { stolenTo: username }],
       },
       { timestamp: 'desc' },
       paginationParams
+    )
+
+    return draws.map(
+      draw =>
+        new Draw({
+          ...draw,
+          owner: playerCache.getName(draw.owner),
+          stolenTo: playerCache.getName(draw.stolenTo),
+        })
     )
   }
 
