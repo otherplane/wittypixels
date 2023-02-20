@@ -187,14 +187,6 @@ export const COLORS: ColorMap = {
   4: BLUE_SHADES,
   5: PURPLE_SHADES,
 }
-
-export const TOKEN_STATUS: Record<number, TokenStatus> = {
-  0: TokenStatus.Void,
-  1: TokenStatus.Launching,
-  2: TokenStatus.Minting,
-  3: TokenStatus.Fractionalized,
-  4: TokenStatus.Acquired,
-}
 export const TX_ACTION_COPY: Record<TxType, string> = {
   [TxType.Redeem]: 'Redeem ownership',
   [TxType.Buy]: 'Buy NFT',

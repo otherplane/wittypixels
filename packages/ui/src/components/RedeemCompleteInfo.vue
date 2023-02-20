@@ -1,7 +1,7 @@
 <template>
   <GameInfo class="redeem-complete-info">
-    <p>Balance: {{ walletInfo?.balance }} WPX</p>
-    <p>Ownership: {{ walletInfo?.sharePercentage100 / 10000 }}%</p>
+    <p>Balance: {{ walletInfo?.wpxBalance }} WPX</p>
+    <p>Ownership: {{ walletInfo?.wpxShare10000 / 10000 }}%</p>
     <p>CurrentPrice: {{ contractInfo?.currentPrice }} ETH</p>
   </GameInfo>
 </template>

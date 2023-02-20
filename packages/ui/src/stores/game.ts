@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ApiService } from '@/api'
 import { useLocalStore } from './local'
 import { isMainnetTime } from '@/utils'
+import { useWeb3 } from '@/composables/useWeb3'
 import {
   TokenStatus,
   type Errors,

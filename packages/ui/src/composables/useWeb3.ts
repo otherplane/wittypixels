@@ -10,7 +10,6 @@ import {
   NETWORKS,
   CURRENT_NETWORK,
   ZERO_ADDRESS,
-  TOKEN_STATUS,
 } from '../constants'
 import {
   GameOverErrorKey,
