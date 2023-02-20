@@ -1,3 +1,4 @@
+import { PlayerCache } from '../services/playerCache'
 import {
   DbPlayerVTO,
   ExtendedPlayerVTO,
@@ -79,7 +80,8 @@ export class Player {
   static getLeaderboard(
     players: Array<Player>,
     totalPlayers: number,
-    paginationOffset = 0
+    paginationOffset = 0,
+    playerCache: PlayerCache
   ): { players: Array<PlayerLeaderboardInfo>; total: number } {
     return {
       players: players
@@ -89,7 +91,7 @@ export class Player {
             b.score - a.score || a.username.localeCompare(b.username)
         )
         .map((p, index) => ({
-          username: p.username,
+          username: playerCache.getName(p.username) || p.username,
           name: p.name,
           creationIndex: p.creationIndex,
           score: p.score,
@@ -112,6 +114,6 @@ export class Player {
   }
 
   static isValidName(name: string) {
-    return !!(name && name.length > 3 && name.length < 34)
+    return !!(name && name.length > 2 && name.length < 34)
   }
 }
