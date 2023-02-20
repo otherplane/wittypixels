@@ -190,9 +190,6 @@ export enum GameOverErrorKey {
   contractArgs = 'contractArgs',
   gameStats = 'gameStats',
 }
-export interface Errors {
-  [key: string]: string | null
-}
 export enum TransactionStatus {
   Confirmed = 'Confirmed',
   InProgress = 'InProgress',

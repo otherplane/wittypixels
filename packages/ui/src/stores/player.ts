@@ -5,7 +5,6 @@ import { isNumber } from '@/utils'
 import {
   type PalettePoints,
   type PixelDB,
-  type Errors,
   type InteractionInfo,
   type SelectedPixel,
   CallApiKey,
@@ -29,8 +28,8 @@ export const useStore = defineStore('player', {
       canvasHistory: [],
       interactionHistory: [],
       playersGlobalStats: [],
-      errors: {} as Errors,
-      errorCounter: {} as Errors,
+      errors: {} as Record<CallApiKey, string>,
+      errorCounter: {} as Record<CallApiKey, number>,
       loadings: {} as Record<CallApiKey, boolean>,
       selectedColor: null as number | null,
       selectedShade: 3 as number,
@@ -46,7 +45,11 @@ export const useStore = defineStore('player', {
   },
   getters: {
     isBonusOver(): boolean {
-      return this.bonus < Date.now()
+      if (!this.bonus) {
+        return true
+      } else {
+        return this.bonus < Date.now()
+      }
     },
   },
   actions: {
@@ -133,7 +136,9 @@ export const useStore = defineStore('player', {
     },
     // Errors
     clearError(error: CallApiKey) {
-      this.errors[error] = null
+      if (this.errors[error]) {
+        delete this.errors[error]
+      }
     },
     setError(name: CallApiKey, error: any) {
       this.errors[name] = error.response?.data?.message || error.toString()
