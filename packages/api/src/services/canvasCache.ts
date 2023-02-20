@@ -1,24 +1,30 @@
+import QuickLRU from 'quick-lru'
+
 export class CanvasCache {
-  lastB64: string
+  lru: QuickLRU<number, string>
   checkpoint: number
 
-  constructor(b64: string) {
-    this.lastB64 = b64
-    this.checkpoint = 0
+  constructor(base64: string, checkpoint: number) {
+    this.checkpoint = checkpoint || 0
+    this.lru = new QuickLRU({ maxSize: 1000 })
+
+    this.lru.set(this.checkpoint, base64)
   }
 
   public add(b64: string) {
-    this.lastB64 = b64
     this.checkpoint += 1
+    this.lru.set(this.checkpoint, b64)
   }
 
   hasLatestCanvas(checkpoint: number) {
     return checkpoint !== this.checkpoint
   }
 
-  getCanvas() {
+  getCanvas(checkpoint?: number) {
+    const targetCheckpoint = checkpoint || this.checkpoint
+
     return {
-      canvas: this.lastB64,
+      canvas: this.lru.get(targetCheckpoint),
       checkpoint: this.checkpoint,
     }
   }

@@ -45,7 +45,8 @@ const canvas: FastifyPluginAsync = async (fastify): Promise<void> => {
       request: FastifyRequest<{ Querystring: GetCanvasParams }>,
       reply
     ) => {
-      return reply.status(200).send(canvasCache.getCanvas())
+      const checkpoint = request.query.checkpoint
+      return reply.status(200).send(canvasCache.getCanvas(checkpoint))
     },
   })
 

@@ -144,7 +144,7 @@ export const CanvasVTO = Type.Object({
 export type CanvasVTO = Static<typeof CanvasVTO>
 
 export const GetCanvasResponse = Type.Object({
-  canvas: Type.String(),
+  canvas: Type.Optional(Type.String()),
   checkpoint: Type.Number(),
 })
 export type GetCanvasResponse = Static<typeof GetCanvasResponse>
@@ -281,7 +281,7 @@ export type InteractionHistoryResponse = Static<
 export type Palette = { [key in Color]: number }
 
 export const GetCanvasParams = Type.Object({
-  checkpoint: Type.Number(),
+  checkpoint: Type.Optional(Type.Number()),
 })
 export type GetCanvasParams = Static<typeof GetCanvasParams>
 
