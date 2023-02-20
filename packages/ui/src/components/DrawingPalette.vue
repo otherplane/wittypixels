@@ -1,6 +1,6 @@
 <template>
   <div class="palette-container" v-touch:swipe.bottom="closePanel">
-    <div v-if="selectedPixelInfo" class="selected-pixel" @click="closePanel">
+    <div class="selected-pixel" @click="closePanel">
       <div
         class="pixel-color"
         :style="{
@@ -10,8 +10,8 @@
       <div class="pixel-info">
         <div class="info-top">
           <div class="coordinates">
-            <p class="dark-text">x {{ selectedPixelInfo?.x }}</p>
-            <p class="dark-text">y {{ selectedPixelInfo?.y }}</p>
+            <p class="dark-text">x {{ selectedPixelInfo?.x ?? 0 }}</p>
+            <p class="dark-text">y {{ selectedPixelInfo?.y ?? 0 }}</p>
           </div>
           <p v-if="selectedPixelInfo?.timestamp" class="light-text time">
             {{ formatDistanceToNow(selectedPixelInfo?.timestamp) }}
