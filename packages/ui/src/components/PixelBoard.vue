@@ -41,6 +41,7 @@ export default {
     const pixelColor = ref()
     const layer = new Konva.Layer()
     const gridGroup = new Konva.Group()
+    const gridBackgroundGroup = new Konva.Group()
     const pixelGroup = new Konva.Group()
     const pixelMapImage = new Image()
     const pixelSelection = new Konva.Rect({
@@ -175,9 +176,10 @@ export default {
       if (stageNode.value.children.length) {
         layer.batchDraw()
       } else {
+        drawGrid()
         pixelGroup.add(pixelSelection)
         layer.add(gridGroup)
-        drawGrid()
+        layer.add(gridBackgroundGroup)
         layer.add(pixelGroup)
         stageNode.value.add(layer)
         stageNode.value.scale({ x: 16, y: 16 })
@@ -191,13 +193,10 @@ export default {
 
     function drawGrid() {
       const stepSize = 1
-      const xSize = stageNode.value.width(),
-        ySize = stageNode.value.height(),
-        xSteps = Math.round(xSize / stepSize),
-        ySteps = Math.round(ySize / stepSize)
-
-      for (let i = 0; i <= xSteps; i++) {
-        layer.add(
+      const xSize = Math.round(CANVAS_WIDTH / stepSize)
+      const ySize = Math.round(CANVAS_HEIGHT / stepSize)
+      for (let i = 0; i <= CANVAS_WIDTH; i++) {
+        gridBackgroundGroup.add(
           new Konva.Line({
             x: i * stepSize,
             points: [0, 0, 0, ySize],
@@ -206,8 +205,8 @@ export default {
           })
         )
       }
-      for (let i = 0; i <= ySteps; i++) {
-        layer.add(
+      for (let i = 0; i <= CANVAS_HEIGHT; i++) {
+        gridBackgroundGroup.add(
           new Konva.Line({
             y: i * stepSize,
             points: [0, 0, xSize, 0],
@@ -216,8 +215,6 @@ export default {
           })
         )
       }
-
-      layer.batchDraw()
     }
 
     function setSelectedPixelColor() {
