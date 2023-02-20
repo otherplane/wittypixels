@@ -3,7 +3,7 @@
     <router-link class="btn" :to="isScanEnabled ? '/scan' : ''">
       <CustomButton :type="type" :slim="true">
         <p v-if="isScanEnabled" id="scan-action-text">Scan</p>
-        <p class="disabled-text" v-else id="disabled-scan-text">
+        <p class="disabled-text" v-if="!isScanEnabled" id="disabled-scan-text">
           Allow new scan in
           <TimeLeft
             v-if="player.interactionOut?.ends"
@@ -29,7 +29,7 @@ export default {
     const player = useStore()
     const gameStore = useGameStore()
     const type = computed(() => (player.interactionOut ? 'disable' : 'dark'))
-    const isScanEnabled = computed(() => type.value !== 'disable')
+    const isScanEnabled = computed(() => type.value === 'dark')
     onMounted(async () => {
       await player.getPlayerInfo()
     })
