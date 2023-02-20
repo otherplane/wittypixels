@@ -6,7 +6,7 @@ import { Player } from '../domain/player'
 const leaderboard: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
 
-  const { playerModel } = fastify
+  const { playerModel, playerCache } = fastify
 
   //GET /leaderboard?resource=RESOURCE&limit=LIMIT&offset=OFFSET
   fastify.get<{
@@ -32,7 +32,8 @@ const leaderboard: FastifyPluginAsync = async (fastify): Promise<void> => {
       const paginatedPlayers = Player.getLeaderboard(
         players,
         totalPlayers,
-        request.query.offset
+        request.query.offset,
+        playerCache
       )
 
       return reply.status(200).send({
