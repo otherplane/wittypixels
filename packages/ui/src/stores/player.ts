@@ -164,7 +164,7 @@ export const useStore = defineStore('player', {
         router.push(`/settings/${key}`)
       }
     },
-    async updateName({ name }) {
+    async updateName({ name }: { name: string }) {
       const tokenInfo = this.localStore.getToken()
       const request = await this.api.updatePlayerName({
         token: tokenInfo.token,
@@ -172,10 +172,10 @@ export const useStore = defineStore('player', {
         name,
       })
       if (request.error) {
-        this.setError(ErrorKey.updateName, request.error)
+        this.setError(CallApiKey.updateName, request.error)
       } else {
-        this.name = request.player.name
-        this.clearError(ErrorKey.updateName)
+        this.username = request.player.name
+        this.clearError(CallApiKey.updateName)
         this.bonus = request.bonusEndsAt
       }
     },
@@ -302,8 +302,7 @@ export const useStore = defineStore('player', {
         const { key, username, score, color, palette, creationIndex, name } =
           request.player
         this.id = key
-        this.username = username
-        this.name = name
+        this.username = name || username
         this.score = score
         this.palettePoints = palette
         this.color = color

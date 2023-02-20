@@ -61,7 +61,7 @@ export default {
     function isPixelStolen(interaction) {
       return (
         interaction?.stolenTo !== '' &&
-        interaction?.stolenTo === (player.name || player.username)
+        interaction?.stolenTo === player.username
       )
     }
     return {

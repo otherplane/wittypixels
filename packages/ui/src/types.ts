@@ -173,6 +173,7 @@ export enum CallApiKey {
   paint = 'paint',
   pixel = 'pixel',
   bonus = 'bonus',
+  updateName = 'updateName',
 }
 export enum InteractionType {
   interactionOut = 'interactionOut',

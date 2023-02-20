@@ -4,7 +4,12 @@
       <div class="container">
         <SectionHeader title="Settings" />
         <label class="form-label">Name</label>
-        <CustomInput class="field" type="text" label="name" v-model="name" />
+        <CustomInput
+          class="field"
+          type="text"
+          label="name"
+          v-model="username"
+        />
         <SectionHeader title="Instructions" />
         <p class="paragraph">
           To <span class="bold orange">send color pixels</span> to somebody, you
@@ -60,19 +65,19 @@ export default {
   setup() {
     const player = useStore()
     const updateName = debounce(val => {
-      if (val !== player.name) {
+      if (val !== player.username) {
         player.updateName({ name: val })
       }
     }, 1200)
-    const name = computed({
+    const username = computed({
       get() {
-        return player.name
+        return player.username
       },
       set: updateName,
     })
 
     const fromAuth = ref(!!router.currentRoute.value.params?.id)
-    return { player, importSvg, fromAuth, name }
+    return { player, importSvg, fromAuth, username }
   },
 }
 </script>
