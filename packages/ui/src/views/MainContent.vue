@@ -4,16 +4,17 @@
       <InteractionInfo />
     </template>
     <template v-slot:main>
-      <ProviderConnected class="provider-info" />
-      <div class="float">
-        <div class="game-info">
+      <transition name="fade">
+        <div class="game-info" v-if="!player.showPalettePanel">
+          <ProviderConnected class="provider-info" />
           <GameOverCountdown />
           <BonusCountdown v-if="player.bonus" />
           <GameInfo>
-            <p>{{ player.score }} Wpx</p>
-          </GameInfo>
+            <p>@{{ player.username }}</p></GameInfo
+          >
         </div>
-      </div>
+      </transition>
+      <MintInformation />
       <PixelBoard />
     </template>
     <template v-slot:bottom>
