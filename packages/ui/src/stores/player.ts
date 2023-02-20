@@ -220,18 +220,15 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
-      this.loadings[CallApiKey.history] = true
       if (request.error) {
         if (
           this.errorCounter[CallApiKey.interactionHistory] > MAX_ERROR_COUNTER
         ) {
           router.push('/init-game')
         }
-        this.loadings[CallApiKey.interactionHistory] = false
         this.setError(CallApiKey.interactionHistory, request.error)
       } else {
         this.clearError(CallApiKey.interactionHistory)
-        this.loadings[CallApiKey.interactionHistory] = false
         return {
           result: request.interactions?.interactions,
           total: request.interactions?.total,
@@ -247,16 +244,13 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
-      this.loadings[CallApiKey.canvasHistory] = true
       if (request.error) {
         if (this.errorCounter[CallApiKey.canvasHistory] > MAX_ERROR_COUNTER) {
           router.push('/init-game')
         }
         this.setError(CallApiKey.canvasHistory, request.error)
-        this.loadings[CallApiKey.canvasHistory] = false
       } else {
         this.clearError(CallApiKey.canvasHistory)
-        this.loadings[CallApiKey.canvasHistory] = false
         return {
           result: request.draws?.draws,
           total: request.draws?.total,
@@ -270,12 +264,9 @@ export const useStore = defineStore('player', {
         offset,
         limit,
       })
-      this.loadings[CallApiKey.getLeaderboardInfo] = true
       if (request.error) {
-        this.loadings[CallApiKey.getLeaderboardInfo] = false
         this.setError(CallApiKey.getLeaderboardInfo, request.error)
       } else {
-        this.loadings[CallApiKey.getLeaderboardInfo] = false
         this.clearError(CallApiKey.getLeaderboardInfo)
         return {
           result: request.players.players,

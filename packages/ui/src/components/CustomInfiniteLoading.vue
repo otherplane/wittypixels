@@ -31,6 +31,8 @@ export default {
       return PAGINATION_LIMIT * currentPage.value
     })
 
+    onBeforeMount(() => emit('loading', true))
+
     const load = async $state => {
       try {
         const request = await props.getItems(offset.value, PAGINATION_LIMIT)
@@ -42,6 +44,7 @@ export default {
           requestData.total < PAGINATION_LIMIT &&
           requestData.result.length !== props.total
         ) {
+          emit('loading', false)
           emit('result', request)
           return $state.complete()
         }

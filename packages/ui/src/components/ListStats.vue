@@ -37,6 +37,7 @@
 <script>
 import { useStore } from '@/stores/player'
 import { ref, onBeforeUnmount } from 'vue'
+import { CallApiKey } from '@/types'
 import { getColor } from '@/composables/getColor'
 export default {
   props: {

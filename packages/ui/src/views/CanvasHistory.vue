@@ -26,8 +26,10 @@
         />
         <CustomInfiniteLoading
           :getItems="player.getCanvasHistory"
+          :loadingKey="CallApiKey.canvasHistory"
           :list="player.canvasHistory || []"
           :total="totalItems"
+          @loading="setLoading"
           @result="pushItems"
         />
       </div>
@@ -47,11 +49,12 @@ export default {
     const player = useStore()
     const timeZone = 'America/Denver'
     const totalItems = ref(0)
-    const showEmptyState = computed(
-      () =>
+    const showEmptyState = computed(() => {
+      return (
         !player.loadings[CallApiKey.canvasHistory] &&
         !player.canvasHistory.length
-    )
+      )
+    })
     onBeforeUnmount(() => (player.canvasHistory = []))
     const pushItems = items => {
       if (items) {
@@ -65,8 +68,12 @@ export default {
         interaction?.stolenTo === player.username
       )
     }
+    function setLoading(value) {
+      player.loadings[CallApiKey.canvasHistory] = value
+    }
     return {
       showEmptyState,
+      setLoading,
       CallApiKey,
       getColor,
       player,

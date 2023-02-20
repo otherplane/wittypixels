@@ -26,6 +26,7 @@
           :getItems="player.getInteractionHistory"
           :list="player.interactionHistory || []"
           :total="totalItems"
+          @loading="setLoading"
           @result="pushItems"
         />
       </div>
@@ -58,7 +59,11 @@ export default {
         totalItems.value = items.total
       }
     }
+    function setLoading(value) {
+      player.loadings[CallApiKey.interactionHistory] = value
+    }
     return {
+      setLoading,
       showEmptyState,
       CallApiKey,
       COLORS,
