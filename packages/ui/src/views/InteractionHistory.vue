@@ -36,7 +36,7 @@
 import { useStore } from '@/stores/player'
 import { getColor } from '@/composables/getColor'
 import { CallApiKey } from '@/types'
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeUnmount } from 'vue'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 import { formatDate } from '@/utils'
@@ -51,6 +51,7 @@ export default {
         !player.loadings[CallApiKey.interactionHistory] &&
         !player.interactionHistory.length
     )
+    onBeforeUnmount(() => (player.interactionHistory = []))
     const pushItems = items => {
       if (items) {
         player.interactionHistory.push(...items.result)

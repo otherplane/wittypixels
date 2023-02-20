@@ -36,7 +36,7 @@
 
 <script>
 import { useStore } from '@/stores/player'
-import { ref } from 'vue'
+import { ref, onBeforeUnmount } from 'vue'
 import { getColor } from '@/composables/getColor'
 export default {
   props: {
@@ -52,6 +52,7 @@ export default {
   setup(props) {
     const player = useStore()
     const totalGlobalItems = ref(0)
+    onBeforeUnmount(() => (player.playersGlobalStats = []))
     const pushGlobalItems = items => {
       if (items) {
         player.playersGlobalStats.push(...items.result)

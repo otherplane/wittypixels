@@ -36,7 +36,7 @@
 </template>
 <script>
 import { useStore } from '@/stores/player'
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeUnmount } from 'vue'
 import { format } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 import { formatDate } from '@/utils'
@@ -52,6 +52,7 @@ export default {
         !player.loadings[CallApiKey.canvasHistory] &&
         !player.canvasHistory.length
     )
+    onBeforeUnmount(() => (player.canvasHistory = []))
     const pushItems = items => {
       if (items) {
         player.canvasHistory.push(...items.result)

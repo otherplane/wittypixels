@@ -30,9 +30,6 @@ export default {
     const offset = computed(() => {
       return PAGINATION_LIMIT * currentPage.value
     })
-    onBeforeMount(async () => {
-      await props.getItems(offset.value, PAGINATION_LIMIT)
-    })
 
     const load = async $state => {
       try {
