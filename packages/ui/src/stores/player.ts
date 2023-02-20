@@ -137,7 +137,7 @@ export const useStore = defineStore('player', {
     },
     setError(name: CallApiKey, error: any) {
       this.errors[name] = error.response?.data?.message || error.toString()
-      if (this.errorCounter[name] < MAX_ERROR_COUNTER) {
+      if (this.errorCounter[name] <= MAX_ERROR_COUNTER) {
         this.errorCounter[name] = this.errorCounter[name]
           ? (this.errorCounter[name] += 1)
           : 1
