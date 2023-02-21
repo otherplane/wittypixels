@@ -75,8 +75,11 @@ export const ERC20_TOKEN_START_TS = process.env.ERC20_TOKEN_START_TS
   : 1677891600 // Fri, 3 March 2023 18:00 GMT-7,
 
 // Web3 provider URL
+// export const WEB3_PROVIDER =
+//   process.env.WEB3_PROVIDER || 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID'
+
 export const WEB3_PROVIDER =
-  process.env.WEB3_PROVIDER || 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID'
+  process.env.WEB3_PROVIDER || 'https://matic-mumbai.chainstacklabs.com/'
 
 // WitmonERC721 contract address
 export const WITMON_ERC721_ADDRESS =
