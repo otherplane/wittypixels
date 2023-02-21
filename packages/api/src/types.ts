@@ -286,6 +286,7 @@ export const GetCanvasParams = Type.Object({
 export type GetCanvasParams = Static<typeof GetCanvasParams>
 
 export const Stats = Type.Object({
+  canvasPixels: Type.Number(),
   totalPixels: Type.Number(),
   totalPlayers: Type.Number(),
   totalScans: Type.Number(),
