@@ -8,7 +8,7 @@
             <p class="state-text">No interactions yet.</p>
             <p>
               What are you waiting for? Go look for other players and ask them
-              to scan your Qr code now!
+              to scan your QR code now!
             </p>
           </div>
         </GameInfo>

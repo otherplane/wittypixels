@@ -2,9 +2,7 @@
   <MainLayout :hideNavBar="true">
     <template v-slot:main>
       <div class="cover">
-        <h2 class="title">
-          Participate in the biggest collaborative act of NFT creation to date!
-        </h2>
+        <h2 class="title">The largest collaborative NFT creation to date!</h2>
         <div class="background">
           <ProviderConnected class="float" />
           <PixelBoard />

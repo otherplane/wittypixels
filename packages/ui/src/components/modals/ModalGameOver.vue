@@ -14,8 +14,8 @@
           <p class="text-sm text-black mb-2">
             The canvas is now finalized with a total of
             {{ totalPixelsDrawn }} pixels drawn by {{ activePlayers }} active
-            players. ... reference to Witnet ... Remember to come back and claim
-            ownership of this unique piece of art...
+            players. Remember to come back and claim ownership of this unique
+            piece of art.
           </p>
         </div>
       </div>

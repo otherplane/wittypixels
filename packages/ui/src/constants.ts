@@ -118,7 +118,7 @@ export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://0.0.0.0:4000'
 
 export const BASE_URL =
-  import.meta.env.VITE_BASE_URL || 'https://wittypixels.com'
+  import.meta.env.VITE_BASE_URL || 'https://wittypixels.art'
 
 export const ATTRIBUTES = {}
 
@@ -188,12 +188,12 @@ export const COLORS: ColorMap = {
   5: PURPLE_SHADES,
 }
 export const TX_ACTION_COPY: Record<TxType, string> = {
-  [TxType.Redeem]: 'Redeem ownership',
+  [TxType.Redeem]: 'Claim ownership',
   [TxType.Buy]: 'Buy NFT',
   [TxType.Withdraw]: 'Withdraw',
 }
 export const TX_ACTION_PROGRESS_COPY: Record<TxType, string> = {
-  [TxType.Redeem]: 'Redeeming...',
+  [TxType.Redeem]: 'Claiming...',
   [TxType.Buy]: 'Buying...',
   [TxType.Withdraw]: 'Withdrawing...',
 }

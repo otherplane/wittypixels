@@ -8,13 +8,14 @@
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
         <h3 class="text-lg leading-6 font-medium text-black" id="modal-title">
-          Redeem your {{ ownershipPercentage }}% of ownership
+          Claim your {{ ownershipPercentage }}% of ownership
         </h3>
         <div class="mt-2">
           <p class="text-sm text-black mb-2">
-            You painted 3000px out of {{ totalPixelsDrawn }}. Now you can claim
-            your {{ ownershipPercentage }}% of ownership of the collectively
-            created NFT. Make sure you are connected to a web3 provider
+            You painted {{ paintedPixels }} out of {{ totalPixelsDrawn }}. Now
+            you can claim your {{ ownershipPercentage }}% of ownership of the
+            collectively created NFT on Ethereum. Make sure you are connected to
+            a web3 provider!
           </p>
         </div>
       </div>

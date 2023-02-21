@@ -12,7 +12,7 @@
         </h3>
         <div class="mt-2">
           <p class="text-sm text-black mb-2">
-            Copy the link to import your creature in another browser:
+            Copy the link to import your profile in another browser:
           </p>
           <p class="import-link text-xs text-red">{{ importLink }}</p>
         </div>

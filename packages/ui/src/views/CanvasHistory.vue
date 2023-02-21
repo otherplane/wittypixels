@@ -8,7 +8,7 @@
             <p class="state-text">No canvas interaction yet.</p>
             <p>
               What are you waiting for? Start drawing pixels in the canvas and
-              get WPX
+              get WPX!
             </p>
           </div>
         </GameInfo>

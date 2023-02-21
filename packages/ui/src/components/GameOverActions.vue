@@ -9,9 +9,8 @@
     :slim="true"
   >
     <p class="disabled-text">
-      Allowing redeem
+      Awaiting fractional mint
       <span v-if="!gameStore.redeemCountdownOver">
-        in
         <TimeLeft
           v-if="!gameStore.redeemCountdownOver"
           class="time-left"
