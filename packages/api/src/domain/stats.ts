@@ -55,9 +55,7 @@ export class Stats {
 
   toJson(): StatsVTO {
     return {
-      authorshipsRoot: this.merkleTree?.getRoot().slice(2),
-      // TODO: add canvasDigest
-      canvasDigest: '',
+      canvasRoot: this.merkleTree?.getRoot().slice(2),
       canvasHeight: CANVAS_MAX_Y,
       canvasWidth: CANVAS_MAX_X,
       // amount of drawn pixels in the current canvas
