@@ -62,7 +62,7 @@ export type Provider = {
 }
 export type RedeemPlayerInfo = {
   // EVM address from which NFT ownership was redeemed
-  address: string
+  playerAddress: string
   // Number of pixels redeemed by the UI’s player index
   pixels: number
 }

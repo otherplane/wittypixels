@@ -3,7 +3,7 @@
     <p>
       {{ network ? `Connected to ${network}` : 'No web3 provider connected' }}
     </p>
-    <p>{{ cropMiddle(`${address ?? ''}`, 11) }}</p>
+    <p>{{ cropMiddle(`${address ?? ''}`, 20) }}</p>
   </GameInfo>
 </template>
 
