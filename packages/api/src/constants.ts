@@ -119,7 +119,7 @@ export const PIXEL_LOCKED_DURATION_MS = process.env.PIXEL_LOCKED_DURATION_MS
 
 export const ERC721_TOKEN_ADDRESS = process.env.ERC721_TOKEN_ADDRESS
   ? process.env.ERC721_TOKEN_ADDRESS
-  : '0xc0ffee3c6F66dE5a0adcCEc65Dc6bB20C8C6A454'
+  : '0xc0FFee029589de1082f8e14d7809F27f452e5191'
 
 export const ERC721_TOKEN_ID = process.env.ERC721_TOKEN_ID
   ? parseInt(process.env.ERC721_TOKEN_ID)
