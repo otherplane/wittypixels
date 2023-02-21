@@ -289,8 +289,7 @@ export const Stats = Type.Object({
   totalPixels: Type.Number(),
   totalPlayers: Type.Number(),
   totalScans: Type.Number(),
-  authorshipsRoot: Type.String(),
-  canvasDigest: Type.String(),
+  canvasRoot: Type.String(),
   canvasHeight: Type.Number(),
   canvasWidth: Type.Number(),
 })
@@ -302,11 +301,10 @@ export const GetStatsParams = Type.Object({
 export type GetStatsParams = Static<typeof GetStatsParams>
 
 export const StatsVTO = Type.Object({
-  authorshipsRoot: Type.String(),
+  canvasRoot: Type.String(),
   totalPixels: Type.Number(),
   totalPlayers: Type.Number(),
   totalScans: Type.Number(),
-  canvasDigest: Type.String(),
   canvasHeight: Type.Number(),
   canvasWidth: Type.Number(),
 })
