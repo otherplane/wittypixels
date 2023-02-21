@@ -6,7 +6,8 @@
     >
       <p class="points bold">{{ x }}:{{ y }}</p>
     </ColorContainer>
-    <p v-if="stolenFrom" class="origin">
+    <p v-if="stolenFrom === owner" class="origin">Pixel overpainted</p>
+    <p v-else-if="stolenFrom" class="origin">
       Pixel stolen by
       <span class="name">@{{ owner }}</span>
     </p>
