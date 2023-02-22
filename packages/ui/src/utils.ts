@@ -1,4 +1,4 @@
-import { PLAYER_MAINNET_TIMESTAMP, TIMEZONE } from '@/constants'
+import { TIMEZONE } from '@/constants'
 import { format, formatDistanceToNowStrict } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 
@@ -9,10 +9,6 @@ export function formatNumber(num: number | string) {
   const rgx = /(\d)(?=(\d{3})+(?!\d))/g
   const unit = splitedNumber[0].replace(rgx, '$1,')
   return unit + decimals
-}
-
-export function isMainnetTime() {
-  return Date.now() >= PLAYER_MAINNET_TIMESTAMP * 1000
 }
 
 export function isNumber(number) {
