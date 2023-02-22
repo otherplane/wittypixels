@@ -6,7 +6,6 @@
     <template v-slot:main>
       <transition name="fade">
         <div class="game-info" v-if="!player.showPalettePanel">
-          <ProviderConnected class="provider-info" />
           <GameOverCountdown />
           <BonusCountdown v-if="player.bonus" />
           <GameInfo>
@@ -17,7 +16,6 @@
           >
         </div>
       </transition>
-      <MintInformation />
       <PixelBoard />
     </template>
     <template v-slot:bottom>

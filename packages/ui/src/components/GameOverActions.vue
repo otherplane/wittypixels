@@ -1,4 +1,13 @@
 <template>
+  <div v-if="gameStore.redeemCountdownOver">
+    <WalletInfo class="connected-provider" />
+    <ConnectToProvider id="connect-to-provider" />
+    <CreateTransaction
+      id="transaction-action"
+      v-if="txType && !gameStore.errors.web3WrongNetwork"
+      :txType="txType"
+    />
+  </div>
   <CustomButton
     v-if="
       (!gameStore.redeemCountdownOver || fractionalizing) &&
@@ -9,7 +18,9 @@
     :slim="true"
   >
     <p class="disabled-text">
-      Awaiting fractional mint
+      <span v-if="gameStore.gameOverStatus || !gameStore.redeemCountdownOver">
+        Awaiting fractional mint
+      </span>
       <span v-if="!gameStore.redeemCountdownOver">
         <TimeLeft
           v-if="!gameStore.redeemCountdownOver"
@@ -22,22 +33,6 @@
       ...
     </p>
   </CustomButton>
-  <div v-if="gameStore.redeemCountdownOver">
-    <ConnectToProvider id="connect-to-provider" />
-    <RedeemCompleteInfo
-      id="redeem-complete-info"
-      class="await-sale"
-      v-if="
-        !gameStore.errors.web3WrongNetwork &&
-        gameStore.gameOverStatus === GameOverStatus.AwaitSale
-      "
-    />
-    <CreateTransaction
-      id="transaction-action"
-      v-if="txType && !gameStore.errors.web3WrongNetwork"
-      :txType="txType"
-    />
-  </div>
 </template>
 
 <script lang="ts">
@@ -52,10 +47,10 @@ export default {
     const localStore = useLocalStore()
     const modalStore = useModalStore()
     const gameStore = useGameStore()
-
     const gameOver = computed(() => gameStore.gameOver)
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
     const txType = computed(() => localStore.txInfo?.txType)
+    onMounted(() => localStore.getTxInfo())
     const showRedeemCompleteInfo = computed(
       () =>
         (gameOverStatus.value === GameOverStatus.AwaitSale ||
@@ -71,12 +66,6 @@ export default {
       )
     })
 
-    onMounted(async () => {
-      if (gameOver.value) {
-        modalStore.openModal(ModalKey.gameOver)
-      }
-    })
-
     watch(gameOverStatus, value => {
       if (value == GameOverStatus.AllowRedeem) {
         modalStore.openModal(ModalKey.redeem)
@@ -85,6 +74,8 @@ export default {
         localStore.saveTxInfo({ txType: TxType.Buy })
       } else if (value == GameOverStatus.AllowWithdraw) {
         localStore.saveTxInfo({ txType: TxType.Withdraw })
+      } else if (value == GameOverStatus.AlreadyWithdrawn) {
+        modalStore.openModal(ModalKey.alreadyWithdrawn)
       }
     })
     watch(gameOver, value => {
@@ -107,6 +98,9 @@ export default {
 </script>
 
 <style lang="scss">
+.connected-provider {
+  margin-bottom: 8px;
+}
 .await-sale {
   width: 100% !important;
   margin-bottom: 16px;

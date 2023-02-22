@@ -11,17 +11,25 @@
 
 <script lang="ts">
 import { useGameStore } from '@/stores/game'
-import { POLLER_MILLISECONDS, NETWORKS, CURRENT_NETWORK } from '@/constants.js'
+import { useLocalStore } from '@/stores/local'
+import { NETWORKS, CURRENT_NETWORK } from '@/constants.js'
 import { onMounted, onBeforeUnmount, computed, watch, ref } from 'vue'
 export default {
   setup(_props) {
     let tokenStatusPoller: any
 
     const gameStore = useGameStore()
+    const localStore = useLocalStore()
     const web3WittyPixels = gameStore.web3
     const isPollerActive = ref()
+    const statusPollerMilliseconds = computed(() =>
+      isTransactionInProgress.value ? 6000 : 60000
+    )
     const web3Disconnected = computed(() => gameStore.errors.web3Disconnected)
     const web3WrongNetwork = computed(() => gameStore.errors.web3WrongNetwork)
+    const isTransactionInProgress = computed(
+      () => localStore.txInfo?.txHash && localStore.txInfo?.blockNumber
+    )
 
     onMounted(async () => {
       startTokenStatusPoller()
@@ -48,6 +56,11 @@ export default {
       }
     })
 
+    watch(isTransactionInProgress, () => {
+      clearPoller()
+      startTokenStatusPoller()
+    })
+
     async function startTokenStatusPoller() {
       await web3WittyPixels.enableProvider()
       if (!web3Disconnected.value && !web3WrongNetwork.value) {
@@ -56,7 +69,7 @@ export default {
         // start polling when provider is the correct one
         tokenStatusPoller = await setInterval(async () => {
           await web3WittyPixels.checkTokenStatus()
-        }, POLLER_MILLISECONDS)
+        }, statusPollerMilliseconds.value)
       }
     }
     function addNetwork() {

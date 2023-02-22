@@ -1,12 +1,6 @@
 <template>
   <GameInfo class="redeem-complete-info">
-    <p>Balance: {{ walletInfo?.wpxBalance }} WPX</p>
-  </GameInfo>
-  <GameInfo class="redeem-complete-info">
-    <p>Ownership: {{ walletInfo?.wpxShare10000 / 10000 }}%</p>
-  </GameInfo>
-  <GameInfo class="redeem-complete-info">
-    <p>CurrentPrice: {{ contractInfo?.currentPrice }} ETH</p>
+    <p>Withdrawable funds: {{ walletInfo?.withdrawableEth }} ETH</p>
   </GameInfo>
 </template>
 
@@ -25,13 +19,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.redeem-complete-info {
+.provider-container {
+  width: 100%;
+  padding: 16px;
   margin-bottom: 8px;
-  &:first-of-type {
-    margin-top: 16px;
+  .link {
+    text-decoration: underline;
+    line-break: anywhere;
+    font-weight: bold;
+    padding-bottom: 4px;
+    font-size: 16px;
   }
-  &:last-of-type {
-    margin-bottom: 0px;
+  .external-link-icon {
+    width: 12px;
+    margin-left: 4px;
+    display: inline-block;
   }
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div v-if="isTxTypeAllow" id="create-transaction">
-    <TransactionHash id="transaction-hash" v-if="transactionInProgress" />
     <CustomButton
       v-if="!transactionConfirmed"
       id="transaction-button"
@@ -37,7 +36,14 @@ import {
   TX_ACTION_COPY,
   TX_ACTION_PROGRESS_COPY,
 } from '@/constants.js'
-import { onMounted, onBeforeUnmount, computed, watch, type PropType } from 'vue'
+import {
+  onMounted,
+  onBeforeUnmount,
+  computed,
+  watch,
+  ref,
+  type PropType,
+} from 'vue'
 export default {
   props: {
     txType: {
@@ -51,9 +57,11 @@ export default {
     const localStore = useLocalStore()
     const modalStore = useModalStore()
     const gameStore = useGameStore()
+    const disableTransactionBtn = ref()
     const web3WittyPixels = gameStore.web3
 
     onMounted(() => {
+      localStore.getTxInfo()
       if (txHash.value && !transactionConfirmed.value) {
         setTxConfirmationsPoller()
       }
@@ -65,9 +73,10 @@ export default {
     const transactionError = computed(() => gameStore.errors.transaction)
     const transactionInProgress = computed(
       () =>
-        localStore.txInfo?.txHash &&
-        !transactionConfirmed.value &&
-        !transactionError.value
+        disableTransactionBtn.value ||
+        (localStore.txInfo?.txHash &&
+          !transactionConfirmed.value &&
+          !transactionError.value)
     )
     const transactionConfirmed = computed(
       () =>
@@ -91,7 +100,6 @@ export default {
     const marketplaceName = computed(
       () => NETWORKS[CURRENT_NETWORK].marketplaceName
     )
-
     watch(txHash, value => {
       clearInterval(txConfirmationStatusPoller)
       if (value && !transactionConfirmed.value) {
@@ -100,11 +108,13 @@ export default {
     })
     watch(transactionConfirmed, value => {
       if (value) {
+        disableTransactionBtn.value = false
         modalStore.openModal(ModalKey.txConfirmation)
       }
     })
     watch(transactionError, value => {
       if (value) {
+        disableTransactionBtn.value = false
         modalStore.openModal(ModalKey.txError)
       }
     })
@@ -119,6 +129,7 @@ export default {
       txConfirmationStatusPoller = null
     }
     async function gameOverAction() {
+      disableTransactionBtn.value = true
       if (props.txType == TxType.Redeem) {
         await web3WittyPixels.redeemOwnership()
       } else if (props.txType == TxType.Buy) {

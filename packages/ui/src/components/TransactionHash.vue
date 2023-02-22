@@ -1,15 +1,9 @@
 <template>
-  <GameInfo
-    v-if="gameStore.redeemCountdownOver && blockExplorerTxUrl"
-    class="provider-container"
-  >
-    <p>Transaction hash</p>
-    <p class="link bold">
-      <a :href="blockExplorerTxUrl" target="_blank"
-        >{{ cropMiddle(`${localStore.txInfo?.txHash}`, 11) }}
-      </a>
+  <GameInfo v-if="blockExplorerTxUrl">
+    <a class="link" :href="blockExplorerTxUrl" target="_blank"
+      >Check transaction
       <SvgImage class="external-link-icon" :svg="externalLink" />
-    </p>
+    </a>
   </GameInfo>
 </template>
 
@@ -48,19 +42,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.provider-container {
-  width: 100%;
-  padding: 16px;
-  margin-bottom: 8px;
-  .link {
-    text-decoration: underline;
-    line-break: anywhere;
-    font-weight: bold;
-    padding-bottom: 4px;
-    font-size: 16px;
-  }
+.link {
+  text-decoration: underline;
+  line-break: anywhere;
+  font-weight: bold;
+  padding-bottom: 4px;
   .external-link-icon {
-    width: 12px;
+    width: 10px;
     margin-left: 4px;
     display: inline-block;
   }
