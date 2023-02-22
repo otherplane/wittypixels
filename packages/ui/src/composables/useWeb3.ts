@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Web3 from 'web3/dist/web3.min.js'
@@ -230,17 +230,37 @@ export function useWeb3() {
       if (erc20Contract) {
         const erc20PlayerInfo: RedeemPlayerInfo | null =
           await getRedeemPlayerInfo()
+        const walletInfo = await getWalletInfo({
+          walletAddress: gameStore.provider.address,
+        })
         const erc20Info: ERC20ContractInfo | null = await getERC20ContractInfo()
-        if (erc20PlayerInfo?.playerAddress === ZERO_ADDRESS) {
-          gameStore.setGameOverStatus(GameOverStatus.AllowRedeem)
-        } else {
-          if (erc20Info?.status == ERC20Status.Acquired) {
-            gameStore.setGameOverStatus(GameOverStatus.AllowWithdraw)
-          } else if (erc20Info?.status == ERC20Status.Auctioning) {
-            gameStore.setGameOverStatus(GameOverStatus.AllowSale)
+        const transactionConfirmed = computed(
+          () =>
+            localStore.txInfo?.txHash &&
+            localStore.txInfo?.blockNumber &&
+            localStore.txInfo?.txConfirmation
+        )
+        if (transactionConfirmed.value || !localStore.txInfo?.txHash) {
+          if (erc20PlayerInfo?.playerAddress === ZERO_ADDRESS) {
+            gameStore.setGameOverStatus(GameOverStatus.AllowRedeem)
           } else {
-            gameStore.setGameOverStatus(GameOverStatus.AwaitSale)
-            //GET REDEEM INFO
+            if (erc20Info?.status == ERC20Status.Acquired) {
+              if (walletInfo?.wpxBalance > 0) {
+                gameStore.setGameOverStatus(GameOverStatus.AllowWithdraw)
+              } else if (transactionConfirmed.value) {
+                gameStore.setGameOverStatus(GameOverStatus.AlreadyWithdrawn)
+              } else {
+                gameStore.setGameOverStatus(GameOverStatus.Acquired)
+              }
+            } else if (erc20Info?.status == ERC20Status.Auctioning) {
+              if (player.username) {
+                gameStore.setGameOverStatus(GameOverStatus.AwaitSale)
+              } else {
+                gameStore.setGameOverStatus(GameOverStatus.AllowSale)
+              }
+            } else {
+              gameStore.setGameOverStatus(GameOverStatus.AwaitSale)
+            }
           }
         }
       }
@@ -262,10 +282,12 @@ export function useWeb3() {
       const currentPrice = await web3.utils.fromWei(
         ERC20ContractInfo.currentPrice
       )
-      return {
+      const result = {
         ...ERC20ContractInfo,
         currentPrice,
       }
+      gameStore.setContractInfo({ contractInfo: result })
+      return result
     } catch (err) {
       console.log('Error getting ERC20 Contract information', err)
     }
@@ -287,17 +309,22 @@ export function useWeb3() {
 
   async function getWalletInfo({ walletAddress }: { walletAddress: string }) {
     try {
-      const balance = await erc20Contract.methods
-        .balanceOf(walletAddress)
-        .call()
-      const standardizeBalance = await web3.utils.fromWei(balance)
       const ERC20WalletInfo: ERC20WalletInfo = await erc20Contract.methods
         .getWalletInfo(walletAddress)
         .call()
-      return {
+      const standardizeWpx = await web3.utils.fromWei(
+        ERC20WalletInfo.wpxBalance
+      )
+      const withdrawableEth = await web3.utils.fromWei(
+        ERC20WalletInfo.withdrawableWeis
+      )
+      const result = {
         ...ERC20WalletInfo,
-        balance: standardizeBalance,
+        wpxBalance: standardizeWpx,
+        withdrawableEth,
       }
+      gameStore.setWalletInfo({ walletInfo: result })
+      return result
     } catch (err) {
       console.log('Error getting wallet info', err)
     }
@@ -317,7 +344,6 @@ export function useWeb3() {
             GameOverErrorKey.transaction,
             createErrorMessage(errorTransactionMessage)
           )
-          console.error(error)
         })
         .on('transactionHash', function (txHash: string) {
           localStore.saveTxInfo({
@@ -340,11 +366,12 @@ export function useWeb3() {
     // Buy Witty Pixels fractionalized NFT
     const from = gameStore.provider.address
     const gasPrice = await web3.eth.getGasPrice()
+    const getValue: ERC20ContractInfo = await getERC20ContractInfo()
     const fromTxCount = await web3.eth.getTransactionCount(from)
     try {
       return await erc20Contract.methods
-        .acquire(gameStore.provider.address)
-        .send({ from, gasPrice })
+        .acquire()
+        .send({ from, gasPrice, value: getValue[2] })
         .on('error', (error: any) => {
           gameStore.setError(
             GameOverErrorKey.transaction,
@@ -376,7 +403,7 @@ export function useWeb3() {
     const fromTxCount = await web3.eth.getTransactionCount(from)
     try {
       return await erc20Contract.methods
-        .withdraw(gameStore.provider.address)
+        .withdraw()
         .send({ from, gasPrice })
         .on('error', (error: any) => {
           gameStore.setError(
