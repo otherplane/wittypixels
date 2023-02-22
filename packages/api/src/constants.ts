@@ -84,7 +84,7 @@ export const WEB3_PROVIDER =
 // WitmonERC721 contract address
 export const WITMON_ERC721_ADDRESS =
   process.env.WITMON_ERC721_ADDRESS ||
-  '0x691908f883E006C0fB42da190A9EA07E6996D6c6'
+  '0xc0FFee029589de1082f8e14d7809F27f452e5191'
 
 export const MONGO_URI: string =
   process.env.MONGO_URI || 'mongodb://localhost:27017/database'

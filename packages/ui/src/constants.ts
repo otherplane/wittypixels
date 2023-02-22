@@ -25,7 +25,6 @@ export const NETWORKS: NetworkMap = {
   137: {
     name: 'Polygon Mainnet',
     id: 137,
-    contractAddress: import.meta.env.VITE_POLYGON_MAINNET_CONTRACT_ADDRESS,
     rpcUrls: ['https://polygon-rpc.com/'],
     blockExplorerUrls: ['https://polygonscan.com'],
     marketplace: 'https://opensea.io/assets/matic',
@@ -47,7 +46,6 @@ export const NETWORKS: NetworkMap = {
   1: {
     name: 'Ethereum Mainnet',
     id: '1',
-    contractAddress: import.meta.env.VITE_ETHEREUM_MAINNET_CONTRACT_ADDRESS,
     rpcUrls: ['https://eth-mainnet.public.blastapi.io'],
     blockExplorerUrls: ['https://etherscan.io'],
     marketplace: 'https://opensea.io/assets/ethereum',
@@ -97,7 +95,6 @@ export const NETWORKS: NetworkMap = {
   80001: {
     name: 'Polygon Mumbai',
     id: 80001,
-    contractAddress: import.meta.env.VITE_POLYGON_MUMBAI_CONTRACT_ADDRESS,
     rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
     blockExplorerUrls: ['https://mumbai.polygonscan.com'],
     marketplace: 'https://testnets.opensea.io/assets/mumbai',
@@ -108,19 +105,15 @@ export const NETWORKS: NetworkMap = {
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export const ERC721_TOKEN_ID = import.meta.env.VITE_ERC721_TOKEN_ID || 2
+export const ERC721_TOKEN_ID = import.meta.env.VITE_ERC721_TOKEN_ID || parseInt(2)
 
-export const CURRENT_NETWORK = import.meta.env.VITE_CURRENT_NETWORK || 80001
-
-export const VITE_TEST = import.meta.env.VITE_TEST || false
+export const CURRENT_NETWORK = import.meta.env.VITE_CURRENT_NETWORK || parseInt(80001)
 
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://0.0.0.0:4000'
 
 export const BASE_URL =
   import.meta.env.VITE_BASE_URL || 'https://wittypixels.art'
-
-export const ATTRIBUTES = {}
 
 export const RED_SHADES: ColorShade = {
   0: [255, 219, 227],
@@ -198,10 +191,10 @@ export const TX_ACTION_PROGRESS_COPY: Record<TxType, string> = {
   [TxType.Withdraw]: 'Withdrawing...',
 }
 export const TIMEZONE = 'America/Denver'
-export const CANVAS_WIDTH = import.meta.env.CANVAS_WIDTH
+export const CANVAS_WIDTH = import.meta.env.VITE_CANVAS_WIDTH
   ? parseInt(import.meta.env.VITE_CANVAS_WIDTH)
   : 250
-export const CANVAS_HEIGHT = import.meta.env.CANVAS_HEIGHT
+export const CANVAS_HEIGHT = import.meta.env.VITE_CANVAS_HEIGHT
   ? parseInt(import.meta.env.VITE_CANVAS_HEIGHT)
   : 250
 export const SCALE_BY = 1.01
