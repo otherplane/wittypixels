@@ -3,7 +3,7 @@
     <p>
       {{ network ? `Connected to ${network}` : 'No web3 provider connected' }}
     </p>
-    <p>{{ cropMiddle(`${address ?? ''}`, 20) }}</p>
+    <p class="address">{{ cropMiddle(`${address ?? ''}`, 22) }}</p>
   </GameInfo>
 </template>
 
@@ -31,5 +31,8 @@ export default {
 .provider-container {
   width: 100%;
   padding: 16px;
+  .address {
+    font-family: 'Roboto Mono', monospace;
+  }
 }
 </style>
