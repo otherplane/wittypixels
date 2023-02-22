@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ApiService } from '@/api'
 import { useLocalStore } from './local'
-import { isMainnetTime } from '@/utils'
 import { useWeb3 } from '@/composables/useWeb3'
 import {
   TokenStatus,
@@ -31,6 +30,8 @@ export const useGameStore = defineStore('gameStore', {
     tokenStatus: null as TokenStatus | null,
     provider: {} as Provider,
     mintParams: null,
+    walletInfo: null as ERC20WalletInfo | null,
+    contractInfo: null as ERC20ContractInfo | null,
     gameStats: null,
     tokenIds: null,
     currentTxType: null as TxType | null,
@@ -42,9 +43,6 @@ export const useGameStore = defineStore('gameStore', {
     },
     isRedeemCountdownOver(): boolean {
       return this.timeToRedeemInMilli < Date.now()
-    },
-    isMainnetTime() {
-      return isMainnetTime()
     },
     txStatus(): TransactionStatus {
       if (
@@ -107,6 +105,12 @@ export const useGameStore = defineStore('gameStore', {
     },
     setGameOver() {
       this.gameOver = true
+    },
+    setWalletInfo({ walletInfo }) {
+      this.walletInfo = walletInfo
+    },
+    setContractInfo({ contractInfo }) {
+      this.contractInfo = contractInfo
     },
     setRedeemCountdownOver() {
       this.redeemCountdownOver = true
