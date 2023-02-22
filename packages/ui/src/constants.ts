@@ -108,7 +108,7 @@ export const NETWORKS: NetworkMap = {
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export const ERC721_TOKEN_ID = 1
+export const ERC721_TOKEN_ID = import.meta.env.VITE_ERC721_TOKEN_ID || 2
 
 export const CURRENT_NETWORK = import.meta.env.VITE_CURRENT_NETWORK || 80001
 

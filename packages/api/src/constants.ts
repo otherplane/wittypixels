@@ -126,7 +126,7 @@ export const ERC721_TOKEN_ADDRESS = process.env.ERC721_TOKEN_ADDRESS
 
 export const ERC721_TOKEN_ID = process.env.ERC721_TOKEN_ID
   ? parseInt(process.env.ERC721_TOKEN_ID)
-  : 1
+  : 2
 export const DEFAULT_RGB: [number, number, number] = [255, 255, 255]
 
 export default {
