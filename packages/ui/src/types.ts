@@ -85,6 +85,7 @@ export enum ModalKey {
   redeem = 'redeem',
   txConfirmation = 'txConfirmation',
   txError = 'txError',
+  alreadyWithdrawn = 'alreadyWithdrawn',
 }
 export interface Modals {
   [key: string]: boolean | null
@@ -149,6 +150,8 @@ export enum GameOverStatus {
   AwaitSale = 'AwaitSale',
   AllowSale = 'AllowSale',
   AllowWithdraw = 'AllowWithdraw',
+  AlreadyWithdrawn = 'AlreadyWithdrawn',
+  Acquired = 'Acquired',
 }
 export enum TokenStatus {
   Void = 'Void',
