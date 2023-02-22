@@ -10,6 +10,7 @@
     <ModalRedeemInfo v-if="modalStore.modals.redeem" />
     <ModalTransactionConfirmed v-if="modalStore.modals.txConfirmation" />
     <ModalTransactionError v-if="modalStore.modals.txError" />
+    <ModalAlreadyWithdrawn v-if="modalStore.modals.alreadyWithdrawn" />
   </ModalDialog>
 </template>
 

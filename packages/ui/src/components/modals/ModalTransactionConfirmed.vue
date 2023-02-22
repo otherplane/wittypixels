@@ -13,15 +13,15 @@
         <div class="mt-2">
           <p class="text-sm text-black mb-2">
             Your transaction was confirmed check in
-            <a
-              v-if="blockExplorerTxUrl"
-              class="link"
-              :href="blockExplorerTxUrl"
-              target="_blank"
-              >block explorer
-              <SvgImage class="external-link-icon" :svg="externalLink" />
-            </a>
           </p>
+          <a
+            v-if="blockExplorerTxUrl"
+            class="link"
+            :href="blockExplorerTxUrl"
+            target="_blank"
+            >block explorer
+            <SvgImage class="external-link-icon" :svg="externalLink" />
+          </a>
         </div>
       </div>
     </div>

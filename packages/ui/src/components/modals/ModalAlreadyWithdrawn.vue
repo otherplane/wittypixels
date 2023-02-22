@@ -8,11 +8,18 @@
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
         <h3 class="text-lg leading-6 font-medium text-black" id="modal-title">
-          Error!
+          You just swapped your WPX for ETH
         </h3>
         <div class="mt-2">
-          <p class="text-sm text-black mb-2">{{ transactionError }}</p>
-          <p class="text-sm text-black mb-2">Please try again!</p>
+          <p class="text-sm text-black mb-2">
+            The same amount of ETH was donated to
+            <a
+              class="link"
+              href="https://thegivingblock.com/donate/headcount/"
+              target="_blank"
+              >TheGivingBlock</a
+            >
+          </p>
         </div>
       </div>
     </div>
@@ -29,13 +36,24 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { onBeforeMount, computed } from 'vue'
 import { useGameStore } from '@/stores/game'
+
 export default {
   setup() {
     const gameStore = useGameStore()
-    const transactionError = computed(() => gameStore.errors.transaction)
-    return { transactionError }
+    onBeforeMount(() => {
+      gameStore.getGameStats()
+    })
+    const totalPixelsDrawn = computed(() => gameStore.gameStats?.totalPixels)
+    const activePlayers = computed(() => gameStore.gameStats?.totalPlayers)
+    return { activePlayers, totalPixelsDrawn }
   },
 }
 </script>
+
+<style lang="scss">
+.link {
+  text-decoration: underline;
+}
+</style>
