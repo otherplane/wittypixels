@@ -107,6 +107,31 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "charity",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Donation",
+    "type": "event"
+  },
+  {
     "inputs": [],
     "name": "acquire",
     "outputs": [],
@@ -320,6 +345,11 @@
             "internalType": "uint256",
             "name": "totalWithdrawals",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ethSoFarDonated",
+            "type": "uint256"
           }
         ],
         "internalType": "struct IWittyPixelsTokenVault.Stats",
@@ -334,6 +364,29 @@
       {
         "internalType": "uint256",
         "name": "nextPriceTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCharityInfo",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "wallet",
+        "type": "address"
+      },
+      {
+        "internalType": "uint8",
+        "name": "percentage",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ethSoFarDonated",
         "type": "uint256"
       }
     ],
@@ -429,24 +482,5 @@
     ],
     "stateMutability": "view",
     "type": "function"
-  },
-  {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "account",
-          "type": "address"
-        }
-      ],
-      "name": "balanceOf",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
   }
 ]
