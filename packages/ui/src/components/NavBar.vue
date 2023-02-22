@@ -12,12 +12,12 @@
       </label>
       <div class="dropdown" :class="{ visible: isMenuVisible }">
         <div class="tab-container" :class="{ visible: isMenuVisible }">
-          <router-link class="tab" to="/leaderboard"> Leaderboard </router-link>
-          <router-link class="tab" to="/interactions">
-            Interactions
-          </router-link>
-          <router-link class="tab" to="/history"> Canvas history </router-link>
           <router-link class="tab" to="/settings">Information</router-link>
+          <router-link class="tab" to="/leaderboard"> Leaderboard </router-link>
+          <router-link class="tab" to="/history"> Canvas history </router-link>
+          <router-link class="tab" to="/interactions">
+            Scans history
+          </router-link>
           <div class="tab" @click="openExportModal()" type="dark">
             Get backup
           </div>
