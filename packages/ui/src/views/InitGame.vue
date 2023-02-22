@@ -4,7 +4,6 @@
       <div class="cover">
         <h2 class="title">The largest collaborative NFT creation to date!</h2>
         <div class="background">
-          <ProviderConnected class="float" />
           <PixelBoard />
         </div>
       </div>
@@ -13,6 +12,7 @@
       <router-link v-if="!gameOver" to="/disclaimer">
         <CustomButton type="primary"> Play now </CustomButton>
       </router-link>
+      <WalletInfo v-if="redeemCountdownOver" class="connected-provider" />
       <ConnectToProvider v-if="redeemCountdownOver" />
       <CreateTransaction v-if="redeemCountdownOver" :txType="TxType.Buy" />
     </template>
@@ -21,17 +21,26 @@
 
 <script lang="ts">
 import { useGameStore } from '@/stores/game'
-import { computed, onMounted } from 'vue'
+import { useLocalStore } from '@/stores/local'
+import { GameOverStatus } from '@/types'
+import { computed, onMounted, watch } from 'vue'
 import { TxType } from '@/types'
 export default {
   setup() {
     const gameStore = useGameStore()
+    const localStore = useLocalStore()
     onMounted(() => {
       if (gameStore.isGameOver) {
         gameStore.setGameOver()
       }
       if (gameStore.isRedeemCountdownOver) {
         gameStore.setRedeemCountdownOver()
+      }
+    })
+    const gameOverStatus = computed(() => gameStore.gameOverStatus)
+    watch(gameOverStatus, value => {
+      if (value == GameOverStatus.AllowSale) {
+        localStore.saveTxInfo({ txType: TxType.Buy })
       }
     })
     const gameOver = computed(() => gameStore.gameOver)
@@ -55,13 +64,6 @@ export default {
     background-position: center;
     background-size: cover;
     height: 100%;
-    .float {
-      margin: 16px;
-      position: absolute;
-      max-width: 700px;
-      z-index: 20;
-      width: 90vw;
-    }
   }
 }
 @media (max-width: 600px) {
