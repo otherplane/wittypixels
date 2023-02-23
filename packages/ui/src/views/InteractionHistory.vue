@@ -12,6 +12,7 @@
             </p>
           </div>
         </GameInfo>
+        <LoadingSpinner v-if="loading" :vheight="60" />
         <InteractionEntry
           v-for="(interaction, index) in player.interactionHistory"
           :key="interaction.timestamp"
@@ -52,6 +53,9 @@ export default {
         !player.loadings[CallApiKey.interactionHistory] &&
         !player.interactionHistory.length
     )
+    const loading = computed(
+      () => player.loadings[CallApiKey.interactionHistory]
+    )
     onBeforeUnmount(() => (player.interactionHistory = []))
     const pushItems = items => {
       if (items) {
@@ -63,6 +67,7 @@ export default {
       player.loadings[CallApiKey.interactionHistory] = value
     }
     return {
+      loading,
       setLoading,
       showEmptyState,
       CallApiKey,

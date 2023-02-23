@@ -1,5 +1,6 @@
 <template>
   <div>
+    <LoadingSpinner v-if="loading" :vheight="60" />
     <div
       v-if="gameEntity === 'players' && player.playersGlobalStats"
       class="list"
@@ -28,6 +29,7 @@
         :getItems="player.getGlobalStats"
         :total="totalGlobalItems"
         :list="player.playersGlobalStats || []"
+        @loading="setLoading"
         @result="pushGlobalItems"
       />
     </div>
@@ -36,7 +38,7 @@
 
 <script>
 import { useStore } from '@/stores/player'
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, onBeforeUnmount, computed } from 'vue'
 import { CallApiKey } from '@/types'
 import { getColor } from '@/composables/getColor'
 export default {
@@ -53,6 +55,9 @@ export default {
   setup(props) {
     const player = useStore()
     const totalGlobalItems = ref(0)
+    const loading = computed(
+      () => player.loadings[CallApiKey.getLeaderboardInfo]
+    )
     onBeforeUnmount(() => (player.playersGlobalStats = []))
     const pushGlobalItems = items => {
       if (items) {
@@ -60,8 +65,13 @@ export default {
         totalGlobalItems.value = items.total
       }
     }
+    function setLoading(value) {
+      player.loadings[CallApiKey.getLeaderboardInfo] = value
+    }
     return {
       player,
+      loading,
+      setLoading,
       totalGlobalItems,
       pushGlobalItems,
       getColor,
