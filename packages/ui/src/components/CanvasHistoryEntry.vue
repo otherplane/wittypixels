@@ -6,7 +6,9 @@
     >
       <p class="points bold">{{ x }}:{{ y }}</p>
     </ColorContainer>
-    <p v-if="stolenFrom === owner" class="origin">Pixel overpainted</p>
+    <p v-if="stolenFrom === player.username" class="origin">
+      Pixel overpainted
+    </p>
     <p v-else-if="stolenFrom" class="origin">
       Pixel stolen by
       <span class="name">@{{ owner }}</span>
@@ -25,6 +27,7 @@
 <script lang="ts">
 import { formatDistanceToNow } from '@/utils'
 import { Position } from '@/types'
+import { useStore } from '@/stores/player'
 import { computed } from 'vue'
 export default {
   props: {
@@ -61,8 +64,10 @@ export default {
     const time = computed(() => {
       return formatDistanceToNow(props.timestamp)
     })
+    const player = useStore()
     return {
       time,
+      player,
       Position,
     }
   },
