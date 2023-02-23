@@ -71,7 +71,7 @@ export default {
         modalStore.openModal(ModalKey.redeem)
         localStore.saveTxInfo({ txType: TxType.Redeem })
       } else if (value == GameOverStatus.AllowSale) {
-        localStore.saveTxInfo({ txType: TxType.Buy })
+        // Auth users are not allow to buy
       } else if (value == GameOverStatus.AllowWithdraw) {
         localStore.saveTxInfo({ txType: TxType.Withdraw })
       } else if (value == GameOverStatus.AlreadyWithdrawn) {

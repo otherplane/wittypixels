@@ -1,9 +1,15 @@
 <template>
-  <GameInfo v-if="gameStore.redeemCountdownOver" class="provider-container">
-    <p>
+  <GameInfo
+    v-if="gameStore.redeemCountdownOver"
+    class="provider-container"
+    id="wallet-info"
+  >
+    <p id="connected-provider">
       {{ network ? `Connected to ${network}` : 'No web3 provider connected' }}
     </p>
-    <p class="address">{{ cropMiddle(`${address ?? ''}`, 22) }}</p>
+    <p class="address" id="wallet-address">
+      {{ cropMiddle(`${address ?? ''}`, 22) }}
+    </p>
     <RedeemCompleteInfo
       id="redeem-complete-info"
       class="wallet-info"
@@ -15,12 +21,13 @@
     />
     <WithdrawInfo
       class="wallet-info"
+      id="withdraw-info"
       v-if="
         !gameStore.errors.web3WrongNetwork &&
         gameStore.gameOverStatus === GameOverStatus.AllowWithdraw
       "
     />
-    <TransactionHash class="transaction-info" v-if="txHash" />
+    <TransactionHash id="tx-hash" class="transaction-info" v-if="txHash" />
   </GameInfo>
 </template>
 

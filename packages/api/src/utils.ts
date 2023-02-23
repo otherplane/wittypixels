@@ -4,7 +4,6 @@ import {
   ERC20_TOKEN_START_TS,
   INTERACTION_COOLDOWN_MILLIS,
   INTERACTION_DURATION_MILLIS,
-  PLAYER_MAINNET_TIMESTAMP,
   COLORS_COUNT,
 } from './constants'
 
@@ -40,10 +39,6 @@ export function calculateRemainingDuration(
 
 export function getColorFromIndex(index: number) {
   return index % COLORS_COUNT
-}
-
-export function isMainnetTime() {
-  return Date.now() >= PLAYER_MAINNET_TIMESTAMP * 1000
 }
 
 export function fromHexToUint8Array(hex: string) {

@@ -89,12 +89,6 @@ export const WITMON_ERC721_ADDRESS =
 export const MONGO_URI: string =
   process.env.MONGO_URI || 'mongodb://localhost:27017/database'
 
-// Mainnet date in millis
-// If `PLAYER_MAINNET_TIMESTAMP=0`, checks are ignored (for testing purposes)
-export const PLAYER_MAINNET_TIMESTAMP = process.env.PLAYER_MAINNET_TIMESTAMP
-  ? parseInt(process.env.PLAYER_MAINNET_TIMESTAMP)
-  : 1645131600 // Thursday, February 17, 2022 09:00:00 PM (UTC)
-
 export const CANVAS_MAX_X = process.env.CANVAS_MAX_X
   ? parseInt(process.env.CANVAS_MAX_X)
   : 250
@@ -151,7 +145,6 @@ export default {
   INTERACTION_COLOR_QUANTITY_MIN,
   INTERACTION_COLOR_QUANTITY_DIVISOR,
   WITMON_ERC721_ADDRESS,
-  PLAYER_MAINNET_TIMESTAMP,
   CANVAS_MAX_X,
   CANVAS_MAX_Y,
   CANVAS_CACHE_MAX_SIZE,

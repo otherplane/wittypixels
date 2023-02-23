@@ -240,22 +240,30 @@ export function useWeb3() {
             localStore.txInfo?.blockNumber &&
             localStore.txInfo?.txConfirmation
         )
+        // No transaction in progress
         if (transactionConfirmed.value || !localStore.txInfo?.txHash) {
+          // There is player info and player didn't claim ownership
           if (erc20PlayerInfo?.playerAddress === ZERO_ADDRESS) {
             gameStore.setGameOverStatus(GameOverStatus.AllowRedeem)
           } else {
+            // Player already claimed ownership or there is no player info
             if (erc20Info?.status == ERC20Status.Acquired) {
+              // The NFT is acquired
               if (walletInfo?.wpxBalance > 0) {
+                // Players with $WPX balance can swap to $ETH
                 gameStore.setGameOverStatus(GameOverStatus.AllowWithdraw)
               } else if (transactionConfirmed.value) {
+                // Player already swap to $ETH
                 gameStore.setGameOverStatus(GameOverStatus.AlreadyWithdrawn)
               } else {
                 gameStore.setGameOverStatus(GameOverStatus.Acquired)
               }
             } else if (erc20Info?.status == ERC20Status.Auctioning) {
               if (player.username) {
+                // Authenticated users are waiting for the NFT to be acquired
                 gameStore.setGameOverStatus(GameOverStatus.AwaitSale)
               } else {
+                // No authenticated users can buy the NFT
                 gameStore.setGameOverStatus(GameOverStatus.AllowSale)
               }
             } else {

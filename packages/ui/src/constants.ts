@@ -12,10 +12,6 @@ export const ERC721_ADDRESS =
   import.meta.env.VITE_ERC721_ADDRESS ||
   '0xc0FFee029589de1082f8e14d7809F27f452e5191'
 
-export const OPENSEA_BASE_URL =
-  import.meta.env.VITE_OPENSEA_BASE_URL ||
-  'https://opensea.io/assets/0x855BCa56D00F3f550D0c610BBF562FEBF6540bc6'
-
 export const EXPLORER_BASE_URL =
   import.meta.env.VITE_EXPLORER_BASE_URL || 'https://polygonscan.com/tx/'
 
