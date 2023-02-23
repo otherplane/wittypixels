@@ -1,17 +1,19 @@
 <template>
-  <div class="marquee">
-    <div class="marquee__inner" aria-hidden="true">
-      <p
-        v-for="(item, index) in new Array(20)"
-        :key="index"
-        class="marquee-elm"
-      >
-        <span>Created by the team behind the</span>
-        <SvgImage class="logo" :svg="witnetLogo" />
-        <span>decentralized oracle /</span>
-      </p>
+  <a href="https://witnet.io/" target="_blank">
+    <div class="marquee">
+      <div class="marquee__inner" aria-hidden="true">
+        <p
+          v-for="(item, index) in new Array(20)"
+          :key="index"
+          class="marquee-elm"
+        >
+          <span>Created by the team behind the</span>
+          <SvgImage class="logo" :svg="witnetLogo" />
+          <span>decentralized oracle /</span>
+        </p>
+      </div>
     </div>
-  </div>
+  </a>
 </template>
 
 <script lang="ts">
