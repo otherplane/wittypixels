@@ -1,5 +1,6 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
 import { GetImageParams, GetImageResponse, GetImageQueryParams } from '../types'
+import base58 from 'bs58'
 
 const image: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
@@ -27,7 +28,9 @@ const image: FastifyPluginAsync = async (fastify): Promise<void> => {
     ) => {
       const digest = request.query.digest
       if (digest && digest.toLowerCase() === 'sha-256') {
-        return reply.status(200).send('sha-256: ' + canvas.toSHA256())
+        const canvasHash = canvas.toSHA256()
+        const canvasB58 = base58.encode(Buffer.from(canvasHash))
+        return reply.status(200).send('sha-256:' + canvasB58)
       } else {
         reply.header('Content-disposition', 'attachment; filename=wittypixels')
         return reply.type('image/png').send(canvas.toPng())

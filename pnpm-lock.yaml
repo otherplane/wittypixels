@@ -27,6 +27,7 @@ importers:
       ajv: 8.11.0
       babel-jest: 28.1.0
       bn.js: ^5.2.1
+      bs58: ^5.0.0
       canvas: ^2.11.0
       cross-env: 7.0.3
       dotenv: 10.0.0
@@ -59,6 +60,7 @@ importers:
       '@types/bn.js': 5.1.1
       ajv: 8.11.0
       bn.js: 5.2.1
+      bs58: 5.0.0
       canvas: 2.11.0
       dotenv: 10.0.0
       fastify: 4.2.0
@@ -4209,6 +4211,10 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
+  /base-x/4.0.0:
+    resolution: {integrity: sha512-FuwxlW4H5kh37X/oW59pwTzzTKRzfrrQwhmyspRM7swOEZcHtDZSCt45U6oKgtuFE+WYPblePMVIPR4RZrh/hw==}
+    dev: false
+
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
@@ -4400,6 +4406,12 @@ packages:
     resolution: {integrity: sha512-Ok3Wdf5vOIlBrgCvTq96gBkJw+JUEzdBgyaza5HLtPm7yTHkjRy8+JzNyHF7BHa0bNWOQIp3m5YF0nnFcOIKLw==}
     dependencies:
       base-x: 3.0.9
+    dev: false
+
+  /bs58/5.0.0:
+    resolution: {integrity: sha512-r+ihvQJvahgYT50JD05dyJNKlmmSlMoOGwn1lCcEzanPglg7TxYjioQUYehQ9mAR/+hOSd2jRc/Z2y5UxBymvQ==}
+    dependencies:
+      base-x: 4.0.0
     dev: false
 
   /bs58check/2.1.2:
