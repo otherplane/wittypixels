@@ -4,7 +4,12 @@
     <ConnectToProvider id="connect-to-provider" />
     <CreateTransaction
       id="transaction-action"
-      v-if="txType && !gameStore.errors.web3WrongNetwork"
+      v-if="
+        txType &&
+        gameStore.gameOverStatus &&
+        (!gameStore.errors.web3WrongNetwork ||
+          !gameStore.errors.web3Disconnected)
+      "
       :txType="txType"
     />
   </div>

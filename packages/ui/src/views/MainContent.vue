@@ -7,11 +7,12 @@
       <transition name="fade">
         <div class="game-info" v-if="!player.showPalettePanel">
           <GameOverCountdown />
+          <GameOverStatus />
           <BonusCountdown v-if="player.bonus" />
           <GameInfo>
             <p>@{{ player.username }}</p></GameInfo
           >
-          <GameInfo>
+          <GameInfo v-if="!redeemCountdownOver">
             <p>{{ player.score }} WPX</p></GameInfo
           >
         </div>
@@ -31,16 +32,18 @@
 
 <script>
 import { useStore } from '@/stores/player'
+import { useGameStore } from '@/stores/game'
 import { useLocalStore } from '@/stores/local'
 import { useModalStore } from '@/stores/modal'
 import { ModalKey, CallApiKey } from '@/types'
-import { onBeforeMount, onMounted, onBeforeUnmount } from 'vue'
+import { onBeforeMount, onMounted, onBeforeUnmount, computed } from 'vue'
 import { POLLER_MILLISECONDS } from '@/constants'
 import { useRouter } from 'vue-router'
 export default {
   setup() {
     const player = useStore()
     const localStore = useLocalStore()
+    const gameStore = useGameStore()
     const router = useRouter()
     const modalStore = useModalStore()
     let playerInfoPoller = null
@@ -71,7 +74,9 @@ export default {
     onBeforeUnmount(() => {
       clearInterval(playerInfoPoller)
     })
+    const redeemCountdownOver = computed(() => gameStore.redeemCountdownOver)
     return {
+      redeemCountdownOver,
       player,
     }
   },

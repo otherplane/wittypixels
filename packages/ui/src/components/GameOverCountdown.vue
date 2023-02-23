@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!gameStore.gameOverStatus">
     <GameInfo v-if="!gameStore.gameOver">
       <p>
         <span>GAME ENDS IN: </span>

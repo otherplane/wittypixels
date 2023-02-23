@@ -4,6 +4,7 @@
       <div class="cover">
         <h2 class="title">The largest collaborative NFT creation to date!</h2>
         <div class="background">
+          <GameOverStatus class="game-status" />
           <PixelBoard />
         </div>
       </div>
@@ -57,6 +58,11 @@ export default {
   overflow: hidden;
   .title {
     padding-bottom: 16px;
+  }
+  .game-status {
+    position: absolute;
+    margin: 16px;
+    z-index: 20;
   }
   .background {
     width: 100%;

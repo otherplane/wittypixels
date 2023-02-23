@@ -100,7 +100,17 @@ export function useWeb3() {
         )
       }
       if (accounts[0]) {
-        const currentProvider: number = await web3.eth.net.getId()
+        let currentProvider: number
+        try {
+          currentProvider = await web3.eth.net.getId()
+        } catch (err) {
+          console.error('Error connecting to provider', err)
+          gameStore.setError(
+            GameOverErrorKey.web3Disconnected,
+            createErrorMessage(errorWeb3Disconnected)
+          )
+          return
+        }
         gameStore.setProvider({
           network: NETWORKS[currentProvider]?.name ?? 'wrong network',
           address: accounts[0],
@@ -246,13 +256,16 @@ export function useWeb3() {
           if (erc20PlayerInfo?.playerAddress === ZERO_ADDRESS) {
             gameStore.setGameOverStatus(GameOverStatus.AllowRedeem)
           } else {
-            // Player already claimed ownership or there is no player info
+            // No player info or the player already claimed ownership
             if (erc20Info?.status == ERC20Status.Acquired) {
               // The NFT is acquired
               if (walletInfo?.wpxBalance > 0) {
                 // Players with $WPX balance can swap to $ETH
                 gameStore.setGameOverStatus(GameOverStatus.AllowWithdraw)
-              } else if (transactionConfirmed.value) {
+              } else if (
+                transactionConfirmed.value &&
+                localStore.txInfo?.txType === TxType.Withdraw
+              ) {
                 // Player already swap to $ETH
                 gameStore.setGameOverStatus(GameOverStatus.AlreadyWithdrawn)
               } else {

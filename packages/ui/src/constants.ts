@@ -179,14 +179,14 @@ export const COLORS: ColorMap = {
   5: PURPLE_SHADES,
 }
 export const TX_ACTION_COPY: Record<TxType, string> = {
-  [TxType.Redeem]: 'Claim ownership',
-  [TxType.Buy]: 'Buy NFT',
-  [TxType.Withdraw]: 'Withdraw',
+  [TxType.Redeem]: 'Claim $WPX',
+  [TxType.Buy]: 'Buy the NFT',
+  [TxType.Withdraw]: 'Swap to $ETH',
 }
 export const TX_ACTION_PROGRESS_COPY: Record<TxType, string> = {
   [TxType.Redeem]: 'Claiming...',
   [TxType.Buy]: 'Buying...',
-  [TxType.Withdraw]: 'Withdrawing...',
+  [TxType.Withdraw]: 'Swapping...',
 }
 export const TIMEZONE = 'America/Denver'
 export const CANVAS_WIDTH = import.meta.env.VITE_CANVAS_WIDTH
