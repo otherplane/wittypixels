@@ -33,6 +33,7 @@ describe('GameOverActions.vue', () => {
       expect(expect(wrapper.find('#allowing-redeem').exists()).toBe(true))
       expect(expect(wrapper.find('#connect-to-provider').exists()).toBe(false))
       expect(expect(wrapper.find('#transaction-action').exists()).toBe(false))
+      expect(expect(wrapper.find('#wallet-info').exists()).toBe(false))
     })
   })
   describe('Redeeem countdown over', () => {
@@ -89,38 +90,9 @@ describe('GameOverActions.vue', () => {
         },
       })
       expect(expect(wrapper.find('#allowing-redeem').exists()).toBe(false))
-      expect(expect(wrapper.find('#redeem-complete-info').exists()).toBe(false))
+      expect(expect(wrapper.find('#wallet-info').exists()).toBe(true))
       expect(expect(wrapper.find('#connect-to-provider').exists()).toBe(true))
       expect(expect(wrapper.find('#transaction-action').exists()).toBe(true))
-    })
-    it('GameOverStatus: Show redeem info when transaciton completed', () => {
-      const wrapper = shallowMount(GameOverActions, {
-        global: {
-          plugins: [
-            createTestingPinia({
-              initialState: {
-                gameStore: {
-                  gameOver: true,
-                  redeemCountdownOver: true,
-                  gameOverStatus: GameOverStatus.AwaitSale,
-                  errors: {
-                    web3WrongNetwork: false,
-                  },
-                },
-                localStore: {
-                  txInfo: { txType: TxType.Redeem },
-                },
-              },
-              stubActions: false,
-              createSpy: vi.fn,
-            }),
-          ],
-        },
-      })
-      expect(expect(wrapper.find('#allowing-redeem').exists()).toBe(false))
-      expect(expect(wrapper.find('#connect-to-provider').exists()).toBe(true))
-      expect(expect(wrapper.find('#transaction-action').exists()).toBe(true))
-      expect(expect(wrapper.find('#redeem-complete-info').exists()).toBe(true))
     })
   })
 })

@@ -105,9 +105,11 @@ export const NETWORKS: NetworkMap = {
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export const ERC721_TOKEN_ID = import.meta.env.VITE_ERC721_TOKEN_ID || parseInt(2)
+export const ERC721_TOKEN_ID =
+  import.meta.env.VITE_ERC721_TOKEN_ID || parseInt(2)
 
-export const CURRENT_NETWORK = import.meta.env.VITE_CURRENT_NETWORK || parseInt(80001)
+export const CURRENT_NETWORK =
+  import.meta.env.VITE_CURRENT_NETWORK || parseInt(80001)
 
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://0.0.0.0:4000'

@@ -1,6 +1,6 @@
 <template>
   <div v-if="gameStore.redeemCountdownOver">
-    <WalletInfo class="connected-provider" />
+    <WalletInfo class="connected-provider" id="wallet-info" />
     <ConnectToProvider id="connect-to-provider" />
     <CreateTransaction
       id="transaction-action"

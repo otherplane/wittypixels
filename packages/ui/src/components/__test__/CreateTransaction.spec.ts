@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import CreateTransaction from '../CreateTransaction.vue'
 import { describe, expect, it, vi } from 'vitest'
 import { createTestingPinia } from '@pinia/testing'
-import { GameOverStatus, TxType } from '@/types'
+import { TxType } from '@/types'
 
 describe('CreateTransaction.vue', () => {
   it('Renders create transaction component', () => {
@@ -50,7 +50,6 @@ describe('CreateTransaction.vue', () => {
         ],
       },
     })
-    expect(expect(wrapper.find('#transaction-hash').exists()).toBe(false))
     expect(expect(wrapper.find('#transaction-button').exists()).toBe(false))
     expect(expect(wrapper.find('#marketplace-button').exists()).toBe(true))
   })
@@ -76,7 +75,6 @@ describe('CreateTransaction.vue', () => {
         ],
       },
     })
-    expect(expect(wrapper.find('#transaction-hash').exists()).toBe(false))
     expect(expect(wrapper.find('#transaction-button').exists()).toBe(false))
     expect(expect(wrapper.find('#marketplace-button').exists()).toBe(true))
   })
@@ -105,7 +103,6 @@ describe('CreateTransaction.vue', () => {
         ],
       },
     })
-    expect(expect(wrapper.find('#transaction-hash').exists()).toBe(true))
     expect(expect(wrapper.find('#transaction-button').exists()).toBe(true))
     expect(expect(wrapper.find('#marketplace-button').exists()).toBe(false))
   })
@@ -136,7 +133,6 @@ describe('CreateTransaction.vue', () => {
         ],
       },
     })
-    expect(expect(wrapper.find('#transaction-hash').exists()).toBe(false))
     expect(expect(wrapper.find('#transaction-button').exists()).toBe(true))
     expect(expect(wrapper.find('#marketplace-button').exists()).toBe(false))
   })

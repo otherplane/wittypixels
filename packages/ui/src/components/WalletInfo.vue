@@ -9,8 +9,8 @@
       class="wallet-info"
       v-if="
         !gameStore.errors.web3WrongNetwork &&
-        gameStore.gameOverStatus === GameOverStatus.AwaitSale ||
-        gameStore.gameOverStatus === GameOverStatus.AllowSale
+        (gameStore.gameOverStatus === GameOverStatus.AwaitSale ||
+          gameStore.gameOverStatus === GameOverStatus.AllowSale)
       "
     />
     <WithdrawInfo
