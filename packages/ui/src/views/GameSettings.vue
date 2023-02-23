@@ -99,8 +99,8 @@
       </div>
     </template>
     <template v-slot:bottom>
-      <router-link v-if="fromAuth" to="/">
-        <CustomButton type="secondary" :slim="true"> Continue</CustomButton>
+      <router-link v-if="!fromAuth" :to="continueUrl">
+        <CustomButton :type="btnType" :slim="true"> Continue</CustomButton>
       </router-link>
     </template>
   </MainLayout>
@@ -109,6 +109,7 @@
 <script>
 import { useStore } from '@/stores/player'
 import { ref, computed } from 'vue'
+import { CallApiKey } from '@/types'
 import router from '../router'
 import { importSvg } from '@/composables/importSvg.js'
 
@@ -128,9 +129,21 @@ export default {
       },
       set: updateName,
     })
-
+    const updateNameError = computed(() => player.errors[CallApiKey.updateName])
+    const continueUrl = computed(() => (!updateNameError.value ? '/' : ''))
+    const btnType = computed(() =>
+      !updateNameError.value ? 'secondary' : 'disable'
+    )
     const fromAuth = ref(!!router.currentRoute.value.params?.id)
-    return { player, importSvg, fromAuth, username }
+    return {
+      player,
+      importSvg,
+      fromAuth,
+      username,
+      updateNameError,
+      continueUrl,
+      btnType,
+    }
   },
 }
 </script>
