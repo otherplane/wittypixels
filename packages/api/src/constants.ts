@@ -70,11 +70,9 @@ export const PLAYERS_COUNT: number = process.env.PLAYERS_COUNT
 
 // Awards date in millis
 // If `ERC20_TOKEN_START_TS=0`, checks are ignored (for testing purposes)
-// export const ERC20_TOKEN_START_TS = process.env.ERC20_TOKEN_START_TS
-//   ? parseInt(process.env.ERC20_TOKEN_START_TS)
-//   : 1677891600 // Fri, 3 March 2023 18:00 GMT-7,
-
-export const ERC20_TOKEN_START_TS = 0
+export const ERC20_TOKEN_START_TS = process.env.ERC20_TOKEN_START_TS
+  ? parseInt(process.env.ERC20_TOKEN_START_TS)
+  : 1677891600 // Fri, 3 March 2023 18:00 GMT-7,
 
 // Web3 provider URL
 // export const WEB3_PROVIDER =
