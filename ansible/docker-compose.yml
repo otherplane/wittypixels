@@ -34,8 +34,8 @@ services:
   # & UI
   ui:
     image: witnet/witty-pixels-ethdenver-2023-ui:latest
-    environment:
-      API_ENDPOINT: "API-REPLACE-ME"
+    env_file:
+      - /home/ubuntu/wp/.env
     networks:
       - WP
     logging: *default-loki
