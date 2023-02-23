@@ -99,7 +99,7 @@
       </div>
     </template>
     <template v-slot:bottom>
-      <router-link v-if="!fromAuth" :to="continueUrl">
+      <router-link v-if="fromAuth" :to="continueUrl">
         <CustomButton :type="btnType" :slim="true"> Continue</CustomButton>
       </router-link>
     </template>
