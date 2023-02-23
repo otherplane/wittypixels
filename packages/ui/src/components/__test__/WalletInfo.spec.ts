@@ -29,7 +29,7 @@ describe('WalletInfo.vue', () => {
     expect(expect(wrapper.find('#wallet-info').exists()).toBe(true))
   })
   it('Does not render wallet info when redeem countdown is not over', () => {
-    const wrapper = shallowMount(CreateTransaction, {
+    const wrapper = shallowMount(WalletInfo, {
       global: {
         plugins: [
           createTestingPinia({
@@ -50,7 +50,7 @@ describe('WalletInfo.vue', () => {
     expect(expect(wrapper.find('#wallet-info').exists()).toBe(false))
   })
   it('Renders wallet connected network and address when redeem countdown over', () => {
-    const wrapper = shallowMount(CreateTransaction, {
+    const wrapper = shallowMount(WalletInfo, {
       global: {
         plugins: [
           createTestingPinia({
@@ -72,7 +72,7 @@ describe('WalletInfo.vue', () => {
     expect(expect(wrapper.find('#wallet-address').exists()).toBe(true))
   })
   it('Renders transaction hash when transaction in progress', () => {
-    const wrapper = shallowMount(CreateTransaction, {
+    const wrapper = shallowMount(WalletInfo, {
       global: {
         plugins: [
           createTestingPinia({
@@ -96,7 +96,7 @@ describe('WalletInfo.vue', () => {
     expect(expect(wrapper.find('#tx-hash').exists()).toBe(true))
   })
   it('Does not render tx hash when no txHash saved', () => {
-    const wrapper = shallowMount(CreateTransaction, {
+    const wrapper = shallowMount(WalletInfo, {
       global: {
         plugins: [
           createTestingPinia({
@@ -121,7 +121,7 @@ describe('WalletInfo.vue', () => {
     expect(expect(wrapper.find('#tx-hash').exists()).toBe(false))
   })
   it('AwaitSale', () => {
-    const wrapper = shallowMount(CreateTransaction, {
+    const wrapper = shallowMount(WalletInfo, {
       global: {
         plugins: [
           createTestingPinia({
@@ -145,7 +145,7 @@ describe('WalletInfo.vue', () => {
     expect(expect(wrapper.find('#withdraw-info').exists()).toBe(false))
   })
   it('AllowSale', () => {
-    const wrapper = shallowMount(CreateTransaction, {
+    const wrapper = shallowMount(WalletInfo, {
       global: {
         plugins: [
           createTestingPinia({
@@ -170,7 +170,7 @@ describe('WalletInfo.vue', () => {
     expect(expect(wrapper.find('#withdraw-info').exists()).toBe(false))
   })
   it('AllowWithdraw', () => {
-    const wrapper = shallowMount(CreateTransaction, {
+    const wrapper = shallowMount(WalletInfo, {
       global: {
         plugins: [
           createTestingPinia({
@@ -194,7 +194,7 @@ describe('WalletInfo.vue', () => {
     expect(expect(wrapper.find('#withdraw-info').exists()).toBe(true))
   })
   it('AlreadyWithdrawn', () => {
-    const wrapper = shallowMount(CreateTransaction, {
+    const wrapper = shallowMount(WalletInfo, {
       global: {
         plugins: [
           createTestingPinia({
