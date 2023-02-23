@@ -49,6 +49,7 @@ export default {
           emit('result', request)
           return $state.complete()
         }
+        emit('loading', false)
         emit('result', request)
         $state.loaded()
         currentPage.value++
