@@ -24,7 +24,7 @@ export default {
       required: true,
     },
   },
-  emits: ['result'],
+  emits: ['result', 'loading'],
   setup(props, { emit }) {
     const currentPage = ref(0)
     const offset = computed(() => {

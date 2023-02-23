@@ -260,13 +260,13 @@ export function useWeb3() {
             if (erc20Info?.status == ERC20Status.Acquired) {
               // The NFT is acquired
               if (walletInfo?.wpxBalance > 0) {
-                // Players with $WPX balance can swap to $ETH
+                // Holders of $WPX balance can swap to $ETH
                 gameStore.setGameOverStatus(GameOverStatus.AllowWithdraw)
               } else if (
                 transactionConfirmed.value &&
                 localStore.txInfo?.txType === TxType.Withdraw
               ) {
-                // Player already swap to $ETH
+                // Player already swapped to $ETH
                 gameStore.setGameOverStatus(GameOverStatus.AlreadyWithdrawn)
               } else {
                 gameStore.setGameOverStatus(GameOverStatus.Acquired)

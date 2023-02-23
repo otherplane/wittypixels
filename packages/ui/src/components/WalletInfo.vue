@@ -10,23 +10,18 @@
     <p class="address" id="wallet-address">
       {{ cropMiddle(`${address ?? ''}`, 22) }}
     </p>
-    <RedeemCompleteInfo
-      id="redeem-complete-info"
-      class="wallet-info"
-      v-if="
-        !gameStore.errors.web3WrongNetwork &&
-        (gameStore.gameOverStatus === GameOverStatus.AwaitSale ||
-          gameStore.gameOverStatus === GameOverStatus.AllowSale)
-      "
-    />
-    <WithdrawInfo
-      class="wallet-info"
-      id="withdraw-info"
+    <div v-if="showRedeemCompleteInfo" id="redeem-info">
+      <RedeemCompleteInfo class="wallet-info" />
+    </div>
+    <div
       v-if="
         !gameStore.errors.web3WrongNetwork &&
         gameStore.gameOverStatus === GameOverStatus.AllowWithdraw
       "
-    />
+      id="withdraw-info"
+    >
+      <WithdrawInfo class="wallet-info" />
+    </div>
     <TransactionHash id="tx-hash" class="transaction-info" v-if="txHash" />
   </GameInfo>
 </template>
@@ -35,18 +30,26 @@
 import { useGameStore } from '@/stores/game'
 import { useLocalStore } from '@/stores/local'
 import { cropMiddle } from '@/utils'
-import { computed } from 'vue'
+import { computed, type ComputedRef } from 'vue'
 import { GameOverStatus } from '@/types'
 
 export default {
   setup() {
     const gameStore = useGameStore()
     const localStore = useLocalStore()
+    const showRedeemCompleteInfo: ComputedRef<boolean> = computed(() => {
+      return (
+        !gameStore.errors.web3WrongNetwork &&
+        (gameStore.gameOverStatus === GameOverStatus.AwaitSale ||
+          gameStore.gameOverStatus === GameOverStatus.AllowSale)
+      )
+    })
     const network = computed(() => gameStore.provider.network)
     const address = computed(() => gameStore.provider.address)
     const txHash = computed(() => localStore.txInfo?.txHash)
     return {
       gameStore,
+      showRedeemCompleteInfo,
       txHash,
       network,
       address,

@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.app.json",
   "exclude": [],
+  "environment": "jsdom",
   "compilerOptions": {
     "allowJs": true,
     "composite": true,
