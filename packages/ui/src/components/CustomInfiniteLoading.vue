@@ -38,6 +38,7 @@ export default {
         const request = await props.getItems(offset.value, PAGINATION_LIMIT)
         const requestData = props.filter ? request[props.filter] : request
         if (props.list.length >= requestData.total) {
+          emit('loading', false)
           return $state.complete()
         }
         if (
