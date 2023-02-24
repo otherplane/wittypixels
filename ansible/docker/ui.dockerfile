@@ -11,4 +11,4 @@ ENV HOST=0.0.0.0
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["pnpm run build:production && pm2 serve --spa /app/dist --no-daemon"]
+CMD "pnpm run build:production && pm2 serve --spa /app/dist --no-daemon"
