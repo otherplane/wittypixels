@@ -1,12 +1,9 @@
 <template>
-  <GameInfo class="redeem-complete-info">
+  <GameInfo v-if="walletInfo?.wpxBalance > 0" class="redeem-complete-info">
     <p>Balance: {{ walletInfo?.wpxBalance }} WPX</p>
   </GameInfo>
-  <GameInfo class="redeem-complete-info">
-    <p>Ownership: {{ walletInfo?.wpxShare10000 / 10000 }}%</p>
-  </GameInfo>
-  <GameInfo class="redeem-complete-info">
-    <p>CurrentPrice: {{ contractInfo?.currentPrice }} ETH</p>
+  <GameInfo v-if="ownership > 0" class="redeem-complete-info">
+    <p>Ownership: {{ ownership }}%</p>
   </GameInfo>
 </template>
 
@@ -18,8 +15,8 @@ export default {
   setup() {
     const gameStore = useGameStore()
     const walletInfo = computed(() => gameStore.walletInfo)
-    const contractInfo = computed(() => gameStore.contractInfo)
-    return { walletInfo, contractInfo }
+    const ownership = computed(() => walletInfo.value?.wpxShare10000 / 10000)
+    return { walletInfo, ownership }
   },
 }
 </script>

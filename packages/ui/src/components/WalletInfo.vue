@@ -64,6 +64,9 @@ export default {
 .provider-container {
   width: 100%;
   padding: 16px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
   .address {
     font-family: 'Roboto Mono', monospace;
   }

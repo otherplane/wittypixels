@@ -272,13 +272,7 @@ export function useWeb3() {
                 gameStore.setGameOverStatus(GameOverStatus.Acquired)
               }
             } else if (erc20Info?.status == ERC20Status.Auctioning) {
-              if (player.username) {
-                // Authenticated users are waiting for the NFT to be acquired
-                gameStore.setGameOverStatus(GameOverStatus.AwaitSale)
-              } else {
-                // No authenticated users can buy the NFT
-                gameStore.setGameOverStatus(GameOverStatus.AllowSale)
-              }
+              gameStore.setGameOverStatus(GameOverStatus.AllowSale)
             } else {
               gameStore.setGameOverStatus(GameOverStatus.AwaitSale)
             }
