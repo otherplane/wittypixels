@@ -137,7 +137,7 @@ export default {
     padding: 8px 0px;
     top: 8px;
     opacity: 1;
-    width: 180px;
+    width: 190px;
     height: 174px;
     .tab {
       cursor: pointer;

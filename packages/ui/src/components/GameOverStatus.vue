@@ -7,7 +7,7 @@
       <p>AUCTION PRICE: {{ contractInfo?.currentPrice }} ETH</p>
     </GameInfo>
     <GameInfo v-else-if="NFTSold" class="nft-sold">
-      <p>ACQUIRED FOR: {{ contractInfo?.currentPrice }} ETH</p>
+      <p>ACQUIRED FOR {{ contractInfo?.currentPrice }} ETH</p>
     </GameInfo>
     <GameInfo v-else>
       <p>GAME OVER</p>
