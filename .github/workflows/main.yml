@@ -1,19 +1,15 @@
 name: production
 
-# on:
-#   workflow_run:
-#     workflows: ["staging"]
-#     types: [completed]
 on:
-  push:
-    branches:
-      - main 
+  workflow_run:
+    workflows: ["staging"]
+    types: [completed]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: main
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v3
 
@@ -40,15 +36,6 @@ jobs:
           echo "$AINV" > ./ansible/inventory.ini
           chmod 400 ./ansible/key.pem
           sed -i "s#LOKI-REPLACE-ME#$LOKI#g" ./ansible/docker-compose.yml
-
-      - name: Build Containers
-        run: |
-          docker build -t witnet/witty-pixels-ethdenver-2023-ui:latest -f ./ansible/docker/ui.dockerfile ./packages/ui
-          docker build -t witnet/witty-pixels-ethdenver-2023-api:latest -f ./ansible/docker/api.dockerfile ./packages/api
-      - name: Publish Containers
-        run: |
-          docker push witnet/witty-pixels-ethdenver-2023-ui:latest
-          docker push witnet/witty-pixels-ethdenver-2023-api:latest
 
       - name: Deploy with Ansible
         shell: bash
