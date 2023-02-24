@@ -10,7 +10,11 @@
     <p class="address" id="wallet-address">
       {{ cropMiddle(`${address ?? ''}`, 22) }}
     </p>
-    <div v-if="showRedeemCompleteInfo" id="redeem-info">
+    <div
+      v-if="showRedeemCompleteInfo"
+      id="redeem-info"
+      class="redeem-complete-info"
+    >
       <RedeemCompleteInfo class="wallet-info" />
     </div>
     <div
@@ -67,6 +71,10 @@ export default {
   display: grid;
   justify-content: center;
   align-items: center;
+  .redeem-complete-info {
+    display: grid;
+    justify-items: center;
+  }
   .address {
     font-family: 'Roboto Mono', monospace;
   }
