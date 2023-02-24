@@ -27,7 +27,6 @@ const leaderboard: FastifyPluginAsync = async (fastify): Promise<void> => {
         limit: request.query.limit || 10,
         offset: request.query.offset || 0,
       })
-
       const totalPlayers = await playerModel.countActive()
       const paginatedPlayers = Player.getLeaderboard(
         players,
