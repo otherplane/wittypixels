@@ -4,7 +4,7 @@
       <div class="incubation-info">
         <p>
           Receiving +{{ interactionIn?.quantity || '' }}px from
-          {{ interactionIn?.from || '' }}
+          {{ interactionIn?.fromName || '' }}
         </p>
         <TimeLeft
           v-if="interactionIn?.ends"

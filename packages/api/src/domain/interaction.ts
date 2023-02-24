@@ -2,7 +2,9 @@ import { Color, DbInteractionVTO } from '../types'
 
 export class Interaction {
   public from: string
+  public fromName: string | undefined
   public to: string
+  public toName: string | undefined
   public quantity: number
   public color: Color
   public timestamp: number
@@ -10,7 +12,9 @@ export class Interaction {
 
   constructor(vto: DbInteractionVTO) {
     this.from = vto.from
+    this.fromName = vto.fromName
     this.to = vto.to
+    this.toName = vto.toName
     this.quantity = vto.quantity
     this.color = vto.color
     this.timestamp = vto.timestamp
@@ -20,7 +24,9 @@ export class Interaction {
   toVTO(): DbInteractionVTO {
     return {
       from: this.from,
+      fromName: this.fromName,
       to: this.to,
+      toName: this.toName,
       quantity: this.quantity,
       color: this.color,
       timestamp: this.timestamp,

@@ -306,7 +306,9 @@ export default {
         stageNode.value.position(newPos)
         lastDist.value = dist
         lastCenter.value = newCenter
-        stageConfig.value.draggable = true
+        setTimeout(() => {
+          stageConfig.value.draggable = true
+        }, 1000)
       } else {
         stageConfig.value.draggable = true
       }
