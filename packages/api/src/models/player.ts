@@ -168,7 +168,7 @@ export class PlayerModel {
         token: { $exists: true, $ne: undefined },
       },
       {
-        testnetPoints: -1,
+        score: -1,
       },
       paginationParams
     )
