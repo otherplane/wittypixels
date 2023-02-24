@@ -303,6 +303,8 @@ export default {
         stageNode.value.position(newPos)
         lastDist.value = dist
         lastCenter.value = newCenter
+      } else {
+        stageConfig.value.draggable = true
       }
     }
     function touchend() {
