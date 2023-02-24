@@ -11,11 +11,9 @@
           v-model="username"
         />
         <SectionHeader title="Instructions" />
-        <p class="instructions-title red">
-          1. Join the Eth Denver oficial game
-        </p>
+        <p class="instructions-title red">1. Join the ETHDenver official game</p>
         <p class="paragraph">
-          Join the official game of EthDenver by visiting the Witnet +
+          Join the official game of ETHDenver by visiting the Witnet +
           WittyPixels booth at the registration area. Receive a limited edition
           player palette pendant and scan the QR code on it with wittypixels.art
           on your phone. The first person to scan it will own it!
@@ -94,7 +92,8 @@
           secured by Witnet — the Multichain Decentralized oracle that makes the
           most of its native $WIT coin to feed reliable data and randomness to
           an ever increasing list of Web3 projects across the 45+ chains it
-          supports. For more info, check out the back side of this leaflet!
+          supports. For more info check
+          <a href="witnet.io" target="blank">witnet.io</a>!
         </p>
       </div>
     </template>
