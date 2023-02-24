@@ -7,8 +7,8 @@
       v-if="
         txType &&
         gameStore.gameOverStatus &&
-        (!gameStore.errors.web3WrongNetwork ||
-          !gameStore.errors.web3Disconnected)
+        !web3Disconnected &&
+        !web3WrongNetwork
       "
       :txType="txType"
     />
@@ -54,6 +54,8 @@ export default {
     const gameStore = useGameStore()
     const gameOver = computed(() => gameStore.gameOver)
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
+    const web3Disconnected = computed(() => gameStore.errors.web3Disconnected)
+    const web3WrongNetwork = computed(() => gameStore.errors.web3WrongNetwork)
     const txType = computed(() => localStore.txInfo?.txType)
     onMounted(() => localStore.getTxInfo())
     const showRedeemCompleteInfo = computed(
@@ -90,6 +92,8 @@ export default {
     })
 
     return {
+      web3Disconnected,
+      web3WrongNetwork,
       showRedeemCompleteInfo,
       gameStore,
       NETWORKS,
