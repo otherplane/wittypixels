@@ -4,7 +4,7 @@
       :color="color"
       :direction="stolenFrom ? Position.right : Position.left"
     >
-      <p class="points bold">{{ x }}:{{ y }}</p>
+      <p class="points bold">{{ x }},{{ y }}</p>
     </ColorContainer>
     <p v-if="stolenFrom === player.username" class="origin">
       Pixel overpainted

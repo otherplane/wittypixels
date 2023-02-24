@@ -100,7 +100,7 @@ export const useStore = defineStore('player', {
           this.setError(CallApiKey.paint, request.error)
         } else {
           this.notify({
-            message: `Pixel (${this.pixelToPaint.x}:${this.pixelToPaint.y}) painted`,
+            message: `Pixel (${this.pixelToPaint.x},${this.pixelToPaint.y}) painted`,
           })
           this.getPixelInfo(this.pixelToPaint.x, this.pixelToPaint.y)
           this.pixelMapImage = request.canvas
