@@ -146,7 +146,7 @@ const interactions: FastifyPluginAsync = async (fastify): Promise<void> => {
         try {
           // Add points to player
           await playerModel.addColor(
-            toPlayer.toDbVTO().key,
+            toPlayer.toDbVTO().username,
             fromPlayer.color,
             totalColorQuantity
           )
