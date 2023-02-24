@@ -138,20 +138,23 @@ export default {
       return `${x}:${y}`
     }
     function onClick() {
-      //If authorized Player show panel to paint
-      pixelSelection.attrs.fill = 'transparent'
-      layer.batchDraw()
-      if (authPlayer.value) {
-        const relativePointerPosition =
-          konvaPixelMapImage.value.getRelativePointerPosition()
-        const pixelCoordinates = {
-          x: Math.floor(relativePointerPosition.x),
-          y: Math.floor(relativePointerPosition.y),
-        }
-        pixelSelection.position(pixelCoordinates)
+      // if touchmove active prevent click
+      if (stageConfig.value.draggable) {
+        pixelSelection.attrs.fill = 'transparent'
         layer.batchDraw()
-        store.togglePalettePanel(true)
-        setSelectedPixel(pixelCoordinates)
+        //If authorized Player show panel to paint
+        if (authPlayer.value) {
+          const relativePointerPosition =
+            konvaPixelMapImage.value.getRelativePointerPosition()
+          const pixelCoordinates = {
+            x: Math.floor(relativePointerPosition.x),
+            y: Math.floor(relativePointerPosition.y),
+          }
+          pixelSelection.position(pixelCoordinates)
+          layer.batchDraw()
+          store.togglePalettePanel(true)
+          setSelectedPixel(pixelCoordinates)
+        }
       }
     }
     function setSelectedPixel({ x, y }: Coordinates) {
@@ -182,7 +185,7 @@ export default {
         layer.add(gridBackgroundGroup)
         layer.add(pixelGroup)
         stageNode.value.add(layer)
-        stageNode.value.scale({ x: 16, y: 16 })
+        stageNode.value.scale({ x: 4, y: 4 })
       }
       gridGroup.on('click tap', onClick)
       pixelGroup.on('click tap', onClick)
