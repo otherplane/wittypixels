@@ -15,7 +15,7 @@ export default {
   setup() {
     const gameStore = useGameStore()
     const walletInfo = computed(() => gameStore.walletInfo)
-    const ownership = computed(() => walletInfo.value?.wpxShare10000 / 10000)
+    const ownership = computed(() => walletInfo.value?.wpxShare10000 / 100)
     return { walletInfo, ownership }
   },
 }
