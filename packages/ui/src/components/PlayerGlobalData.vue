@@ -5,7 +5,7 @@
     :style="{ 'border-color': color }"
   >
     <ColorContainer :color="color">
-      <p class="item player-name">{{ position }}</p>
+      <p class="item position">{{ position }}</p>
     </ColorContainer>
     <p class="item player-name">@{{ name }}</p>
     <p class="item player-score">{{ score }}px</p>
@@ -36,13 +36,17 @@ export default {
   row-gap: 16px;
   column-gap: 16px;
   padding: 16px;
+  font-weight: bold;
+  font-size: 12px;
+  color: var(--primary-color);
   .player-name {
-    color: var(--primary-color);
     justify-self: flex-start;
-    font-size: 12px;
   }
   .player-score {
     justify-self: flex-end;
+  }
+  .position {
+    font-size: 14px;
   }
 }
 .border {
