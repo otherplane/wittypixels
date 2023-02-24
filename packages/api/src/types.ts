@@ -105,7 +105,9 @@ export type JwtVerifyPayload = Static<typeof JwtVerifyPayload>
 
 export const DbInteractionVTO = Type.Object({
   from: Type.String(),
+  fromName: Type.Optional(Type.String()),
   to: Type.String(),
+  toName: Type.Optional(Type.String()),
   quantity: Type.Number(),
   color: Type.Enum(Color),
   timestamp: Type.Number(),
@@ -115,7 +117,6 @@ export type DbInteractionVTO = Static<typeof DbInteractionVTO>
 
 export const ProtectedPlayerVTO = Type.Omit(PlayerVTO, ['token'])
 export type ProtectedPlayerVTO = Static<typeof ProtectedPlayerVTO>
-
 export const ExtendedPlayerVTO = Type.Object({
   player: ProtectedPlayerVTO,
   lastInteractionIn: Nullable(DbInteractionVTO),

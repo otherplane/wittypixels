@@ -11,6 +11,7 @@ import {
   BonusParams,
   BonusReply,
 } from '../types'
+import { Interaction } from '../domain/interaction'
 
 const players: FastifyPluginAsync = async (fastify): Promise<void> => {
   if (!fastify.mongo.db) throw Error('mongo db not found')
@@ -59,17 +60,30 @@ const players: FastifyPluginAsync = async (fastify): Promise<void> => {
           .status(405)
           .send(new Error(`Player has not been claimed yet (key: ${key})`))
       }
-
+      const interactionIn = await fastify.interactionModel.getLast({
+        to: player.username,
+      })
+      const interactionOut = await fastify.interactionModel.getLast({
+        from: player.username,
+      })
+      const lastInteractionIn = interactionIn
+        ? new Interaction({
+            ...interactionIn,
+            fromName: playerCache.getName(interactionIn.from),
+          })
+        : null
+      const lastInteractionOut = interactionOut
+        ? new Interaction({
+            ...interactionOut,
+            toName: playerCache.getName(interactionOut.to),
+          })
+        : null
       const extendedPlayer: ExtendedPlayerVTO =
         await player.toExtendedPlayerVTO({
           // get last incoming interaction
-          lastInteractionIn: await fastify.interactionModel.getLast({
-            to: player.username,
-          }),
+          lastInteractionIn,
           // get last outgoing interaction
-          lastInteractionOut: await fastify.interactionModel.getLast({
-            from: player.username,
-          }),
+          lastInteractionOut,
         })
 
       return reply.status(200).send(extendedPlayer)
