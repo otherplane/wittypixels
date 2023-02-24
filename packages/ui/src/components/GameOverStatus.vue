@@ -25,7 +25,10 @@ export default {
     const gameStore = useGameStore()
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
     const NFTSold = computed(
-      () => gameOverStatus.value === GameOverStatus.Acquired
+      () =>
+        gameOverStatus.value === GameOverStatus.Acquired ||
+        gameOverStatus.value === GameOverStatus.AllowWithdraw ||
+        gameOverStatus.value === GameOverStatus.AlreadyWithdrawn
     )
     const auctionStarted = computed(
       () => gameOverStatus.value === GameOverStatus.AllowSale
