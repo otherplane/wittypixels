@@ -43,7 +43,6 @@ declare module '@vue/runtime-core' {
     PanelSlider: typeof import('./src/components/PanelSlider.vue')['default']
     PixelBoard: typeof import('./src/components/PixelBoard.vue')['default']
     PlayerGlobalData: typeof import('./src/components/PlayerGlobalData.vue')['default']
-    ProviderConnected: typeof import('./src/components/ProviderConnected.vue')['default']
     RedeemCompleteInfo: typeof import('./src/components/RedeemCompleteInfo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
