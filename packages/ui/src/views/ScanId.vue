@@ -2,13 +2,6 @@
   <MainLayout :hideNavBar="player.username ? false : true">
     <template v-slot:main>
       <StreamBarcodeReader class="qr-code" @decode="onDecode" />
-      <CustomButton
-        class="btn"
-        color="black"
-        @click="onDecode('/a17b86baba0cb804')"
-      >
-        Import player id
-      </CustomButton>
       <ModalDialog :show="modal.visible.value" v-on:close="modal.hideModal">
         <ModalClaimConfirmation v-on:claim="register" />
       </ModalDialog>
