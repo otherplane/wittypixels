@@ -24,7 +24,7 @@
     </template>
     <template v-slot:bottom-2>
       <PanelSlider :showPanel="player.showPalettePanel">
-        <!-- <DrawingPalette /> -->
+        <DrawingPalette />
         <div></div>
       </PanelSlider>
     </template>

@@ -67,11 +67,17 @@ import { useGameStore } from '@/stores/game'
 import { formatDistanceToNow, getRgbaColor, isNumber } from '@/utils'
 export default {
   setup() {
+    console.log(1)
     const store = useStore()
+    console.log(2)
     const game = useGameStore()
+    console.log(3)
     const paintButtonType = ref()
+    console.log(4)
     const palette = computed(() => store.palettePoints)
+    console.log(5)
     const colors = computed(() => {
+      console.log(21)
       return Object.keys(COLORS).map(key => {
         return {
           points: palette.value[key] ?? 0,
@@ -79,10 +85,15 @@ export default {
         }
       })
     })
+    console.log(6)
     const selectedPixelInfo = computed(() => {
+
+      console.log(20)
       return store.selectedPixelInfo
     })
+    console.log(7)
     const shades = computed(() => {
+      console.log(19)
       return Object.keys(COLORS[selectedColor.value]).map(key => {
         const shadeData = COLORS[selectedColor.value][key]
         return {
@@ -91,7 +102,10 @@ export default {
         }
       })
     })
+    console.log(8)
     const selectedPixelColor = computed(() => {
+
+      console.log(18)
       return isNumber(selectedPixelInfo.value?.color)
         ? getColor(
             selectedPixelInfo.value?.color,
@@ -99,22 +113,36 @@ export default {
           ).value
         : 'white'
     })
-    const score = computed(() => store.score)
-    const selectedColor = computed(() => store.selectedColor)
+    console.log(9)
+    const score = computed(() => {
+
+      console.log(17)
+      return store.score
+    })
+    console.log(10)
+    const selectedColor = computed(() => {
+      console.log(16)
+      return store.selectedColor
+    })
+    console.log(11)
     function selectShade(shade) {
       store.selectedShade = shade.key
     }
+    console.log(12)
     async function paintPixel() {
       paintButtonType.value = 'disable'
       await store.paintPixel()
       paintButtonType.value = 'primary'
     }
+    console.log(13)
     function closePanel() {
       store.clearPixelToPaint()
       store.togglePalettePanel(false)
     }
+    console.log(14)
     // TODO: Does this avoid re-render?
     const gameOver = computed(() => game.gameOver)
+    console.log(15)
     return {
       game,
       selectShade,
