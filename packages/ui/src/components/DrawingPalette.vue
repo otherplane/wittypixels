@@ -1,5 +1,6 @@
 <template>
   <div class="palette-container" v-touch:swipe.bottom="closePanel">
+    <p>We'll be back soon</p>
     <!-- <div class="selected-pixel" @click="closePanel">
       <div
         class="pixel-color"
@@ -22,7 +23,7 @@
         </p>
       </div>
     </div> -->
-    <div v-if="!gameOver" class="colors-container">
+    <!-- <div v-if="!gameOver" class="colors-container">
       <div class="palette">
         <ColorSelector
           v-for="color in colors"
@@ -53,7 +54,7 @@
       @click="paintPixel"
     >
       Paint pixel
-    </CustomButton>
+    </CustomButton> -->
   </div>
 </template>
 
