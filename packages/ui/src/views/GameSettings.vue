@@ -11,7 +11,9 @@
           v-model="username"
         />
         <SectionHeader title="Instructions" />
-        <p class="instructions-title red">1. Join the ETHDenver official game</p>
+        <p class="instructions-title red">
+          1. Join the ETHDenver official game
+        </p>
         <p class="paragraph">
           Join the official game of ETHDenver by visiting the Witnet +
           WittyPixels booth at the registration area. Receive a limited edition
@@ -93,7 +95,7 @@
           most of its native $WIT coin to feed reliable data and randomness to
           an ever increasing list of Web3 projects across the 45+ chains it
           supports. For more info check
-          <a href="witnet.io" target="blank">witnet.io</a>!
+          <a href="witnet.io" target="blank">witnet.io</a>
         </p>
       </div>
     </template>
