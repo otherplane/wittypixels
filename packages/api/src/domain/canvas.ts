@@ -147,7 +147,7 @@ export class Canvas {
             c: Number.isInteger(currentPixel.c) ? currentPixel.c : pixel.c,
             o: pixel.o || currentPixel.o,
             t: pixel.t || currentPixel.t,
-            s: pixel.s || currentPixel.s,
+            s: Number.isInteger(currentPixel.s) ? currentPixel.s : pixel.s,
           }
         })
       })
