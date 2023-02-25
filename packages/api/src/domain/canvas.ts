@@ -144,10 +144,10 @@ export class Canvas {
           const currentPixel = pixels[pixel.x][pixel.y]
           pixels[pixel.x][pixel.y] = {
             ...pixel,
-            c: Number.isInteger(currentPixel.c) ? currentPixel.c : pixel.c,
+            c: Number.isInteger(pixel.c) ? pixel.c : currentPixel.c,
             o: pixel.o || currentPixel.o,
             t: pixel.t || currentPixel.t,
-            s: Number.isInteger(currentPixel.s) ? currentPixel.s : pixel.s,
+            s: Number.isInteger(pixel.s) ? pixel.s : currentPixel.s,
           }
         })
       })
