@@ -141,10 +141,14 @@ export class Canvas {
       const rows: Array<Omit<DbSectorVTO, 'name'>> = Object.values(rowMap)
       rows.forEach(row => {
         row.forEach((pixel: DbPixelVTO) => {
-          if (!pixels[pixel.x]) {
-            pixels
+          const currentPixel = pixels[pixel.x][pixel.y]
+          pixels[pixel.x][pixel.y] = {
+            ...pixel,
+            c: Number.isInteger(currentPixel.c) ? currentPixel.c : pixel.c,
+            o: pixel.o || currentPixel.o,
+            t: pixel.t || currentPixel.t,
+            s: Number.isInteger(currentPixel.c) ? currentPixel.s : pixel.s,
           }
-          pixels[pixel.x][pixel.y] = pixel
         })
       })
     })
@@ -206,7 +210,7 @@ export class Canvas {
         const sectorX = Math.floor(x / CANVAS_SECTOR_SIZE)
         const sectorY = Math.floor(y / CANVAS_SECTOR_SIZE)
         const name = `${sectorX}-${sectorY}`
-        sectors[name][y % CANVAS_SECTOR_SIZE][x % CANVAS_SECTOR_SIZE] = pixel
+        sectors[name][x % CANVAS_SECTOR_SIZE][y % CANVAS_SECTOR_SIZE] = pixel
       }
     }
 
