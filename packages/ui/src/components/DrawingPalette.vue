@@ -1,6 +1,6 @@
 <template>
   <div class="palette-container" v-touch:swipe.bottom="closePanel">
-    <div class="selected-pixel" @click="closePanel">
+    <!-- <div class="selected-pixel" @click="closePanel">
       <div
         class="pixel-color"
         :style="{
@@ -21,7 +21,7 @@
           @{{ selectedPixelInfo?.ownerName || selectedPixelInfo?.owner }}
         </p>
       </div>
-    </div>
+    </div> -->
     <div v-if="!gameOver" class="colors-container">
       <div class="palette">
         <ColorSelector
