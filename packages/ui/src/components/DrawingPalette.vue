@@ -17,9 +17,9 @@
             {{ formatDistanceToNow(selectedPixelInfo?.timestamp) }}
           </p>
         </div>
-        <p v-if="selectedPixelInfo?.owner" class="dark-text">
+        <!-- <p v-if="selectedPixelInfo?.owner" class="dark-text">
           @{{ selectedPixelInfo?.ownerName || selectedPixelInfo?.owner }}
-        </p>
+        </p> -->
       </div>
     </div>
     <div v-if="!gameOver" class="colors-container">
@@ -79,6 +79,7 @@ export default {
       })
     })
     const selectedPixelInfo = computed(() => {
+      console.log('selectedpixelinfo', store.selectedPixelInfo)
       return store.selectedPixelInfo
     })
     const shades = computed(() => {
