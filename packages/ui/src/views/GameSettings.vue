@@ -95,7 +95,7 @@
           most of its native $WIT coin to feed reliable data and randomness to
           an ever increasing list of Web3 projects across the 45+ chains it
           supports. For more info check
-          <a href="witnet.io" target="blank">witnet.io</a>!
+          <a href="witnet.io" target="blank">witnet.io</a>
         </p>
       </div>
     </template>
