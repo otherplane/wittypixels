@@ -141,9 +141,13 @@ export class Canvas {
       const rows: Array<Omit<DbSectorVTO, 'name'>> = Object.values(rowMap)
       rows.forEach(row => {
         row.forEach((pixel: DbPixelVTO) => {
-          // if (!pixels[pixel.x][pixel.y]?.o) {
-          pixels[pixel.x][pixel.y] = pixel
-          // }
+          const currentPixel = pixels[pixel.x][pixel.y]
+          pixels[pixel.x][pixel.y] = {
+            ...pixel,
+            o: pixel.o || currentPixel.o,
+            t: pixel.t || currentPixel.t,
+            s: pixel.s || currentPixel.s,
+          }
         })
       })
     })
