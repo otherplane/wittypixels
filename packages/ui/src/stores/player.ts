@@ -118,6 +118,7 @@ export const useStore = defineStore('player', {
       this.selectedShade = 3
     },
     togglePalettePanel(value: boolean) {
+      console.log(2)
       this.showPalettePanel = value
     },
     selectColor(color: number) {

@@ -6,7 +6,7 @@
     <template v-slot:main>
       <transition name="fade">
         <div class="game-info" v-if="!player.showPalettePanel">
-          <GameOverCountdown />
+          <!-- <GameOverCountdown />
           <GameOverStatus />
           <BonusCountdown v-if="player.bonus" />
           <GameInfo>
@@ -14,7 +14,7 @@
           >
           <GameInfo v-if="!redeemCountdownOver">
             <p>{{ player.score }} WPX</p></GameInfo
-          >
+          > -->
         </div>
       </transition>
       <PixelBoard />
@@ -24,7 +24,8 @@
     </template>
     <template v-slot:bottom-2>
       <PanelSlider :showPanel="player.showPalettePanel">
-        <DrawingPalette />
+        <!-- <DrawingPalette /> -->
+        <div></div>
       </PanelSlider>
     </template>
   </MainLayout>

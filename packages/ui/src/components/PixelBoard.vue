@@ -87,6 +87,7 @@ export default {
       return store.selectedShade
     })
     const isPanelClosed = computed(() => {
+      console.log('1')
       return !store.showPalettePanel
     })
     const authPlayer = computed(() => {
