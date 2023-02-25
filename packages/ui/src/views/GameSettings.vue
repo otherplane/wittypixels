@@ -11,7 +11,9 @@
           v-model="username"
         />
         <SectionHeader title="Instructions" />
-        <p class="instructions-title red">1. Join the ETHDenver official game</p>
+        <p class="instructions-title red">
+          1. Join the ETHDenver official game
+        </p>
         <p class="paragraph">
           Join the official game of ETHDenver by visiting the Witnet +
           WittyPixels booth at the registration area. Receive a limited edition
