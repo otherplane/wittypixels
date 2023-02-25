@@ -87,7 +87,6 @@ export default {
     })
     console.log(6)
     const selectedPixelInfo = computed(() => {
-
       console.log(20)
       return store.selectedPixelInfo
     })
@@ -115,7 +114,6 @@ export default {
     })
     console.log(9)
     const score = computed(() => {
-
       console.log(17)
       return store.score
     })
@@ -136,6 +134,7 @@ export default {
     }
     console.log(13)
     function closePanel() {
+      console.log(22)
       store.clearPixelToPaint()
       store.togglePalettePanel(false)
     }
