@@ -238,10 +238,10 @@ export default {
         ).value
       } else {
         console.log('28.3')
-        pixelSelection.attrs.fill = 'rgba(255,255,255,255)'
+        pixelSelection.attrs.fill = 'rgba(255,255,255,1)'
       }
       console.log('28.4')
-      pixelSelection.attrs.stroke = 'rgba(0,0,0,255)'
+      pixelSelection.attrs.stroke = 'rgba(0,0,0,1)'
       console.log('28.5')
       layer.batchDraw()
       console.log(28)
