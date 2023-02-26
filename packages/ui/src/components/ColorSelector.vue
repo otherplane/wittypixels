@@ -29,6 +29,7 @@ export default {
     const store = useStore()
 
     const selected = computed(() => {
+      console.log(24)
       return store.selectedColor == props.color && props.points > 0
     })
 

@@ -101,9 +101,12 @@ export default {
       }
     })
     watch(selectedColor, value => {
+      console.log('25')
       if (isNumber(value)) {
+      console.log('26')
         setSelectedPixelColor()
       } else {
+      console.log('27')
         setSelectedPixelToDefault()
       }
     })
@@ -235,11 +238,14 @@ export default {
       }
       pixelSelection.attrs.stroke = 'rgba(0,0,0,355)'
       layer.batchDraw()
+      console.log(28)
     }
     function setSelectedPixelToDefault() {
       pixelSelection.attrs.fill = 'transparent'
       pixelSelection.attrs.stroke = 'transparent'
       layer.batchDraw()
+
+      console.log(29)
     }
     function avoidBlurryCanvas() {
       const ctx = layer.getContext()
