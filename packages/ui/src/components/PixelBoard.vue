@@ -226,17 +226,23 @@ export default {
     }
 
     function setSelectedPixelColor() {
+      console.log('28.0')
       if (isNumber(store.selectedColor)) {
+        console.log('28.1')
         pixelSelection.attrs.fill = getColor().value
       } else if (store.selectedPixelInfo?.owner) {
+        console.log('28.2')
         pixelSelection.attrs.fill = getColor(
           store.selectedPixelInfo?.color,
           store.selectedPixelInfo?.shade
         ).value
       } else {
+        console.log('28.3')
         pixelSelection.attrs.fill = 'rgba(255,255,255,255)'
       }
-      pixelSelection.attrs.stroke = 'rgba(0,0,0,355)'
+      console.log('28.4')
+      pixelSelection.attrs.stroke = 'rgba(0,0,0,255)'
+      console.log('28.5')
       layer.batchDraw()
       console.log(28)
     }
