@@ -1,5 +1,5 @@
 <template>
-  <div class="palette-container" v-touch:swipe.bottom="closePanel">
+  <div class="palette-container">
     <p>We'll be back soon</p>
     <!-- <div class="selected-pixel" @click="closePanel">
       <div
