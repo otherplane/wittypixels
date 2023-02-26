@@ -7,6 +7,7 @@ import { fileURLToPath, URL } from 'url'
 export default defineConfig({
   build: {
     emptyOutDir: true,
+    minify: false,
   },
   plugins: [vue(), Components()],
   test: {
