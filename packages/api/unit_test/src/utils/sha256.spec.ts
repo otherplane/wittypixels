@@ -6,8 +6,6 @@ describe('sha256', () => {
 
     const hash = sha256(buffer)
 
-    expect(hash).toBe(
-      'c3a3ee99e9fb7ac257541c20d5a98740b207975b4c70d4261eb60f36aa8eab14'
-    )
+    expect(hash).toBe('w6Pumen7esJXVBwg1amHQLIHl1tMcNQmHrYPNqqOqxQ=')
   })
 })

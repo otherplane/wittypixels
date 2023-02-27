@@ -78,7 +78,7 @@ export function generateUsernameList(count: number): Array<string> {
   return Array.from(usernames)
 }
 
-// Calculate SHA-256 and return the result as hex
+// Calculate SHA-256 and return the result as base64
 export function sha256(data: Buffer): string {
-  return crypto.createHash('sha256').update(data).digest('hex')
+  return crypto.createHash('sha256').update(data).digest('base64')
 }
