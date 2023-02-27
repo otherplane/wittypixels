@@ -49,7 +49,10 @@ export default {
     function register() {
       const chunks = decodedString.value.split('/')
       const key = chunks[chunks.length - 1]
-      if (key) {
+      // decoded URL contains a bonus code
+      if (chunks[chunks.length - 2] === 'bonus') {
+        router.push(`/bonus/${key}`)
+      } else if (key) {
         // TODO: Add scanned key from QR
         playerKey.value = key
         submitAndRedirect()
