@@ -224,7 +224,7 @@ export class Canvas {
         totalPixelsDrawn +
         row.reduce(
           (pixelsDrawnInDraw, pixel: Pixel) =>
-            pixel.c ? pixelsDrawnInDraw + 1 : pixelsDrawnInDraw,
+            pixel.o ? pixelsDrawnInDraw + 1 : pixelsDrawnInDraw,
           0
         ),
       0
