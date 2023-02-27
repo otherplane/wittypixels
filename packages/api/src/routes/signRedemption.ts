@@ -100,21 +100,19 @@ const signRedemption: FastifyPluginAsync = async (
       const playerPixels = canvas.countPixels(player.username)
 
       const leaf = calculateLeaf(player)
-      if (!stats.merkleTree) {
-        const canvasPixels = canvas.countPixelsDrawn()
-        const totalPixels = await drawModel.countAll()
-        const players = await playerModel.getActivePlayers()
-        const totalScans = await interactionModel.countAll()
+      const canvasPixels = canvas.countPixelsDrawn()
+      const totalPixels = await drawModel.countAll()
+      const players = await playerModel.getActivePlayers()
+      const totalScans = await interactionModel.countAll()
 
-        const statsParams = {
-          players,
-          totalPixels,
-          totalScans,
-          canvasPixels,
-        }
-        if (stats.hasChanged(statsParams)) {
-          stats.update(statsParams)
-        }
+      const statsParams = {
+        players,
+        totalPixels,
+        totalScans,
+        canvasPixels,
+      }
+      if (stats.hasChanged(statsParams)) {
+        stats.update(statsParams)
       }
       const proof = stats.merkleTree?.getProof(leaf) as Array<string>
       if (!proof) {
