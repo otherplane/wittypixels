@@ -4,7 +4,7 @@
     <ConnectToProvider id="connect-to-provider" />
     <CreateTransaction
       id="transaction-action"
-      v-if="gameStore.gameOverStatus && !web3Disconnected && !web3WrongNetwork"
+      v-if="gameOverStatus && !fractionalizing && !networkError"
       :txType="txType"
     />
   </div>
@@ -49,8 +49,10 @@ export default {
     const gameStore = useGameStore()
     const gameOver = computed(() => gameStore.gameOver)
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
-    const web3Disconnected = computed(() => gameStore.errors.web3Disconnected)
-    const web3WrongNetwork = computed(() => gameStore.errors.web3WrongNetwork)
+    const networkError = computed(
+      () =>
+        gameStore.errors.web3Disconnected || gameStore.errors.web3WrongNetwork
+    )
     const txType = computed(() => localStore.txInfo?.txType)
     onMounted(() => localStore.getTxInfo())
     const showRedeemCompleteInfo = computed(
@@ -72,15 +74,13 @@ export default {
       if (value == GameOverStatus.AllowRedeem) {
         modalStore.openModal(ModalKey.redeem)
         localStore.saveTxInfo({ txType: TxType.Redeem })
-      } else if (value == GameOverStatus.AllowSale) {
+      } else if (
         // Auth users are not allow to buy
         // Do not allow redeem again
-        if (
-          localStore.txInfo?.txType === TxType.Buy ||
-          !localStore.txInfo?.txHash
-        ) {
-          localStore.saveTxInfo({})
-        }
+        value == GameOverStatus.AllowSale &&
+        (localStore.txInfo?.txType === TxType.Buy || !localStore.txInfo?.txHash)
+      ) {
+        localStore.saveTxInfo({})
       } else if (value == GameOverStatus.AllowWithdraw) {
         localStore.saveTxInfo({ txType: TxType.Withdraw })
       } else if (value == GameOverStatus.AlreadyWithdrawn) {
@@ -94,14 +94,14 @@ export default {
     })
 
     return {
-      web3Disconnected,
-      web3WrongNetwork,
+      networkError,
       showRedeemCompleteInfo,
       gameStore,
       NETWORKS,
       CURRENT_NETWORK,
       txType,
       fractionalizing,
+      gameOverStatus,
       GameOverStatus,
     }
   },

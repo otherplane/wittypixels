@@ -28,7 +28,11 @@ export default {
     const web3Disconnected = computed(() => gameStore.errors.web3Disconnected)
     const web3WrongNetwork = computed(() => gameStore.errors.web3WrongNetwork)
     const isTransactionInProgress = computed(
-      () => localStore.txInfo?.txHash && localStore.txInfo?.blockNumber
+      () =>
+        localStore.txInfo?.txHash &&
+        localStore.txInfo?.blockNumber &&
+        !localStore.txInfo?.txConfirmation &&
+        !localStore.txInfo?.externalConfirmation
     )
 
     onMounted(async () => {

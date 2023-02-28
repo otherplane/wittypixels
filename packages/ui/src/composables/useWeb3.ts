@@ -301,7 +301,6 @@ export function useWeb3() {
         ...ERC20ContractInfo,
         currentPrice,
       }
-      console.log('contractInfo!!', result)
       gameStore.setContractInfo({ contractInfo: result })
       return result
     } catch (err) {

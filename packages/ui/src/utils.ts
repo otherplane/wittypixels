@@ -19,6 +19,22 @@ export function getRgbaColor(r, g, b, a = 255) {
   return `rgba(${r}, ${g}, ${b}, ${a})`
 }
 
+export function percentageFromUtcTime(
+  prevTime: number,
+  currentTime: number,
+  nextTime: number
+) {
+  if (nextTime > 0) {
+    const startTime = utcToZonedTime(new Date(prevTime), TIMEZONE).getTime()
+    const timeNow = utcToZonedTime(currentTime, TIMEZONE).getTime()
+    const endTime = utcToZonedTime(new Date(nextTime), TIMEZONE).getTime()
+    const range = endTime - startTime
+    const diff = Math.max(0, endTime - timeNow)
+    return 100 - (100 * diff) / range
+  } else {
+    return 100
+  }
+}
 export function cropMiddle(text: string, length: number) {
   if (text.length > length) {
     const leftSizeLengh = Math.floor((length - 3) / 2)

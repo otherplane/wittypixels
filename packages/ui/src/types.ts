@@ -46,8 +46,7 @@ export type ERC20ContractInfo = {
   stats: ERC20Stats
   // ETH/weis
   currentPrice: number
-  // Future block number in which current price will change, if ever
-  nextPriceBlock: number
+  // Future timestamp in which current price will change, if ever
   nextPriceTimestamp: number
 }
 export type ERC20WalletInfo = {
@@ -57,6 +56,7 @@ export type ERC20WalletInfo = {
   // amount of funds that can be potentially witdrawn from walletAddr
   withdrawableWeis: number
   soulboundPixels: number
+  withdrawableEth: number
 }
 export type Provider = {
   network: string

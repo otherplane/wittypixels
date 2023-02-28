@@ -1,5 +1,5 @@
 <template>
-  <a id="marketplace-button" :href="marketplaceUrl" target="_blank">
+  <a :href="marketplaceUrl" target="_blank">
     <CustomButton type="dark" :slim="true">
       Check on {{ marketplaceName }}
     </CustomButton>

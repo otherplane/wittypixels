@@ -16,7 +16,7 @@
       <WalletInfo v-if="redeemCountdownOver" class="connected-provider" />
       <ConnectToProvider v-if="redeemCountdownOver" />
       <CreateTransaction
-        v-if="redeemCountdownOver && !web3Disconnected && !web3WrongNetwork"
+        v-if="redeemCountdownOver && !networkError && !isFractionalizing"
         :txType="TxType.Buy"
       />
     </template>
@@ -41,9 +41,14 @@ export default {
         gameStore.setRedeemCountdownOver()
       }
     })
-    const web3Disconnected = computed(() => gameStore.errors.web3Disconnected)
-    const web3WrongNetwork = computed(() => gameStore.errors.web3WrongNetwork)
+    const networkError = computed(
+      () =>
+        !gameStore.errors.web3Disconnected && !gameStore.errors.web3WrongNetwork
+    )
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
+    const isFractionalizing = computed(
+      () => gameOverStatus.value !== GameOverStatus.Fractionalizing
+    )
     watch(gameOverStatus, value => {
       if (value == GameOverStatus.AllowSale) {
         localStore.saveTxInfo({ txType: TxType.Buy })
@@ -52,11 +57,12 @@ export default {
     const gameOver = computed(() => gameStore.gameOver)
     const redeemCountdownOver = computed(() => gameStore.redeemCountdownOver)
     return {
+      networkError,
+      isFractionalizing,
+      gameOverStatus,
       gameOver,
       redeemCountdownOver,
       TxType,
-      web3Disconnected,
-      web3WrongNetwork,
     }
   },
 }

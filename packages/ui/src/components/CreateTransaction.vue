@@ -9,9 +9,9 @@
     >
       {{ transactionInProgress ? txInProgressText : txActionText }}
     </CustomButton>
-    <MarketplaceLink v-else-if="transactionConfirmed" />
+    <MarketplaceLink id="marketplace-button" v-else-if="transactionConfirmed" />
   </div>
-  <MarketplaceLink v-else />
+  <MarketplaceLink id="marketplace-button" v-else />
 </template>
 
 <script lang="ts">
