@@ -18,6 +18,13 @@
           <router-link class="tab" to="/interactions">
             Scans history
           </router-link>
+          <a
+            class="tab"
+            href="https://witnet.network/search/b9d56f8e178fab41f0d497ac3d2cd6c943d33977f92ca8adfb602512a4eb6975"
+            target="_blank"
+          >
+            Witnet audit
+          </a>
           <div class="tab" @click="openExportModal()" type="dark">
             Get backup
           </div>
@@ -127,6 +134,7 @@ export default {
   border-radius: 24px;
   margin: 0;
   display: grid;
+  align-items: center;
   opacity: 0;
   width: 0px;
   height: 0px;
@@ -138,7 +146,7 @@ export default {
     top: 8px;
     opacity: 1;
     width: 190px;
-    height: 174px;
+    height: 230px;
     .tab {
       cursor: pointer;
       opacity: 1;
