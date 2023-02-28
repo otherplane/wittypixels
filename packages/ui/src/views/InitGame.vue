@@ -15,7 +15,10 @@
       </router-link>
       <WalletInfo v-if="redeemCountdownOver" class="connected-provider" />
       <ConnectToProvider v-if="redeemCountdownOver" />
-      <CreateTransaction v-if="redeemCountdownOver" :txType="TxType.Buy" />
+      <CreateTransaction
+        v-if="redeemCountdownOver && !web3Disconnected && !web3WrongNetwork"
+        :txType="TxType.Buy"
+      />
     </template>
   </MainLayout>
 </template>
@@ -38,6 +41,8 @@ export default {
         gameStore.setRedeemCountdownOver()
       }
     })
+    const web3Disconnected = computed(() => gameStore.errors.web3Disconnected)
+    const web3WrongNetwork = computed(() => gameStore.errors.web3WrongNetwork)
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
     watch(gameOverStatus, value => {
       if (value == GameOverStatus.AllowSale) {
@@ -46,7 +51,13 @@ export default {
     })
     const gameOver = computed(() => gameStore.gameOver)
     const redeemCountdownOver = computed(() => gameStore.redeemCountdownOver)
-    return { gameOver, redeemCountdownOver, TxType }
+    return {
+      gameOver,
+      redeemCountdownOver,
+      TxType,
+      web3Disconnected,
+      web3WrongNetwork,
+    }
   },
 }
 </script>

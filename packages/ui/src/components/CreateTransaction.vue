@@ -9,17 +9,9 @@
     >
       {{ transactionInProgress ? txInProgressText : txActionText }}
     </CustomButton>
-    <a
-      v-if="transactionConfirmed"
-      id="marketplace-button"
-      :href="marketplaceUrl"
-      target="_blank"
-    >
-      <CustomButton :type="web3Disconnected ? 'disable' : 'dark'" :slim="true">
-        Check on {{ marketplaceName }}
-      </CustomButton>
-    </a>
+    <MarketplaceLink v-else-if="transactionConfirmed" />
   </div>
+  <MarketplaceLink v-else />
 </template>
 
 <script lang="ts">
@@ -29,10 +21,6 @@ import { useModalStore } from '@/stores/modal'
 import { ModalKey, TxType } from '@/types'
 import {
   POLLER_MILLISECONDS,
-  NETWORKS,
-  CURRENT_NETWORK,
-  ERC721_ADDRESS,
-  ERC721_TOKEN_ID,
   TX_ACTION_COPY,
   TX_ACTION_PROGRESS_COPY,
 } from '@/constants.js'
@@ -86,20 +74,15 @@ export default {
     const web3Disconnected = computed(() => gameStore.errors.web3Disconnected)
     const web3WrongNetwork = computed(() => gameStore.errors.web3WrongNetwork)
     const isTxTypeAllow = computed(() => {
-      return localStore.txInfo?.txType === props.txType
+      return (
+        localStore.txInfo?.txType && localStore.txInfo?.txType === props.txType
+      )
     })
     const txActionText = computed(() => TX_ACTION_COPY[props.txType])
     const txInProgressText = computed(
       () => TX_ACTION_PROGRESS_COPY[props.txType]
     )
-    const marketplaceUrl = computed(
-      () =>
-        `${NETWORKS[CURRENT_NETWORK].marketplace}/${ERC721_ADDRESS}/${ERC721_TOKEN_ID}`
-    )
     const txHash = computed(() => localStore.txInfo?.txHash)
-    const marketplaceName = computed(
-      () => NETWORKS[CURRENT_NETWORK].marketplaceName
-    )
     watch(txHash, value => {
       clearInterval(txConfirmationStatusPoller)
       if (value && !transactionConfirmed.value) {
@@ -148,8 +131,6 @@ export default {
       isTxTypeAllow,
       txActionText,
       txInProgressText,
-      marketplaceUrl,
-      marketplaceName,
     }
   },
 }

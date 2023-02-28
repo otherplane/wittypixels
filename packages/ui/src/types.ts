@@ -48,6 +48,7 @@ export type ERC20ContractInfo = {
   currentPrice: number
   // Future block number in which current price will change, if ever
   nextPriceBlock: number
+  nextPriceTimestamp: number
 }
 export type ERC20WalletInfo = {
   wpxBalance: number

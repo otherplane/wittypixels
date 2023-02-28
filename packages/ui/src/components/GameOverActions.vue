@@ -4,12 +4,7 @@
     <ConnectToProvider id="connect-to-provider" />
     <CreateTransaction
       id="transaction-action"
-      v-if="
-        txType &&
-        gameStore.gameOverStatus &&
-        !web3Disconnected &&
-        !web3WrongNetwork
-      "
+      v-if="gameStore.gameOverStatus && !web3Disconnected && !web3WrongNetwork"
       :txType="txType"
     />
   </div>
@@ -79,6 +74,13 @@ export default {
         localStore.saveTxInfo({ txType: TxType.Redeem })
       } else if (value == GameOverStatus.AllowSale) {
         // Auth users are not allow to buy
+        // Do not allow redeem again
+        if (
+          localStore.txInfo?.txType === TxType.Buy ||
+          !localStore.txInfo?.txHash
+        ) {
+          localStore.saveTxInfo({})
+        }
       } else if (value == GameOverStatus.AllowWithdraw) {
         localStore.saveTxInfo({ txType: TxType.Withdraw })
       } else if (value == GameOverStatus.AlreadyWithdrawn) {

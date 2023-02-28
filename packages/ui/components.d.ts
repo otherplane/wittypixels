@@ -29,6 +29,7 @@ declare module '@vue/runtime-core' {
     ListStats: typeof import('./src/components/ListStats.vue')['default']
     LoadingSpinner: typeof import('./src/components/LoadingSpinner.vue')['default']
     MainLayout: typeof import('./src/components/MainLayout.vue')['default']
+    MarketplaceLink: typeof import('./src/components/MarketplaceLink.vue')['default']
     MintInformation: typeof import('./src/components/MintInformation.vue')['default']
     ModalAlreadyWithdrawn: typeof import('./src/components/modals/ModalAlreadyWithdrawn.vue')['default']
     ModalClaimConfirmation: typeof import('./src/components/modals/ModalClaimConfirmation.vue')['default']

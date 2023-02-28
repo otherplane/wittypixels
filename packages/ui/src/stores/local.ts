@@ -9,9 +9,7 @@ export const useLocalStore = defineStore('localStore', {
     // Mint info
     getTxInfo() {
       const txStored = localStorage.getItem('wpxTxInfo')
-      const txInfo = txStored
-        ? JSON.parse(localStorage.getItem('wpxTxInfo'))
-        : null
+      const txInfo: TxInfo = txStored ? JSON.parse(txStored) : null
       if (txInfo) {
         this.txInfo = txInfo
       }
