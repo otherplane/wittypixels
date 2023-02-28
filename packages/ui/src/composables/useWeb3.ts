@@ -301,6 +301,7 @@ export function useWeb3() {
         ...ERC20ContractInfo,
         currentPrice,
       }
+      console.log('contractInfo!!', result)
       gameStore.setContractInfo({ contractInfo: result })
       return result
     } catch (err) {
@@ -381,12 +382,12 @@ export function useWeb3() {
     // Buy Witty Pixels fractionalized NFT
     const from = gameStore.provider.address
     const gasPrice = await web3.eth.getGasPrice()
-    const getValue: ERC20ContractInfo = await getERC20ContractInfo()
+    const getValue = await getERC20ContractInfo()
     const fromTxCount = await web3.eth.getTransactionCount(from)
     try {
       return await erc20Contract.methods
         .acquire()
-        .send({ from, gasPrice, value: getValue[2] })
+        .send({ from, gasPrice, value: getValue ? getValue[2] : 0 })
         .on('error', (error: any) => {
           gameStore.setError(
             GameOverErrorKey.transaction,

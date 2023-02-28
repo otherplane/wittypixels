@@ -4,7 +4,8 @@ import { useLocalStore } from './local'
 import { useWeb3 } from '@/composables/useWeb3'
 import {
   TokenStatus,
-  type Errors,
+  type ERC20ContractInfo,
+  type ERC20WalletInfo,
   GameOverErrorKey,
   type Provider,
   TxType,
@@ -35,7 +36,7 @@ export const useGameStore = defineStore('gameStore', {
     gameStats: null,
     tokenIds: null,
     currentTxType: null as TxType | null,
-    errors: {} as Errors,
+    errors: {} as Record<GameOverErrorKey, string | null>,
   }),
   getters: {
     isGameOver(): boolean {
@@ -106,10 +107,10 @@ export const useGameStore = defineStore('gameStore', {
     setGameOver() {
       this.gameOver = true
     },
-    setWalletInfo({ walletInfo }) {
+    setWalletInfo({ walletInfo }: { walletInfo: any }) {
       this.walletInfo = walletInfo
     },
-    setContractInfo({ contractInfo }) {
+    setContractInfo({ contractInfo }: { contractInfo: any }) {
       this.contractInfo = contractInfo
     },
     setRedeemCountdownOver() {

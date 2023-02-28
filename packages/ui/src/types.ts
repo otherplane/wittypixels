@@ -41,6 +41,7 @@ export type ERC20Stats = {
   totalWithdrawals: number
 }
 export type ERC20ContractInfo = {
+  2: number
   status: ERC20Status
   stats: ERC20Stats
   // ETH/weis
