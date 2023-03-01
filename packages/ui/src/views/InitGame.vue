@@ -2,7 +2,16 @@
   <MainLayout :hideNavBar="true">
     <template v-slot:main>
       <div class="cover">
-        <h2 class="title">The largest collaborative NFT creation to date!</h2>
+        <div class="title">
+          <h2>The largest collaborative NFT creation to date!</h2>
+          <a
+            class="subtitle"
+            href="https://witnet.network/search/b9d56f8e178fab41f0d497ac3d2cd6c943d33977f92ca8adfb602512a4eb6975"
+            target="_blank"
+          >
+            Secured by <SvgImage class="logo" :svg="witnetLogo" />
+          </a>
+        </div>
         <div class="background">
           <GameOverStatus class="game-status" />
           <PixelBoard />
@@ -27,6 +36,7 @@
 import { useGameStore } from '@/stores/game'
 import { useLocalStore } from '@/stores/local'
 import { GameOverStatus } from '@/types'
+import witnetLogo from '@/assets/witnet-logo-dark.svg?raw'
 import { computed, onMounted, watch } from 'vue'
 import { TxType } from '@/types'
 export default {
@@ -69,6 +79,7 @@ export default {
       redeemCountdownOver,
       TxType,
       txType,
+      witnetLogo,
     }
   },
 }
@@ -81,6 +92,19 @@ export default {
   overflow: hidden;
   .title {
     padding-bottom: 16px;
+    .subtitle {
+      text-decoration: underline;
+      margin-top: 16px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      .logo {
+        height: 20px;
+        width: 80px;
+        padding: 0 4px;
+        position: inline;
+      }
+    }
   }
   .game-status {
     position: absolute;

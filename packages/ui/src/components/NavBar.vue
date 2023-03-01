@@ -23,7 +23,7 @@
             href="https://witnet.network/search/b9d56f8e178fab41f0d497ac3d2cd6c943d33977f92ca8adfb602512a4eb6975"
             target="_blank"
           >
-            Witnet audit
+            Witnet proofs
           </a>
           <div class="tab" @click="openExportModal()" type="dark">
             Get backup
