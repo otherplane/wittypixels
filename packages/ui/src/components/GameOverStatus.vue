@@ -37,7 +37,7 @@ const AVERAGE_BLOCK_TIME_MILLISECONDS = 15000
 export default {
   setup() {
     const prevPriceTimestamp = ref()
-    const showTimeLeft = ref()
+    const showTimeLeft = ref(true)
     const showPriceAnimation = ref(false)
     const gameStore = useGameStore()
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
