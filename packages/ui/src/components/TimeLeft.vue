@@ -1,9 +1,12 @@
 <template>
   <div
     v-if="inPercentage"
-    class="h-0.5 w-full bg-neutral-200 dark:bg-neutral-100"
+    class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-100"
   >
-    <div class="h-0.5 dark:bg-green-800" :style="{ width: percentage }"></div>
+    <div
+      class="h-0.5 bg-green-800 dark:bg-green-800"
+      :style="{ width: percentage }"
+    ></div>
   </div>
   <span v-else>{{ timeLeft || '0 s' }}</span>
 </template>
