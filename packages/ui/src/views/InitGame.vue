@@ -17,7 +17,7 @@
       <ConnectToProvider v-if="redeemCountdownOver" />
       <CreateTransaction
         v-if="redeemCountdownOver && !networkError && !isFractionalizing"
-        :txType="TxType.Buy"
+        :txType="txType"
       />
     </template>
   </MainLayout>
@@ -49,9 +49,12 @@ export default {
     const isFractionalizing = computed(
       () => gameOverStatus.value === GameOverStatus.Fractionalizing
     )
+    const txType = computed(() => localStore.txInfo?.txType)
     watch(gameOverStatus, value => {
       if (value == GameOverStatus.AllowSale) {
         localStore.saveTxInfo({ txType: TxType.Buy })
+      } else if (value == GameOverStatus.AllowWithdraw) {
+        localStore.saveTxInfo({ txType: TxType.Withdraw })
       } else if (!localStore.txInfo?.txHash) {
         localStore.saveTxInfo({})
       }
@@ -65,6 +68,7 @@ export default {
       gameOver,
       redeemCountdownOver,
       TxType,
+      txType,
     }
   },
 }
