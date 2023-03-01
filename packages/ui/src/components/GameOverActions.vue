@@ -85,6 +85,8 @@ export default {
         localStore.saveTxInfo({ txType: TxType.Withdraw })
       } else if (value == GameOverStatus.AlreadyWithdrawn) {
         modalStore.openModal(ModalKey.alreadyWithdrawn)
+      } else if (value == GameOverStatus.Acquired) {
+        localStore.saveTxInfo({})
       }
     })
     watch(gameOver, value => {

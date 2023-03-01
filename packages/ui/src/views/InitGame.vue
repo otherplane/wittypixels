@@ -52,6 +52,8 @@ export default {
     watch(gameOverStatus, value => {
       if (value == GameOverStatus.AllowSale) {
         localStore.saveTxInfo({ txType: TxType.Buy })
+      } else if (!localStore.txInfo?.txHash) {
+        localStore.saveTxInfo({})
       }
     })
     const gameOver = computed(() => gameStore.gameOver)

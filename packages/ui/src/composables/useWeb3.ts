@@ -60,7 +60,6 @@ export function useWeb3() {
   const gameStore = useGameStore()
   const player = useStore()
   const network = ref(NETWORKS[CURRENT_NETWORK])
-  const checkIfExist = ref()
   let erc721Contract: any
   let erc20Contract: any
 
@@ -74,6 +73,7 @@ export function useWeb3() {
           address: accounts[0],
         })
         enableProvider()
+        checkTokenStatus()
       })
       // detect network change
       window.ethereum.on('chainChanged', (networkId: any) => {
