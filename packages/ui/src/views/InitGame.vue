@@ -47,7 +47,7 @@ export default {
     )
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
     const isFractionalizing = computed(
-      () => gameOverStatus.value !== GameOverStatus.Fractionalizing
+      () => gameOverStatus.value === GameOverStatus.Fractionalizing
     )
     watch(gameOverStatus, value => {
       if (value == GameOverStatus.AllowSale) {
