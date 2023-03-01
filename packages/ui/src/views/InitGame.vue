@@ -43,7 +43,7 @@ export default {
     })
     const networkError = computed(
       () =>
-        !gameStore.errors.web3Disconnected && !gameStore.errors.web3WrongNetwork
+        gameStore.errors.web3Disconnected || gameStore.errors.web3WrongNetwork
     )
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
     const isFractionalizing = computed(
