@@ -1,9 +1,13 @@
 <template>
-  <div v-if="gameOverStatus">
-    <GameInfo v-if="awaitingAuction" class="await-auction">
+  <div v-if="gameOverStatus" id="game-over-status">
+    <GameInfo
+      v-if="awaitingAuction"
+      class="await-auction"
+      id="awaiting-auction"
+    >
       <p>AWAITING AUCTION</p>
     </GameInfo>
-    <div v-else-if="auctionStarted">
+    <div v-else-if="auctionStarted" id="auction-started">
       <GameInfo
         class="auction-price"
         :class="{ flicker: showPriceAnimation && nextPriceTimestamp }"
@@ -19,10 +23,10 @@
         />
       </GameInfo>
     </div>
-    <GameInfo v-else-if="NFTSold" class="nft-sold">
+    <GameInfo v-else-if="NFTSold" class="nft-sold" id="nft-sold">
       <p>ACQUIRED FOR {{ contractInfo?.currentPrice }} ETH</p>
     </GameInfo>
-    <GameInfo v-else>
+    <GameInfo v-else id="default-status">
       <p>GAME OVER</p>
     </GameInfo>
   </div>
@@ -93,7 +97,6 @@ export default {
       NFTSold,
       auctionStarted,
       awaitingAuction,
-      prevPriceTimestamp,
     }
   },
 }
