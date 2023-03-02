@@ -1,10 +1,6 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
 import Web3 from 'web3'
-import {
-  WEB3_PROVIDER,
-  ERC721_TOKEN_ADDRESS,
-  ERC721_TOKEN_ID,
-} from '../constants'
+import { WEB3_PROVIDER, ERC721_TOKEN_ADDRESS } from '../constants'
 
 //import { WEB3_PROVIDER, WITMON_ERC721_ADDRESS } from '../constants'
 //import { MetadataRepository } from '../repositories/metadata'
@@ -32,10 +28,6 @@ const metadata: FastifyPluginAsync = async (fastify): Promise<void> => {
         reply
       ) => {
         const { token } = request.params
-        // Check token id is the same as defined
-        if (Number(token) !== Number(ERC721_TOKEN_ID)) {
-          return reply.status(404).send(new Error(`Token ID not found`))
-        }
         let callResult
         const web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER))
         const contract = new web3.eth.Contract(
