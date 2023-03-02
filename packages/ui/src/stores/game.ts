@@ -33,6 +33,7 @@ export const useGameStore = defineStore('gameStore', {
     mintParams: null,
     walletInfo: null as ERC20WalletInfo | null,
     contractInfo: null as ERC20ContractInfo | null,
+    prevTokenPriceTimeSecs: null as number | null,
     gameStats: null,
     tokenIds: null,
     currentTxType: null as TxType | null,

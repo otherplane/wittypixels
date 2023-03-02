@@ -68,13 +68,14 @@ export default {
     )
     // Prev price timestamp in milliseconds
     const standardizedPrevPriceTimestamp = computed(
-      () => prevPriceTimestamp.value * 1000
+      () => (gameStore.prevTokenPriceTimeSecs ?? 0) * 1000
     )
     const contractInfo = computed(() => {
       return gameStore.contractInfo
     })
     watch(nextPriceTimestamp, (_current: any, prev: any) => {
       showTimeLeft.value = true
+      gameStore.prevTokenPriceTimeSecs = prev
       prevPriceTimestamp.value = prev
     })
     function getContractInfo() {
