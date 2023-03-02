@@ -346,6 +346,7 @@ export function useWeb3() {
   }
 
   async function redeemOwnership() {
+    gameStore.clearError(GameOverErrorKey.transaction)
     const from = gameStore.provider.address
     const redeemArgs = await gameStore.getContractArgs(from)
     const gasPrice = await web3.eth.getGasPrice()
@@ -378,6 +379,7 @@ export function useWeb3() {
   }
 
   async function buyNFT() {
+    gameStore.clearError(GameOverErrorKey.transaction)
     // Buy Witty Pixels fractionalized NFT
     const from = gameStore.provider.address
     const gasPrice = await web3.eth.getGasPrice()
@@ -412,6 +414,7 @@ export function useWeb3() {
   }
 
   async function withdrawNFTOwnership() {
+    gameStore.clearError(GameOverErrorKey.transaction)
     // Withdraw NFT ownership if the NFT has been bought
     const from = gameStore.provider.address
     const gasPrice = await web3.eth.getGasPrice()
