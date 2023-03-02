@@ -1,5 +1,5 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify'
-
+import { ERC721_TOKEN_ID } from '../constants'
 import { GetStatsParams, Stats } from '../types'
 
 const stats: FastifyPluginAsync = async (fastify): Promise<void> => {
@@ -18,9 +18,14 @@ const stats: FastifyPluginAsync = async (fastify): Promise<void> => {
       },
     },
     handler: async (
-      _request: FastifyRequest<{ Params: GetStatsParams }>,
+      request: FastifyRequest<{ Params: GetStatsParams }>,
       reply
     ) => {
+      const { token_id } = request.params
+
+      if (Number(token_id) !== Number(ERC721_TOKEN_ID)) {
+        return reply.status(404).send(new Error(`Token ID not found`))
+      }
       const canvasPixels = canvas.countPixelsDrawn()
       const totalPixels = await drawModel.countAll()
       const players = await playerModel.getActivePlayers()
