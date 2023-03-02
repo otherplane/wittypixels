@@ -15,9 +15,9 @@
             The same amount of $ETH was donated to
             <a
               class="link"
-              href="https://thegivingblock.com/donate/headcount/"
+              href="https://thegivingblock.com/campaigns/ukraine-emergency-response-fund/"
               target="_blank"
-              >TheGivingBlock</a
+              >TheGivingBlock's Ukraine Emergency Response Fund</a
             >
           </p>
         </div>
