@@ -23,6 +23,7 @@ const stats: FastifyPluginAsync = async (fastify): Promise<void> => {
     ) => {
       const { token_id } = request.params
 
+      // Check if the token ID is valid
       if (Number(token_id) !== Number(ERC721_TOKEN_ID)) {
         return reply.status(404).send(new Error(`Token ID not found`))
       }
