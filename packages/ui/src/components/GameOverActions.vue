@@ -70,6 +70,13 @@ export default {
         gameStore.tokenStatus == TokenStatus.Minting
       )
     })
+    watch(fractionalizing, value => {
+      if (gameStore.isGameOver) {
+        if (value) {
+          modalStore.openModal(ModalKey.gameOver)
+        }
+      }
+    })
     watch(gameOverStatus, value => {
       if (value == GameOverStatus.AllowRedeem) {
         modalStore.openModal(ModalKey.redeem)

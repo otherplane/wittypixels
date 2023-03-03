@@ -19,32 +19,14 @@
 
 <script lang="ts">
 import { useGameStore } from '@/stores/game'
-import { ModalKey, GameOverStatus, TokenStatus } from '@/types'
+import { ModalKey } from '@/types'
 import { formatNumber } from '@/utils'
-import { computed, watch } from 'vue'
 import { useModalStore } from '@/stores/modal'
 
 export default {
   setup() {
     const gameStore = useGameStore()
     const modalStore = useModalStore()
-    const gameOverStatus = computed(() => gameStore.gameOverStatus)
-    const fractionalizing = computed(() => {
-      return (
-        !gameOverStatus.value ||
-        gameOverStatus.value == GameOverStatus.Fractionalizing ||
-        gameStore.tokenStatus == TokenStatus.Minting
-      )
-    })
-    watch(fractionalizing, value => {
-      if (gameStore.isGameOver) {
-        if (value) {
-          modalStore.openModal(ModalKey.gameOver)
-        } else {
-          modalStore.closeModal()
-        }
-      }
-    })
     function setGameOver() {
       if (gameStore.isGameOver) {
         if (!gameStore.isRedeemCountdownOver) {
