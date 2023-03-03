@@ -47,14 +47,15 @@ export default {
     const localStore = useLocalStore()
     const modalStore = useModalStore()
     const gameStore = useGameStore()
-    const gameOver = computed(() => gameStore.gameOver)
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
     const networkError = computed(
       () =>
         gameStore.errors.web3Disconnected || gameStore.errors.web3WrongNetwork
     )
     const txType = computed(() => localStore.txInfo?.txType)
-    onMounted(() => localStore.getTxInfo())
+    onMounted(() => {
+      localStore.getTxInfo()
+    })
     const showRedeemCompleteInfo = computed(
       () =>
         (gameOverStatus.value === GameOverStatus.AwaitSale ||
@@ -69,7 +70,6 @@ export default {
         gameStore.tokenStatus == TokenStatus.Minting
       )
     })
-
     watch(gameOverStatus, value => {
       if (value == GameOverStatus.AllowRedeem) {
         modalStore.openModal(ModalKey.redeem)
@@ -87,11 +87,6 @@ export default {
         modalStore.openModal(ModalKey.alreadyWithdrawn)
       } else if (value == GameOverStatus.Acquired) {
         localStore.saveTxInfo({})
-      }
-    })
-    watch(gameOver, value => {
-      if (value) {
-        modalStore.openModal(ModalKey.gameOver)
       }
     })
 
