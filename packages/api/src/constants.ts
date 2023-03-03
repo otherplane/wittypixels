@@ -75,11 +75,9 @@ export const ERC20_TOKEN_START_TS = process.env.ERC20_TOKEN_START_TS
   : 1677891600 // Fri, 3 March 2023 18:00 GMT-7,
 
 // Web3 provider URL
-// export const WEB3_PROVIDER =
-//   process.env.WEB3_PROVIDER || 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID'
-
 export const WEB3_PROVIDER =
-  process.env.WEB3_PROVIDER || 'https://matic-mumbai.chainstacklabs.com/'
+  process.env.WEB3_PROVIDER ||
+  'https://eth-mainnet.g.alchemy.com/v2/YOUR_PROJECT_ID'
 
 // WitmonERC721 contract address
 export const WITMON_ERC721_ADDRESS =
@@ -116,11 +114,11 @@ export const PIXEL_LOCKED_DURATION_MS = process.env.PIXEL_LOCKED_DURATION_MS
 
 export const ERC721_TOKEN_ADDRESS = process.env.ERC721_TOKEN_ADDRESS
   ? process.env.ERC721_TOKEN_ADDRESS
-  : '0xc0FFee029589de1082f8e14d7809F27f452e5191'
+  : '0xC0FFee0a590cf5e6cc21234fD7688E727898eF19'
 
 export const ERC721_TOKEN_ID = process.env.ERC721_TOKEN_ID
   ? parseInt(process.env.ERC721_TOKEN_ID)
-  : 2
+  : 1
 export const DEFAULT_RGB: [number, number, number] = [255, 255, 255]
 
 // Default bonus time: 15 minutes

@@ -2,7 +2,6 @@ import {
   type ColorShade,
   type ColorMap,
   type NetworkMap,
-  TokenStatus,
   TxType,
 } from '@/types'
 
@@ -10,7 +9,7 @@ export const MAX_ERROR_COUNTER = 2
 
 export const ERC721_ADDRESS =
   import.meta.env.VITE_ERC721_ADDRESS ||
-  '0xc0FFee029589de1082f8e14d7809F27f452e5191'
+  '0xC0FFee0a590cf5e6cc21234fD7688E727898eF19'
 
 export const EXPLORER_BASE_URL =
   import.meta.env.VITE_EXPLORER_BASE_URL || 'https://polygonscan.com/tx/'
@@ -41,11 +40,16 @@ export const NETWORKS: NetworkMap = {
   },
   1: {
     name: 'Ethereum Mainnet',
-    id: '1',
+    id: 1,
     rpcUrls: ['https://eth-mainnet.public.blastapi.io'],
     blockExplorerUrls: ['https://etherscan.io'],
-    marketplace: 'https://opensea.io/assets/ethereum',
-    marketplaceName: 'OpenSea',
+    marketplaceSeparator:
+      import.meta.env.VITE_ETHEREUM_NFT_MARKETPLACE_SEPARATOR || '/',
+    marketplace:
+      import.meta.env.VITE_ETHEREUM_NFT_MARKETPLACE_URL ||
+      'https://opensea.io/assets/ethereum',
+    marketplaceName:
+      import.meta.env.VITE_ETHEREUM_NFT_MARKETPLACE_NAME || 'OpenSea',
     confirmationCount: 3,
   },
   82: {
@@ -93,19 +97,22 @@ export const NETWORKS: NetworkMap = {
     id: 80001,
     rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
     blockExplorerUrls: ['https://mumbai.polygonscan.com'],
-    marketplace: 'https://testnets.opensea.io/assets/mumbai',
-    marketplaceName: 'OpenSea',
+    marketplaceSeparator:
+      import.meta.env.VITE_MUMBAI_NFT_MARKETPLACE_SEPARATOR || '/',
+    marketplace:
+      import.meta.env.VITE_MUMBAI_NFT_MARKETPLACE_URL ||
+      'https://testnets.opensea.io/assets/mumbai',
+    marketplaceName:
+      import.meta.env.VITE_MUMBAI_NFT_MARKETPLACE_NAME || 'OpenSea',
     confirmationCount: 3,
   },
 }
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export const ERC721_TOKEN_ID =
-  import.meta.env.VITE_ERC721_TOKEN_ID || parseInt(2)
+export const ERC721_TOKEN_ID = import.meta.env.VITE_ERC721_TOKEN_ID || 1
 
-export const CURRENT_NETWORK =
-  import.meta.env.VITE_CURRENT_NETWORK || parseInt(80001)
+export const CURRENT_NETWORK = import.meta.env.VITE_CURRENT_NETWORK || 1
 
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://0.0.0.0:4000'

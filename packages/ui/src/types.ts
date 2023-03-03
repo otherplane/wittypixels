@@ -105,6 +105,7 @@ export interface NetworkMap {
     id: number
     contractAddress?: string
     rpcUrls?: Array<string>
+    marketplaceSeparator?: string
     blockExplorerUrls?: Array<string>
     marketplace?: string
     marketplaceName?: string
