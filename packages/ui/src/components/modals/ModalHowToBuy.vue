@@ -8,22 +8,22 @@
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
         <h3 class="text-lg leading-6 font-medium text-black" id="modal-title">
-          How to redeem your {{ paintedPixels }} $WPX
+          How to buy the 1-of-1 canvas NFT
         </h3>
         <div class="mt-2">
           <p class="text-sm text-black mb-2">
-            The WittyPixels 1-of-1 canvas NFT is now minted on Ethereum mainnet,
-            fractionalized into $WPX tokens, and ready for auctioning.
+            The WittyPixels 1-of-1canvas NFT can be purchased as an ERC-721 on
+            Ethereum mainnet through a Dutch auction.
           </p>
           <p class="text-sm text-black mb-2">
-            $WPX is the onchain ERC-20 representation of your painted pixels.
-            Because {{ paintedPixels }} pixels of yours are showing in the final
-            artwork, you are eligible to redeem {{ paintedPixels }} $WPX.
+            Half of the amount paid goes to the Ukraine Emergency Response Fund
+            through TheGivingBlock, and the other half will go to the players,
+            proportional to their share of $WPX (i.e. how many pixels they got
+            in the final artwork).
           </p>
           <p class="text-sm text-black mb-2">
-            Once the one-of-one canvas NFT is bought in the auction, you will be
-            able to withdraw your share of the raised $ETH by burning your $WPX
-            inside the WittyPixels app.
+            The initial price is 100 $ETH, and it goes down by 0.5 $ETH every
+            hour, until somebody buys it.
           </p>
         </div>
       </div>
@@ -39,20 +39,3 @@
     </button>
   </div>
 </template>
-
-<script>
-import { onBeforeMount, computed } from 'vue'
-import { useGameStore } from '@/stores/game'
-import { useStore } from '@/stores/player'
-export default {
-  setup() {
-    const gameStore = useGameStore()
-    const player = useStore()
-    onBeforeMount(() => {
-      gameStore.getGameStats()
-    })
-    const paintedPixels = computed(() => player.score)
-    return { paintedPixels }
-  },
-}
-</script>

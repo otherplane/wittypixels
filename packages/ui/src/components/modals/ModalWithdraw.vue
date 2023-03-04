@@ -8,22 +8,29 @@
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
         <h3 class="text-lg leading-6 font-medium text-black" id="modal-title">
-          How to redeem your {{ paintedPixels }} $WPX
+          How to withdraw your {{ paintedPixels }} $ETH
         </h3>
         <div class="mt-2">
           <p class="text-sm text-black mb-2">
-            The WittyPixels 1-of-1 canvas NFT is now minted on Ethereum mainnet,
-            fractionalized into $WPX tokens, and ready for auctioning.
+            The WittyPixels 1-of-1 canvas NFT has been sold for
+            {{ contractInfo?.currentPrice }} $ETH.
           </p>
           <p class="text-sm text-black mb-2">
-            $WPX is the onchain ERC-20 representation of your painted pixels.
-            Because {{ paintedPixels }} pixels of yours are showing in the final
-            artwork, you are eligible to redeem {{ paintedPixels }} $WPX.
+            {{ contractInfo?.currentPrice / 2 }} $ETH has been donated to the
+            Ukraine Emergency Response Fund through TheGivingBlock.
           </p>
           <p class="text-sm text-black mb-2">
-            Once the one-of-one canvas NFT is bought in the auction, you will be
-            able to withdraw your share of the raised $ETH by burning your $WPX
-            inside the WittyPixels app.
+            {{ contractInfo?.currentPrice / 2 }} is now withrdrawable by the
+            players, proportional to how much $WPX they own (i.e. how many
+            pixels they got into the final artwork).
+          </p>
+          <p class="text-sm text-black mb-2">
+            You currently own {{ paintedPixels }} $WPX. You can now burn your
+            $WPX to withdraw {{ paintedPixels }} $ETH.
+          </p>
+
+          <p class="text-sm text-black mb-2">
+            Burn {{ paintedPixels }} $WPX to withdraw {{ paintedPixels }} $ETH
           </p>
         </div>
       </div>
@@ -51,8 +58,20 @@ export default {
     onBeforeMount(() => {
       gameStore.getGameStats()
     })
+    const contractInfo = computed(() => {
+      return gameStore.contractInfo
+    })
+    const totalPixelsDrawn = computed(() => gameStore.gameStats?.totalPixels)
     const paintedPixels = computed(() => player.score)
-    return { paintedPixels }
+    const ownershipPercentage = computed(
+      () => (paintedPixels.value * 100) / totalPixelsDrawn.value
+    )
+    return {
+      ownershipPercentage,
+      paintedPixels,
+      totalPixelsDrawn,
+      contractInfo,
+    }
   },
 }
 </script>

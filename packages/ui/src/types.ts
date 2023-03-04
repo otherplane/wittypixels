@@ -88,6 +88,8 @@ export enum ModalKey {
   txConfirmation = 'txConfirmation',
   txError = 'txError',
   alreadyWithdrawn = 'alreadyWithdrawn',
+  fractionalizing = 'fractionalizing',
+  buyInfo = 'buyInfo',
 }
 export interface Modals {
   [key: string]: boolean | null

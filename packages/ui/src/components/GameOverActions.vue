@@ -78,7 +78,9 @@ export default {
       }
     })
     watch(gameOverStatus, value => {
-      if (value == GameOverStatus.AllowRedeem) {
+      if (value == GameOverStatus.Fractionalizing) {
+        modalStore.openModal(ModalKey.fractionalizing)
+      } else if (value == GameOverStatus.AllowRedeem) {
         modalStore.openModal(ModalKey.redeem)
         localStore.saveTxInfo({ txType: TxType.Redeem })
       } else if (
@@ -87,6 +89,7 @@ export default {
         value == GameOverStatus.AllowSale &&
         (localStore.txInfo?.txType === TxType.Buy || !localStore.txInfo?.txHash)
       ) {
+        modalStore.openModal(ModalKey.buyInfo)
         localStore.saveTxInfo({})
       } else if (value == GameOverStatus.AllowWithdraw) {
         localStore.saveTxInfo({ txType: TxType.Withdraw })

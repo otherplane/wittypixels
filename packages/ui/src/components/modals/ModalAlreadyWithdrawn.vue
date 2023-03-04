@@ -10,7 +10,7 @@
         <h3 class="text-lg leading-6 font-medium text-black" id="modal-title">
           You just swapped your $WPX for $ETH
         </h3>
-        <div class="mt-2">
+        <!-- <div class="mt-2">
           <p class="text-sm text-black mb-2">
             The same amount of $ETH was donated to
             <a
@@ -20,7 +20,7 @@
               >TheGivingBlock's Ukraine Emergency Response Fund</a
             >
           </p>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
