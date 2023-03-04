@@ -9,9 +9,11 @@
     >
       {{ transactionInProgress ? txInProgressText : txActionText }}
     </CustomButton>
-    <MarketplaceLink id="marketplace-button" v-else-if="transactionConfirmed" />
   </div>
-  <MarketplaceLink id="marketplace-button" v-else />
+  <MarketplaceLink
+    id="marketplace-button"
+    v-if="!isTxTypeAllow || (isTxTypeAllow && transactionConfirmed)"
+  />
 </template>
 
 <script lang="ts">

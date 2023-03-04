@@ -8,6 +8,8 @@
     <ModalGameOver v-if="modalStore.modals.gameOver" />
     <ModalExport v-if="modalStore.modals.export" />
     <ModalRedeemInfo v-if="modalStore.modals.redeem" />
+    <ModalWithdraw v-if="modalStore.modals.allowWithdraw" />
+    <ModalFractionalizingInfo v-if="modalStore.modals.fractionalizing" />
     <ModalTransactionConfirmed v-if="modalStore.modals.txConfirmation" />
     <ModalTransactionError v-if="modalStore.modals.txError" />
     <ModalAlreadyWithdrawn v-if="modalStore.modals.alreadyWithdrawn" />

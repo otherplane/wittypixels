@@ -440,10 +440,7 @@ export function useWeb3() {
         })
     } catch (err) {
       console.log('Error withdrawing Witty Pixels NFT', err)
-      gameStore.setError(
-        GameOverErrorKey.transaction,
-        createErrorMessage(errorTransactionMessage)
-      )
+      gameStore.setError(GameOverErrorKey.transaction, createErrorMessage(i))
     }
   }
 
