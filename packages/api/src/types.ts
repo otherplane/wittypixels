@@ -187,20 +187,7 @@ export const SignRedemptionOutput = Type.Object({
 })
 export type SignRedemptionOutput = Static<typeof SignRedemptionOutput>
 
-export const CanvasMetadata = Type.Object({
-  name: Type.String(),
-  description: Type.String(),
-  external_url: Type.String(),
-  image: Type.String(),
-  attributes: Type.Array(
-    Type.Object({
-      trait_type: Type.String(),
-      value: Type.String(),
-      display_type: Type.Optional(Type.String()),
-      max_value: Type.Optional(Type.String()),
-    })
-  ),
-})
+export const CanvasMetadata = Type.String()
 export type CanvasMetadata = Static<typeof CanvasMetadata>
 
 export const MetadataParams = Type.Object({
