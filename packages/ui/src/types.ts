@@ -90,6 +90,7 @@ export enum ModalKey {
   alreadyWithdrawn = 'alreadyWithdrawn',
   fractionalizing = 'fractionalizing',
   buyInfo = 'buyInfo',
+  web3ProviderNotFound = 'web3ProviderNotFound',
 }
 export interface Modals {
   [key: string]: boolean | null

@@ -534,6 +534,10 @@ export function useWeb3() {
     }
   }
 
+  async function existWeb3Provider() {
+    return !!window.ethereum
+  }
+
   return {
     enableProvider,
     addNetwork,
@@ -545,5 +549,6 @@ export function useWeb3() {
     buyNFT,
     getWalletInfo,
     getERC20ContractInfo,
+    existWeb3Provider,
   }
 }
