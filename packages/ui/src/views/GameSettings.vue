@@ -71,12 +71,7 @@
         <p class="paragraph">
           After minting, the fractionalized NFT will be sold at a public Dutch
           auction, where one "patron" will be able to purchase the canvas NFT
-          and own this one-of-a-kind piece of crypto history. 50% of the
-          proceeds from the auction will be donated to TheGivingBlock's Ukraine
-          Emergency Response Fund, while the other 50% will be distributed to
-          players proportionally to the $WPX fractions they hold. So not only
-          will you have fun and network with others, but you may also go home
-          with extra $ETH in your wallet!
+          and own this one-of-a-kind piece of crypto history.
         </p>
         <p class="instructions-title orange">
           7. Swap your $WPX for real $ETH!
