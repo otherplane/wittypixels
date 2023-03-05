@@ -39,7 +39,7 @@ const metadata: FastifyPluginAsync = async (fastify): Promise<void> => {
           callResult = await contract.methods.metadata(token).call()
         } catch (err) {
           console.error('[Server] Metadata error:', err)
-          return reply.status(502).send(new Error(`Metadata`))
+          return reply.status(404).send(new Error(`Metadata`))
         }
         return reply.status(200).send(callResult)
       },
