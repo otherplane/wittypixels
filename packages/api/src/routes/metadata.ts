@@ -41,7 +41,7 @@ const metadata: FastifyPluginAsync = async (fastify): Promise<void> => {
           console.error('[Server] Metadata error:', err)
           return reply.status(404).send(new Error(`Metadata`))
         }
-        return reply.status(200).send(callResult)
+        return reply.status(200).send(JSON.parse(callResult))
       },
     }
   )
