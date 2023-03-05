@@ -15,24 +15,35 @@
             A Web3-enabled browser is needed to redeem your $WPX, withdraw your
             $ETH, or bid for the 1-of-1 canvas NFT.
           </p>
-          <p class="text-sm text-black mb-2">
+          <p v-if="paintedPixels" class="text-sm text-black mb-2">
             Please copy the backup URL below and paste it into a Web3 browser,
             such as MEW Wallet or Metamask on your phone, or your regular
             browser on your computer with the Metamask add-on installed:
           </p>
 
-          <p class="import-link text-xs text-red">{{ importLink }}</p>
+          <p v-if="paintedPixels" class="import-link text-xs text-red">
+            {{ importLink }}
+          </p>
         </div>
       </div>
     </div>
   </div>
   <div class="bg-beige px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
     <button
+      v-if="paintedPixels"
       @click="copyToClipboard"
       type="button"
       class="w-full inline-flex justify-center rounded-full border border-primary shadow-sm px-4 py-2 bg-primary text-base font-medium modal-text hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
     >
       Copy to clipboard
+    </button>
+
+    <button
+      @click="$parent.$emit('close')"
+      type="button"
+      class="mt-3 w-full inline-flex justify-center rounded-full border-primary shadow-sm px-4 py-2 bg-transparent text-base font-medium modal-text-2 hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+    >
+      Close
     </button>
   </div>
 </template>
