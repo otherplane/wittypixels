@@ -1,41 +1,10 @@
 import { shallowMount } from '@vue/test-utils'
-import ModalFractionalizingInfo from '../modals/ModalFractionalizingInfo.vue'
 import { describe, expect, it, vi } from 'vitest'
 import { createTestingPinia } from '@pinia/testing'
 import ModalHowToBuy from '../modals/ModalHowToBuy.vue'
 import ModalAlreadyWithdrawn from '../modals/ModalAlreadyWithdrawn.vue'
 
 describe('App.vue', () => {
-  it('renders ModalFractionalizingInfo', () => {
-    const wrapper = shallowMount(ModalFractionalizingInfo, {
-      props: {},
-      global: {
-        plugins: [
-          createTestingPinia({
-            initialState: {
-              modalStore: {
-                modals: {
-                  buyInfo: false,
-                  export: false,
-                  preview: false,
-                  gameOver: false,
-                  redeem: false,
-                  txConfirmation: false,
-                  txError: false,
-                  alreadyWithdrawn: false,
-                  fractionalizing: true,
-                },
-              },
-            },
-            stubActions: false,
-            createSpy: vi.fn,
-          }),
-        ],
-      },
-    })
-    expect(expect(wrapper.find('#modal-title').text()).toBe('GG, witty fren!'))
-  })
-
   it('renders ModalHowToBuy', () => {
     const wrapper = shallowMount(ModalHowToBuy, {
       props: {},

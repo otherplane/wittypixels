@@ -8,14 +8,33 @@
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
         <h3 class="text-lg leading-6 font-medium text-black" id="modal-title">
-          Game Over!
+          GG, witty fren!
         </h3>
         <div class="mt-2">
           <p class="text-sm text-black mb-2">
-            The canvas is now finalized with a total of
-            {{ totalPixelsDrawn }} pixels drawn by {{ activePlayers }} active
-            players. Remember to come back and claim ownership of this unique
-            piece of art.
+            The WittyPixels 1-of-1 canvas NFT will shortly be minted on Ethereum
+            mainnet, fractionalized into $WPX tokens, and become ready for
+            auctioning.
+          </p>
+
+          <p class="text-sm text-black mb-2">
+            This process is powered and secured by the Witnet Multichain
+            Decentralized Oracle, which is used to move the player data and
+            general game state from the offchain backend into the smart
+            contract.
+          </p>
+
+          <p class="text-sm text-black mb-2">
+            Because you got {{ paintedPixels }} pixels into the final artwork,
+            you are eligible to redeem {{ paintedPixels }} $WPX. The $WPX acts
+            as the onchain representation of your pixels, and once the NFT is
+            auctioned and sold, it will give you access to a share of the
+            collected $ETH.
+          </p>
+
+          <p class="text-sm text-black mb-2">
+            The fractionalization process will be over soon. Please come back
+            later to redeem your $WPX.
           </p>
         </div>
       </div>

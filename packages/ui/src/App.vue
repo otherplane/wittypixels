@@ -11,7 +11,6 @@
     <ModalWithdraw v-if="modalStore.modals.allowWithdraw" />
     <ModalTransactionConfirmed v-if="modalStore.modals.txConfirmation" />
     <ModalTransactionError v-if="modalStore.modals.txError" />
-    <ModalFractionalizingInfo v-if="modalStore.modals.fractionalizing" />
     <ModalAlreadyWithdrawn v-if="modalStore.modals.alreadyWithdrawn" />
     <ModalHowToBuy v-if="modalStore.modals.buyInfo" />
   </ModalDialog>
