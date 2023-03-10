@@ -14,13 +14,25 @@
     id="marketplace-button"
     v-if="!isTxTypeAllow || (isTxTypeAllow && transactionConfirmed)"
   />
+
+  <!-- Quick fix to allow buy and redeem -->
+  <CustomButton
+    v-if="showExtraBuyButton"
+    class="mt-2"
+    id="transaction-button-buy"
+    @click="gameOverActionBuy"
+    type="dark"
+    :slim="true"
+  >
+    {{ buyText }}
+  </CustomButton>
 </template>
 
 <script lang="ts">
 import { useLocalStore } from '@/stores/local'
 import { useGameStore } from '@/stores/game'
 import { useModalStore } from '@/stores/modal'
-import { ModalKey, TxType } from '@/types'
+import { GameOverStatus, ModalKey, TxType } from '@/types'
 import {
   POLLER_MILLISECONDS,
   TX_ACTION_COPY,
@@ -81,8 +93,11 @@ export default {
       )
     })
     const txActionText = computed(() => TX_ACTION_COPY[props.txType])
-    const txInProgressText = computed(
-      () => TX_ACTION_PROGRESS_COPY[props.txType]
+    // Quick fix to allow buy and redeem
+    const txInProgressText = computed(() =>
+      clickedBuy.value
+        ? TX_ACTION_PROGRESS_COPY.Buy
+        : TX_ACTION_PROGRESS_COPY[props.txType]
     )
     const txHash = computed(() => localStore.txInfo?.txHash)
     watch(txHash, value => {
@@ -123,6 +138,34 @@ export default {
         await web3WittyPixels.withdrawNFTOwnership()
       }
     }
+
+    // Quick fix to allow buy and redeem
+    async function gameOverActionBuy() {
+      disableTransactionBtn.value = true
+      clickedBuy.value = true
+      await web3WittyPixels.buyNFT()
+      clickedBuy.value = false
+    }
+    const gameOverStatus = computed(() => gameStore.gameOverStatus)
+    const NFTSold = computed(
+      () =>
+        gameOverStatus.value === GameOverStatus.Acquired ||
+        gameOverStatus.value === GameOverStatus.AllowWithdraw ||
+        gameOverStatus.value === GameOverStatus.AlreadyWithdrawn
+    )
+    const showExtraBuyButton = computed(() => {
+      const isRedeemActive =
+        isTxTypeAllow.value &&
+        !transactionConfirmed.value &&
+        !transactionInProgress.value &&
+        txActionText.value === TX_ACTION_COPY.Redeem
+      const isMarketplaceLinkActive =
+        !isTxTypeAllow.value ||
+        (isTxTypeAllow.value && transactionConfirmed.value)
+      return !NFTSold.value && (isRedeemActive || isMarketplaceLinkActive)
+    })
+    const buyText = TX_ACTION_COPY.Buy
+    const clickedBuy = ref(false)
     return {
       gameOverAction,
       gameStore,
@@ -133,6 +176,10 @@ export default {
       isTxTypeAllow,
       txActionText,
       txInProgressText,
+      showExtraBuyButton,
+      gameOverActionBuy,
+      buyText,
+      NFTSold,
     }
   },
 }
