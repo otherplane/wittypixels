@@ -22,7 +22,7 @@
             in the final artwork).
           </p>
           <p class="text-sm text-black mb-2">
-            The initial price is 100 $ETH, and it goes down by 0.5 $ETH every
+            The initial price is 100 $ETH, and it goes down by 0.15 $ETH every
             hour, until somebody buys it.
           </p>
         </div>
