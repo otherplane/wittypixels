@@ -51,8 +51,11 @@ export default {
         gameOverStatus.value === GameOverStatus.AllowWithdraw ||
         gameOverStatus.value === GameOverStatus.AlreadyWithdrawn
     )
+    // Show NFT price also before WPX claim
     const auctionStarted = computed(
-      () => gameOverStatus.value === GameOverStatus.AllowSale
+      () =>
+        gameOverStatus.value === GameOverStatus.AllowSale ||
+        gameOverStatus.value === GameOverStatus.AllowRedeem
     )
     const awaitingAuction = computed(
       () => gameOverStatus.value === GameOverStatus.AwaitSale
