@@ -45,20 +45,16 @@ export default {
     const showPriceAnimation = ref(false)
     const gameStore = useGameStore()
     const gameOverStatus = computed(() => gameStore.gameOverStatus)
-    const NFTSold = computed(
-      () =>
-        gameOverStatus.value === GameOverStatus.Acquired ||
-        gameOverStatus.value === GameOverStatus.AllowWithdraw ||
-        gameOverStatus.value === GameOverStatus.AlreadyWithdrawn
-    )
+    const NFTSold = computed(() => gameStore.nftSold)
     // Show NFT price also before WPX claim
     const auctionStarted = computed(
       () =>
-        gameOverStatus.value === GameOverStatus.AllowSale ||
-        gameOverStatus.value === GameOverStatus.AllowRedeem
+        !NFTSold.value &&
+        (gameOverStatus.value === GameOverStatus.AllowSale ||
+          gameOverStatus.value === GameOverStatus.AllowRedeem)
     )
     const awaitingAuction = computed(
-      () => gameOverStatus.value === GameOverStatus.AwaitSale
+      () => !NFTSold.value && gameOverStatus.value === GameOverStatus.AwaitSale
     )
     const nextPriceTimestamp = computed(
       () => contractInfo.value?.nextPriceTimestamp

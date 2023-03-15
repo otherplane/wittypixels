@@ -146,13 +146,7 @@ export default {
       await web3WittyPixels.buyNFT()
       clickedBuy.value = false
     }
-    const gameOverStatus = computed(() => gameStore.gameOverStatus)
-    const NFTSold = computed(
-      () =>
-        gameOverStatus.value === GameOverStatus.Acquired ||
-        gameOverStatus.value === GameOverStatus.AllowWithdraw ||
-        gameOverStatus.value === GameOverStatus.AlreadyWithdrawn
-    )
+    const NFTSold = computed(() => gameStore.nftSold)
     const showExtraBuyButton = computed(() => {
       const isRedeemActive =
         isTxTypeAllow.value &&

@@ -28,6 +28,7 @@ export const useGameStore = defineStore('gameStore', {
     gameOver: false as boolean,
     redeemCountdownOver: false as boolean,
     gameOverStatus: null as GameOverStatus | null,
+    nftSold: false,
     tokenStatus: null as TokenStatus | null,
     provider: {} as Provider,
     mintParams: null,
@@ -130,6 +131,9 @@ export const useGameStore = defineStore('gameStore', {
     },
     clearError(error: GameOverErrorKey) {
       this.errors[error] = null
+    },
+    setNFTSoldStatus(sold: boolean) {
+      this.nftSold = sold
     },
   },
 })

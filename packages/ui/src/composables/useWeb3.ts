@@ -252,6 +252,10 @@ export function useWeb3() {
         )
         // No transaction in progress
         if (transactionConfirmed.value || !localStore.txInfo?.txHash) {
+          if (erc20Info?.status == ERC20Status.Acquired) {
+            gameStore.setNFTSoldStatus(true)
+          }
+
           // There is player info and player didn't claim ownership
           if (erc20PlayerInfo?.playerAddress === ZERO_ADDRESS) {
             gameStore.setGameOverStatus(GameOverStatus.AllowRedeem)
